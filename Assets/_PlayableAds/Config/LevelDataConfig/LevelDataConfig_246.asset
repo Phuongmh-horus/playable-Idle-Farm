@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e785c8941da859478e6d00387f5e90b, type: 3}
+  m_Name: LevelDataConfig_246
+  m_EditorClassIdentifier: 
+  levelData: {fileID: 11400000, guid: 4800732be97ff534e8481928dbea39a3, type: 2}
+  mapImageSprite: {fileID: 21300000, guid: bd9cc1cd11573be42a2246dcc5fb7322, type: 3}
+  mapImagePosition: {x: -0.2, y: -1, z: 0.79}
+  mapImageScale: {x: 5.901009, y: 6.15146, z: 5.839666}
+  railImageSprite: {fileID: 21300000, guid: 7dbb3c8480213d3458f8e16c29304bdb, type: 3}
+  railImagePosition: {x: -0.28, y: -1, z: 1.51}
+  railImageScale: {x: 5.924997, y: 6.125374, z: 5.839666}
+  CameraPosition: {x: 0, y: 120, z: -30}
+  CameraRotation: {x: 75, y: 0, z: 0}
+  rotateEntryPoral: {x: 0, y: 0, z: 0}
+  rotateExitPoral: {x: 0, y: 0, z: 0}

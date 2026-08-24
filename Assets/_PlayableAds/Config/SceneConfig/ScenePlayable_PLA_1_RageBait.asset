@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31bb7af18bb377f4fb538c44a26ed036, type: 3}
+  m_Name: ScenePlayable_PLA_1_RageBait
+  m_EditorClassIdentifier: 
+  LevelDataConfig: {fileID: 11400000, guid: 7f4e2ddf74390804a9bd8d52177582f3, type: 2}
+  handPosition: {x: 30, y: 55}
+  enableClickCta: 1
+  autoOpenStore: 1
+  EndCardClickCta: 1
+  enableContinuousClickCta: 0
+  clickThreshold: 01000000
+  repeatClickThreshold: 1
+  autoCTAInGame: 0
+  timeInGameSecondsBeforeAutoCTA: 30
+  isTutorialAutoWhenAFK: 0
+  timeAFKToDisplayTutorialHand: 5
+  handMovePositions: []
+  playPraiseSfx: 1
+  showTimer: 0
+  InitRemainingTime: 50
+  WarningTime: 10
+  SecondWarningTime: 5
+  autoCtaRemainCat: 0
+  remainCatCount: 2
+  showConveyorWin: 0
+  showConveyorCapacity: 1
+  showConveyorCapacityText: 0
+  unloadBeforePlay: 1
+  orderCarries: 01000000

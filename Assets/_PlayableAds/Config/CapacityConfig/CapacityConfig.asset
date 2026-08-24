@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8acab2b6d182c254cafee7929e72d6c8, type: 3}
+  m_Name: CapacityConfig
+  m_EditorClassIdentifier: 
+  sliderStates:
+  - minThreshold: 0
+    maxThreshold: 0.25
+    sprite: {fileID: 223229244, guid: 877e388b34e279647a9d8c33f266367c, type: 3}
+    imageType: 2
+  - minThreshold: 0.25
+    maxThreshold: 0.5
+    sprite: {fileID: -1978724304, guid: fe996eac978e0c14f81f9c62201d0573, type: 3}
+    imageType: 2
+  - minThreshold: 0.5
+    maxThreshold: 0.75
+    sprite: {fileID: 1941191109, guid: 15733df8b714f334490c48976f719c41, type: 3}
+    imageType: 2
+  - minThreshold: 0.75
+    maxThreshold: 1
+    sprite: {fileID: 684654763, guid: bdefb580bf6fc3f4abe88ecb500adcdf, type: 3}
+    imageType: 2

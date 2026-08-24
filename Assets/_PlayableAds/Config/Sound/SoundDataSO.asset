@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a74cded1338be44a92139666764ac15, type: 3}
+  m_Name: SoundDataSO
+  m_EditorClassIdentifier: 
+  soundDataList:
+  - Name: 1
+    Clip: {fileID: 8300000, guid: c1d3b1fc3ef4aa547bfa69f0e7ad2e62, type: 3}
+    VolumeDefault: 0.65
+  - Name: 7
+    Clip: {fileID: 8300000, guid: 0fb57aa37157ec145a7c7c36129a647b, type: 3}
+    VolumeDefault: 0.6
+  - Name: 5
+    Clip: {fileID: 8300000, guid: 33c24527cfa977940a5f658e83f22700, type: 3}
+    VolumeDefault: 0.5
+  - Name: 6
+    Clip: {fileID: 8300000, guid: 75a8c9dd52ad8b24ba804eb08430d8f3, type: 3}
+    VolumeDefault: 0.5
+  - Name: 7
+    Clip: {fileID: 8300000, guid: 0fb57aa37157ec145a7c7c36129a647b, type: 3}
+    VolumeDefault: 0.5
+  - Name: 8
+    Clip: {fileID: 8300000, guid: c5fcd57125eacdb40a28dbbd9f58db6b, type: 3}
+    VolumeDefault: 0.4
+  - Name: 9
+    Clip: {fileID: 8300000, guid: 9f6f4a2dfcc807e46a6333cc9ca86ed8, type: 3}
+    VolumeDefault: 0.3
+  - Name: 13
+    Clip: {fileID: 8300000, guid: af20808b7b0f40244815cfc520fa2167, type: 3}
+    VolumeDefault: 0.3
+  - Name: 14
+    Clip: {fileID: 8300000, guid: 203a671fcfcfe5945b96de823082768e, type: 3}
+    VolumeDefault: 0.4
+  - Name: 16
+    Clip: {fileID: 8300000, guid: 07cae9db297e210489ae456481aade62, type: 3}
+    VolumeDefault: 1
+  - Name: 20
+    Clip: {fileID: 8300000, guid: 59cbb57f6dded0e46beb004da00edea2, type: 3}
+    VolumeDefault: 0.12
+  - Name: 20
+    Clip: {fileID: 8300000, guid: 0e5c275b082f59443b0c4f0a777dd652, type: 3}
+    VolumeDefault: 0.12
+  - Name: 20
+    Clip: {fileID: 8300000, guid: 85c22ff074553d0479a551f959720a18, type: 3}
+    VolumeDefault: 0.12
+  - Name: 20
+    Clip: {fileID: 8300000, guid: a80b578a8e1e8f94a9c6923cca6a0ed7, type: 3}
+    VolumeDefault: 0.12
+  - Name: 21
+    Clip: {fileID: 8300000, guid: b9457a3c58f173042bd800d44efa5785, type: 3}
+    VolumeDefault: 0.85
+  - Name: 22
+    Clip: {fileID: 8300000, guid: d75f0f51ee6fbda4d97d41d3321551a0, type: 3}
+    VolumeDefault: 0.65
