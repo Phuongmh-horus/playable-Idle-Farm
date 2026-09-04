@@ -45,9 +45,8 @@ public class CameraSize : MonoSingleton<CameraSize>
         base.Awake();
     }
 
-    protected override void OnDestroy()
+    protected void OnDestroy()
     {
-        base.OnDestroy();
         moveTween?.Kill();
         sizeTween?.Kill();
         fovTween?.Kill();
