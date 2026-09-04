@@ -102,12 +102,14 @@
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\ICTAPresenter.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\LunaUIManager.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\CapacityTextUI.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\CameraSize.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\SO\LookAtPosition.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\CapacityUI.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\PulseAnimation.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\GameplayCtaTriggerSource.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\VideoEditor\HandCreative.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\UIGamePlayLayer.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIHelper\SliderValidator.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\VFXManager.cs" />
