@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 
 
-public class CameraSize : Singleton<CameraSize>
+public class CameraSize : MonoSingleton<CameraSize>
 {
     [Header("Views")]
     [SerializeField] private ViewCamera[] viewCameraHori;
