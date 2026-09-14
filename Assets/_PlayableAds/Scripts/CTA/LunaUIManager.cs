@@ -158,6 +158,8 @@ public class LunaUIManager : MonoBehaviour
     
     [Header("Auto PopupUI")]
     public PopupStore PopupStoreUI;
+
+    public PlantStore plantStore;
     private bool _triggeredAutoPopupStoreUI = false;
     private int timePopupUI = 0;
 
@@ -272,6 +274,7 @@ public class LunaUIManager : MonoBehaviour
 
         EnsureTransitionPanel();
         LoadLevel();
+
     }
 
     private void Update()
@@ -1210,18 +1213,6 @@ public class LunaUIManager : MonoBehaviour
     }
 
 
-
-    private void EnsureConveyorUI()
-    {
-        uIGamePlayLayer.EnsureUI();
-    }
-    private void EnsurePopupUI()
-    {
-        if(PopupStoreUI != null)
-        {
-            PopupStoreUI.ClosePopupStore();
-        }
-    }
     private void EnsureScenario()
     {
 
@@ -1237,8 +1228,45 @@ public class LunaUIManager : MonoBehaviour
         EnsureAFKHand();
         EnsureConveyorUI();
         EnsurePopupUI();
+        EnsureGameplay();
     }
 
+
+    private void EnsureConveyorUI()
+    {
+        uIGamePlayLayer.EnsureUI();
+    }
+    private void EnsurePopupUI()
+    {
+        if(PopupStoreUI != null)
+        {
+            PopupStoreUI.ClosePopupStore();
+        }
+    }
+
+    private void EnsureGameplay()
+    {
+        if (CurrentScenePlayableSO.gameMode == GameMode.Auto)
+        {
+            
+        }
+        if (CurrentScenePlayableSO.enableFarmer)
+        {
+            
+        }
+
+        if (CurrentScenePlayableSO.prePlant.PrePlantMode != PrePlantMode.None)
+        {
+            
+        }
+
+        if (CurrentScenePlayableSO.SelectPlantStore)
+        {
+            
+        }
+
+
+    }
 
     // private void TransitionAndLoadLevel(LevelDataConfigSO levelData)
     // {

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ScenePlayable_123
   m_EditorClassIdentifier: 
   gameMode: 0
-  enableFarmer: 1
-  AutoPopupStoreUI: 0
-  AutoPopupStoreUITime: 90
+  enableFarmer: 0
+  AutoPopupStoreUI: 1
+  AutoPopupStoreUITime: 6.7
   enableContinuousPopup: 1
   SelectPlantStore: 0
   numberOfPlantsToSelect: 2
@@ -23,6 +23,7 @@ MonoBehaviour:
     PrePlantMode: 0
     numberOfPrePlant: 1
     prePlantIndex: 
+  numberOfCan: 0
   handPosition: {x: 30, y: 55}
   enableClickCta: 0
   autoOpenStore: 1

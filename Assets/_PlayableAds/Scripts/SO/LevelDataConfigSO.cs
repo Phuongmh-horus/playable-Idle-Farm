@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelDataConfig", menuName = "PLA/LevelDataConfig")]
 public class LevelDataConfigSO : ScriptableObject
 {
-    public int levelData;
 
 
     public Vector3 CameraPosition = new Vector3(0, 120, -34);

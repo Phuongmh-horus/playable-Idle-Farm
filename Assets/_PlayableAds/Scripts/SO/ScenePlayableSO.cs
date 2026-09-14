@@ -28,7 +28,7 @@ public class ScenePlayableSO : ScriptableObject
 
     [Header("Support Can")]
 
-    [Min(0)]public int numberOfCan = 0;
+    [Min(0)]public int numberOfBottle = 0;
 
 
     [Header("============= General =============")]
@@ -79,12 +79,6 @@ public enum GameMode
     Auto,
 }
 
-public enum PrePlantMode
-{
-    None,
-    Progress,
-    Index,
-}
 
 [System.Serializable]
 public class PrePlant
@@ -93,4 +87,10 @@ public class PrePlant
     [Min(1)]public int numberOfPrePlant = 1;
     public List<int> prePlantIndex = new List<int>();
 
+}
+public enum PrePlantMode
+{
+    None,
+    Progress,
+    Index,
 }
