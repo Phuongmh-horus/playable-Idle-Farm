@@ -28,35 +28,22 @@ public class LunaUIManager : MonoBehaviour
     #region  Game Level
 
     [Header(" === Game Level === ")]
-    [SerializeField, Min(1)] private int numberLevel = 1;
+    // [SerializeField, Min(1)] private int numberLevel = 1;
     [SerializeField] private List<ScenePlayableSO> scenePlayableSOs = new List<ScenePlayableSO>();
 
     public ScenePlayableSO CurrentScenePlayableSO => scenePlayableSOs[_currentScene];
 
-    public Vector3 GetRotateEntryPortal()
-    {
-        return CurrentScenePlayableSO.LevelDataConfig.rotateEntryPoral;
-    }
 
-    public Vector3 GetRotateExitPortal()
-    {
-        return CurrentScenePlayableSO.LevelDataConfig.rotateExitPoral;
-    }
 
     private int _currentScene = 0;
 
-
-    public bool IsPlayMoreGame => scenePlayableSOs.Count > 1 && numberLevel > 1 ? true : false;
-    private int _currentLevelIndex = 0;
-
-    [SerializeField] private SpriteRenderer mapImage;
-    [SerializeField] private SpriteRenderer railImage;
+    // public bool IsPlayMoreGame => scenePlayableSOs.Count > 1 && numberLevel > 1 ? true : false;
 
     [SerializeField] private GameObject transitionPanel;
     private CanvasGroup transitionCanvasGroup;
     private Coroutine _transitionRoutine;
 
-    public LevelDataConfigSO FirstLevel => scenePlayableSOs.Count > 0 ? scenePlayableSOs[0].LevelDataConfig : null;
+    // public LevelDataConfigSO FirstLevel => scenePlayableSOs.Count > 0 ? scenePlayableSOs[0].LevelDataConfig : null;
     #endregion 
     #region  General Config
 
@@ -164,30 +151,15 @@ public class LunaUIManager : MonoBehaviour
     #endregion
 
 
+    [SerializeField] private UIGamePlayLayer uIGamePlayLayer;
 
     #region  Optional Gameplay 
     [Header("============ Optional Gameplay ============")]
     
-    [Header("Conveyor")]
-
-    [SerializeField] private UIGamePlayLayer uIGamePlayLayer;
-    public bool IsShowConveyorWin => CurrentScenePlayableSO.showConveyorWin;
-    public bool IsShowConveyorCapacity => CurrentScenePlayableSO.showConveyorCapacity;
-    public bool IsShowConveyorCapacityText => CurrentScenePlayableSO.showConveyorCapacityText;
-    #region  Remain Cat CTA
-
-    private bool _remainCatCtaTriggered = false;
-    public bool IsRemainCatCtaTriggered {
-        get => _remainCatCtaTriggered;
-    }
-    public void SetRemainCatCtaTriggered(bool value)
-    {
-        _remainCatCtaTriggered = value;
-    }
-
-    #endregion
-    
-
+    [Header("Auto PopupUI")]
+    public PopupStore PopupStoreUI;
+    private bool _triggeredAutoPopupStoreUI = false;
+    private int timePopupUI = 0;
 
     #endregion
 
@@ -202,9 +174,9 @@ public class LunaUIManager : MonoBehaviour
 
     #region Private Fields
 
-    private bool isStartGame = false;
-    private bool isResumeGame = false;
-    private bool isEndGame = false;
+    public bool isStartGame = false;
+    public bool isResumeGame = false;
+    public bool isEndGame = false;
 
 
     private Vector2 _handBaseAnchoredPos;
@@ -212,7 +184,7 @@ public class LunaUIManager : MonoBehaviour
     private Coroutine _buttonPulseRoutine;
     private Coroutine _textRoutine;
     private Vector3 _textBaseScale = Vector3.one;
-    private bool _endGameSent = false;
+    // private bool _endGameSent = false;
     private Coroutine _endcardRoutine;
     private bool _useCtaOnlyPulse;
     private bool _tutorialPauseApplied;
@@ -299,7 +271,7 @@ public class LunaUIManager : MonoBehaviour
         }
 
         EnsureTransitionPanel();
-        LoadLevel(FirstLevel);
+        LoadLevel();
     }
 
     private void Update()
@@ -319,22 +291,17 @@ public class LunaUIManager : MonoBehaviour
         //     }
         // }
         if(!isResumeGame) return ;
+        _elapsedTime += Time.deltaTime; 
         if(CurrentScenePlayableSO.showTimer)
         {
-            _elapsedTime += Time.deltaTime; 
             GameEventBus.OnTimeUpdate?.Invoke((float)CurrentScenePlayableSO.InitRemainingTime - _elapsedTime);
 
-
-            UpdateAutoCTA(_elapsedTime);
-
-            
             if (_elapsedTime >= CurrentScenePlayableSO.InitRemainingTime)
             {
                 // GameEventBus.OnLoseTrigger?.Invoke(ELoseReason.TimeOut);
                 GameEventBus.OnEndGame?.Invoke(EndGameState.Lose);
             }
         }
-
         if(CurrentScenePlayableSO.isTutorialAutoWhenAFK)
         {
             _afkElapsed += Time.deltaTime; 
@@ -352,6 +319,10 @@ public class LunaUIManager : MonoBehaviour
             _currentHandPositionIndex = carrierIndex;
 
         }
+
+        UpdateAutoCTA(_elapsedTime);
+        UpdateAutoPopupStoreUI(_elapsedTime);
+
 
     }
 
@@ -429,7 +400,35 @@ public class LunaUIManager : MonoBehaviour
     }
     
     
-    private void StartGame()
+    
+    private void UpdateAutoPopupStoreUI(float elapsedTime)
+    {
+        if (!CurrentScenePlayableSO.AutoPopupStoreUI) return ;
+        if (_triggeredAutoPopupStoreUI && !CurrentScenePlayableSO.enableContinuousPopup) return;
+
+        if(elapsedTime >= CurrentScenePlayableSO.AutoPopupStoreUITime * (timePopupUI + 1))
+        {
+            ShowPopupStoreUI();
+        }
+    }
+
+
+    private void ShowPopupStoreUI()
+    {
+        if(PopupStoreUI != null)
+        {
+            PopupStoreUI.OpenPopupStore();
+            _triggeredAutoPopupStoreUI = true;
+            timePopupUI++;
+            PauseGameplay();
+        }
+    }
+
+
+
+
+    [ContextMenu("StartGame")]
+    public void StartGame()
     {
         Debug.Log("Game Started");
         isStartGame = true;
@@ -443,7 +442,7 @@ public class LunaUIManager : MonoBehaviour
     }
     
 
-    private void PauseGameplay() 
+    public void PauseGameplay() 
     {
         // Pause the game
         Debug.Log("Game Paused");
@@ -451,7 +450,7 @@ public class LunaUIManager : MonoBehaviour
         isResumeGame = false;
     }
 
-    private void ResumeGameplay() 
+    public void ResumeGameplay() 
     {
 
         Debug.Log("Game Resumed");
@@ -564,19 +563,18 @@ public class LunaUIManager : MonoBehaviour
     {
         if(isEndGame == true) return;
 
-        if (IsPlayMoreGame && endGameState == EndGameState.Win && _currentScene < numberLevel - 1)
-        {
-            _currentScene++;
+        // if (IsPlayMoreGame && endGameState == EndGameState.Win && _currentScene < numberLevel - 1)
+        // {
+        //     _currentScene++;
             
-            // if(_currentLevelIndex >= levelGame.Count)
-            // {
-            //     _currentLevelIndex = 0;
-            // }
-
-            LevelDataConfigSO nextLevelData = CurrentScenePlayableSO.LevelDataConfig;
-            TransitionAndLoadLevel(nextLevelData);
-            return;
-        }
+        //     // if(_currentLevelIndex >= levelGame.Count)
+        //     // {
+        //     //     _currentLevelIndex = 0;
+        //     // }
+        //     LevelDataConfigSO nextLevelData = CurrentScenePlayableSO.LevelDataConfig;
+        //     TransitionAndLoadLevel(nextLevelData);
+        //     return;
+        // }
 
         SoundManager.Instance?.StopAllSfx();
         ShowEndcard(endGameState);
@@ -695,7 +693,6 @@ public class LunaUIManager : MonoBehaviour
             endcardCanvasGroup.blocksRaycasts = true;
         }
 
-        SendEndGameIfNeeded();
         if (autoCTAOnEndcard)
         {
             OpenStoreNow();
@@ -824,17 +821,9 @@ public class LunaUIManager : MonoBehaviour
         // GameplayManager.Instance.PauseGame();
     }
 
-    private void SendEndGameIfNeeded()
-    {
-        return ;
-        if (_endGameSent) return;
-        _endGameSent = true;
-        Luna.Unity.LifeCycle.GameEnded();
-    }
 
     public void OpenStoreNow()
     {
-        SendEndGameIfNeeded();
         Luna.Unity.Playable.InstallFullGame();
     }
 
@@ -1030,8 +1019,8 @@ public class LunaUIManager : MonoBehaviour
 
     // [SerializeField] private Transform firstTarget;
     // [SerializeField] private Transform secondTarget;
-    private float timeMoving = 0.75f;
-    private float timeWaiting = 2f;
+    // private float timeMoving = 0.75f;
+    // private float timeWaiting = 2f;
     private IEnumerator HandMoveRoutine()
     {
         // tutorialHand.transform.position = firstTarget.position;
@@ -1226,6 +1215,13 @@ public class LunaUIManager : MonoBehaviour
     {
         uIGamePlayLayer.EnsureUI();
     }
+    private void EnsurePopupUI()
+    {
+        if(PopupStoreUI != null)
+        {
+            PopupStoreUI.ClosePopupStore();
+        }
+    }
     private void EnsureScenario()
     {
 
@@ -1240,20 +1236,21 @@ public class LunaUIManager : MonoBehaviour
         EnsurePraiseUser();
         EnsureAFKHand();
         EnsureConveyorUI();
+        EnsurePopupUI();
     }
 
 
-    private void TransitionAndLoadLevel(LevelDataConfigSO levelData)
-    {
-        if (transitionPanel == null || transitionCanvasGroup == null)
-        {
-            LoadLevel(FirstLevel);
-            return;
-        }
+    // private void TransitionAndLoadLevel(LevelDataConfigSO levelData)
+    // {
+    //     if (transitionPanel == null || transitionCanvasGroup == null)
+    //     {
+    //         // LoadLevel(FirstLevel);
+    //         return;
+    //     }
 
-        transitionPanel.SetActive(true);
-        _transitionRoutine = StartCoroutine(TransitionRoutine(levelData));
-    }
+    //     transitionPanel.SetActive(true);
+    //     _transitionRoutine = StartCoroutine(TransitionRoutine(levelData));
+    // }
 
     private void LoadLevel(LevelDataConfigSO levelDataConfig = null)
     {
@@ -1262,35 +1259,13 @@ public class LunaUIManager : MonoBehaviour
         //     LoadMapAndRailAndCamera(levelDataConfig);
         //     LevelManager.Instance.LoadLevel(levelDataConfig.levelData);
         //     SplineSystem.Instance?.LoadLevel(levelDataConfig.levelData);
-        //     EnsureScenario();
+            EnsureScenario();
         // }
+
+
+
     }
 
-    private void LoadMapAndRailAndCamera(LevelDataConfigSO levelDataConfig = null)
-    {
-        if (mapImage != null && levelDataConfig?.mapImageSprite != null)
-        {
-            mapImage.sprite = levelDataConfig.mapImageSprite;
-            mapImage.transform.localScale = levelDataConfig.mapImageScale;
-            mapImage.transform.localPosition = levelDataConfig.mapImagePosition;
-        }
-
-        if (railImage != null && levelDataConfig?.railImageSprite != null)
-        {
-            railImage.sprite = levelDataConfig.railImageSprite;
-            railImage.transform.localScale = levelDataConfig.railImageScale;
-            railImage.transform.localPosition = levelDataConfig.railImagePosition;
-        }
-
-        if (levelDataConfig?.CameraPosition != null && levelDataConfig?.CameraRotation != null)
-        {
-            if (mainCamera != null)
-            {
-                mainCamera.transform.position = levelDataConfig.CameraPosition;
-                mainCamera.transform.rotation = Quaternion.Euler(levelDataConfig.CameraRotation);
-            }
-        }
-    }
 
 
     private void EnsureTransitionPanel()
@@ -1307,25 +1282,25 @@ public class LunaUIManager : MonoBehaviour
     //     StartCoroutine(TransitionRoutine(level));
     // }
 
-    private IEnumerator TransitionRoutine(LevelDataConfigSO levelData)
-    {
-        yield return StartCoroutine(FadeInCanvasGroup(transitionCanvasGroup, ctaConfig.transitionFadeDuration));
+    // private IEnumerator TransitionRoutine(LevelDataConfigSO levelData)
+    // {
+    //     yield return StartCoroutine(FadeInCanvasGroup(transitionCanvasGroup, ctaConfig.transitionFadeDuration));
 
-        LoadLevel(levelData);
+    //     LoadLevel(levelData);
 
-        float t = 0f;
-        while (t < ctaConfig.transitionDelay)
-        {
-            t += Time.unscaledDeltaTime;
-            yield return null;
-        }
+    //     float t = 0f;
+    //     while (t < ctaConfig.transitionDelay)
+    //     {
+    //         t += Time.unscaledDeltaTime;
+    //         yield return null;
+    //     }
 
-        // Fade out
-        yield return StartCoroutine(FadeOutCanvasGroup(transitionCanvasGroup, ctaConfig.transitionFadeDuration));
+    //     // Fade out
+    //     yield return StartCoroutine(FadeOutCanvasGroup(transitionCanvasGroup, ctaConfig.transitionFadeDuration));
 
-        transitionPanel.SetActive(false);
-        _transitionRoutine = null;
-    }
+    //     transitionPanel.SetActive(false);
+    //     _transitionRoutine = null;
+    // }
 
 
     #endregion

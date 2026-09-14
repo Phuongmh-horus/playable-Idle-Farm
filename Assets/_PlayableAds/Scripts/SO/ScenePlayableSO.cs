@@ -4,8 +4,34 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ScenePlayable", menuName = "PLA/ScenePlayable")]
 public class ScenePlayableSO : ScriptableObject
 {
-    public LevelDataConfigSO LevelDataConfig;
+    // public LevelDataConfigSO LevelDataConfig;
 
+    [Header ("============ Optional Gameplay ============")]
+    
+    [Header("GameMode")]
+    public GameMode gameMode = GameMode.Normal;
+
+    public bool enableFarmer = true;
+    [Header("Auto PopupUI")]
+    public bool AutoPopupStoreUI = false;
+
+    [Range(0f, 180f)] public float AutoPopupStoreUITime = 90f;
+    public bool enableContinuousPopup = true;
+
+    [Header("Select Plant Store")]
+    public bool SelectPlantStore = false;
+
+    [Min(2)] public int numberOfPlantsToSelect = 2; 
+
+    [Header("PrePlant ")]
+    public PrePlant prePlant = new PrePlant();
+
+    [Header("Support Can")]
+
+    [Min(0)]public int numberOfCan = 0;
+
+
+    [Header("============= General =============")]
     [Header("Hand Tutorial")]
     public Vector2 handPosition ;
 
@@ -41,26 +67,30 @@ public class ScenePlayableSO : ScriptableObject
     public int SecondWarningTime = 5;
 
 
-    [Header ("============ Optional Gameplay ============")]
-    [Header("Remain Cat CTA")]
-    public bool autoCtaRemainCat = false;
-
-    [Min(0)]
-    public int remainCatCount = 2;
 
 
-    [Header("Conveyor")]
-    [SerializeField] public bool showConveyorWin = false;
-    public bool IsShowConveyorWin => showConveyorWin;
+}
 
-    [SerializeField] public bool showConveyorCapacity = false;
-    public bool IsShowConveyorCapacity => showConveyorCapacity;
 
-    public bool showConveyorCapacityText = false;
-    public bool IsShowConveyorCapacityText => showConveyorCapacityText;
 
-    [Header("Unload Carrier trước khi chơi")]
-    [SerializeField] public bool unloadBeforePlay = false;
-    [SerializeField] public List<int> orderCarries = new List<int>();
+public enum GameMode
+{
+    Normal,
+    Auto,
+}
+
+public enum PrePlantMode
+{
+    None,
+    Progress,
+    Index,
+}
+
+[System.Serializable]
+public class PrePlant
+{
+    public PrePlantMode PrePlantMode = PrePlantMode.None;
+    [Min(1)]public int numberOfPrePlant = 1;
+    public List<int> prePlantIndex = new List<int>();
 
 }

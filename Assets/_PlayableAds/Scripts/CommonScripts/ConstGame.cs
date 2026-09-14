@@ -6,7 +6,7 @@ namespace GameAds
 {
     public static class ConstGame
     {
-        public const int TIME_LIMIT = 60;
+        public const int TIME_LIMIT = 120;
         public const int WARNING_TIME = 10;
     }
 
@@ -18,8 +18,6 @@ namespace GameAds
         public const string PAUSE_GAME_TEXT_BUTTON = "Continue";
 
         public const string PAUSE_TITLE_TEXT = "";
-
-        
 
     }
 

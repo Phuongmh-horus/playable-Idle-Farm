@@ -24,20 +24,20 @@ public class UIGamePlayLayer : LayerBase
     }
     public void EnsureUI()
     {
-        if(capacityUI != null)
-        {
-            capacityUI.gameObject.SetActive(LunaUIManager.Instance.IsShowConveyorCapacity);
+        // if(capacityUI != null)
+        // {
+        //     capacityUI.gameObject.SetActive(LunaUIManager.Instance.IsShowConveyorCapacity);
             
-        }
+        // }
         
-        if(successCapacityUI != null)
-        {
-            successCapacityUI.gameObject.SetActive(LunaUIManager.Instance.IsShowConveyorWin);
-        }
-        if (capacityTextUI != null) 
-        {
-            capacityTextUI.gameObject.SetActive(LunaUIManager.Instance.IsShowConveyorCapacityText);
-        }
+        // if(successCapacityUI != null)
+        // {
+        //     successCapacityUI.gameObject.SetActive(LunaUIManager.Instance.IsShowConveyorWin);
+        // }
+        // if (capacityTextUI != null) 
+        // {
+        //     capacityTextUI.gameObject.SetActive(LunaUIManager.Instance.IsShowConveyorCapacityText);
+        // }
     }
 
 

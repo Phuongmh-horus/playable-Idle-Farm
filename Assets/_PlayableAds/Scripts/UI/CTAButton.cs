@@ -27,9 +27,6 @@ public class CTAButton : MonoBehaviour
 
 
 
-
-
-
     [SerializeField] private float buttonPulseDuration = 0.6f;
 
     [SerializeField] private float ctaImpactStartAngle = -18f;
@@ -78,15 +75,15 @@ public class CTAButton : MonoBehaviour
         {
             float t = Mathf.PingPong(Time.unscaledTime / duration, 1f);
             float scale;
-            if (true)
-            {
-                scale = Mathf.Lerp(ctaOnlyStartScale, ctaOnlyPulseScale, t);
-            }
-            else
-            {
-                float targetScale = buttonPulseScale;
-                scale = Mathf.Lerp(1f, targetScale, t);
-            }
+            // if (true)
+            // {
+            scale = Mathf.Lerp(ctaOnlyStartScale, ctaOnlyPulseScale, t);
+            // }
+            // else
+            // {
+            //     float targetScale = buttonPulseScale;
+            //     scale = Mathf.Lerp(1f, targetScale, t);
+            // }
 
             button.transform.localScale = new Vector3(scale, scale, scale);
             
