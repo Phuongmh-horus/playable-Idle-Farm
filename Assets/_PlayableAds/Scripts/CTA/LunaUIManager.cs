@@ -6,6 +6,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+#if UNITY_EDITOR
+using Alchemy;
+using Alchemy.Inspector;
+#endif
 // Luna playable UI manager.
 // [FIX] Removed ConvertLegacyTextToTmp() which called FontEngine.LoadFontFace(Font, int)
 
@@ -160,6 +164,10 @@ public class LunaUIManager : MonoBehaviour
     public PopupStore PopupStoreUI;
 
     public PlantStore plantStore;
+
+    private List<int> usedPlantIds = new List<int>();
+
+    public PlantConfig plantConfig;
     private bool _triggeredAutoPopupStoreUI = false;
     private int timePopupUI = 0;
 
@@ -176,9 +184,9 @@ public class LunaUIManager : MonoBehaviour
 
     #region Private Fields
 
-    public bool isStartGame = false;
-    public bool isResumeGame = false;
-    public bool isEndGame = false;
+    private bool isStartGame = false;
+    private bool isResumeGame = false;
+    private bool isEndGame = false;
 
 
     private Vector2 _handBaseAnchoredPos;
@@ -200,6 +208,7 @@ public class LunaUIManager : MonoBehaviour
         GameEventBus.OnEndGame += HandleGameEnd;
         GameEventBus.OnShowCTA += HandleShowCTA;
         GameEventBus.OnTimeUpdate += UpdateRemainingTime;
+        GameEventBus.ActionOnPlantSelected += ActionOnPlantSelected;
         Luna.Unity.LifeCycle.OnPause += PauseGameplay;
         Luna.Unity.LifeCycle.OnResume += ResumeGameplay;
     }
@@ -210,7 +219,7 @@ public class LunaUIManager : MonoBehaviour
         GameEventBus.OnEndGame -= HandleGameEnd;
         GameEventBus.OnShowCTA -= HandleShowCTA;
         GameEventBus.OnTimeUpdate -= UpdateRemainingTime;
-
+        GameEventBus.ActionOnPlantSelected -= ActionOnPlantSelected;
         Luna.Unity.LifeCycle.OnPause -= PauseGameplay;
         Luna.Unity.LifeCycle.OnResume -= ResumeGameplay;
     }
@@ -384,6 +393,80 @@ public class LunaUIManager : MonoBehaviour
             _timeOpenStore++;
         }
     }
+    
+    
+
+
+
+    #if UNITY_EDITOR
+    [Button]
+    #endif
+    [ContextMenu("SetupStore") ]
+    public void SetupStore()
+    {
+        List<PlantConfigData> plantConfigDatas = GetUnusedPlantConfigDatas();
+        int numberOfPlantsToSelect = Mathf.Clamp(CurrentScenePlayableSO.numberOfPlantsToSelect, 1, plantConfigDatas.Count);
+        List<PlantConfigData> selectedPlants = GetRandomPlants(plantConfigDatas, numberOfPlantsToSelect);
+
+        // option 1
+        // lấy theo thứ tự 
+        // for (int i = 0; i < numberOfPlantsToSelect; i++)
+        // {
+        //     selectedPlants.Add(plantConfigDatas[i]);
+        // }
+        // // option 2
+        // lấy ngẫu nhiên
+
+        SetupStore(selectedPlants);
+    }
+
+    private List<PlantConfigData> GetRandomPlants(List<PlantConfigData> plantConfigDatas, int numberOfPlantsToSelect)
+    {
+        if (plantConfigDatas.Count <= numberOfPlantsToSelect)
+        {
+            return new List<PlantConfigData>(plantConfigDatas);
+        }
+        List<PlantConfigData> selectedPlants = new List<PlantConfigData>();
+        HashSet<int> selectedIndices = new HashSet<int>();
+        System.Random random = new System.Random();
+
+        while (selectedPlants.Count < numberOfPlantsToSelect)
+        {
+            int randomIndex = random.Next(plantConfigDatas.Count);
+            if (!selectedIndices.Contains(randomIndex))
+            {
+                selectedIndices.Add(randomIndex);
+                selectedPlants.Add(plantConfigDatas[randomIndex]);
+            }
+        }
+        return selectedPlants;
+    }
+
+    private void SetupStore(List<PlantConfigData> plantConfigs)
+    {
+        if (plantStore != null)
+        {
+            plantStore.SetupStore(plantConfigs);
+        }
+    }
+
+    private List<PlantConfigData> GetUnusedPlantConfigDatas()
+    {
+        List<PlantConfigData> unusedPlantConfigs = new List<PlantConfigData>();
+        if (plantConfig == null || plantConfig.plants == null) return unusedPlantConfigs;
+
+        foreach (var plant in plantConfig.plants)
+        {
+            if (!usedPlantIds.Contains(plant.id))
+            {
+                unusedPlantConfigs.Add(plant);
+            }
+        }
+
+        return unusedPlantConfigs;
+        
+    }
+
     #endregion
 
     #region  Private Methods
@@ -429,7 +512,9 @@ public class LunaUIManager : MonoBehaviour
 
 
 
-
+    #if UNITY_EDITOR
+    [Button]
+    #endif 
     [ContextMenu("StartGame")]
     public void StartGame()
     {
@@ -496,6 +581,11 @@ public class LunaUIManager : MonoBehaviour
         timerAudioSource.Stop();
     }
 
+    private void ActionOnPlantSelected(int plantId)
+    {
+        usedPlantIds.Add(plantId);
+        plantStore.HideStore();
+    }
 
 
     private Coroutine ShowHandWhenAfk;
@@ -1205,7 +1295,7 @@ public class LunaUIManager : MonoBehaviour
 
     private void CheckInvalidCarriersAFKTutorialHand()
     {
-        List<int> indexs = new ();
+        List<int> indexs = new List<int>();
         if(indexs.Contains(_currentHandPositionIndex) == false)
         {
             ResetAFKTimer();
@@ -1262,8 +1352,9 @@ public class LunaUIManager : MonoBehaviour
 
         if (CurrentScenePlayableSO.SelectPlantStore)
         {
-            
+            SetupStore();
         }
+        else plantStore.HideStore();
 
 
     }

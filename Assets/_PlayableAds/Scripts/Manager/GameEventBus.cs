@@ -19,6 +19,7 @@ public static class GameEventBus
 
     // public static Action OnMatchRowOrColumn; // position of the matched row
 
+    public static Action<int> ActionOnPlantSelected; // plantId
 
     #endregion
 }

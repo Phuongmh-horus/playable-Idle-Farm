@@ -1,0 +1,515 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0aab2120d3cfa241a4c14b0fb941cbc, type: 3}
+  m_Name: PlantConfig
+  m_EditorClassIdentifier: 
+  plants:
+  - id: 0
+    plantName: Wheat
+    fruitName: Wheat
+    fruitIcon: {fileID: 21300000, guid: 5c08d58a94e787548afa5b639a57531d, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 0.95, g: 0.82, b: 0.45, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
+      stats:
+      - type: 0
+        value: 5
+      - type: 1
+        value: 100
+      - type: 2
+        value: 10
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
+      stats:
+      - type: 0
+        value: 7
+      - type: 1
+        value: 300
+      - type: 2
+        value: 25
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
+      stats:
+      - type: 0
+        value: 10
+      - type: 1
+        value: 800
+      - type: 2
+        value: 60
+      - type: 3
+        value: 0.08
+  - id: 1
+    plantName: Corn
+    fruitName: Corn
+    fruitIcon: {fileID: 21300000, guid: 034c761c2cd298440876bdf46d39f285, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 1, g: 0.85, b: 0.1, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 042c932482451994588ff6775b1f0595, type: 3}
+      stats:
+      - type: 0
+        value: 8
+      - type: 1
+        value: 200
+      - type: 2
+        value: 20
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 042c932482451994588ff6775b1f0595, type: 3}
+      stats:
+      - type: 0
+        value: 11
+      - type: 1
+        value: 600
+      - type: 2
+        value: 50
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 042c932482451994588ff6775b1f0595, type: 3}
+      stats:
+      - type: 0
+        value: 15
+      - type: 1
+        value: 1500
+      - type: 2
+        value: 120
+      - type: 3
+        value: 0.08
+  - id: 2
+    plantName: Carrot
+    fruitName: Carrot
+    fruitIcon: {fileID: 21300000, guid: e0f0613bc9209494e940e0dbd0068d93, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 1, g: 0.5, b: 0, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
+      stats:
+      - type: 0
+        value: 10
+      - type: 1
+        value: 400
+      - type: 2
+        value: 35
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
+      stats:
+      - type: 0
+        value: 14
+      - type: 1
+        value: 1000
+      - type: 2
+        value: 85
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
+      stats:
+      - type: 0
+        value: 19
+      - type: 1
+        value: 2500
+      - type: 2
+        value: 200
+      - type: 3
+        value: 0.08
+  - id: 3
+    plantName: Tomato
+    fruitName: Tomato
+    fruitIcon: {fileID: 21300000, guid: 102cf65f8e02424459a325a655bc0e92, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 0.95, g: 0.2, b: 0.15, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 81d44e6c50e825b4b8c5b7038bc293cb, type: 3}
+      stats:
+      - type: 0
+        value: 12
+      - type: 1
+        value: 800
+      - type: 2
+        value: 55
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 81d44e6c50e825b4b8c5b7038bc293cb, type: 3}
+      stats:
+      - type: 0
+        value: 17
+      - type: 1
+        value: 1800
+      - type: 2
+        value: 130
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 81d44e6c50e825b4b8c5b7038bc293cb, type: 3}
+      stats:
+      - type: 0
+        value: 23
+      - type: 1
+        value: 4000
+      - type: 2
+        value: 300
+      - type: 3
+        value: 0.08
+  - id: 4
+    plantName: Eggplant
+    fruitName: Eggplant
+    fruitIcon: {fileID: 21300000, guid: fa888dccfdaee244db1ac419c942ccb3, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 0.48, g: 0.16, b: 0.64, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 018bf408639e03242b0356409f99cdb4, type: 3}
+      stats:
+      - type: 0
+        value: 15
+      - type: 1
+        value: 1500
+      - type: 2
+        value: 80
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 018bf408639e03242b0356409f99cdb4, type: 3}
+      stats:
+      - type: 0
+        value: 21
+      - type: 1
+        value: 3200
+      - type: 2
+        value: 190
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 018bf408639e03242b0356409f99cdb4, type: 3}
+      stats:
+      - type: 0
+        value: 28
+      - type: 1
+        value: 7000
+      - type: 2
+        value: 450
+      - type: 3
+        value: 0.08
+  - id: 5
+    plantName: Pumpkin
+    fruitName: Pumpkin
+    fruitIcon: {fileID: 21300000, guid: 3a2b2f70146905f4f9d0b32e7d2b802b, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 1, g: 0.6, b: 0.1, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 5d690d29a0ac05d4aa0e049e9939e682, type: 3}
+      stats:
+      - type: 0
+        value: 18
+      - type: 1
+        value: 2500
+      - type: 2
+        value: 120
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 5d690d29a0ac05d4aa0e049e9939e682, type: 3}
+      stats:
+      - type: 0
+        value: 25
+      - type: 1
+        value: 5500
+      - type: 2
+        value: 280
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 5d690d29a0ac05d4aa0e049e9939e682, type: 3}
+      stats:
+      - type: 0
+        value: 33
+      - type: 1
+        value: 12000
+      - type: 2
+        value: 650
+      - type: 3
+        value: 0.08
+  - id: 6
+    plantName: Watermelon
+    fruitName: Watermelon
+    fruitIcon: {fileID: 21300000, guid: f67360fa2e167f047b17da72d6d5e93e, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 0.95, g: 0.25, b: 0.35, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 9f09eac0119821048941f708ad0c85ff, type: 3}
+      stats:
+      - type: 0
+        value: 22
+      - type: 1
+        value: 4000
+      - type: 2
+        value: 180
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 9f09eac0119821048941f708ad0c85ff, type: 3}
+      stats:
+      - type: 0
+        value: 30
+      - type: 1
+        value: 9000
+      - type: 2
+        value: 420
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 9f09eac0119821048941f708ad0c85ff, type: 3}
+      stats:
+      - type: 0
+        value: 40
+      - type: 1
+        value: 20000
+      - type: 2
+        value: 950
+      - type: 3
+        value: 0.08
+  - id: 7
+    plantName: Strawberry
+    fruitName: Strawberry
+    fruitIcon: {fileID: 21300000, guid: 9664b17528a069d4ca9ae53b0e1a5b1c, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 0.98, g: 0.15, b: 0.3, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: beb01025a5325e84991c00dec801a690, type: 3}
+      stats:
+      - type: 0
+        value: 26
+      - type: 1
+        value: 6500
+      - type: 2
+        value: 260
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: beb01025a5325e84991c00dec801a690, type: 3}
+      stats:
+      - type: 0
+        value: 35
+      - type: 1
+        value: 15000
+      - type: 2
+        value: 600
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: beb01025a5325e84991c00dec801a690, type: 3}
+      stats:
+      - type: 0
+        value: 47
+      - type: 1
+        value: 32000
+      - type: 2
+        value: 1400
+      - type: 3
+        value: 0.08
+  - id: 8
+    plantName: Grape
+    fruitName: Grape
+    fruitIcon: {fileID: 21300000, guid: 30ae071cc8902144384c22e38db341b2, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 0.55, g: 0.15, b: 0.7, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
+      stats:
+      - type: 0
+        value: 32
+      - type: 1
+        value: 10000
+      - type: 2
+        value: 380
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
+      stats:
+      - type: 0
+        value: 42
+      - type: 1
+        value: 23000
+      - type: 2
+        value: 880
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
+      stats:
+      - type: 0
+        value: 56
+      - type: 1
+        value: 50000
+      - type: 2
+        value: 2000
+      - type: 3
+        value: 0.08
+  - id: 9
+    plantName: Dragon Fruit
+    fruitName: Dragon Fruit
+    fruitIcon: {fileID: 21300000, guid: 45e2fb5cd53d2a241b2cdbc902dccd51, type: 3}
+    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
+    juiceColor: {r: 0.9, g: 0.1, b: 0.5, a: 1}
+    defaultJuiceAmount: 0.05
+    fruitPositions:
+    - {x: -1.11, y: 0.394}
+    - {x: 0.68, y: 0.288}
+    - {x: -0.4, y: 0.215}
+    - {x: 0.75, y: 0.117}
+    - {x: -1.19, y: 0.044}
+    plantLevelConfigs:
+    - level: 1
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
+      stats:
+      - type: 0
+        value: 40
+      - type: 1
+        value: 16000
+      - type: 2
+        value: 550
+      - type: 3
+        value: 0.05
+    - level: 2
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
+      stats:
+      - type: 0
+        value: 52
+      - type: 1
+        value: 36000
+      - type: 2
+        value: 1300
+      - type: 3
+        value: 0.06
+    - level: 3
+      icon: {fileID: 0}
+      prefab: {fileID: 2622606248970829705, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
+      stats:
+      - type: 0
+        value: 70
+      - type: 1
+        value: 80000
+      - type: 2
+        value: 3000
+      - type: 3
+        value: 0.08

@@ -1,0 +1,435 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa1e535d19b4cd4586fbe867472ac1a, type: 3}
+  m_Name: FarmConfig
+  m_EditorClassIdentifier: 
+  farmName: Idle Farm
+  plots:
+  - id: 0
+    ringIndex: 0
+    sectorIndex: 0
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 0
+    isUnlockedByDefault: 1
+  - id: 1
+    ringIndex: 0
+    sectorIndex: 1
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 1
+    unlockCost: 100
+    isUnlockedByDefault: 0
+  - id: 2
+    ringIndex: 0
+    sectorIndex: 2
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 2
+    unlockCost: 200
+    isUnlockedByDefault: 0
+  - id: 3
+    ringIndex: 0
+    sectorIndex: 3
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 300
+    isUnlockedByDefault: 0
+  - id: 4
+    ringIndex: 0
+    sectorIndex: 4
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 400
+    isUnlockedByDefault: 0
+  - id: 5
+    ringIndex: 0
+    sectorIndex: 5
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 500
+    isUnlockedByDefault: 0
+  - id: 6
+    ringIndex: 0
+    sectorIndex: 6
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 600
+    isUnlockedByDefault: 0
+  - id: 7
+    ringIndex: 0
+    sectorIndex: 7
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 700
+    isUnlockedByDefault: 0
+  - id: 8
+    ringIndex: 0
+    sectorIndex: 8
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 800
+    isUnlockedByDefault: 0
+  - id: 9
+    ringIndex: 0
+    sectorIndex: 9
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 900
+    isUnlockedByDefault: 0
+  - id: 10
+    ringIndex: 1
+    sectorIndex: 0
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 1000
+    isUnlockedByDefault: 0
+  - id: 11
+    ringIndex: 1
+    sectorIndex: 1
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 1200
+    isUnlockedByDefault: 0
+  - id: 12
+    ringIndex: 1
+    sectorIndex: 2
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 1400
+    isUnlockedByDefault: 0
+  - id: 13
+    ringIndex: 1
+    sectorIndex: 3
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 1600
+    isUnlockedByDefault: 0
+  - id: 14
+    ringIndex: 1
+    sectorIndex: 4
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 1800
+    isUnlockedByDefault: 0
+  - id: 15
+    ringIndex: 1
+    sectorIndex: 5
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 2000
+    isUnlockedByDefault: 0
+  - id: 16
+    ringIndex: 1
+    sectorIndex: 6
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 2200
+    isUnlockedByDefault: 0
+  - id: 17
+    ringIndex: 1
+    sectorIndex: 7
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 2400
+    isUnlockedByDefault: 0
+  - id: 18
+    ringIndex: 1
+    sectorIndex: 8
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 2600
+    isUnlockedByDefault: 0
+  - id: 19
+    ringIndex: 1
+    sectorIndex: 9
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 2800
+    isUnlockedByDefault: 0
+  - id: 20
+    ringIndex: 2
+    sectorIndex: 0
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 3500
+    isUnlockedByDefault: 0
+  - id: 21
+    ringIndex: 2
+    sectorIndex: 1
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 4000
+    isUnlockedByDefault: 0
+  - id: 22
+    ringIndex: 2
+    sectorIndex: 2
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 4500
+    isUnlockedByDefault: 0
+  - id: 23
+    ringIndex: 2
+    sectorIndex: 3
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 5000
+    isUnlockedByDefault: 0
+  - id: 24
+    ringIndex: 2
+    sectorIndex: 4
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 5500
+    isUnlockedByDefault: 0
+  - id: 25
+    ringIndex: 2
+    sectorIndex: 5
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 6000
+    isUnlockedByDefault: 0
+  - id: 26
+    ringIndex: 2
+    sectorIndex: 6
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 6500
+    isUnlockedByDefault: 0
+  - id: 27
+    ringIndex: 2
+    sectorIndex: 7
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 7000
+    isUnlockedByDefault: 0
+  - id: 28
+    ringIndex: 2
+    sectorIndex: 8
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 7500
+    isUnlockedByDefault: 0
+  - id: 29
+    ringIndex: 2
+    sectorIndex: 9
+    plotType: 0
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 8000
+    isUnlockedByDefault: 0
+  - id: 30
+    ringIndex: 3
+    sectorIndex: 0
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 10000
+    isUnlockedByDefault: 0
+  - id: 31
+    ringIndex: 3
+    sectorIndex: 1
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 11500
+    isUnlockedByDefault: 0
+  - id: 32
+    ringIndex: 3
+    sectorIndex: 2
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 13000
+    isUnlockedByDefault: 0
+  - id: 33
+    ringIndex: 3
+    sectorIndex: 3
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 14500
+    isUnlockedByDefault: 0
+  - id: 34
+    ringIndex: 3
+    sectorIndex: 4
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 16000
+    isUnlockedByDefault: 0
+  - id: 35
+    ringIndex: 3
+    sectorIndex: 5
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 17500
+    isUnlockedByDefault: 0
+  - id: 36
+    ringIndex: 3
+    sectorIndex: 6
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 19000
+    isUnlockedByDefault: 0
+  - id: 37
+    ringIndex: 3
+    sectorIndex: 7
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 20500
+    isUnlockedByDefault: 0
+  - id: 38
+    ringIndex: 3
+    sectorIndex: 8
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 22000
+    isUnlockedByDefault: 0
+  - id: 39
+    ringIndex: 3
+    sectorIndex: 9
+    plotType: 1
+    plantPosition: {x: 0, y: 0}
+    defaultPlantId: 0
+    unlockCost: 23500
+    isUnlockedByDefault: 0
+  sprinkler:
+    rotationSpeed: 90
+    levels:
+    - level: 1
+      upgradeCost: 100
+      waterAmount: 5
+      armLength: 1
+      nozzleCount: 1
+    - level: 2
+      upgradeCost: 300
+      waterAmount: 10
+      armLength: 2
+      nozzleCount: 1
+    - level: 3
+      upgradeCost: 800
+      waterAmount: 15
+      armLength: 3
+      nozzleCount: 1
+    - level: 4
+      upgradeCost: 2000
+      waterAmount: 20
+      armLength: 1
+      nozzleCount: 2
+    - level: 5
+      upgradeCost: 4500
+      waterAmount: 25
+      armLength: 2
+      nozzleCount: 2
+    - level: 6
+      upgradeCost: 9000
+      waterAmount: 30
+      armLength: 3
+      nozzleCount: 2
+    - level: 7
+      upgradeCost: 18000
+      waterAmount: 35
+      armLength: 1
+      nozzleCount: 3
+    - level: 8
+      upgradeCost: 35000
+      waterAmount: 40
+      armLength: 2
+      nozzleCount: 3
+    - level: 9
+      upgradeCost: 70000
+      waterAmount: 50
+      armLength: 3
+      nozzleCount: 3
+  harvester:
+    rotationSpeed: 30
+    levels:
+    - level: 1
+      upgradeCost: 150
+      bladeCount: 1
+      harvesterCount: 1
+    - level: 2
+      upgradeCost: 450
+      bladeCount: 2
+      harvesterCount: 1
+    - level: 3
+      upgradeCost: 1200
+      bladeCount: 3
+      harvesterCount: 1
+    - level: 4
+      upgradeCost: 3000
+      bladeCount: 1
+      harvesterCount: 2
+    - level: 5
+      upgradeCost: 6500
+      bladeCount: 2
+      harvesterCount: 2
+    - level: 6
+      upgradeCost: 13000
+      bladeCount: 3
+      harvesterCount: 2
+    - level: 7
+      upgradeCost: 25000
+      bladeCount: 1
+      harvesterCount: 3
+    - level: 8
+      upgradeCost: 50000
+      bladeCount: 2
+      harvesterCount: 3
+    - level: 9
+      upgradeCost: 100000
+      bladeCount: 3
+      harvesterCount: 3
+  conveyor:
+    moveSpeed: 2
+    levels:
+    - level: 1
+      upgradeCost: 200
+      maxBottles: 10
+    - level: 2
+      upgradeCost: 800
+      maxBottles: 20
+    - level: 3
+      upgradeCost: 2500
+      maxBottles: 30

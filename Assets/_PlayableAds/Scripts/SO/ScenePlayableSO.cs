@@ -26,7 +26,7 @@ public class ScenePlayableSO : ScriptableObject
     [Header("PrePlant ")]
     public PrePlant prePlant = new PrePlant();
 
-    [Header("Support Can")]
+    [Header("Support Bottle")]
 
     [Min(0)]public int numberOfBottle = 0;
 
