@@ -1,12 +1,12 @@
 {
     "hierarchyObjectMode": 2,
-    "showHierarchyToggles": true,
-    "showComponentIcons": true,
-    "showTreeMap": true,
+    "showHierarchyToggles": false,
+    "showComponentIcons": false,
+    "showTreeMap": false,
     "treeMapColor": {
-        "r": 0.18523192405700684,
+        "r": 0.0,
         "g": 1.0,
-        "b": 0.0,
+        "b": 0.39443540573120119,
         "a": 1.0
     },
     "showSeparator": false,

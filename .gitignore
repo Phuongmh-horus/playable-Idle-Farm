@@ -121,3 +121,17 @@ InitTestScene*.unity*
 # Playable export cache
 dist/
 bin/
+
+
+# Playable Exports folder
+/[Pp]layableExports
+
+# MCP Unity cache (nếu có)
+.mcp/
+.mcp-cache/
+
+# Playable export cache
+dist/
+bin/
+Assets/Editor/PlayableExporter
+LunaTemp

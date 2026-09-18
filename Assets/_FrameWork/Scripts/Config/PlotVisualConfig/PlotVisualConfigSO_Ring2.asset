@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618a17115ec13704d8fef807ea7dfc14, type: 3}
+  m_Name: PlotVisualConfigSO_Ring2
+  m_EditorClassIdentifier: 
+  stateSprites:
+  - state: 0
+    sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  - state: 1
+    sprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  - state: 2
+    sprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  - state: 3
+    sprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}

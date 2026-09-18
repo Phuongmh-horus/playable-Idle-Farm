@@ -59,22 +59,28 @@
     <UnityVersion>2022.3.62f3</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\MyNTT\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.3.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="D:\unity\Project\Template-PlayableAds\Library\PackageCache\com.annulusgames.alchemy@0fd900299d\Generator\Alchemy.SourceGenerator.dll" />
+    <Analyzer Include="C:\Users\HorusPC\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.3.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="E:\GitProjects\playable-Idle-Farm\Library\PackageCache\com.annulusgames.alchemy@0fd900299d\Generator\Alchemy.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\CtaEnums.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\PopupStore.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\UI\PlantStore.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\Singletons\MonoSingleton.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\CTAButton.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\Config\PlotVisualConfig\PlotVisualConfigSO.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\NoOpPlayableAdapter.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\CTAConfig.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\PlantConfigData.cs" />
     <Compile Include="Assets\_PlayableAds\Config\Sound\SoundData.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\ICTAOrchestrator.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\IPlayablePlatformAdapter.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\CTAPresenter.cs" />
+    <Compile Include="Assets\_Data\Config\PlantConfig.cs" />
+    <Compile Include="Assets\_Data\Config\FarmConfig.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\ObjectPooling\PoolHolder.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\LunaPlayableAdapter.cs" />
     <Compile Include="Assets\_PlayableAds\Config\Sound\SoundDataSO.cs" />
@@ -93,6 +99,7 @@
     <Compile Include="Assets\_PlayableAds\Scripts\UI\HandEndCard.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\UIManager.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\General\LayerReferenceSO.cs" />
+    <Compile Include="Assets\_Data\Runtime\SaveData.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\PlayablePlatformAdapterFactory.cs" />
@@ -107,22 +114,27 @@
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\CapacityUI.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\PulseAnimation.cs" />
+    <Compile Include="Assets\_Data\Runtime\RuntimeData.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\GameplayCtaTriggerSource.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\VideoEditor\HandCreative.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\UIGamePlayLayer.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\Camera\CameraSettingsSO.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIHelper\SliderValidator.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\VFXManager.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\UI\PlantItem.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\SO\ScenePlayableSO.cs" />
     <Compile Include="Assets\_PlayableAds\Config\CapacityConfig\CapacityConfig.cs" />
     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CommonScripts\ConstGame.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\LunaUIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\DOTween\DOTween.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\_Game\Shaders\JuiceCollectorRing.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\DOTween\readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
@@ -491,7 +503,27 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="RuntimeScripts">
-      <HintPath>D:\QuangVu\Personal\7.2.0\scripts\Runtime\RuntimeScripts.dll</HintPath>
+      <HintPath>E:\Luna plugins\7.0.0\scripts\Runtime\RuntimeScripts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.GradleProject">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.GradleProject.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">
@@ -982,104 +1014,16 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.EditorCoroutines.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Alchemy">
       <HintPath>Library\ScriptAssemblies\Alchemy.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Shared.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualStudio.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Core">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Core.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Flow">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Flow.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Timeline">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
-      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Performance.Profile-Analyzer.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Performance.Profile-Analyzer.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TestTools.CodeCoverage.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model">
-      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.PlasticSCM.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.State.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Settings.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Settings.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.State">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VSCode.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Alchemy.Editor">
@@ -1089,10 +1033,25 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PlayableExporter.Editor.csproj" />
-    <ProjectReference Include="VHierarchy.csproj" />
-    <ProjectReference Include="VInspector.csproj" />
-    <ProjectReference Include="VFavorites.csproj" />
-    <ProjectReference Include="VFolders.csproj" />
+    <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.csproj" />
+    <ProjectReference Include="Unity.EditorCoroutines.Editor.csproj" />
+    <ProjectReference Include="Unity.VisualScripting.SettingsProvider.Editor.csproj" />
+    <ProjectReference Include="Unity.Performance.Profile-Analyzer.Editor.csproj" />
+    <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.csproj" />
+    <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.csproj" />
+    <ProjectReference Include="Unity.VisualScripting.State.Editor.csproj" />
+    <ProjectReference Include="Unity.VisualScripting.Shared.Editor.csproj" />
+    <ProjectReference Include="Unity.Settings.Editor.csproj" />
+    <ProjectReference Include="Unity.VisualStudio.Editor.csproj" />
+    <ProjectReference Include="Unity.TextMeshPro.csproj" />
+    <ProjectReference Include="Unity.VisualScripting.Core.csproj" />
+    <ProjectReference Include="Unity.TextMeshPro.Editor.csproj" />
+    <ProjectReference Include="Unity.VisualScripting.Core.Editor.csproj" />
+    <ProjectReference Include="Unity.Rider.Editor.csproj" />
+    <ProjectReference Include="Unity.VisualScripting.State.csproj" />
+    <ProjectReference Include="Unity.VSCode.Editor.csproj" />
+    <ProjectReference Include="Unity.VisualScripting.Flow.csproj" />
+    <ProjectReference Include="Unity.VisualScripting.Flow.Editor.csproj" />
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <ItemGroup>

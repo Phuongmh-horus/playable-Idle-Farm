@@ -1,14 +1,14 @@
 {
-    "version": "7.2.0",
+    "version": "7.0.0",
     "projectId": "6de55b9e7b1f9804a859458bd0ec3af8",
-    "applicationID": 40897,
+    "applicationID": 39501,
     "creativeName": "",
     "pgServer": "EU",
     "window": {
-        "‐⁘": true
+        "‐⁏": true
     },
     "unity": {
-        "environmentID": -2046678946,
+        "environmentID": -2046678880,
         "scripts": {
             "excludes": [
                 "**/Editor/",
@@ -76,12 +76,12 @@
                 "Stubs/SupersonicWisdom/"
             ],
             "msbuildMac64": "/Library/Frameworks/Mono.framework/Versions/Current/bin/msbuild",
-            "msbuildWin64": "D:\\Program\\Microsoft Visual Studio\\MSBuild\\Current\\Bin\\MSBuild.exe",
+            "msbuildWin64": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe",
             "externalSources": [],
             "externalJSLibraries": [],
             "scriptingDefines": [],
-            "msbuildVersion": "18.9",
-            "monoVersion": "10.0.11",
+            "msbuildVersion": "17.14",
+            "monoVersion": "9.0.18",
             "dotnetVersion": ""
         },
         "assets": {
@@ -129,7 +129,9 @@
                 "Assets/TextMesh Pro/Resources/TMP Settings.asset"
             ]
         },
-        "scenes": [],
+        "scenes": [
+            "Assets/Scenes/SampleScene.unity"
+        ],
         "disabledScenes": [],
         "startupScene": 0,
         "packages": {
@@ -153,7 +155,7 @@
             "logo": ""
         },
         "enableRealtimeShadows": false,
-        "enableLunaCompilerV2": false,
+        "enableLunaCompilerV2": true,
         "optimiseShaderVariantsExport": true,
         "enableMecanimWASM": true,
         "minify": true,
@@ -163,12 +165,43 @@
         "genericCheck": true,
         "disableAntiAliasing": true,
         "forceStableRandomSeed": false,
-        "unusedModules": [],
+        "unusedModules": [
+            {
+                "name": "physics3d",
+                "excluded": false,
+                "forceIncluded": false
+            },
+            {
+                "name": "physics2d",
+                "excluded": false,
+                "forceIncluded": false
+            },
+            {
+                "name": "particle-system",
+                "excluded": false,
+                "forceIncluded": false
+            },
+            {
+                "name": "reflection",
+                "excluded": false,
+                "forceIncluded": false
+            },
+            {
+                "name": "prefabs",
+                "excluded": false,
+                "forceIncluded": false
+            },
+            {
+                "name": "mecanim-wasm",
+                "excluded": false,
+                "forceIncluded": false
+            }
+        ],
         "disableRuntimeAnalysisForCode": true,
         "disableRuntimeAnalysisForShaders": false,
         "useShadersCache": true,
-        "usePreservativeDynamicBatching": true,
         "preventUpdatingRAListWhenRAIsDisabled": false,
+        "bakeReferenceAmbientProbe": false,
         "unusedClasses": [],
         "unusedMethods": [],
         "stubberDataList": [],
@@ -206,6 +239,36 @@
                         "script": "",
                         "ext": "",
                         "name": "Resources/unity_builtin_extra/Default-Particle"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "none",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_PlayableAds/Assets/Font/Baloo/Baloo Bhaijaan Regular 400 SDF.asset"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "none",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "none",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset"
                     }
                 ]
             },
@@ -248,17 +311,6 @@
                 },
                 "overrides": []
             }
-        }
-    },
-    "postprocesses": {
-        "ssao": {
-            "isActive": false,
-            "samplingQuality": 1,
-            "normalsQuality": 0,
-            "blurQuality": 0,
-            "radius": 0.1,
-            "intensity": 1.0,
-            "falloff": 100.0
         }
     },
     "logLevel_Cs": "error",
