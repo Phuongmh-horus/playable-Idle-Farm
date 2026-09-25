@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c3431677d6b4e4ea7671f4fd8a6fc7, type: 3}
+  m_Name: FarmPlotConfigSO
+  m_EditorClassIdentifier: 
+  plotPrefabs:
+  - {fileID: 7414544073650130002, guid: 5c5761d61adb1a24a9a5ac4abd92d724, type: 3}
+  - {fileID: 4855643226965046834, guid: d36942091164efe4e8734a43ab5e3c4d, type: 3}
+  - {fileID: 3128230447634368269, guid: 82853762d3253384d82703bb3d0b769a, type: 3}
+  - {fileID: 8895674178016037332, guid: 011af6e4bfe445947badc8df2aee6228, type: 3}

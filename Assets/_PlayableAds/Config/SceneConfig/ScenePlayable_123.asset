@@ -12,32 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31bb7af18bb377f4fb538c44a26ed036, type: 3}
   m_Name: ScenePlayable_123
   m_EditorClassIdentifier: 
-  gameMode: 0
-  enableFarmer: 0
-  AutoPopupStoreUI: 1
-  AutoPopupStoreUITime: 6.7
-  enableContinuousPopup: 1
-  SelectPlantStore: 1
-  numberOfPlantsToSelect: 2
-  prePlant:
-    PrePlantMode: 0
-    numberOfPrePlant: 1
-    prePlantIndex: 
-  numberOfBottle: 0
-  handPosition: {x: 30, y: 55}
-  enableClickCta: 0
-  autoOpenStore: 1
-  EndCardClickCta: 0
-  enableContinuousClickCta: 0
-  clickThreshold: 
-  repeatClickThreshold: 1
-  autoCTAInGame: 0
-  timeInGameSecondsBeforeAutoCTA: 30
-  isTutorialAutoWhenAFK: 0
-  timeAFKToDisplayTutorialHand: 5
-  handMovePositions: []
-  playPraiseSfx: 0
-  showTimer: 0
-  InitRemainingTime: 50
-  WarningTime: 10
-  SecondWarningTime: 5
+  scenario: 123
+  showTutorial: 1
+  tutorialStartPhase: 0
+  skippedTutorialPhases: 
+  showFruitPicker: 0
+  selectablePlantIds: 
+  initialPlotCount: 1
+  initialPlantIds: 00000000
+  startingCurrency: 0
+  showConveyorAndSell: 1
+  showUpgrade: 1
+  endcardDelaySeconds: 90

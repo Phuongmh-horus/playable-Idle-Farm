@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlantItem : MonoBehaviour
 {
     private Button button;
-    
+
     public Image fruitIconImage;
+    [SerializeField] private TMP_Text fruitNameText;
 
     public PlantConfigData plantConfigData;
 
@@ -16,7 +18,7 @@ public class PlantItem : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    private void Start()
+    public void SetData(PlantConfigData data)
     {
         if (plantConfigData != null)
         {
@@ -33,7 +35,12 @@ public class PlantItem : MonoBehaviour
     private void OnPlantItemClicked()
     {
         // Trigger the event when the plant item is clicked
-        GameEventBus.ActionOnPlantSelected?.Invoke(plantConfigData.id);
+        GameEventBus.ActionOnPlantSelected?.Invoke(plantConfigData.ID);
+    }
+
+    private void OnDestroy()
+    {
+        if (button != null) button.onClick.RemoveListener(OnPlantItemClicked);
     }
 
 

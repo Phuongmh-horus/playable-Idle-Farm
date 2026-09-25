@@ -135,3 +135,5 @@ dist/
 bin/
 Assets/Editor/PlayableExporter
 LunaTemp
+ReferenceSync/GameplayScripts_Reference
+Assets/Editor/ReferencesSync

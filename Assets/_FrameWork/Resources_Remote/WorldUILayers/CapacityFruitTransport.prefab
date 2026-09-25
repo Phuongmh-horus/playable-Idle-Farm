@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 233.57, y: 118.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4469160913366988074
 CanvasRenderer:
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -819102343, guid: e6f61f34b59e49c48bbbf73a304f9735, type: 3}
+  m_Sprite: {fileID: -267618581, guid: e6f61f34b59e49c48bbbf73a304f9735, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -108,10 +108,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 548253945695487305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 4}
+  m_SizeDelta: {x: 180, y: 74.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7458687475878890815
 CanvasRenderer:
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 71.6
+  m_fontSize: 66.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -273,7 +273,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 1730657447
+  m_SortingLayerID: -17376981
   m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!225 &4361352500554325144

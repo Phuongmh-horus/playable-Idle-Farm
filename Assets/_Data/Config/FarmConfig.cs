@@ -13,7 +13,7 @@ public class FarmConfig : ScriptableObject
 
     public HarvesterConfig harvester;
 
-    public ConveyorConfig conveyor;
+    public TransportConfig transport;
 
     /// <summary>
     /// Lấy PlotConfig theo plotId
@@ -63,7 +63,7 @@ public class PlotConfig
 
     [Header("Gameplay")]
     public int defaultPlantId = -1;
-    public long unlockCost;
+    public double unlockCost;
     public bool isUnlockedByDefault;
 }
 
@@ -71,7 +71,7 @@ public class PlotConfig
 public class StatData
 {
     public StatType type;
-    
+
     public float value;
 }
 
@@ -80,7 +80,6 @@ public enum StatType
     WaterRequirement,
     UpgradeCost,
     FruitPrice,
-    JuiceAmount,
 }
 
 #endregion
@@ -90,23 +89,58 @@ public enum StatType
 [Serializable]
 public class SprinklerConfig
 {
-    public float rotationSpeed;
-    
-    public List<SprinklerLevelConfig> levels = new List<SprinklerLevelConfig>();
-}
+    [Header("General Settings")]
+    [Tooltip("Cấp độ tối đa của vòi phun")]
+    public int maxLevel = 30;
 
-[Serializable]
-public class SprinklerLevelConfig
-{
-    public int level;
+    [Tooltip("Chu kỳ quay 1 vòng 360 độ (giây/vòng)")]
+    public float rotationDuration = 10f;
 
-    public long upgradeCost;
-    
-    public float waterAmount;
-    
-    public int armLength; // Độ dài cánh tay vòi phun đang nâng cấp ở level này (cánh tay mới bắt đầu từ 1)
-    
-    public int nozzleCount; // Số lượng cánh tay SprinklerArm trong nông trại
+    [Tooltip("Tốc độ quay (độ/giây). Nếu rotationDuration > 0 thì tự tính 360 / rotationDuration")]
+    public float rotationSpeed => rotationDuration > 0f ? 360f / rotationDuration : 27.6923f;
+
+    public float GetRotationSpeed()
+    {
+        return rotationSpeed;
+    }
+
+    [Header("Upgrade Cost Formula Settings")]
+    [Tooltip("Chi phí nâng cấp tại Level 1")]
+    public double level1Cost = 19;
+
+    [Tooltip("Giá cơ sở để tính chi phí nâng cấp sau level 1 (SprinklerBasePrice)")]
+    public double sprinklerBasePrice = 190;
+
+    [Tooltip("Hệ số tăng giá nâng cấp theo cấp (SprinklerUpdateScale)")]
+    public float sprinklerUpdateScale = 2.25f;
+
+    [Header("Water Amount Settings (Tính trên mỗi cánh tay)")]
+    [Tooltip("Lượng nước phun gốc (Level 1)")]
+    public float baseWaterAmount = 5f;
+
+    [Tooltip("Lượng nước tăng thêm theo cấp (+2 nước / cấp)")]
+    public float waterAmountSumPerLevel = 2f;
+
+    public float GetWaterAmount(int level)
+    {
+        return baseWaterAmount + (Mathf.Max(1, level) - 1) * waterAmountSumPerLevel;
+    }
+
+    public double GetUpgradeCost(int level)
+    {
+        if (level >= maxLevel) return 0;
+        if (level <= 1) return level1Cost;
+
+        return sprinklerBasePrice * Math.Pow(sprinklerUpdateScale, level - 2);
+    }
+
+    public int GetNozzleCount(int level)
+    {
+        if (level >= 30) return 4;
+        if (level >= 20) return 3;
+        if (level >= 10) return 2;
+        return 1;
+    }
 }
 
 #endregion
@@ -116,43 +150,95 @@ public class SprinklerLevelConfig
 [Serializable]
 public class HarvesterConfig
 {
-    public float rotationSpeed = 90f;
-    
-    public List<HarvesterLevelConfig> levels = new List<HarvesterLevelConfig>();
-}
+    [Header("General Settings")]
+    [Tooltip("Cấp độ tối đa của máy gặt")]
+    public int maxLevel = 9;
 
-[Serializable]
-public class HarvesterLevelConfig
-{
-    public int level;
-    
-    public long upgradeCost;
-    
-    public int bladeCount; // Số lượng blade (lưỡi gặt) của cánh tay đang nâng cấp ở level này (cánh tay mới bắt đầu từ 1)
-    
-    public int harvesterCount; // Số lượng cánh tay HarvesterArm trong nông trại
+    [Tooltip("Chu kỳ quay 1 vòng 360 độ (giây/vòng)")]
+    public float rotationDuration = 45f;
+
+    [Tooltip("Tốc độ quay (độ/giây). Nếu rotationDuration > 0 thì tự tính 360 / rotationDuration")]
+    public float rotationSpeed => rotationDuration > 0f ? 360f / rotationDuration : 8f;
+
+    [Header("Upgrade Cost Formula Settings")]
+    [Tooltip("Chi phí nâng cấp tại Level 1")]
+    public double level1Cost = 130;
+
+    [Tooltip("Giá cơ sở để tính chi phí nâng cấp sau level 1 (HarvesterBasePrice)")]
+    public double harvesterBasePrice = 9750;
+
+    [Tooltip("Hệ số tăng giá nâng cấp theo cấp (HarvesterUpdateScale)")]
+    public float harvesterUpdateScale = 3f;
+
+    public double GetUpgradeCost(int level)
+    {
+        if (level >= maxLevel) return 0;
+        if (level <= 1) return level1Cost;
+
+        return harvesterBasePrice * Math.Pow(harvesterUpdateScale, level - 2);
+    }
+
+    public int GetHarvesterCount(int level)
+    {
+        int clampedLevel = Mathf.Clamp(level, 1, maxLevel);
+        return (clampedLevel + 2) / 3;
+    }
+
+    public int GetBladeCount(int level, int armIndex)
+    {
+        int clampedLevel = Mathf.Clamp(level, 1, maxLevel);
+        return Mathf.Clamp(clampedLevel - armIndex * 3, 1, 3);
+    }
+
+    public int GetTotalBlades(int level)
+    {
+        return Mathf.Clamp(level, 1, maxLevel);
+    }
 }
 
 #endregion
 
-#region ConveyorConfig
+#region TransportConfig
 
 [Serializable]
-public class ConveyorConfig
+public class TransportConfig
 {
-    public float moveSpeed = 2f;
-    
-    public List<ConveyorLevelConfig> levels = new List<ConveyorLevelConfig>();
-}
+    [Header("General Settings")]
+    [Tooltip("Cấp độ tối đa của xe tải")]
+    public int maxLevel = 30;
 
-[Serializable]
-public class ConveyorLevelConfig
-{
-    public int level;
-    
-    public long upgradeCost;
-    
-    public int maxBottles; // Tổng số chai tối đa trên băng chuyền ở level này
+    [Header("Capacity Settings")]
+    [Tooltip("Sức chứa khởi đầu (Level 1)")]
+    public int baseCapacity = 1;
+
+    [Tooltip("Sức chứa tăng thêm mỗi level")]
+    public int capacitySumPerLevel = 1;
+
+    [Header("Upgrade Cost Formula Settings")]
+    [Tooltip("Chi phí nâng cấp tại Level 1")]
+    public double level1Cost = 19;
+
+    [Tooltip("Giá cơ sở để tính chi phí nâng cấp sau level 1 (CargoBasePrice)")]
+    public double cargoBasePrice = 190;
+
+    [Tooltip("Hệ số tăng giá nâng cấp theo cấp (CargoUpdateScale)")]
+    public float cargoUpdateScale = 2.25f;
+
+    public int MaxLevel => maxLevel;
+
+    public int GetCapacity(int level)
+    {
+        int clampedLevel = Mathf.Clamp(level, 1, maxLevel);
+        return baseCapacity + (clampedLevel - 1) * capacitySumPerLevel;
+    }
+
+    public double GetUpgradeCost(int level)
+    {
+        if (level >= maxLevel) return 0;
+        if (level <= 1) return level1Cost;
+
+        return cargoBasePrice * Math.Pow(cargoUpdateScale, level - 2);
+    }
 }
 
 #endregion

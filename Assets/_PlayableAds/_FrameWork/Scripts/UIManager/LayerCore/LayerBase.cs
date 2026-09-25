@@ -16,10 +16,10 @@ public class LayerBase : MonoBehaviour
 
     protected virtual void Reset()
     {
-        canvas ??= GetComponent<Canvas>();
+        if (canvas == null) canvas = GetComponent<Canvas>();
         canvas.overrideSorting = true;
 
-        canvasGroup ??= GetComponent<CanvasGroup>();
+        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
         canvasGroup.gameObject.SetActive(false);
     }
 
@@ -30,7 +30,7 @@ public class LayerBase : MonoBehaviour
 
     public int GetSortingOrder()
     {
-        return _sortOrders.Count > 0 ? _sortOrders[^1] : 0;
+        return _sortOrders.Count > 0 ? _sortOrders[_sortOrders.Count - 1] : 0;
     }
 
     public virtual void InitData()
@@ -52,7 +52,7 @@ public class LayerBase : MonoBehaviour
         canvasGroup.gameObject.SetActive(true);
         if (!gameObject.activeInHierarchy) gameObject.SetActive(true);
     }
-    
+
     public virtual void HideLayerAsync()
     {
         canvasGroup.gameObject.SetActive(false);
@@ -65,19 +65,19 @@ public class LayerBase : MonoBehaviour
         if (_sortOrders.Count > 1)
         {
             _sortOrders.RemoveAt(_sortOrders.Count - 1);
-            order = _sortOrders[^1];
+            order = _sortOrders[_sortOrders.Count - 1];
         }
         else
         {
             _sortOrders.Clear();
         }
         SetSortOrder(order, false);
-        if(order <= 0) HideLayerAsync();
+        if (order <= 0) HideLayerAsync();
     }
     public virtual void SetSortOrder(int order, bool save = true)
     {
         canvas.sortingOrder = order;
-        if (save && (_sortOrders.Count == 0 || _sortOrders[^1] < order)) _sortOrders.Add(order);
+        if (save && (_sortOrders.Count == 0 || _sortOrders[_sortOrders.Count - 1] < order)) _sortOrders.Add(order);
     }
 
     public bool IsActive()
@@ -87,7 +87,7 @@ public class LayerBase : MonoBehaviour
 
     public void SetHighLight(bool highlight)
     {
-        canvas.sortingOrder = highlight ? 32767 : (_sortOrders.Count > 0 ? _sortOrders[^1] : -10000);
+        canvas.sortingOrder = highlight ? 32767 : (_sortOrders.Count > 0 ? _sortOrders[_sortOrders.Count - 1] : -10000);
         bool isActive = canvas.sortingOrder > 0;
         canvasGroup.interactable = isActive;
         canvasGroup.blocksRaycasts = isActive;

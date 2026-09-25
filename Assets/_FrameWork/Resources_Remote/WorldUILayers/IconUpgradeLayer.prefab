@@ -183,7 +183,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 1730657447
+  m_SortingLayerID: -1822937161
   m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!225 &4699249898474013207
@@ -241,21 +241,18 @@ MonoBehaviour:
   graphicRaycaster: {fileID: 5543442537288267282}
   billboardFollower: {fileID: 163347352585999886}
   animHandler: {fileID: 7878175853418721860}
+  layerDepth: 200
   blockSelectionClick: 0
   focusCameraOnShow: 0
-  useCustomFocusOffset: 0
-  customFocusOffset: {x: 0, y: 0, z: 0}
-  focusCameraOnShow: 0
-  useCustomFocusOffset: 0
-  customFocusOffset: {x: 0, y: 0, z: 0}
-  layerDepth: 200
-  additionalOrder: 0
+  useCustomFocusOffset: 1
+  customFocusOffset: {x: 0, y: 1, z: 1}
   OnShowLayer:
     m_PersistentCalls:
       m_Calls: []
   OnHideLayer:
     m_PersistentCalls:
       m_Calls: []
+  upgradeButton: {fileID: 0}
 --- !u!114 &7878175853418721860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,20 +269,15 @@ MonoBehaviour:
   panelRect: {fileID: 1714683689209248481}
   canvasGroup: {fileID: 4699249898474013207}
   useScale: 1
-  autoDetectTargetScale: 1
-  targetScale: {x: 0.01, y: 0.01, z: 0.01}
   useFade: 1
   duration: 0.3
-  easeType: 26
-  interval: 0
+  hideDuration: 0.2
   OnStartAnim:
     m_PersistentCalls:
       m_Calls: []
   OnCompleteAnim:
     m_PersistentCalls:
       m_Calls: []
-  hideDuration: 0.2
-  hideEaseType: 25
   OnStartHideAnim:
     m_PersistentCalls:
       m_Calls: []
@@ -308,9 +300,8 @@ MonoBehaviour:
   target: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
-  billboardMode: 3
+  billboardMode: 0
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
   manageScale: 0
   flipX: 0
   customScale: {x: 1, y: 1, z: 1}
-  upgradeButton: {fileID: 5701245428032756180}

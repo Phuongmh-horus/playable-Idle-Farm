@@ -47,14 +47,8 @@ TagManager:
   - name: Ground
     uniqueID: 3798821529
     locked: 0
-  - name: Tree
+  - name: Plant
     uniqueID: 4121911171
-    locked: 0
-  - name: Harvester
-    uniqueID: 2396933845
-    locked: 0
-  - name: Irrigation
-    uniqueID: 2424261525
     locked: 0
   - name: Road
     uniqueID: 2152556947
@@ -62,11 +56,20 @@ TagManager:
   - name: Vehicle
     uniqueID: 558210859
     locked: 0
-  - name: HarvesterBlade
-    uniqueID: 2258601611
-    locked: 0
   - name: Fruit
     uniqueID: 3606245065
+    locked: 0
+  - name: HarvesterMachine
+    uniqueID: 2258601611
+    locked: 0
+  - name: AnimatedFruit
+    uniqueID: 1739018693
+    locked: 0
+  - name: Harvester
+    uniqueID: 2396933845
+    locked: 0
+  - name: Irrigation
+    uniqueID: 2424261525
     locked: 0
   - name: WorldUI
     uniqueID: 2472030135

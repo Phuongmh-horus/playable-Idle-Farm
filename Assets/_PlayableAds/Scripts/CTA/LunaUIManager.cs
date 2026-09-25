@@ -1,1427 +1,529 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-#if UNITY_EDITOR
-using Alchemy;
-using Alchemy.Inspector;
-#endif
-// Luna playable UI manager.
-// [FIX] Removed ConvertLegacyTextToTmp() which called FontEngine.LoadFontFace(Font, int)
-
+/// <summary>
+/// Minimal playable UI flow: persistent store CTAs plus a repeating endcard.
+/// Gameplay never pauses or resets when the store is opened or the endcard closes.
+/// </summary>
+[DefaultExecutionOrder(-1000)]
 public class LunaUIManager : MonoBehaviour
 {
     public static LunaUIManager Instance { get; private set; }
-    public bool IsTutorialVisible => tutorialLayer != null && tutorialLayer.activeSelf;
-
-
-    #region Inspector Fields
-    [SerializeField] private Camera mainCamera;
 
     [Header("Scenario")]
-    [SerializeField] private int scenario = 1;
-
-
-    // [SerializeField] private int scenario = 107;
-    // [SerializeField] private int numberScene = 1;
-
-    #region  Game Level
-
-    [Header(" === Game Level === ")]
-    // [SerializeField, Min(1)] private int numberLevel = 1;
+    [SerializeField] private PlayableScenarioId scenario = PlayableScenarioId.Scenario123;
     [SerializeField] private List<ScenePlayableSO> scenePlayableSOs = new List<ScenePlayableSO>();
-
-    public ScenePlayableSO CurrentScenePlayableSO => scenePlayableSOs[_currentScene];
-
-
-
-    private int _currentScene = 0;
-
-    // public bool IsPlayMoreGame => scenePlayableSOs.Count > 1 && numberLevel > 1 ? true : false;
-
-    [SerializeField] private GameObject transitionPanel;
-    private CanvasGroup transitionCanvasGroup;
-    private Coroutine _transitionRoutine;
-
-    // public LevelDataConfigSO FirstLevel => scenePlayableSOs.Count > 0 ? scenePlayableSOs[0].LevelDataConfig : null;
-    #endregion 
-    #region  General Config
-
-    [Header("============ General Config ============")]
-    [SerializeField] private CTAConfigPlayableSO ctaConfig;
-
-
-    #region Tutorial Layer
-    [Header("Tutorial Layer")]
-    [SerializeField] private GameObject tutorialLayer;
-    [SerializeField] private RectTransform tutorialHand;
-    [SerializeField] private List<TMP_Text> tutorialTMPText = new List<TMP_Text>();
-    #endregion
-
-    #region  EndCard
-    [Header("Endcard")]
-    [SerializeField] private GameObject endcardRoot;
-
-    [SerializeField] private GameObject losePanel;
-
-    [SerializeField] private GameObject winPanel;
-
-    [SerializeField] private GameObject endcardSingle;
-    private CanvasGroup endcardCanvasGroup;
-
-    [SerializeField] private List<CanvasGroup> specificCanvasGroupsToHideOnEndcard = new List<CanvasGroup>();
-
-    private Coroutine hiddenCanvasGroupsRoutine;
-    #endregion
-
-
-    #region  CTA Buttons
-    [Header("CTA Buttons")]
+    [Header("Persistent store CTAs")]
     [SerializeField] private List<Button> ctaButtons = new List<Button>();
+    [Header("Repeating endcard")]
+    [SerializeField] private GameObject endcardRoot;
+    [SerializeField] private Button continueButton;
+    [SerializeField] private List<Button> endcardStoreButtons = new List<Button>();
+    [SerializeField, Min(1f)] private float fallbackEndcardDelaySeconds = 60f;
+    [Header("Optional references (auto-resolved when empty)")]
+    [SerializeField] private PlayableTutorialFlow tutorialFlow;
+    [SerializeField] private PlantStore plantStore;
+    [SerializeField] private PlantConfig plantConfig;
+    [SerializeField] private Button selloutButton;
+    [SerializeField] private CanvasGroup selloutCanvasGroup;
+    [SerializeField] private TMPro.TMP_Text selloutValueText;
+    [Header("Pre-attached upgrade popup layers")]
+    [SerializeField] private PlayableUpgradePopupView sprinklerUpgradePopup;
+    [SerializeField] private PlayableUpgradePopupView harvesterUpgradePopup;
+    [SerializeField] private PlayableUpgradePopupView transportUpgradePopup;
+    [SerializeField] private PlayableUpgradePopupView plantUpgradePopup;
+    [Tooltip("Enable only when this scene should take tutorial start/skip values from ScenePlayableSO. By default, TutorialLayer's inspector settings win.")]
+    [SerializeField] private bool useSceneSoTutorialSettings;
 
-    #endregion
+    public ScenePlayableSO CurrentScenePlayableSO { get; private set; }
+    public bool IsTutorialVisible => tutorialFlow != null && tutorialFlow.IsRunning;
+    private bool _waitingForFruitSelection;
+    private bool _endcardVisible;
+    private float _nextEndcardAt;
+    private FruitTransportStation _transportStation;
+    private PlayableUpgradePopupPresenter _upgradePopupPresenter;
+    private PlayableCurrencyDisplay _currencyDisplay;
 
-    #region Behavior Settings
-    [Header("Behavior")]
-    [SerializeField] private bool pauseOnTutorial = true; // pause the game when tutorial is shown
-    [SerializeField] private bool pauseOnEndcard = true;
-    [SerializeField] private bool pauseTimeScaleOnEndcard = false;
-    [SerializeField] private bool autoCTAOnEndcard = false;
-    [SerializeField] public bool AutoCTAFirstTouch = false;
+    public bool IsGameplayInputBlocked => _upgradePopupPresenter != null && _upgradePopupPresenter.IsVisible;
 
-    #endregion
-
-    #region  Behavior - Mid Game
-    private int _currentClickCount = 0;
-    private bool _clickThresholdTriggered = false;
-
-    private int _timeOpenStore = 0 ;
-    // [Header("Marketing Video")]
-    // public bool IsMarketingVideoPlaying = false;
-    #endregion
-
-
-    
-
-
-    #region  Auto CTA
-    [Header("Behavior - Auto CTA")]
-    private bool _triggeredAutoCTA = false;
-
-    #endregion
-    #region  AFK Tutorial
-    [Header ("AFK Tutorial")]
-    [SerializeField] private RectTransform afkHand;
-    private int _currentHandPositionIndex = 0;
-    private float _afkElapsed = 0f;
-
-    private bool isTriggeredAFKTutorial = false;
-
-    #endregion
-
-
-    #region Praise SFX
-    [Header("SFX Praise user")]
-
-    [SerializeField] private Image praiseUserImage;
-
-    public bool PlayPraiseSfx
+    private void Awake()
     {
-        get => CurrentScenePlayableSO.playPraiseSfx;
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+        CurrentScenePlayableSO = FindScenarioConfig();
+        PlayableScenarioRuntime.Prepare(CurrentScenePlayableSO);
+        ResolveReferences();
     }
 
-    #endregion
-
-    #region  Timer
-    [Header("Timer")]
-
-
-    [SerializeField] private AudioSource timerAudioSource;
-    [SerializeField] private GameObject timerLayer;
-    [SerializeField] private TMP_Text remainingTimeText;
-    [SerializeField] private Animator remainingTimeTextAnimator;
-    [SerializeField] private Animator warningFrameAnimator;
-
-    private int remainTime = 9999;
-    private bool isWarningTime = false;
-    private float _elapsedTime = 0f;
-
-    private bool isFirstWarningTriggered = false;
-    #endregion
-    #endregion
-
-
-    [SerializeField] private UIGamePlayLayer uIGamePlayLayer;
-
-    #region  Optional Gameplay 
-    [Header("============ Optional Gameplay ============")]
-    
-    [Header("Auto PopupUI")]
-    public PopupStore PopupStoreUI;
-
-    public PlantStore plantStore;
-
-    private List<int> usedPlantIds = new List<int>();
-
-    public PlantConfig plantConfig;
-    private bool _triggeredAutoPopupStoreUI = false;
-    private int timePopupUI = 0;
-
-    #endregion
-
-    #endregion
-
-/// <summary>
-/// ///////////////////////////////////////////////////////////////////////////////
-/// </summary>//
-/// 
-/// 
-/// 
-
-    #region Private Fields
-
-    private bool isStartGame = false;
-    private bool isResumeGame = false;
-    private bool isEndGame = false;
-
-
-    private Vector2 _handBaseAnchoredPos;
-    private Coroutine _handRoutine;
-    private Coroutine _buttonPulseRoutine;
-    private Coroutine _textRoutine;
-    private Vector3 _textBaseScale = Vector3.one;
-    // private bool _endGameSent = false;
-    private Coroutine _endcardRoutine;
-    private bool _useCtaOnlyPulse;
-    private bool _tutorialPauseApplied;
-
-    #endregion
-
-    #region  Unity Lifecycle Methods
     private void OnEnable()
     {
-        GameEventBus.OnStartGame += StartGame;
-        GameEventBus.OnEndGame += HandleGameEnd;
-        GameEventBus.OnShowCTA += HandleShowCTA;
-        GameEventBus.OnTimeUpdate += UpdateRemainingTime;
-        GameEventBus.ActionOnPlantSelected += ActionOnPlantSelected;
-        Luna.Unity.LifeCycle.OnPause += PauseGameplay;
-        Luna.Unity.LifeCycle.OnResume += ResumeGameplay;
+        GameEventBus.ActionOnPlantSelected += HandlePlantSelected;
     }
 
     private void OnDisable()
     {
-        GameEventBus.OnStartGame -= StartGame;
-        GameEventBus.OnEndGame -= HandleGameEnd;
-        GameEventBus.OnShowCTA -= HandleShowCTA;
-        GameEventBus.OnTimeUpdate -= UpdateRemainingTime;
-        GameEventBus.ActionOnPlantSelected -= ActionOnPlantSelected;
-        Luna.Unity.LifeCycle.OnPause -= PauseGameplay;
-        Luna.Unity.LifeCycle.OnResume -= ResumeGameplay;
-    }
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-
-        if (tutorialTMPText.Count == 0 && tutorialLayer != null)
-        {
-            var texts = tutorialLayer.GetComponentsInChildren<TMP_Text>(true);
-            tutorialTMPText.AddRange(texts);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (Instance == this) Instance = null;
+        GameEventBus.ActionOnPlantSelected -= HandlePlantSelected;
     }
 
     private void Start()
     {
-        EnsureEventSystem();
-        if (tutorialLayer != null)
-        {
-            ShowTutorial(true);
-        }
-
-        if (endcardRoot != null)
-        {
-            endcardRoot.SetActive(false);
-        }
-
-        SetCTAButtonsVisible(false);
-
-        EnsureEndcardCanvasGroup();
-        WireCTAButtons();
-
-        if (tutorialHand != null)
-        {
-            tutorialHand.anchoredPosition = CurrentScenePlayableSO.handPosition;
-            _handBaseAnchoredPos = tutorialHand.anchoredPosition;
-        }
-
-        if (tutorialTMPText.Count > 0)
-        {
-            foreach (var text in tutorialTMPText)
-            {
-                if (text != null)
-                {
-                    _textBaseScale = text.rectTransform.localScale;
-                    break; // Use the first valid text's scale
-                }
-            }
-        }
-
-        EnsureTransitionPanel();
-        LoadLevel();
-
+        WireStoreButtons();
+        WireEndcardButtons();
+        WireSelloutButton();
+        SubscribeTransportStation();
+        HideEndcard();
+        ConfigureScenario();
+        RestartEndcardCountdown();
+        GameEventBus.OnStartGame?.Invoke();
     }
 
     private void Update()
     {
-        // if (tutorialLayer != null && tutorialLayer.activeSelf)
-        // {
-        //     if (pauseOnTutorial && !_tutorialPauseApplied)
-        //     {
-        //         ForcePauseGame();
-        //         _tutorialPauseApplied = true;
-        //     }
-
-        //     if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
-        //     {
-        //         Debug.Log("Tutorial touched/clicked, starting game...");
-        //         StartGameplayFromTutorial();
-        //     }
-        // }
-        if(!isResumeGame) return ;
-        _elapsedTime += Time.deltaTime; 
-        if(CurrentScenePlayableSO.showTimer)
-        {
-            GameEventBus.OnTimeUpdate?.Invoke((float)CurrentScenePlayableSO.InitRemainingTime - _elapsedTime);
-
-            if (_elapsedTime >= CurrentScenePlayableSO.InitRemainingTime)
-            {
-                // GameEventBus.OnLoseTrigger?.Invoke(ELoseReason.TimeOut);
-                GameEventBus.OnEndGame?.Invoke(EndGameState.Lose);
-            }
-        }
-        if(CurrentScenePlayableSO.isTutorialAutoWhenAFK)
-        {
-            _afkElapsed += Time.deltaTime; 
-            if(_afkElapsed < CurrentScenePlayableSO.timeAFKToDisplayTutorialHand || isTriggeredAFKTutorial == true)
-                return;
-            isTriggeredAFKTutorial = true;
-            List<int> indexs = GetValidIndexList();
-
-            if(indexs.Count == 0) return;
-            int randomIndex = UnityEngine.Random.Range(0, indexs.Count);
-
-            int carrierIndex = indexs[randomIndex];
-            afkHand.gameObject.SetActive(true);
-            afkHand.anchoredPosition = CurrentScenePlayableSO.handMovePositions[carrierIndex];
-            _currentHandPositionIndex = carrierIndex;
-
-        }
-
-        UpdateAutoCTA(_elapsedTime);
-        UpdateAutoPopupStoreUI(_elapsedTime);
-
-
+        if (_waitingForFruitSelection || _endcardVisible || Time.unscaledTime < _nextEndcardAt) return;
+        ShowEndcard();
     }
 
-
-    #endregion
-    
-    #region  Public API
-    public void NotifySelectableClick(bool unloadBeforePlay = false)
-    {   
-        if(unloadBeforePlay) return;
-        ResetAFKTimer();
-        if (tutorialLayer != null && tutorialLayer.activeSelf)
-        {
-            if (pauseOnTutorial && !_tutorialPauseApplied)
-            {
-                ForcePauseGame();
-                _tutorialPauseApplied = true;
-            }
-
-            if (Input.GetMouseButtonDown(0) || Input.touchCount > 0)
-            {
-                Debug.Log("Tutorial touched/clicked, starting game...");
-                StartGameplayFromTutorial();
-            }
-        }
-
-        if (CurrentScenePlayableSO.enableClickCta == false) return;
-        if (_clickThresholdTriggered && !CurrentScenePlayableSO.enableContinuousClickCta) return;
-        _currentClickCount++;
-        // Debug.Log($"Current click count: {_currentClickCount}");
-        
-        int threshold = 0;
-
-
-        if (_timeOpenStore >= CurrentScenePlayableSO.clickThreshold.Count)
-        {
-            if (CurrentScenePlayableSO.repeatClickThreshold <= 0) return;
-            threshold = CurrentScenePlayableSO.repeatClickThreshold;
-        }
-        else
-        {
-            threshold = Mathf.Max(1, CurrentScenePlayableSO.clickThreshold[_timeOpenStore]);
-        }
-
-        if (_currentClickCount < threshold) return;
-        _currentClickCount = 0;
-        _clickThresholdTriggered = true;
-
-        if (CurrentScenePlayableSO.EndCardClickCta)
-        {
-            GameEventBus.OnEndGame?.Invoke(EndGameState.Pause);   
-        }
-        if (CurrentScenePlayableSO.autoOpenStore)
-        {
-            OpenStoreNow();
-            _timeOpenStore++;
-        }
-    }
-    
-    
-
-
-
-    #if UNITY_EDITOR
-    [Button]
-    #endif
-    [ContextMenu("SetupStore") ]
-    public void SetupStore()
+    private void OnDestroy()
     {
-        List<PlantConfigData> plantConfigDatas = GetUnusedPlantConfigDatas();
-        int numberOfPlantsToSelect = Mathf.Clamp(CurrentScenePlayableSO.numberOfPlantsToSelect, 1, plantConfigDatas.Count);
-        List<PlantConfigData> selectedPlants = GetRandomPlants(plantConfigDatas, numberOfPlantsToSelect);
-
-        // option 1
-        // lấy theo thứ tự 
-        // for (int i = 0; i < numberOfPlantsToSelect; i++)
-        // {
-        //     selectedPlants.Add(plantConfigDatas[i]);
-        // }
-        // // option 2
-        // lấy ngẫu nhiên
-
-        SetupStore(selectedPlants);
+        if (tutorialFlow != null)
+        {
+            tutorialFlow.PhaseChanged -= HandleTutorialPhaseChanged;
+        }
+        if (_transportStation != null)
+        {
+            _transportStation.OnFruitLoaded -= HandleFruitLoaded;
+            _transportStation.OnVehicleStateChanged -= HandleVehicleStateChanged;
+        }
+        if (Instance == this) Instance = null;
     }
 
-    private List<PlantConfigData> GetRandomPlants(List<PlantConfigData> plantConfigDatas, int numberOfPlantsToSelect)
+    public void ConfigureScenario()
     {
-        if (plantConfigDatas.Count <= numberOfPlantsToSelect)
+        CurrentScenePlayableSO = FindScenarioConfig();
+        if (CurrentScenePlayableSO == null) { Debug.LogWarning("LunaUIManager: no ScenePlayableSO is assigned."); return; }
+        bool useScenarioTutorial = useSceneSoTutorialSettings || CurrentScenePlayableSO.scenario != PlayableScenarioId.Scenario123;
+        if (tutorialFlow != null && useScenarioTutorial)
         {
-            return new List<PlantConfigData>(plantConfigDatas);
+            tutorialFlow.Configure(CurrentScenePlayableSO.tutorialStartPhase, CurrentScenePlayableSO.skippedTutorialPhases, false);
+            tutorialFlow.gameObject.SetActive(CurrentScenePlayableSO.showTutorial);
         }
-        List<PlantConfigData> selectedPlants = new List<PlantConfigData>();
-        HashSet<int> selectedIndices = new HashSet<int>();
-        System.Random random = new System.Random();
+        _waitingForFruitSelection = CurrentScenePlayableSO.showFruitPicker;
+        if (_waitingForFruitSelection) ShowConfiguredFruitPicker();
+        else { HideFruitPicker(); StartConfiguredTutorial(); }
+    }
 
-        while (selectedPlants.Count < numberOfPlantsToSelect)
+    private ScenePlayableSO FindScenarioConfig()
+    {
+        foreach (ScenePlayableSO config in scenePlayableSOs) if (config != null && config.scenario == scenario) return config;
+        foreach (ScenePlayableSO config in scenePlayableSOs) if (config != null) return config;
+        return null;
+    }
+
+    private void StartConfiguredTutorial()
+    {
+        if (tutorialFlow == null || CurrentScenePlayableSO == null || !CurrentScenePlayableSO.showTutorial) return;
+        tutorialFlow.gameObject.SetActive(true);
+        tutorialFlow.StartConfiguredPhase();
+    }
+
+    private void ShowConfiguredFruitPicker()
+    {
+        if (plantStore == null) { Debug.LogWarning("LunaUIManager: Scenario 125 needs SelectPlantStore."); return; }
+        List<PlantConfigData> choices = GetConfiguredFruitChoices();
+        if (choices.Count == 0) { _waitingForFruitSelection = false; StartConfiguredTutorial(); return; }
+        plantStore.SetupStore(choices);
+    }
+
+    private List<PlantConfigData> GetConfiguredFruitChoices()
+    {
+        List<PlantConfigData> choices = new List<PlantConfigData>();
+        if (plantConfig == null || CurrentScenePlayableSO == null) return choices;
+        foreach (int id in CurrentScenePlayableSO.selectablePlantIds)
         {
-            int randomIndex = random.Next(plantConfigDatas.Count);
-            if (!selectedIndices.Contains(randomIndex))
+            PlantConfigData plant = plantConfig.GetPlant(id);
+            if (plant != null) choices.Add(plant);
+        }
+        return choices;
+    }
+
+    private void HandlePlantSelected(int plantId)
+    {
+        if (!_waitingForFruitSelection) return;
+        _waitingForFruitSelection = false;
+        HideFruitPicker();
+        FarmPlotSystem plotSystem = FarmSystem.Instance != null ? FarmSystem.Instance.PlotSystem : null;
+        if (plotSystem != null)
+        {
+            // Scenario 125: player choice becomes the starter plant in the first open plot.
+            plotSystem.TryOccupyPlot(0, plantId);
+        }
+        StartConfiguredTutorial();
+        RestartEndcardCountdown();
+    }
+
+    private void ResolveReferences()
+    {
+        Transform playableRoot = transform.root;
+        if (tutorialFlow == null) tutorialFlow = playableRoot.GetComponentInChildren<PlayableTutorialFlow>(true);
+        if (plantStore == null) plantStore = playableRoot.GetComponentInChildren<PlantStore>(true);
+        if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "EndGamePanel");
+        ResolvePreloadedUpgradePopups(playableRoot);
+
+        if (selloutButton == null)
+        {
+            Button[] buttons = playableRoot.GetComponentsInChildren<Button>(true);
+            for (int i = 0; i < buttons.Length; i++)
             {
-                selectedIndices.Add(randomIndex);
-                selectedPlants.Add(plantConfigDatas[randomIndex]);
-            }
-        }
-        return selectedPlants;
-    }
-
-    private void SetupStore(List<PlantConfigData> plantConfigs)
-    {
-        if (plantStore != null)
-        {
-            plantStore.SetupStore(plantConfigs);
-        }
-    }
-
-    private List<PlantConfigData> GetUnusedPlantConfigDatas()
-    {
-        List<PlantConfigData> unusedPlantConfigs = new List<PlantConfigData>();
-        if (plantConfig == null || plantConfig.plants == null) return unusedPlantConfigs;
-
-        foreach (var plant in plantConfig.plants)
-        {
-            if (!usedPlantIds.Contains(plant.id))
-            {
-                unusedPlantConfigs.Add(plant);
+                if (buttons[i] != null && buttons[i].name == "Sellout_Button")
+                {
+                    selloutButton = buttons[i];
+                    break;
+                }
             }
         }
 
-        return unusedPlantConfigs;
-        
-    }
-
-    #endregion
-
-    #region  Private Methods
-
-
-    private List<int> GetValidIndexList()
-    {
-        return new List<int>();
-    }
-    private void UpdateAutoCTA(float elapsedTime)
-    {
-        if (CurrentScenePlayableSO.autoCTAInGame && elapsedTime >= CurrentScenePlayableSO.timeInGameSecondsBeforeAutoCTA && !_triggeredAutoCTA)
+        if (selloutCanvasGroup == null && selloutButton != null)
         {
-            OpenStoreNow();
-            _triggeredAutoCTA = true;
+            selloutCanvasGroup = selloutButton.GetComponent<CanvasGroup>();
         }
-    }
-    
-    
-    
-    private void UpdateAutoPopupStoreUI(float elapsedTime)
-    {
-        if (!CurrentScenePlayableSO.AutoPopupStoreUI) return ;
-        if (_triggeredAutoPopupStoreUI && !CurrentScenePlayableSO.enableContinuousPopup) return;
 
-        if(elapsedTime >= CurrentScenePlayableSO.AutoPopupStoreUITime * (timePopupUI + 1))
+        if (selloutValueText == null && selloutButton != null)
         {
-            ShowPopupStoreUI();
+            selloutValueText = selloutButton.GetComponentInChildren<TMPro.TMP_Text>(true);
         }
-    }
 
-
-    private void ShowPopupStoreUI()
-    {
-        if(PopupStoreUI != null)
+        GameObject currencyRoot = FindChildByName(playableRoot, "CurrencyLayer");
+        if (currencyRoot != null)
         {
-            PopupStoreUI.OpenPopupStore();
-            _triggeredAutoPopupStoreUI = true;
-            timePopupUI++;
-            PauseGameplay();
+            _currencyDisplay = currencyRoot.GetComponent<PlayableCurrencyDisplay>();
+            if (_currencyDisplay == null) _currencyDisplay = currencyRoot.AddComponent<PlayableCurrencyDisplay>();
         }
-    }
 
+        if (endcardRoot == null) return;
 
-
-    #if UNITY_EDITOR
-    [Button]
-    #endif 
-    [ContextMenu("StartGame")]
-    public void StartGame()
-    {
-        Debug.Log("Game Started");
-        isStartGame = true;
-        isResumeGame = true;
-    }
-    private void EndGame()
-    {
-        isEndGame = true;
-        isResumeGame = false;
-        Luna.Unity.LifeCycle.GameEnded();
-    }
-    
-
-    public void PauseGameplay() 
-    {
-        // Pause the game
-        Debug.Log("Game Paused");
-        if(isStartGame == false) return ;
-        isResumeGame = false;
-    }
-
-    public void ResumeGameplay() 
-    {
-
-        Debug.Log("Game Resumed");
-        if(isStartGame == false) return ;
-        if(isEndGame) return ;
-        isResumeGame = true;
-        // Resume the game
-    }
-    private void UpdateRemainingTime(float remainingTime)
-    {
-        int current = Mathf.FloorToInt(remainingTime);
-        if (current == remainTime) return;
-        remainTime = current;
-        int minutes = Mathf.FloorToInt(remainingTime / 60);
-        int seconds = Mathf.FloorToInt(remainingTime % 60);
-        if (remainingTime <= 0)
+        foreach (Button button in endcardRoot.GetComponentsInChildren<Button>(true))
         {
-            remainingTimeText.SetText("00:00");
+            if (button.name == "Continue_Button") continueButton = button;
+            else if (!endcardStoreButtons.Contains(button)) endcardStoreButtons.Add(button);
+        }
+
+    }
+
+    private static GameObject FindChildByName(Transform root, string objectName)
+    {
+        Transform[] items = root.GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].name == objectName) return items[i].gameObject;
+        }
+        return null;
+    }
+
+    private void WireStoreButtons()
+    {
+        Transform[] items = transform.root.GetComponentsInChildren<Transform>(true);
+        for (int i = 0; i < items.Length; i++)
+        {
+            Transform item = items[i];
+            if (item.name != "Logo_Button" && item.name != "PlayNow_Button") continue;
+            Button button = item.GetComponent<Button>();
+            if (button != null && !ctaButtons.Contains(button)) ctaButtons.Add(button);
+        }
+        foreach (Button button in ctaButtons) WireStoreButton(button);
+    }
+
+    private void WireEndcardButtons()
+    {
+        if (continueButton != null)
+        {
+            continueButton.onClick.RemoveListener(ContinuePlaying);
+            continueButton.onClick.AddListener(ContinuePlaying);
+        }
+        foreach (Button button in endcardStoreButtons) WireStoreButton(button);
+    }
+
+    private void WireSelloutButton()
+    {
+        if (selloutButton == null)
+        {
             return;
         }
-        remainingTimeText.SetText("{0:00}:{1:00}", minutes, seconds);
-        if(remainTime <= CurrentScenePlayableSO.WarningTime && isWarningTime == false)
+
+        selloutButton.onClick.RemoveListener(SellLoadedFruit);
+        selloutButton.onClick.AddListener(SellLoadedFruit);
+        if (tutorialFlow != null)
         {
-            isWarningTime = true;
-            string trigger = "WarningTime";
-            timerAudioSource.Play();
-            remainingTimeTextAnimator.SetTrigger(trigger);
+            tutorialFlow.PhaseChanged -= HandleTutorialPhaseChanged;
+            tutorialFlow.PhaseChanged += HandleTutorialPhaseChanged;
         }
-        if(remainTime <= CurrentScenePlayableSO.SecondWarningTime && isWarningTime == true && isFirstWarningTriggered == false)
+        RefreshSelloutButton();
+    }
+
+    private void HandleTutorialPhaseChanged(PlayableTutorialFlow.Phase? phase)
+    {
+        RefreshSelloutButton();
+    }
+
+    private void RefreshSelloutButton()
+    {
+        if (selloutButton == null)
         {
-            isFirstWarningTriggered = true;
-            warningFrameAnimator.SetTrigger("WarningTime");
+            return;
+        }
+
+        FruitTransportStation station = FarmSystem.Instance != null ? FarmSystem.Instance.TransportStation : null;
+        bool isVisible = station != null && station.LoadedFruitCount > 0 && station.IsIdleAtStation;
+        if (selloutCanvasGroup != null)
+        {
+            selloutCanvasGroup.alpha = isVisible ? 1f : 0f;
+            selloutCanvasGroup.interactable = isVisible;
+            selloutCanvasGroup.blocksRaycasts = isVisible;
+        }
+        selloutButton.interactable = isVisible;
+        if (selloutValueText != null)
+        {
+            selloutValueText.text = station != null ? T_Utility.FormatGold(station.LoadedRevenue) : "0";
         }
     }
 
-    private void TurnOffAnimationWarningTime()
+    private void SellLoadedFruit()
     {
-        remainingTimeTextAnimator.SetTrigger("TurnOffWarning");  
-        warningFrameAnimator.SetTrigger("TurnOffWarning");
-        timerAudioSource.Stop();
-    }
-
-    private void ActionOnPlantSelected(int plantId)
-    {
-        usedPlantIds.Add(plantId);
-        plantStore.HideStore();
-    }
-
-
-    private Coroutine ShowHandWhenAfk;
-    /// <summary>
-    /// Shows or hides the tutorial layer. When showing, it starts the hand animation and text pulse. When hiding, it stops them.
-    /// </summary>
-    /// <param name="show"></param>
-    private void ShowTutorial(bool show)
-    {
-        if (tutorialLayer != null) tutorialLayer.SetActive(show);
-        if (show) _tutorialPauseApplied = false;
-
-        if (show)
+        FruitTransportStation station = FarmSystem.Instance != null ? FarmSystem.Instance.TransportStation : null;
+        if (station != null)
         {
-            StartHandAnimation();
-            StartTextPulse();
+            station.Sell();
         }
-        else
+        RefreshSelloutButton();
+    }
+
+    private void SubscribeTransportStation()
+    {
+        FruitTransportStation station = FarmSystem.Instance != null ? FarmSystem.Instance.TransportStation : null;
+        if (_transportStation == station)
         {
-            StopHandAnimation();
-            StopTextPulse();
+            RefreshSelloutButton();
+            return;
         }
 
-    }
-    // private IEnumerator ShowHandWhenAFK()
-    // {
-    //     tutorialHand.gameObject.SetActive(false);
-    //     float timer = 0f;
-    //     while (true)
-    //     {
-    //         timer += Time.deltaTime;
-    //         if (timer >= CurrentScenePlayableSO.timeAFKToDisplayTutorialHand)
-    //         {
-    //             if (tutorialHand != null && tutorialHand.gameObject.activeSelf == false)
-    //             {
-    //                 tutorialHand.gameObject.SetActive(true);
-    //             }
-    //         }
-    //         yield return null;
-    //     }
-    // }
-
- 
-    
-    /// <summary>
-    /// Call when first touch/click is detected on tutorial layer. It hides the tutorial, starts the game, and sends game start event.
-    /// </summary>
-    private void StartGameplayFromTutorial()
-    {
-        ShowTutorial(false);
-
-        // if (GameplayManager.Instance != null)
-        // {
-        //     GameplayManager.IsGameStarted = true;
-        //     GameplayManager.Instance.ContinueGame();
-        // }
-
-        // Luna.Unity.LifeCycle.GameStarted();
-        if(AutoCTAFirstTouch)
+        if (_transportStation != null)
         {
-            Luna.Unity.Playable.InstallFullGame();
+            _transportStation.OnFruitLoaded -= HandleFruitLoaded;
+            _transportStation.OnVehicleStateChanged -= HandleVehicleStateChanged;
         }
 
-        GameEventBus.OnStartGame?.Invoke();
-        
-    }
-    private void HandleGameEnd(EndGameState endGameState)
-    {
-        if(isEndGame == true) return;
-
-        // if (IsPlayMoreGame && endGameState == EndGameState.Win && _currentScene < numberLevel - 1)
-        // {
-        //     _currentScene++;
-            
-        //     // if(_currentLevelIndex >= levelGame.Count)
-        //     // {
-        //     //     _currentLevelIndex = 0;
-        //     // }
-        //     LevelDataConfigSO nextLevelData = CurrentScenePlayableSO.LevelDataConfig;
-        //     TransitionAndLoadLevel(nextLevelData);
-        //     return;
-        // }
-
-        SoundManager.Instance?.StopAllSfx();
-        ShowEndcard(endGameState);
-        EndGame();
-        TurnOffAnimationWarningTime();
-        // inputController.RemoveClickableLayerMask(LayerMask.NameToLayer("Carrier"));
-        switch (endGameState)
+        _transportStation = station;
+        if (_transportStation != null)
         {
-            case EndGameState.Win:
-                GameEventBus.OnWinGame?.Invoke(); 
-                break;
-            case EndGameState.Lose:
-                GameEventBus.OnLoseGame?.Invoke();
-                break;
-            case EndGameState.Pause:
-                // CustomTimeScaleGroup.Instance?.ApplyTimeScale(0f);
-                // CustomTimeScaleGroup.Instance.ClearTargets();
-                GameEventBus.OnPauseGame?.Invoke();
-                // Handle pause logic
-                break;
+            _transportStation.OnFruitLoaded += HandleFruitLoaded;
+            _transportStation.OnVehicleStateChanged += HandleVehicleStateChanged;
         }
-
+        RefreshSelloutButton();
     }
 
-
-    private void HandleShowCTA()
+    private void HandleFruitLoaded(int plantId, int count)
     {
-        SetCTAButtonsVisible(true);
+        RefreshSelloutButton();
     }
 
-    public void ShowCtaOnlyEndgame()
+    private void HandleVehicleStateChanged(TransportVehicleState state)
     {
-        EnsureEventSystem();
-        if (tutorialLayer != null) tutorialLayer.SetActive(false);
-        if (endcardRoot != null) endcardRoot.SetActive(false);
-
-        _useCtaOnlyPulse = true;
-        SetCTAButtonsVisible(true);
+        RefreshSelloutButton();
     }
 
-    private void ShowEndcard(EndGameState endGameState)
+    private void WireStoreButton(Button button)
     {
-        ShowTutorial(false);
-        HideSpecificGameObject();
-        EnsureEventSystem();
-        if (_endcardRoutine != null) StopCoroutine(_endcardRoutine);
-        _endcardRoutine = StartCoroutine(EndcardRoutine(endGameState));
+        if (button == null) return;
+        button.onClick.RemoveListener(OnCTAClicked);
+        button.onClick.AddListener(OnCTAClicked);
     }
 
-    private void HideSpecificGameObject()
+    private void RestartEndcardCountdown()
     {
-        hiddenCanvasGroupsRoutine = StartCoroutine(HiddenCanvasGroupsRoutine());
+        float delay = CurrentScenePlayableSO != null
+            ? CurrentScenePlayableSO.endcardDelaySeconds
+            : fallbackEndcardDelaySeconds;
+        _nextEndcardAt = Time.unscaledTime + Mathf.Max(1f, delay);
     }
 
-    private IEnumerator HiddenCanvasGroupsRoutine()
+    [ContextMenu("Show Endcard Now")]
+    public void ShowEndcard()
     {
-        if (specificCanvasGroupsToHideOnEndcard == null || specificCanvasGroupsToHideOnEndcard.Count == 0)
-        {
-            hiddenCanvasGroupsRoutine = null;
-            yield break;
-        }
-
-        float delay = Mathf.Max(0f, ctaConfig.endcardDelay);
-        if (delay > 0f)
-            yield return new WaitForSeconds(delay);
-        // Debug.Log("Delay: " + delay);
-        for (int i = 0; i < specificCanvasGroupsToHideOnEndcard.Count; i++)
-            StartCoroutine(FadeOutCanvasGroup(specificCanvasGroupsToHideOnEndcard[i], ctaConfig.endcardFadeDuration));
-        
-        yield return null;
-        yield return new WaitForSeconds(ctaConfig.endcardFadeDuration);
-        hiddenCanvasGroupsRoutine = null;
-    }
-
-
-    private IEnumerator EndcardRoutine(EndGameState endGameState)
-    {
-        float delay = Mathf.Max(0f, ctaConfig.endcardDelay);
-        if (delay > 0f)
-            yield return new WaitForSeconds(delay);
-
-        EnsureEndcardCanvasGroup();
-        if (endcardRoot != null) endcardRoot.SetActive(true);
-        if (endcardSingle != null) endcardSingle.SetActive(true);
-
-
-        if (endcardCanvasGroup != null)
-        {
-            endcardCanvasGroup.alpha = 0f;
-            endcardCanvasGroup.interactable = false;
-            endcardCanvasGroup.blocksRaycasts = true;
-        }
-
-        SetCTAButtonsVisible(true);
-        switch (endGameState)
-        {
-            case EndGameState.Win:
-            case EndGameState.Lose:
-                foreach (Transform child in endcardRoot.transform)
-                {
-                    child.gameObject.SetActive(false);
-                }
-                break;
-            case EndGameState.Pause:
-                break;
-        }
-
-
-        if (winPanel != null) winPanel.SetActive(endGameState == EndGameState.Win);
-        if (losePanel != null) losePanel.SetActive(endGameState == EndGameState.Lose);
-        yield return StartCoroutine(FadeInCanvasGroup(endcardCanvasGroup, ctaConfig.endcardFadeDuration));
-
-        if (endcardCanvasGroup != null)
-        {
-            endcardCanvasGroup.interactable = true;
-            endcardCanvasGroup.blocksRaycasts = true;
-        }
-
-        if (autoCTAOnEndcard)
-        {
-            OpenStoreNow();
-        }
-
-        if (pauseOnEndcard)
-        {
-            ForcePauseGame();
-            if (pauseTimeScaleOnEndcard) Time.timeScale = 0f;
-        }
-
-        _endcardRoutine = null;
-    }
-
-    private void EnsureEndcardCanvasGroup()
-    {
-        if (endcardCanvasGroup != null) return;
         if (endcardRoot == null) return;
-        endcardCanvasGroup = endcardRoot.GetComponent<CanvasGroup>();
-        if (endcardCanvasGroup == null)
-        {
-            endcardCanvasGroup = endcardRoot.AddComponent<CanvasGroup>();
-        }
-        endcardCanvasGroup.alpha = 0f;
-
-        losePanel.SetActive(false);
-        winPanel.SetActive(false);
-    }
-    private void EnsureTimerLayer()
-    {
-        if (timerLayer == null) return;
-        _elapsedTime = 0f; // Reset elapsed time at the start of the game
-        timerLayer.SetActive(CurrentScenePlayableSO.showTimer);
-        UpdateRemainingTime((float)CurrentScenePlayableSO.InitRemainingTime);
+        _endcardVisible = true;
+        endcardRoot.SetActive(true);
     }
 
-    private IEnumerator FadeInCanvasGroup(CanvasGroup canvasGroup, float? fadeDuration = null)
+    public void ContinuePlaying()
     {
-        CanvasGroup targetCanvasGroup = canvasGroup ?? endcardCanvasGroup;
-        if (targetCanvasGroup == null) yield break;
-
-        float duration = Mathf.Max(0.05f, fadeDuration ?? ctaConfig.endcardFadeDuration);
-        float t = 0f;
-        while (t < duration)
-        {
-            t += Time.unscaledDeltaTime;
-            float k = Mathf.Clamp01(t / duration);
-            targetCanvasGroup.alpha = k;
-            yield return null;
-        }
-
-        targetCanvasGroup.alpha = 1f;
+        HideEndcard();
+        RestartEndcardCountdown();
     }
 
-
-    private IEnumerator FadeOutCanvasGroup(CanvasGroup canvasGroup, float? fadeDuration = null)
+    private void HideEndcard()
     {
-        CanvasGroup targetCanvasGroup = canvasGroup ?? endcardCanvasGroup;
-        if (targetCanvasGroup == null) yield break;
-
-        float duration = Mathf.Max(0.05f, fadeDuration ?? ctaConfig.endcardFadeDuration);
-        float t = 0f;
-        while (t < duration)
-        {
-            t += Time.unscaledDeltaTime;
-            float k = Mathf.Clamp01(t / duration);
-            targetCanvasGroup.alpha = 1f - k;
-            yield return null;
-        }
-
-        targetCanvasGroup.alpha = 0f;
+        _endcardVisible = false;
+        if (endcardRoot != null) endcardRoot.SetActive(false);
     }
 
-    private void SetCTAButtonsVisible(bool visible)
+    private void HideFruitPicker() { if (plantStore != null) plantStore.HideStore(); }
+
+    public void ShowIrrigationUpgrade()
     {
-        if (ctaButtons == null) return;
-        for (int i = 0; i < ctaButtons.Count; i++)
+        FarmIrrigationSystem system = FarmSystem.Instance != null ? FarmSystem.Instance.IrrigationSystem : null;
+        if (system != null)
         {
-            if (ctaButtons[i] != null)
-            {
-                ctaButtons[i].gameObject.SetActive(visible);
-                ctaButtons[i].interactable = visible;
-
-                var graphic = ctaButtons[i].targetGraphic;
-                if (graphic != null) graphic.raycastTarget = true;
-            }
-        }
-
-        if (visible)
-        {
-            WireCTAButtons();
-            if (_useCtaOnlyPulse)
-            {
-                for (int i = 0; i < ctaButtons.Count; i++)
-                {
-                    var btn = ctaButtons[i];
-                    if (btn == null) continue;
-                    btn.transform.localScale = new Vector3(ctaConfig.ctaOnlyStartScale, ctaConfig.ctaOnlyStartScale, ctaConfig.ctaOnlyStartScale);
-                }
-            }
-            StartButtonPulse();
-        }
-        else
-        {
-            StopButtonPulse();
+            string stat = "Water output " + GetSprinklerWater(system.Level) + " → " + GetSprinklerWater(system.Level + 1);
+            ShowUpgrade("SPRINKLER", stat, GetLocalSprite(system.transform), () => system.Level, () => system.NextUpgradeCost, () => system.CanUpgrade, system.TryUpgrade);
         }
     }
 
-    public void OnCTAClicked()
+    public void ShowHarvestUpgrade()
     {
-        GameEventBus.OnCTAClicked?.Invoke();
-        OpenStoreNow();
-    }
-
-
-    /// <summary>
-    /// call when endCard or stopTutorial
-    /// </summary>
-    private void ForcePauseGame()
-    {
-        // if (GameplayManager.Instance == null) return;
-        // if (GameplayManager.IsGameStarted)
-        // {
-        //     GameplayManager.IsGameStarted = false;
-        // }
-        // GameplayManager.Instance.PauseGame();
-    }
-
-
-    public void OpenStoreNow()
-    {
-        Luna.Unity.Playable.InstallFullGame();
-    }
-
-    private void StartHandAnimation()
-    {
-        if (tutorialHand == null) return;
-        if (_handRoutine != null) StopCoroutine(_handRoutine);
-        _handRoutine = StartCoroutine(HandMoveRoutine());
-    }
-
-    private void StopHandAnimation()
-    {
-        if (_handRoutine != null)
+        FarmHarvestSystem system = FarmSystem.Instance != null ? FarmSystem.Instance.HarvestSystem : null;
+        if (system != null)
         {
-            StopCoroutine(_handRoutine);
-            _handRoutine = null;
-        }
-
-        if (tutorialHand != null)
-        {
-            tutorialHand.anchoredPosition = _handBaseAnchoredPos;
+            ShowUpgrade("HARVESTER", "Blades " + system.TotalBladeCount + " → " + GetHarvesterBladeCount(system.Level + 1), GetLocalSprite(system.transform), () => system.Level, () => system.NextUpgradeCost, () => system.CanUpgrade, system.TryUpgrade);
         }
     }
 
-    private void StartTextPulse()
+    public void ShowTransportUpgrade()
     {
-        if (tutorialTMPText == null) return;
-        if (_textRoutine != null) StopCoroutine(_textRoutine);
-        _textRoutine = StartCoroutine(TextPulseRoutine());
-    }
-
-    private void StopTextPulse()
-    {
-        if (_textRoutine != null)
+        FruitTransportStation system = FarmSystem.Instance != null ? FarmSystem.Instance.TransportStation : null;
+        if (system != null)
         {
-            StopCoroutine(_textRoutine);
-            _textRoutine = null;
-        }
-
-        if (tutorialTMPText != null)
-        {
-            foreach (var text in tutorialTMPText)
-            {
-                if (text != null)
-                {
-                    text.rectTransform.localScale = _textBaseScale;
-                }
-            }
+            ShowUpgrade("VEHICLE", "Capacity " + system.Capacity + " → " + GetTransportCapacity(system.Level + 1), GetLocalSprite(system.transform), () => system.Level, () => system.NextUpgradeCost, () => system.CanUpgrade, system.TryUpgrade);
         }
     }
 
-    private void StartButtonPulse()
+    public void ShowPlantUpgrade(Plot plot)
     {
-        if (_buttonPulseRoutine != null) StopCoroutine(_buttonPulseRoutine);
-        _buttonPulseRoutine = StartCoroutine(ButtonImpactThenPulseRoutine());
+        Plant plant = plot != null ? plot.CurrentPlant : null;
+        if (plant == null)
+        {
+            return;
+        }
+
+        PlantConfigData config = plant.Config;
+        string stat = config != null
+            ? "Fruit value " + T_Utility.FormatGold(config.GetFruitPrice(plant.PlantLevel)) + " → " + T_Utility.FormatGold(config.GetFruitPrice(plant.PlantLevel + 1))
+            : "Increase fruit value";
+        Sprite icon = config != null ? config.plantIcon : GetLocalSprite(plant.transform);
+        ShowUpgrade("PLANT", stat, icon, () => plant.PlantLevel, () => plant.UpgradeCost, plot.CanUpgradePlant, () => UpgradePlant(plot, plant));
     }
 
-    private void StopButtonPulse()
+    private bool UpgradePlant(Plot plot, Plant plant)
     {
-        if (_buttonPulseRoutine != null)
+        if (plot == null || plant == null || !plot.CanUpgradePlant())
         {
-            StopCoroutine(_buttonPulseRoutine);
-            _buttonPulseRoutine = null;
+            return false;
         }
 
-        if (ctaButtons == null) return;
-        for (int i = 0; i < ctaButtons.Count; i++)
+        double cost = plant.UpgradeCost;
+        if (cost > 0 && !PlayableFarmState.ConsumeGold(cost))
         {
-            if (ctaButtons[i] != null)
-            {
-                ctaButtons[i].transform.localScale = Vector3.one;
-            }
+            return false;
         }
+
+        if (!plant.TryUpgrade())
+        {
+            return false;
+        }
+
+        plot.SetPlantLevel(plant.PlantLevel);
+        PlayableFarmState.UpdatePlotData(plot.PlotId, PlotState.Planted, plant.PlantId, plant.PlantLevel);
+        GameEventBus.OnCropUpgradedEvent?.Invoke(plant.PlantId, plant.PlantLevel);
+        return true;
     }
 
-    private IEnumerator ButtonImpactThenPulseRoutine()
+    private void ShowUpgrade(string title, string statDescription, Sprite illustration, Func<int> getLevel, Func<double> getCost,
+        Func<bool> canUpgrade, Func<bool> performUpgrade)
     {
-        float impactDuration = Mathf.Max(0.05f, ctaConfig.ctaImpactDuration);
-        float impactT = 0f;
-        while (impactT < impactDuration)
+        if (_upgradePopupPresenter == null)
         {
-            impactT += Time.unscaledDeltaTime;
-            float k = Mathf.Clamp01(impactT / impactDuration);
-            float scale = Mathf.Lerp(ctaConfig.ctaImpactStartScale, 1f, k);
-            float angle = Mathf.Lerp(ctaConfig.ctaImpactStartAngle, 0f, k);
-
-            for (int i = 0; i < ctaButtons.Count; i++)
-            {
-                var btn = ctaButtons[i];
-                if (btn == null || !btn.gameObject.activeInHierarchy) continue;
-                var rt = btn.transform as RectTransform;
-                if (rt != null)
-                {
-                    rt.localScale = new Vector3(scale, scale, scale);
-                    rt.localRotation = Quaternion.Euler(0f, 0f, angle);
-                }
-                else
-                {
-                    btn.transform.localScale = new Vector3(scale, scale, scale);
-                    btn.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
-                }
-            }
-
-            yield return null;
+            _upgradePopupPresenter = gameObject.AddComponent<PlayableUpgradePopupPresenter>();
         }
 
-        for (int i = 0; i < ctaButtons.Count; i++)
-        {
-            var btn = ctaButtons[i];
-            if (btn == null) continue;
-            btn.transform.localRotation = Quaternion.identity;
-        }
-
-        float duration = Mathf.Max(0.05f, ctaConfig.buttonPulseDuration);
-        while (ctaButtons != null && ctaButtons.Count > 0)
-        {
-            float t = Mathf.PingPong(Time.unscaledTime / duration, 1f);
-            float scale;
-            if (_useCtaOnlyPulse)
-            {
-                scale = Mathf.Lerp(ctaConfig.ctaOnlyStartScale, ctaConfig.ctaOnlyPulseScale, t);
-            }
-            else
-            {
-                float targetScale = ctaConfig.buttonPulseScale;
-                scale = Mathf.Lerp(1f, targetScale, t);
-            }
-            for (int i = 0; i < ctaButtons.Count; i++)
-            {
-                var btn = ctaButtons[i];
-                if (btn == null || !btn.gameObject.activeInHierarchy) continue;
-                btn.transform.localScale = new Vector3(scale, scale, scale);
-            }
-            yield return null;
-        }
-
-        _buttonPulseRoutine = null;
+        _upgradePopupPresenter.Show(GetUpgradePopup(title), title, statDescription, illustration, getLevel, getCost, canUpgrade, performUpgrade);
     }
 
-    private void WireCTAButtons()
+    private PlayableUpgradePopupView GetUpgradePopup(string title)
     {
-        if (ctaButtons == null) return;
-        for (int i = 0; i < ctaButtons.Count; i++)
+        // GameplayWorldCanvas is a sibling of this manager's UI root in
+        // SampleScene, so resolve again at click time after its singleton is ready.
+        if (sprinklerUpgradePopup == null || transportUpgradePopup == null)
         {
-            var btn = ctaButtons[i];
-            if (btn == null) continue;
-            btn.onClick.RemoveListener(OnCTAClicked);
-            btn.onClick.AddListener(OnCTAClicked);
+            ResolvePreloadedUpgradePopups(transform.root);
         }
+        if (title == "SPRINKLER") return sprinklerUpgradePopup;
+        if (title == "HARVESTER") return harvesterUpgradePopup;
+        if (title == "VEHICLE") return transportUpgradePopup;
+        // Plant shares the sprinkler layer until dedicated plant artwork exists.
+        return plantUpgradePopup != null ? plantUpgradePopup : sprinklerUpgradePopup;
     }
 
-    private void EnsureEventSystem()
+    private void ResolvePreloadedUpgradePopups(Transform playableRoot)
     {
-        if (EventSystem.current != null) return;
-        var go = new GameObject("EventSystem");
-        go.AddComponent<EventSystem>();
-        go.AddComponent<StandaloneInputModule>();
+        sprinklerUpgradePopup = ResolvePopup(playableRoot, sprinklerUpgradePopup, "PopupSprinklerUpgradeLayer");
+        transportUpgradePopup = ResolvePopup(playableRoot, transportUpgradePopup, "PopupTransportStationUpgradeLayer");
+        harvesterUpgradePopup = ResolvePopup(playableRoot, harvesterUpgradePopup, "PopupSprinklerAndHarvesterUpgradeLayer");
+        plantUpgradePopup = ResolvePopup(playableRoot, plantUpgradePopup, "PopupPlantUpgradeLayer");
+        HidePopupAtStartup(sprinklerUpgradePopup);
+        HidePopupAtStartup(transportUpgradePopup);
+        HidePopupAtStartup(harvesterUpgradePopup);
+        HidePopupAtStartup(plantUpgradePopup);
     }
 
-    private IEnumerator TextPulseRoutine()
+    private static PlayableUpgradePopupView ResolvePopup(Transform root, PlayableUpgradePopupView assigned, string objectName)
     {
-        if (tutorialTMPText.Count == 0) yield break;
-
-        var from = _textBaseScale;
-        var to = _textBaseScale * ctaConfig.textScaleUp;
-        float duration = Mathf.Max(0.05f, ctaConfig.textScaleDuration);
-
-        while (tutorialLayer != null && tutorialLayer.activeSelf)
+        if (assigned != null && assigned.gameObject.scene.IsValid()) return assigned;
+        GameObject sceneObject = FindChildByName(root, objectName);
+        if (sceneObject == null && WorldLayerManager.Instance != null)
         {
-            float t = Mathf.PingPong(Time.unscaledTime / duration, 1f);
-            foreach (var text in tutorialTMPText)
-            {
-                if (text != null)
-                {
-                    text.rectTransform.localScale = Vector3.Lerp(from, to, t);
-                }
-            }
-            yield return null;
+            sceneObject = FindChildByName(WorldLayerManager.Instance.transform, objectName);
         }
-
-        foreach (var text in tutorialTMPText)
-        {
-            if (text != null)
-            {
-                text.rectTransform.localScale = _textBaseScale;
-            }
-        }
-        _textRoutine = null;
+        return sceneObject != null ? sceneObject.GetComponent<PlayableUpgradePopupView>() : null;
     }
 
-
-
-
-    // [SerializeField] private Transform firstTarget;
-    // [SerializeField] private Transform secondTarget;
-    // private float timeMoving = 0.75f;
-    // private float timeWaiting = 2f;
-    private IEnumerator HandMoveRoutine()
+    private static void HidePopupAtStartup(PlayableUpgradePopupView popup)
     {
-        // tutorialHand.transform.position = firstTarget.position;
-        // while (true)
-        // {
-        //     tutorialHand.transform.position = firstTarget.position;
-        //     float elapsedTime = 0f;
-        //     while (elapsedTime < timeMoving)
-        //     {
-        //         tutorialHand.transform.position = Vector3.Lerp(firstTarget.position, secondTarget.position, elapsedTime / timeMoving);
-        //         elapsedTime += Time.deltaTime;
-        //         yield return null;
-        //     }
-        //     tutorialHand.transform.position = secondTarget.position;
-        //     yield return new WaitForSeconds(timeWaiting);
-
-        //     elapsedTime = 0f;
-        //     while (elapsedTime < timeMoving / 2)
-        //     {
-        //         tutorialHand.transform.position = Vector3.Lerp(secondTarget.position, firstTarget.position, elapsedTime / (timeMoving / 2));
-        //         elapsedTime += Time.deltaTime;
-        //         yield return null;
-        //     }
-        //     tutorialHand.transform.position = firstTarget.position;
-        //     yield return null;
-        // }
-
-        if (tutorialHand == null) yield break;
-
-        //  Vector2 originalPos = tutorialHand.anchoredPosition;
-        Vector3 originalScale = tutorialHand.localScale;
-        Vector3 targetScale = originalScale * ctaConfig.handScaleUp;
-
-        while (true)
-        {
-            float elapsedTime = 0f;
-            while (elapsedTime < ctaConfig.handMoveDuration)
-            {
-                float t = elapsedTime / ctaConfig.handMoveDuration;
-                tutorialHand.localScale = Vector3.Lerp(originalScale, targetScale, t);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-            elapsedTime = 0f;
-            while (elapsedTime < ctaConfig.handMoveDuration / 2)
-            {
-                float t = elapsedTime / (ctaConfig.handMoveDuration / 2);
-                tutorialHand.localScale = Vector3.Lerp(targetScale, originalScale, t);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-        }
-        // yield return null;
-
+        if (popup != null) popup.gameObject.SetActive(false);
     }
 
-
-
-
-    private void EnsurePraiseUser()
+    private static Sprite GetLocalSprite(Transform root)
     {
-        if (praiseUserImage == null) return;
-        praiseUserImage.gameObject.SetActive(false);
-    }
-
-
-    private Coroutine _praiseVfxRoutine;
-
-    public void PlayPraiseVfx(string praiseText = null)
-    {
-        if (praiseUserImage != null)
+        if (root == null) return null;
+        SpriteRenderer[] renderers = root.GetComponentsInChildren<SpriteRenderer>(true);
+        for (int i = 0; i < renderers.Length; i++)
         {
-
-            praiseUserImage.gameObject.SetActive(true);
-            if(_praiseVfxRoutine != null) StopCoroutine(_praiseVfxRoutine);
-            _praiseVfxRoutine = StartCoroutine(PlayPraiseVfxRoutine(praiseText));
+            if (renderers[i] != null && renderers[i].sprite != null) return renderers[i].sprite;
         }
+        return null;
     }
 
-    private IEnumerator PlayPraiseVfxRoutine(string praiseText)
+    private static float GetSprinklerWater(int level)
     {
-        string defaultPraiseText = "good";
-        praiseText = praiseText?.ToLower();
-        praiseText = string.IsNullOrEmpty(praiseText) ? defaultPraiseText : praiseText;
-        praiseUserImage.gameObject.SetActive(true);
-        praiseUserImage.sprite = UIManager.Instance.GetSpriteByType(praiseText);
-        praiseUserImage.SetNativeSize();
-        // Impact
-        float impactDuration = Mathf.Max(0.05f, ctaConfig.praiseVfxImpactDuration);
-        float impactT = 0f;
-        while (impactT < impactDuration)
-        {
-            impactT += Time.unscaledDeltaTime;
-            float k = Mathf.Clamp01(impactT / impactDuration);
-            float scale = Mathf.Lerp(ctaConfig.ctaImpactStartScale, 1f, k);
-            float angle = Mathf.Lerp(ctaConfig.ctaImpactStartAngle, 0f, k);
-
-            praiseUserImage.transform.localScale = Vector3.one * scale;
-            praiseUserImage.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
-
-            yield return null;
-        }
-
-        praiseUserImage.transform.localRotation = Quaternion.identity;
-
-        // Pulse
-        float duration = Mathf.Max(0.05f, ctaConfig.praiseVfxDuration);
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.unscaledDeltaTime;
-
-            float t = Mathf.PingPong(Time.unscaledTime / duration, 1f);
-
-            float scale;
-            if (_useCtaOnlyPulse)
-            {
-                scale = Mathf.Lerp(ctaConfig.ctaOnlyStartScale, ctaConfig.ctaOnlyPulseScale, t);
-            }
-            else
-            {
-                scale = Mathf.Lerp(1f, ctaConfig.buttonPulseScale, t);
-            }
-
-            if (praiseUserImage == null || !praiseUserImage.gameObject.activeInHierarchy)
-                yield break;
-
-            praiseUserImage.transform.localScale = Vector3.one * scale;
-
-            yield return null;
-        }
-
-        // Fade + Shrink
-        Color startColor = praiseUserImage.color;
-        Vector3 startScale = praiseUserImage.transform.localScale;
-        Vector3 endScale = Vector3.one * ctaConfig.praiseFadeEndScale;
-
-        float fadeTime = 0f;
-        while (fadeTime < ctaConfig.praiseFadeDuration)
-        {
-            fadeTime += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(fadeTime / ctaConfig.praiseFadeDuration);
-
-            // Alpha giảm dần
-            Color c = startColor;
-            c.a = Mathf.Lerp(startColor.a, 0f, t);
-            praiseUserImage.color = c;
-
-            // Scale nhỏ dần
-            praiseUserImage.transform.localScale =
-                Vector3.Lerp(startScale, endScale, t);
-
-            yield return null;
-        }
-
-        // Reset
-        Color finalColor = startColor;
-        finalColor.a = 1f;
-        praiseUserImage.color = finalColor;
-
-        praiseUserImage.transform.localScale = Vector3.one;
-        praiseUserImage.gameObject.SetActive(false);
-        _praiseVfxRoutine = null;
-    
+        FarmConfig config = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+        return config != null && config.sprinkler != null ? config.sprinkler.GetWaterAmount(level) : 0f;
     }
 
-    private void EnsureAFKHand()
+    private static int GetHarvesterBladeCount(int level)
     {
-        afkHand.gameObject.SetActive(false);
+        FarmConfig config = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+        return config != null && config.harvester != null ? config.harvester.GetTotalBlades(level) : level;
     }
 
-    private void ResetAFKTimer()
+    private static int GetTransportCapacity(int level)
     {
-        _afkElapsed = 0f;
-        afkHand.gameObject.SetActive(false);
-        isTriggeredAFKTutorial = false;
+        FarmConfig config = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+        return config != null && config.transport != null ? config.transport.GetCapacity(level) : 0;
     }
 
-    private void CheckInvalidCarriersAFKTutorialHand()
-    {
-        List<int> indexs = new List<int>();
-        if(indexs.Contains(_currentHandPositionIndex) == false)
-        {
-            ResetAFKTimer();
-        }
-    }
-
-
-    private void EnsureScenario()
-    {
-
-        switch (scenario)
-        {
-            case 107:
-                break;
-            default:
-                break;
-        }
-        EnsureTimerLayer();
-        EnsurePraiseUser();
-        EnsureAFKHand();
-        EnsureConveyorUI();
-        EnsurePopupUI();
-        EnsureGameplay();
-    }
-
-
-    private void EnsureConveyorUI()
-    {
-        uIGamePlayLayer.EnsureUI();
-    }
-    private void EnsurePopupUI()
-    {
-        if(PopupStoreUI != null)
-        {
-            PopupStoreUI.ClosePopupStore();
-        }
-    }
-
-    private void EnsureGameplay()
-    {
-        if (CurrentScenePlayableSO.gameMode == GameMode.Auto)
-        {
-            
-        }
-        if (CurrentScenePlayableSO.enableFarmer)
-        {
-            
-        }
-
-        if (CurrentScenePlayableSO.prePlant.PrePlantMode != PrePlantMode.None)
-        {
-            
-        }
-
-        if (CurrentScenePlayableSO.SelectPlantStore)
-        {
-            SetupStore();
-        }
-        else plantStore.HideStore();
-
-
-    }
-
-    // private void TransitionAndLoadLevel(LevelDataConfigSO levelData)
-    // {
-    //     if (transitionPanel == null || transitionCanvasGroup == null)
-    //     {
-    //         // LoadLevel(FirstLevel);
-    //         return;
-    //     }
-
-    //     transitionPanel.SetActive(true);
-    //     _transitionRoutine = StartCoroutine(TransitionRoutine(levelData));
-    // }
-
-    private void LoadLevel(LevelDataConfigSO levelDataConfig = null)
-    {
-        // if (LevelManager.Instance != null)
-        // {
-        //     LoadMapAndRailAndCamera(levelDataConfig);
-        //     LevelManager.Instance.LoadLevel(levelDataConfig.levelData);
-        //     SplineSystem.Instance?.LoadLevel(levelDataConfig.levelData);
-            EnsureScenario();
-        // }
-
-
-
-    }
-
-
-
-    private void EnsureTransitionPanel()
-    {
-        if (transitionPanel == null) return;
-        transitionCanvasGroup = transitionPanel.GetComponent<CanvasGroup>();
-        transitionCanvasGroup.alpha = 0f;
-        transitionPanel.SetActive(false);
-    }
-    // private void FadeTransition()
-    // {
-    //     if (transitionPanel == null || transitionCanvasGroup == null) return;
-    //     transitionPanel.SetActive(true);
-    //     StartCoroutine(TransitionRoutine(level));
-    // }
-
-    // private IEnumerator TransitionRoutine(LevelDataConfigSO levelData)
-    // {
-    //     yield return StartCoroutine(FadeInCanvasGroup(transitionCanvasGroup, ctaConfig.transitionFadeDuration));
-
-    //     LoadLevel(levelData);
-
-    //     float t = 0f;
-    //     while (t < ctaConfig.transitionDelay)
-    //     {
-    //         t += Time.unscaledDeltaTime;
-    //         yield return null;
-    //     }
-
-    //     // Fade out
-    //     yield return StartCoroutine(FadeOutCanvasGroup(transitionCanvasGroup, ctaConfig.transitionFadeDuration));
-
-    //     transitionPanel.SetActive(false);
-    //     _transitionRoutine = null;
-    // }
-
-
-    #endregion
-
+    public void OnCTAClicked() { GameEventBus.OnCTAClicked?.Invoke(); Luna.Unity.Playable.InstallFullGame(); }
+    public void OpenStoreNow() => OnCTAClicked();
+    public void StartGame() => GameEventBus.OnStartGame?.Invoke();
+    public void PauseGameplay() { }
+    public void ResumeGameplay() { }
+    public void NotifySelectableClick(bool unloadBeforePlay = false) { }
 }

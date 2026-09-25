@@ -60,45 +60,42 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Users\HorusPC\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.3.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="E:\GitProjects\playable-Idle-Farm\Library\PackageCache\com.annulusgames.alchemy@0fd900299d\Generator\Alchemy.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\PlayableExporter\Networks\AppLovinNetworkMarkupBuilder.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Networks\TikTokNetworkMarkupBuilder.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Networks\MintegralNetworkMarkupBuilder.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\PlayableAdsExporter.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Networks\GoogleAdsNetworkMarkupBuilder.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\PlayableExportCleanup.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\PlayableExporterWindow.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Patching\HtmlPatchExecutionReport.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\PlayableExportModels.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\LunaXSharedCoreBuilder.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Networks\MolocoNetworkMarkupBuilder.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Patching\HtmlPatchExecutor.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Networks\INetworkMarkupBuilder.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Patching\HtmlPatchOperationResult.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\LunaXBuildModels.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\LunaXCoreBuildPlanner.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Networks\GoogleAdsNetworkMarkupBuilder.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Contracts\LunaSourceContract.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\PlayableExportJsonWriter.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\LunaPlayableSingleHtmlPacker.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Networks\NetworkMarkupBuilderFactory.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Networks\UnityNetworkMarkupBuilder.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Networks\IronSourceNetworkMarkupBuilder.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Networks\VungleNetworkMarkupBuilder.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Networks\TikTokNetworkMarkupBuilder.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\PlayableAdsExporter.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\PlayableExportCleanup.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\Contracts\LunaSourceContract.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Patching\HtmlPatchOperationResult.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\PlayableExportModels.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\LunaXBuildModels.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\LunaXSharedCoreBuilder.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Networks\NetworkMarkupTemplates.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Networks\MolocoNetworkMarkupBuilder.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Networks\NetworkMarkupBuilderFactory.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Patching\HtmlPatchExecutor.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Patching\HtmlPatchOperation.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Networks\UnityNetworkMarkupBuilder.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Verification\PlayableExportVerifier.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Networks\IronSourceNetworkMarkupBuilder.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\LunaXCoreBuildPlanner.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\LunaBuildProjectScanner.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Networks\FacebookNetworkMarkupBuilder.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\Networks\VungleNetworkMarkupBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Editor\PlayableExporter\Templates\lunax_preloader_shell.txt" />
     <None Include="Assets\Editor\PlayableExporter\PlayableExporter.Editor.asmdef" />
     <None Include="Assets\Editor\PlayableExporter\Templates\brotli_decoder.txt" />
-    <None Include="Assets\Editor\PlayableExporter\Templates\lunax_worker_bootstrap.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -461,36 +458,24 @@
       <HintPath>Assets\DOTween\DOTween.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VisualScripting.YamlDotNet">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="ReportGeneratorMerged">
       <HintPath>Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\lib\ReportGenerator\ReportGeneratorMerged.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DOTweenEditor">
-      <HintPath>Assets\DOTween\Editor\DOTweenEditor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.IonicZip">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.TextureAssets">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="EditorScripts">
       <HintPath>E:\Luna plugins\7.0.0\scripts\Editor\EditorScripts.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DOTweenEditor">
+      <HintPath>Assets\DOTween\Editor\DOTweenEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="RuntimeScripts">
       <HintPath>E:\Luna plugins\7.0.0\scripts\Runtime\RuntimeScripts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="nunit.framework">

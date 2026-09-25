@@ -1,15 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using TMPro;
 
+/// <summary>Compatibility shell for disabled legacy capacity UI prefab links.</summary>
 public class CapacityTextUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI capacityText;
-
-    public void SetCapacity(int capacity, int maxCapacity)
-    {
-        capacityText.text = $"{capacity}/{maxCapacity}";
-        
-    }
+    public void SetCapacity(int capacity, int maxCapacity) { }
 }

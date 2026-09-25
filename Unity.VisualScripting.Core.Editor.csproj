@@ -60,7 +60,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Users\HorusPC\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.3.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="E:\GitProjects\playable-Idle-Farm\Library\PackageCache\com.annulusgames.alchemy@0fd900299d\Generator\Alchemy.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -309,8 +308,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\SerializedProperties\SerializedPropertyUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Dependencies\ReorderableList\ElementAdderMenu\ElementAdderMeta.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Utilities\NativeUtility.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Reflection\TypeOptionTree.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Plugin\Changelogs\LegacyLudiqCore\Changelog_1_3_1.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Reflection\TypeOptionTree.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Platforms\FieldInfoStubWriter.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Plugin\Migrations\Migration_1_4_0_f5_to_1_4_0_f6.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\GraphNestEditor.cs" />
@@ -340,8 +339,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\ResourceProviders\EmbeddedResourceProvider.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Interface\Licenses\License.CCA3.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Debugging\GraphDebugDataProvider.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Interface\Fuzzy\FuzzyOption.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Unity\RectInspector.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Interface\Fuzzy\FuzzyOption.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Canvases\VisualScriptingCanvas.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Primitives\SbyteInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Dependencies\ReorderableList\GenericListAdaptor.cs" />
@@ -400,8 +399,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Plugin\Acknowledgements\Acknowledgement_DeepCopy.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Windows\Sidebars\SidebarPanelWindow.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Canvases\WidgetList.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Platforms\AotStubWriter.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Dependencies\ReorderableList\Internal\SerializedPropertyUtility.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Platforms\AotStubWriter.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Graph\GraphPointerData.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Plugin\Changelogs\LegacyLudiqGraphs\Changelog_1_4_6.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Product\LudiqProduct.cs" />
@@ -428,9 +427,9 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Unity\RayInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Meta\ProjectSettingMetadata.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Descriptors\Description.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\BoltProduct.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Primitives\DiscreteNumberInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Plugin\Changelogs\LegacyLudiqCore\Changelog_1_0_4.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\BoltProduct.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Other\SemanticVersionInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Plugins\PluginUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Context\GraphContext.cs" />
@@ -450,8 +449,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\EditorProvider.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Plugins\PluginAcknowledgement.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\ResourceProviders\IResourceProvider.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Variables\InspectorVariableFieldAttributeInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Description\IMacroDescription.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Variables\InspectorVariableFieldAttributeInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Reflection\ParameterStringMode.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Reflection\EnumOption.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Other\DictionaryAssetEditor.cs" />
@@ -462,8 +461,8 @@
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Reflection\MemberInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Special\UnknownInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Platforms\MethodInfoStubWriter.cs" />
-    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Primitives\UlongInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Products\Product.cs" />
+    <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\Primitives\UlongInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Interface\Fuzzy\FuzzyOptionTree.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Dependencies\ReorderableList\ReorderableListEvents.cs" />
     <Compile Include="Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Inspection\MetadataCollectionAdaptor.cs" />
@@ -915,8 +914,16 @@
       <HintPath>Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\lib\ReportGenerator\ReportGeneratorMerged.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="EditorScripts">
+      <HintPath>E:\Luna plugins\7.0.0\scripts\Editor\EditorScripts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DOTweenEditor">
       <HintPath>Assets\DOTween\Editor\DOTweenEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RuntimeScripts">
+      <HintPath>E:\Luna plugins\7.0.0\scripts\Runtime\RuntimeScripts.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.IonicZip">
@@ -927,16 +934,12 @@
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.VisualScripting.TextureAssets">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="EditorScripts">
-      <HintPath>E:\Luna plugins\7.0.0\scripts\Editor\EditorScripts.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RuntimeScripts">
-      <HintPath>E:\Luna plugins\7.0.0\scripts\Runtime\RuntimeScripts.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="nunit.framework">

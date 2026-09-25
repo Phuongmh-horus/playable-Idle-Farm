@@ -60,75 +60,126 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Users\HorusPC\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.3.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="E:\GitProjects\playable-Idle-Farm\Library\PackageCache\com.annulusgames.alchemy@0fd900299d\Generator\Alchemy.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmIrrigationSystem\FarmIrrigationSystem.cs" />
+    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\CapacityUI.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\PlantSpawner.cs" />
+    <Compile Include="Assets\_PlayableAds\Config\Sound\SoundDataSO.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmPlotSystem\CircularFarmPlotLayoutHelper.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\WaterRequired\WaterRequiredLayer.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Manager\SoundManager.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\ObjectPooling\MonoPool.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmHarvestSystem\HarvesterArm.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\Config\FarmPlotConfig\FarmPlotConfigSO.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Manager\UIManager.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\IconUpgradeLayer\IconUpgradeLayer.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\General\WorldLayerReferenceSO.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\PulseAnimation.cs" />
+    <Compile Include="Assets\_Data\Runtime\RuntimeData.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FruitTransportStation\AnimatedFruit.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FruitTransportStation\TransportVehicle.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\CtaEnums.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\PlantAnimator.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\CTA\CTAOrchestrator.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\SO\CTAConfigPlayableSO.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmPlotSystem\CircularFarmPlotLayoutConfigSO.cs" />
+    <Compile Include="Assets\_Data\Config\CollectionConfigSO.cs" />
+    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\General\LayerReferenceSO.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmPlotSystem\FarmPlotSystem.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\FloatingCurrencyLayer\FloatingCurrencyLayer.cs" />
+    <Compile Include="Assets\_Data\Runtime\SaveData.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\General\ShowWorldLayerHelper.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\ObjectPooling\PoolHolder.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmIrrigationSystem\SprinklerArm.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\UIHelper\UIAnimator\AnimShowPopupWorld.cs" />
+    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\General\ShowLayerHelper.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\CTA\GameplayCtaTriggerSource.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FruitSpawner.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\PopupStore.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\SpriteData.cs" />
+    <Compile Include="Assets\_Game\Scripts\ClickBasedSelection\Scripts\StaticSelectionBaker.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Manager\GameManager.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\LayerCore\WorldLayerBase.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\LayerCore\WorldLayerManager.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\UI\PlantStore.cs" />
+    <Compile Include="Assets\_Game\Scripts\BillboardJobManager\BillboardJobFollower.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\CTA\PlayablePlatformAdapterFactory.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmHarvestSystem\HarvestMachine.cs" />
+    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\General\LayerSourcePath.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\Singletons\MonoSingleton.cs" />
-    <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\BuyPlot\PopupBuyPlotLayer.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\PlayableCurrencyDisplay.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\VideoEditor\HandCreative.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmHarvestSystem\HarvestBlade.cs" />
+    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\UIGamePlayLayer.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\CTAButton.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\SO\LevelDataConfigSO.cs" />
+    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIHelper\SliderValidator.cs" />
+    <Compile Include="Assets\_Data\Config\FruitConfig.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\SO\ScenarioPlayableSO.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\Config\PlotVisualConfig\FarmPlotData.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\UIHelper\T_Utility.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\PlayableUpgradePopupPresenter.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\PlayableFarmState.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmIrrigationSystem\SprinklerArmConfig.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Tutorial\PlayableTutorialFlow.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\ObjectPooling\MonoPool.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\Config\PlotVisualConfig\PlotVisualConfigSO.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Manager\VFXManager.cs" />
+    <Compile Include="Assets\_Game\Scripts\UI\StaticSelectableButtonBase.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\NoOpPlayableAdapter.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\CTAConfig.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\PlantConfigData.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\PlantPriceLayer\PopupPlantPriceLayer.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmSystem.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FruitTransportStation\FruitTransportStationConfig.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\UI\PlantItem.cs" />
+    <Compile Include="Assets\_Game\Scripts\ClickBasedSelection\Scripts\StaticSelectable.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\SO\ScenePlayableSO.cs" />
     <Compile Include="Assets\_PlayableAds\Config\Sound\SoundData.cs" />
+    <Compile Include="Assets\_PlayableAds\Config\CapacityConfig\CapacityConfig.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmHarvestSystem\HarvesterArmConfig.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\ShakingZAnimation.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\CTA\ICTAPresenter.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\CommonScripts\ConstGame.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FruitTransportStation\FruitTransportStation.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\ICTAOrchestrator.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\Plant.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\IPlayablePlatformAdapter.cs" />
+    <Compile Include="Assets\_Game\Scripts\UI\UpgradeSprinklerAndHarvesterButton.cs" />
+    <Compile Include="Assets\_Game\Scripts\UI\UpgradeFruitTransportStationButton.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\PlayableUpgradePopupView.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\CTA\LunaUIManager.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\CTAPresenter.cs" />
     <Compile Include="Assets\_Data\Config\PlantConfig.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmPlotSystem\PlotVisual.cs" />
+    <Compile Include="Assets\_Game\Scripts\ClickBasedSelection\Scripts\JobSelectionManager.cs" />
     <Compile Include="Assets\_Data\Config\FarmConfig.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\ObjectPooling\PoolHolder.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\CTA\LunaPlayableAdapter.cs" />
-    <Compile Include="Assets\_PlayableAds\Config\Sound\SoundDataSO.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\ObjectPooling\MonoPool.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\CTA\CTAOrchestrator.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\SO\CTAConfigPlayableSO.cs" />
-    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\General\ShowLayerHelper.cs" />
-    <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\UI\SpriteData.cs" />
-    <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
-    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\General\LayerSourcePath.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\SO\LevelDataConfigSO.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\UI\ShakingZAnimation.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\Fruit.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmHarvestSystem\FarmHarvestSystem.cs" />
+    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\CapacityTextUI.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\General\WorldLayerSourcePath.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FruitTransportStation\AnimatedFruitConfig.cs" />
+    <Compile Include="Assets\_Game\Scripts\Gameplay\FarmPlotSystem\Plot.cs" />
+    <Compile Include="Assets\_Data\Config\ValueUpgradePanelConfig.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\CapacityFruitTransport\CapacityFruitTransport.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\LayerCore\LayerBase.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\CameraSize.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\BuyPlant\PopupUpgradePlantLayer.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\PlantTree\PopupPlantTreeLayer.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\ObjectPooling\PoolHolder.cs" />
+    <Compile Include="Assets\_Game\Scripts\BillboardJobManager\BillboardJobManager.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\LayerCore\WorldSinglePopupAutoCloseHandler.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\GameEventBus.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\HandEndCard.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\Manager\UIManager.cs" />
-    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\General\LayerReferenceSO.cs" />
-    <Compile Include="Assets\_Data\Runtime\SaveData.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\Manager\GameManager.cs" />
-    <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\CTA\PlayablePlatformAdapterFactory.cs" />
-    <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\SO\ScenarioPlayableSO.cs" />
-    <Compile Include="Assets\DOTween\Modules\DOTweenModuleSprite.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\CTA\ICTAPresenter.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\CTA\LunaUIManager.cs" />
-    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\CapacityTextUI.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\UI\CameraSize.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\SO\LookAtPosition.cs" />
-    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\CapacityUI.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\Manager\SoundManager.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\UI\PulseAnimation.cs" />
-    <Compile Include="Assets\_Data\Runtime\RuntimeData.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\CTA\GameplayCtaTriggerSource.cs" />
-    <Compile Include="Assets\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\VideoEditor\HandCreative.cs" />
-    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\UIGamePlayLayer.cs" />
-    <Compile Include="Assets\_FrameWork\Scripts\Camera\CameraSettingsSO.cs" />
-    <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIHelper\SliderValidator.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\Manager\VFXManager.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\UI\PlantItem.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\SO\ScenePlayableSO.cs" />
-    <Compile Include="Assets\_PlayableAds\Config\CapacityConfig\CapacityConfig.cs" />
-    <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\CommonScripts\ConstGame.cs" />
-    <Compile Include="Assets\_FrameWork\Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\LunaUIManager.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\SO\LookAtPosition.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\CTA\LunaPlayableAdapter.cs" />
+    <Compile Include="Assets\_FrameWork\Scripts\Config\ConfigHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -498,12 +549,12 @@
       <HintPath>Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\lib\ReportGenerator\ReportGeneratorMerged.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="RuntimeScripts">
       <HintPath>E:\Luna plugins\7.0.0\scripts\Runtime\RuntimeScripts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
@@ -1014,20 +1065,24 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Alchemy">
-      <HintPath>Library\ScriptAssemblies\Alchemy.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    <Reference Include="MCPForUnity.Runtime">
+      <HintPath>Library\ScriptAssemblies\MCPForUnity.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Alchemy.Editor">
-      <HintPath>Library\ScriptAssemblies\Alchemy.Editor.dll</HintPath>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MCPForUnity.Editor">
+      <HintPath>Library\ScriptAssemblies\MCPForUnity.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -1035,23 +1090,16 @@
     <ProjectReference Include="PlayableExporter.Editor.csproj" />
     <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.csproj" />
     <ProjectReference Include="Unity.EditorCoroutines.Editor.csproj" />
-    <ProjectReference Include="Unity.VisualScripting.SettingsProvider.Editor.csproj" />
     <ProjectReference Include="Unity.Performance.Profile-Analyzer.Editor.csproj" />
     <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.csproj" />
     <ProjectReference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.csproj" />
-    <ProjectReference Include="Unity.VisualScripting.State.Editor.csproj" />
-    <ProjectReference Include="Unity.VisualScripting.Shared.Editor.csproj" />
+    <ProjectReference Include="DOTween.Modules.csproj" />
     <ProjectReference Include="Unity.Settings.Editor.csproj" />
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj" />
     <ProjectReference Include="Unity.TextMeshPro.csproj" />
-    <ProjectReference Include="Unity.VisualScripting.Core.csproj" />
     <ProjectReference Include="Unity.TextMeshPro.Editor.csproj" />
-    <ProjectReference Include="Unity.VisualScripting.Core.Editor.csproj" />
     <ProjectReference Include="Unity.Rider.Editor.csproj" />
-    <ProjectReference Include="Unity.VisualScripting.State.csproj" />
     <ProjectReference Include="Unity.VSCode.Editor.csproj" />
-    <ProjectReference Include="Unity.VisualScripting.Flow.csproj" />
-    <ProjectReference Include="Unity.VisualScripting.Flow.Editor.csproj" />
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <ItemGroup>

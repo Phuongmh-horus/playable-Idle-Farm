@@ -13,503 +13,283 @@ MonoBehaviour:
   m_Name: PlantConfig
   m_EditorClassIdentifier: 
   plants:
-  - id: 0
-    plantName: Wheat
-    fruitName: Wheat
-    fruitIcon: {fileID: 21300000, guid: 5c08d58a94e787548afa5b639a57531d, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 0.95, g: 0.82, b: 0.45, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
-      stats:
-      - type: 0
-        value: 5
-      - type: 1
-        value: 100
-      - type: 2
-        value: 10
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
-      stats:
-      - type: 0
-        value: 7
-      - type: 1
-        value: 300
-      - type: 2
-        value: 25
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
-      stats:
-      - type: 0
-        value: 10
-      - type: 1
-        value: 800
-      - type: 2
-        value: 60
-      - type: 3
-        value: 0.08
-  - id: 1
-    plantName: Corn
-    fruitName: Corn
-    fruitIcon: {fileID: 21300000, guid: 034c761c2cd298440876bdf46d39f285, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 1, g: 0.85, b: 0.1, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 042c932482451994588ff6775b1f0595, type: 3}
-      stats:
-      - type: 0
-        value: 8
-      - type: 1
-        value: 200
-      - type: 2
-        value: 20
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 042c932482451994588ff6775b1f0595, type: 3}
-      stats:
-      - type: 0
-        value: 11
-      - type: 1
-        value: 600
-      - type: 2
-        value: 50
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 042c932482451994588ff6775b1f0595, type: 3}
-      stats:
-      - type: 0
-        value: 15
-      - type: 1
-        value: 1500
-      - type: 2
-        value: 120
-      - type: 3
-        value: 0.08
-  - id: 2
-    plantName: Carrot
-    fruitName: Carrot
-    fruitIcon: {fileID: 21300000, guid: e0f0613bc9209494e940e0dbd0068d93, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 1, g: 0.5, b: 0, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
-      stats:
-      - type: 0
-        value: 10
-      - type: 1
-        value: 400
-      - type: 2
-        value: 35
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
-      stats:
-      - type: 0
-        value: 14
-      - type: 1
-        value: 1000
-      - type: 2
-        value: 85
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
-      stats:
-      - type: 0
-        value: 19
-      - type: 1
-        value: 2500
-      - type: 2
-        value: 200
-      - type: 3
-        value: 0.08
-  - id: 3
-    plantName: Tomato
-    fruitName: Tomato
-    fruitIcon: {fileID: 21300000, guid: 102cf65f8e02424459a325a655bc0e92, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 0.95, g: 0.2, b: 0.15, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 81d44e6c50e825b4b8c5b7038bc293cb, type: 3}
-      stats:
-      - type: 0
-        value: 12
-      - type: 1
-        value: 800
-      - type: 2
-        value: 55
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 81d44e6c50e825b4b8c5b7038bc293cb, type: 3}
-      stats:
-      - type: 0
-        value: 17
-      - type: 1
-        value: 1800
-      - type: 2
-        value: 130
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 81d44e6c50e825b4b8c5b7038bc293cb, type: 3}
-      stats:
-      - type: 0
-        value: 23
-      - type: 1
-        value: 4000
-      - type: 2
-        value: 300
-      - type: 3
-        value: 0.08
-  - id: 4
-    plantName: Eggplant
-    fruitName: Eggplant
-    fruitIcon: {fileID: 21300000, guid: fa888dccfdaee244db1ac419c942ccb3, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 0.48, g: 0.16, b: 0.64, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 018bf408639e03242b0356409f99cdb4, type: 3}
-      stats:
-      - type: 0
-        value: 15
-      - type: 1
-        value: 1500
-      - type: 2
-        value: 80
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 018bf408639e03242b0356409f99cdb4, type: 3}
-      stats:
-      - type: 0
-        value: 21
-      - type: 1
-        value: 3200
-      - type: 2
-        value: 190
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 018bf408639e03242b0356409f99cdb4, type: 3}
-      stats:
-      - type: 0
-        value: 28
-      - type: 1
-        value: 7000
-      - type: 2
-        value: 450
-      - type: 3
-        value: 0.08
-  - id: 5
-    plantName: Pumpkin
-    fruitName: Pumpkin
-    fruitIcon: {fileID: 21300000, guid: 3a2b2f70146905f4f9d0b32e7d2b802b, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 1, g: 0.6, b: 0.1, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 5d690d29a0ac05d4aa0e049e9939e682, type: 3}
-      stats:
-      - type: 0
-        value: 18
-      - type: 1
-        value: 2500
-      - type: 2
-        value: 120
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 5d690d29a0ac05d4aa0e049e9939e682, type: 3}
-      stats:
-      - type: 0
-        value: 25
-      - type: 1
-        value: 5500
-      - type: 2
-        value: 280
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 5d690d29a0ac05d4aa0e049e9939e682, type: 3}
-      stats:
-      - type: 0
-        value: 33
-      - type: 1
-        value: 12000
-      - type: 2
-        value: 650
-      - type: 3
-        value: 0.08
-  - id: 6
-    plantName: Watermelon
-    fruitName: Watermelon
-    fruitIcon: {fileID: 21300000, guid: f67360fa2e167f047b17da72d6d5e93e, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 0.95, g: 0.25, b: 0.35, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 9f09eac0119821048941f708ad0c85ff, type: 3}
-      stats:
-      - type: 0
-        value: 22
-      - type: 1
-        value: 4000
-      - type: 2
-        value: 180
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 9f09eac0119821048941f708ad0c85ff, type: 3}
-      stats:
-      - type: 0
-        value: 30
-      - type: 1
-        value: 9000
-      - type: 2
-        value: 420
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 9f09eac0119821048941f708ad0c85ff, type: 3}
-      stats:
-      - type: 0
-        value: 40
-      - type: 1
-        value: 20000
-      - type: 2
-        value: 950
-      - type: 3
-        value: 0.08
-  - id: 7
-    plantName: Strawberry
-    fruitName: Strawberry
-    fruitIcon: {fileID: 21300000, guid: 9664b17528a069d4ca9ae53b0e1a5b1c, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 0.98, g: 0.15, b: 0.3, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: beb01025a5325e84991c00dec801a690, type: 3}
-      stats:
-      - type: 0
-        value: 26
-      - type: 1
-        value: 6500
-      - type: 2
-        value: 260
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: beb01025a5325e84991c00dec801a690, type: 3}
-      stats:
-      - type: 0
-        value: 35
-      - type: 1
-        value: 15000
-      - type: 2
-        value: 600
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: beb01025a5325e84991c00dec801a690, type: 3}
-      stats:
-      - type: 0
-        value: 47
-      - type: 1
-        value: 32000
-      - type: 2
-        value: 1400
-      - type: 3
-        value: 0.08
-  - id: 8
-    plantName: Grape
-    fruitName: Grape
-    fruitIcon: {fileID: 21300000, guid: 30ae071cc8902144384c22e38db341b2, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 0.55, g: 0.15, b: 0.7, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
-      stats:
-      - type: 0
-        value: 32
-      - type: 1
-        value: 10000
-      - type: 2
-        value: 380
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
-      stats:
-      - type: 0
-        value: 42
-      - type: 1
-        value: 23000
-      - type: 2
-        value: 880
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
-      stats:
-      - type: 0
-        value: 56
-      - type: 1
-        value: 50000
-      - type: 2
-        value: 2000
-      - type: 3
-        value: 0.08
-  - id: 9
-    plantName: Dragon Fruit
-    fruitName: Dragon Fruit
-    fruitIcon: {fileID: 21300000, guid: 45e2fb5cd53d2a241b2cdbc902dccd51, type: 3}
-    fruitPrefab: {fileID: 3933717965073762957, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
-    juiceColor: {r: 0.9, g: 0.1, b: 0.5, a: 1}
-    defaultJuiceAmount: 0.05
-    fruitPositions:
-    - {x: -1.11, y: 0.394}
-    - {x: 0.68, y: 0.288}
-    - {x: -0.4, y: 0.215}
-    - {x: 0.75, y: 0.117}
-    - {x: -1.19, y: 0.044}
-    plantLevelConfigs:
-    - level: 1
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
-      stats:
-      - type: 0
-        value: 40
-      - type: 1
-        value: 16000
-      - type: 2
-        value: 550
-      - type: 3
-        value: 0.05
-    - level: 2
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
-      stats:
-      - type: 0
-        value: 52
-      - type: 1
-        value: 36000
-      - type: 2
-        value: 1300
-      - type: 3
-        value: 0.06
-    - level: 3
-      icon: {fileID: 0}
-      prefab: {fileID: 2622606248970829705, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
-      stats:
-      - type: 0
-        value: 70
-      - type: 1
-        value: 80000
-      - type: 2
-        value: 3000
-      - type: 3
-        value: 0.08
+  - plantType: 0
+    plantIcon: {fileID: 21300000, guid: 3b2a8923418e25a4b920d08ee245c206, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 3b2a8923418e25a4b920d08ee245c206, type: 3}
+    plantPrefab: {fileID: 2747681241958203882, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
+    ringStats:
+    - baseUpgradeCost: 8
+      baseFruitPrice: 14
+      waterRequirement: 7
+      levelUpCostSumPerLevel: 8
+      priceSumPerLevel: 5
+    - baseUpgradeCost: 48
+      baseFruitPrice: 14
+      waterRequirement: 11
+      levelUpCostSumPerLevel: 45
+      priceSumPerLevel: 5
+    - baseUpgradeCost: 120
+      baseFruitPrice: 21
+      waterRequirement: 16
+      levelUpCostSumPerLevel: 252
+      priceSumPerLevel: 7
+    plantSprites:
+    - {fileID: 21300000, guid: e464170f7ee67564f912391856b4716f, type: 3}
+    - {fileID: 21300000, guid: ff00284af0906c749b5d430df87506f0, type: 3}
+    - {fileID: 21300000, guid: 6b96b424e6029614a96263fdf493d451, type: 3}
+    - {fileID: 21300000, guid: 459f31888539c2f4297675c330d24a99, type: 3}
+    - {fileID: 21300000, guid: 2bca5c4faa2f597419618154de87fb70, type: 3}
+    - {fileID: 21300000, guid: a4d8468ccd217aa46a134c2447e78f71, type: 3}
+    - {fileID: 21300000, guid: 83e4cbcf2b270a241a1669afd14f69e3, type: 3}
+  - plantType: 1
+    plantIcon: {fileID: 21300000, guid: 02fa8b8d895969c4ab0f45fa1cbc25bf, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 02fa8b8d895969c4ab0f45fa1cbc25bf, type: 3}
+    plantPrefab: {fileID: 2108421722821967915, guid: 042c932482451994588ff6775b1f0595, type: 3}
+    ringStats:
+    - baseUpgradeCost: 75
+      baseFruitPrice: 26
+      waterRequirement: 8
+      levelUpCostSumPerLevel: 75
+      priceSumPerLevel: 20
+    - baseUpgradeCost: 450
+      baseFruitPrice: 26
+      waterRequirement: 12
+      levelUpCostSumPerLevel: 450
+      priceSumPerLevel: 20
+    - baseUpgradeCost: 2700
+      baseFruitPrice: 39
+      waterRequirement: 18
+      levelUpCostSumPerLevel: 2700
+      priceSumPerLevel: 30
+    plantSprites:
+    - {fileID: 21300000, guid: a0ddb4d09bca1e14283ebd071fef9b56, type: 3}
+    - {fileID: 21300000, guid: 2d35d963e7455a341abc232e99291bad, type: 3}
+    - {fileID: 21300000, guid: de625eae763cbc548804fca40334ff3a, type: 3}
+    - {fileID: 21300000, guid: c11ba70f99c7ef34a8a883db835936e1, type: 3}
+    - {fileID: 21300000, guid: e4c3b3820d95e2246a3d76ddac7809e7, type: 3}
+    - {fileID: 21300000, guid: d045ea459da99434aa90727d62acaf74, type: 3}
+    - {fileID: 21300000, guid: 5a58be9e0aa5b954ca326e40eb3b1092, type: 3}
+  - plantType: 2
+    plantIcon: {fileID: 21300000, guid: 86c2e50510ffc314c87ef53179fa66ef, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 86c2e50510ffc314c87ef53179fa66ef, type: 3}
+    plantPrefab: {fileID: 7376260434647007569, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
+    ringStats:
+    - baseUpgradeCost: 562
+      baseFruitPrice: 74
+      waterRequirement: 10
+      levelUpCostSumPerLevel: 562
+      priceSumPerLevel: 80
+    - baseUpgradeCost: 3372
+      baseFruitPrice: 74
+      waterRequirement: 15
+      levelUpCostSumPerLevel: 3372
+      priceSumPerLevel: 80
+    - baseUpgradeCost: 20232
+      baseFruitPrice: 111
+      waterRequirement: 23
+      levelUpCostSumPerLevel: 20232
+      priceSumPerLevel: 120
+    plantSprites:
+    - {fileID: 21300000, guid: 719bfbcfdcd9f0348bbc38183dfad779, type: 3}
+    - {fileID: 21300000, guid: 7100685b53e59944f8b06a29abc017f4, type: 3}
+    - {fileID: 21300000, guid: c1b2520d9495e2d49b96c45d11162f41, type: 3}
+    - {fileID: 21300000, guid: 2b2f5b312a3bea3468a501dfdbaa98df, type: 3}
+    - {fileID: 21300000, guid: 47e7b562a43c16c40960222d61da6af9, type: 3}
+    - {fileID: 21300000, guid: caf702919253da749861055ef690f558, type: 3}
+    - {fileID: 21300000, guid: e37f6bee0ffe52941905dde1db5d9709, type: 3}
+  - plantType: 3
+    plantIcon: {fileID: 21300000, guid: 7ab6805c11adf104c999246874d14a7d, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 7ab6805c11adf104c999246874d14a7d, type: 3}
+    plantPrefab: {fileID: 2090809617196704299, guid: 81d44e6c50e825b4b8c5b7038bc293cb, type: 3}
+    ringStats:
+    - baseUpgradeCost: 3750
+      baseFruitPrice: 266
+      waterRequirement: 30
+      levelUpCostSumPerLevel: 3750
+      priceSumPerLevel: 320
+    - baseUpgradeCost: 22500
+      baseFruitPrice: 266
+      waterRequirement: 45
+      levelUpCostSumPerLevel: 22500
+      priceSumPerLevel: 320
+    - baseUpgradeCost: 135000
+      baseFruitPrice: 399
+      waterRequirement: 68
+      levelUpCostSumPerLevel: 135000
+      priceSumPerLevel: 480
+    plantSprites:
+    - {fileID: 21300000, guid: 647b7dbd090738742b215650fe8ca3a6, type: 3}
+    - {fileID: 21300000, guid: 63f62762d49222c4b98e41d829c1a4a7, type: 3}
+    - {fileID: 21300000, guid: 26bdac68f67019846b2ccf40d8574691, type: 3}
+    - {fileID: 21300000, guid: 123776701ba6229439a2c4334a0b957c, type: 3}
+    - {fileID: 21300000, guid: 06e149aeb06d1ae46b002880add9652e, type: 3}
+    - {fileID: 21300000, guid: 5c3910961e1fa4b498af375a363a317c, type: 3}
+    - {fileID: 21300000, guid: 88353faaa223b9848bfbf4ab8c14b2a9, type: 3}
+  - plantType: 4
+    plantIcon: {fileID: 21300000, guid: 9342e0ce280b69445b708eb13d4e64e2, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 9342e0ce280b69445b708eb13d4e64e2, type: 3}
+    plantPrefab: {fileID: 21777259753631421, guid: 018bf408639e03242b0356409f99cdb4, type: 3}
+    ringStats:
+    - baseUpgradeCost: 18750
+      baseFruitPrice: 798
+      waterRequirement: 45
+      levelUpCostSumPerLevel: 18750
+      priceSumPerLevel: 1280
+    - baseUpgradeCost: 112500
+      baseFruitPrice: 798
+      waterRequirement: 68
+      levelUpCostSumPerLevel: 112500
+      priceSumPerLevel: 1280
+    - baseUpgradeCost: 675000
+      baseFruitPrice: 1197
+      waterRequirement: 101
+      levelUpCostSumPerLevel: 675000
+      priceSumPerLevel: 1920
+    plantSprites:
+    - {fileID: 21300000, guid: 75b7dccd8ee7d2841bcd1791a0459c42, type: 3}
+    - {fileID: 21300000, guid: 3653bb74e8aae0343afde09353c1a05c, type: 3}
+    - {fileID: 21300000, guid: 593cc224af2c0f442a7b7ce9ee1eceaa, type: 3}
+    - {fileID: 21300000, guid: 5e490738b799ff04bb7f20ad1e52648f, type: 3}
+    - {fileID: 21300000, guid: e8ef856be585d8749b981b6cfc611525, type: 3}
+    - {fileID: 21300000, guid: 739b686d1ec4ad14abf65514e6d41340, type: 3}
+    - {fileID: 21300000, guid: 7e85c1301ef6c1d4c9fe50d782ea384b, type: 3}
+  - plantType: 5
+    plantIcon: {fileID: 21300000, guid: 5bc47f9f9cb3b524c847a6ad42ff54b8, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 5bc47f9f9cb3b524c847a6ad42ff54b8, type: 3}
+    plantPrefab: {fileID: 7292942727523549358, guid: 5d690d29a0ac05d4aa0e049e9939e682, type: 3}
+    ringStats:
+    - baseUpgradeCost: 93750
+      baseFruitPrice: 2394
+      waterRequirement: 68
+      levelUpCostSumPerLevel: 93750
+      priceSumPerLevel: 5120
+    - baseUpgradeCost: 562500
+      baseFruitPrice: 2394
+      waterRequirement: 102
+      levelUpCostSumPerLevel: 562500
+      priceSumPerLevel: 5120
+    - baseUpgradeCost: 3375000
+      baseFruitPrice: 3591
+      waterRequirement: 153
+      levelUpCostSumPerLevel: 3375000
+      priceSumPerLevel: 7680
+    plantSprites:
+    - {fileID: 21300000, guid: 0d4f0ce09837e14498ff9973a237df31, type: 3}
+    - {fileID: 21300000, guid: b719bca5e686f24469eafa91968f5156, type: 3}
+    - {fileID: 21300000, guid: 5524783a6fa37604683f77282d213870, type: 3}
+    - {fileID: 21300000, guid: 0c2852d26be02394bb0cb3de5208f2c4, type: 3}
+    - {fileID: 21300000, guid: 462c7970fbaa4a24899299112fa65ad6, type: 3}
+    - {fileID: 21300000, guid: 48586732db6475e4cbf6a56552df2ddc, type: 3}
+    - {fileID: 21300000, guid: 691d7ed885a22e84bb887608124f2892, type: 3}
+  - plantType: 6
+    plantIcon: {fileID: 21300000, guid: 07e681a0660a3b64f96e3b13ed979cdc, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 07e681a0660a3b64f96e3b13ed979cdc, type: 3}
+    plantPrefab: {fileID: 7756525101406347104, guid: 9f09eac0119821048941f708ad0c85ff, type: 3}
+    ringStats:
+    - baseUpgradeCost: 468750
+      baseFruitPrice: 7182
+      waterRequirement: 102
+      levelUpCostSumPerLevel: 468750
+      priceSumPerLevel: 20480
+    - baseUpgradeCost: 2812500
+      baseFruitPrice: 7182
+      waterRequirement: 153
+      levelUpCostSumPerLevel: 2812500
+      priceSumPerLevel: 20480
+    - baseUpgradeCost: 16875000
+      baseFruitPrice: 10773
+      waterRequirement: 230
+      levelUpCostSumPerLevel: 16875000
+      priceSumPerLevel: 30720
+    plantSprites:
+    - {fileID: 21300000, guid: 001f3c8c4e7875844856035509ac9cd7, type: 3}
+    - {fileID: 21300000, guid: 972405f6c219aa74c8f4ac7cfaf1fa0c, type: 3}
+    - {fileID: 21300000, guid: e59d9510cc22ab44abc3cd26e3fa5c3a, type: 3}
+    - {fileID: 21300000, guid: b777726c8a4cc8c47938943ea5d71b04, type: 3}
+    - {fileID: 21300000, guid: 2ec960353274f1849b318a6994cc7ab9, type: 3}
+    - {fileID: 21300000, guid: c02ef68e2d8d9b948a973271c4c976a9, type: 3}
+    - {fileID: 21300000, guid: 3f737b7774935f74ebef6ce64ef813c6, type: 3}
+  - plantType: 7
+    plantIcon: {fileID: 21300000, guid: 6885a11fe8adbe2428e8b842c0809b63, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 6885a11fe8adbe2428e8b842c0809b63, type: 3}
+    plantPrefab: {fileID: 6861620595050215266, guid: beb01025a5325e84991c00dec801a690, type: 3}
+    ringStats:
+    - baseUpgradeCost: 2343750
+      baseFruitPrice: 21546
+      waterRequirement: 153
+      levelUpCostSumPerLevel: 2343750
+      priceSumPerLevel: 81920
+    - baseUpgradeCost: 14062500
+      baseFruitPrice: 21546
+      waterRequirement: 230
+      levelUpCostSumPerLevel: 14062500
+      priceSumPerLevel: 81920
+    - baseUpgradeCost: 84375000
+      baseFruitPrice: 32319
+      waterRequirement: 344
+      levelUpCostSumPerLevel: 84375000
+      priceSumPerLevel: 122880
+    plantSprites:
+    - {fileID: 21300000, guid: b072d3a145c5d7140bfaba0ffd257780, type: 3}
+    - {fileID: 21300000, guid: 3cbb7c7abc7b0b44287c084a7387af46, type: 3}
+    - {fileID: 21300000, guid: 442319df11672bf4183a47e774db7cff, type: 3}
+    - {fileID: 21300000, guid: 9caa7d1aeb1863240978d2d00642617f, type: 3}
+    - {fileID: 21300000, guid: b052ec7ec9af531438c1e81540d874d2, type: 3}
+    - {fileID: 21300000, guid: a3547722505e3fd4590ad6b58800d608, type: 3}
+    - {fileID: 21300000, guid: 7477e0f1e67f7a94383f664d87968b90, type: 3}
+  - plantType: 8
+    plantIcon: {fileID: 21300000, guid: 221e5db01b12bce4e89a8049e488a0d4, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 221e5db01b12bce4e89a8049e488a0d4, type: 3}
+    plantPrefab: {fileID: 3418310729356881154, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
+    ringStats:
+    - baseUpgradeCost: 11718750
+      baseFruitPrice: 64638
+      waterRequirement: 230
+      levelUpCostSumPerLevel: 11718750
+      priceSumPerLevel: 327680
+    - baseUpgradeCost: 70312500
+      baseFruitPrice: 64638
+      waterRequirement: 345
+      levelUpCostSumPerLevel: 70312500
+      priceSumPerLevel: 327680
+    - baseUpgradeCost: 70312500
+      baseFruitPrice: 96957
+      waterRequirement: 518
+      levelUpCostSumPerLevel: 70312500
+      priceSumPerLevel: 491520
+    plantSprites:
+    - {fileID: 21300000, guid: d7f0c1037ecf2e64eaeca781a530959f, type: 3}
+    - {fileID: 21300000, guid: 9380579e0daa6134a80d22fb7bf4eefe, type: 3}
+    - {fileID: 21300000, guid: 18d16b16e6fa94242892ed5ae1b73642, type: 3}
+    - {fileID: 21300000, guid: 4fb7f049578bcb04198f26929c364f57, type: 3}
+    - {fileID: 21300000, guid: 26f8c3bae85518e48b17b5cd38360a13, type: 3}
+    - {fileID: 21300000, guid: 3173f033a17076643b37acb99b8c2857, type: 3}
+    - {fileID: 21300000, guid: 134371ad2639ddd44b7bd3cf5a6af645, type: 3}
+  - plantType: 9
+    plantIcon: {fileID: 21300000, guid: c58b19e80c62bc748ab1cd76a391c586, type: 3}
+    fruitIcon: {fileID: 21300000, guid: c58b19e80c62bc748ab1cd76a391c586, type: 3}
+    plantPrefab: {fileID: 7046204497938297139, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
+    ringStats:
+    - baseUpgradeCost: 58593750
+      baseFruitPrice: 193914
+      waterRequirement: 345
+      levelUpCostSumPerLevel: 58593750
+      priceSumPerLevel: 1310720
+    - baseUpgradeCost: 351562500
+      baseFruitPrice: 193914
+      waterRequirement: 518
+      levelUpCostSumPerLevel: 351562500
+      priceSumPerLevel: 1310720
+    - baseUpgradeCost: 351562500
+      baseFruitPrice: 290871
+      waterRequirement: 776
+      levelUpCostSumPerLevel: 351562500
+      priceSumPerLevel: 1966080
+    plantSprites:
+    - {fileID: 21300000, guid: c687d29853b0d6d42ad3ea5ba09094e2, type: 3}
+    - {fileID: 21300000, guid: ac289503cfcc0d04dbd5005b5e1098d0, type: 3}
+    - {fileID: 21300000, guid: a0b7c5ff725137049bebc0884a5acf5d, type: 3}
+    - {fileID: 21300000, guid: 55c5bc9a637adc84f818fe75ee01980d, type: 3}
+    - {fileID: 21300000, guid: d5bcddfde2edca349ae85bc5ecc60ebf, type: 3}
+    - {fileID: 21300000, guid: b36a57790b5103648a50b9cc724acf6b, type: 3}
+    - {fileID: 21300000, guid: c5ff1e961642032429a49d76d6d97490, type: 3}

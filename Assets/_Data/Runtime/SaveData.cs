@@ -48,6 +48,47 @@ public class ConveyorSaveData
 {
     public int currentLevel; // Level hiện tại của băng chuyền
 }
+[Serializable]
+public class TransportSaveData
+{
+    public int currentLevel = 1;
+}
+
+[Serializable]
+public class ValueUpgradeItemSaveData
+{
+    public int upgradeType;
+    public int targetId;
+    public int currentLevel;
+}
+
+[Serializable]
+public class ValueUpgradeSaveData
+{
+    public List<ValueUpgradeItemSaveData> upgradeLevels = new List<ValueUpgradeItemSaveData>();
+
+    public int GetLevel(int upgradeType, int targetId)
+    {
+        ValueUpgradeItemSaveData item = upgradeLevels.Find(entry => entry.upgradeType == upgradeType && entry.targetId == targetId);
+        return item != null ? item.currentLevel : 0;
+    }
+
+    public void SetLevel(int upgradeType, int targetId, int level)
+    {
+        ValueUpgradeItemSaveData item = upgradeLevels.Find(entry => entry.upgradeType == upgradeType && entry.targetId == targetId);
+        if (item == null)
+        {
+            item = new ValueUpgradeItemSaveData
+            {
+                upgradeType = upgradeType,
+                targetId = targetId
+            };
+            upgradeLevels.Add(item);
+        }
+
+        item.currentLevel = Mathf.Max(0, level);
+    }
+}
 
 [Serializable]
 public class GardenSaveData
@@ -57,6 +98,8 @@ public class GardenSaveData
     public SprinklerSaveData sprinkler = new SprinklerSaveData(); // Lưu tiến trình vòi phun nước thường
     public HarvesterSaveData harvester = new HarvesterSaveData(); // Lưu tiến trình máy gặt thường
     public ConveyorSaveData conveyor = new ConveyorSaveData(); // Lưu tiến trình băng chuyền
+    public TransportSaveData transport = new TransportSaveData();
+    public ValueUpgradeSaveData valueUpgrades = new ValueUpgradeSaveData();
 
     // tiến trình 2 ô đất đặc biệt
     public List<SpecialPlotSaveData> specialPlots = new List<SpecialPlotSaveData>();

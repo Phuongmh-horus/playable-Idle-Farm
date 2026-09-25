@@ -1,0 +1,272 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public sealed class FarmHarvestSystem : MonoBehaviour
+{
+    [SerializeField] private HarvesterArmConfig armConfig;
+    [SerializeField] private int harvesterLevel = 1;
+
+    [SerializeField] private HarvesterArm harvesterArmPrefab;
+    [SerializeField] private Transform harvesterArmParent;
+
+    [SerializeField] private bool logPlotHarvested = true;
+
+    private FarmPlotSystem _plotSystem;
+    public FarmPlotSystem PlotSystem => _plotSystem != null ? _plotSystem : (_plotSystem = FarmSystem.Instance?.PlotSystem);
+
+    private readonly HashSet<int> _reachedPlotIds = new HashSet<int>();
+    private readonly List<HarvesterArm> _spawnedHarvesterArms = new List<HarvesterArm>();
+
+    public IReadOnlyList<HarvesterArm> Arms => _spawnedHarvesterArms;
+    public HarvesterArm PrimaryArm => _spawnedHarvesterArms.Count > 0 ? _spawnedHarvesterArms[0] : null;
+    public Transform ArmRoot => harvesterArmParent != null ? harvesterArmParent : transform;
+
+    public HarvesterConfig Config => ConfigHolder.Instance?.FarmConfig?.harvester;
+
+    public HarvesterArmConfig ArmConfig => armConfig != null ? armConfig : (harvesterArmPrefab != null ? harvesterArmPrefab.Config : null);
+    public float AlignmentTolerance => ArmConfig != null ? ArmConfig.alignmentTolerance : 3f;
+
+    public int MaxLevel => (Config != null && Config.maxLevel > 0) ? Config.maxLevel : 9;
+    public float RotationSpeed => Config != null ? Config.rotationSpeed : 30f;
+    public int HarvesterCount => Config != null ? Config.GetHarvesterCount(harvesterLevel) : ((harvesterLevel + 2) / 3);
+    public int TotalBladeCount => Config != null ? Config.GetTotalBlades(harvesterLevel) : harvesterLevel;
+    public int Level => harvesterLevel;
+    public double NextUpgradeCost => (Config != null && harvesterLevel < MaxLevel) ? Config.GetUpgradeCost(harvesterLevel) : -1;
+    public bool IsMaxLevel => harvesterLevel >= MaxLevel;
+    public bool CanUpgrade => !IsMaxLevel && (NextUpgradeCost <= 0 || PlayableFarmState.HasEnoughGold(NextUpgradeCost));
+
+    public event Action<Plot, double> PlotHarvested;
+    public event Action<int> OnHarvesterLevelChanged;
+
+    private void Update()
+    {
+        RotateHarvester();
+        CheckPlotAlignment();
+    }
+
+    public void Initialize()
+    {
+        _reachedPlotIds.Clear();
+        LoadSavedLevel();
+    }
+
+    private void LoadSavedLevel()
+    {
+        int targetLevel = harvesterLevel;
+        if (PlayableFarmState.PlayerData != null)
+        {
+            var save = PlayableFarmState.GetHarvesterSaveData();
+            if (save != null && save.currentLevel > 0)
+            {
+                targetLevel = save.currentLevel;
+            }
+        }
+
+        SetLevel(targetLevel, save: false);
+    }
+
+    private void SetLevel(int level, bool save = true)
+    {
+        harvesterLevel = Math.Clamp(level, 1, MaxLevel);
+        if (save)
+        {
+            PlayableFarmState.UpdateHarvesterLevel(harvesterLevel);
+        }
+        EnsureHarvesterArms();
+        UpdateBladeCountVisual();
+        OnHarvesterLevelChanged?.Invoke(harvesterLevel);
+        GameEventBus.OnHarvesterUpgradedEvent?.Invoke(harvesterLevel);
+    }
+
+    public bool TryUpgrade()
+    {
+        if (IsMaxLevel || Config == null)
+            return false;
+
+        double cost = Config.GetUpgradeCost(harvesterLevel);
+        if (cost > 0)
+        {
+            if (!PlayableFarmState.HasEnoughGold(cost))
+                return false;
+
+            PlayableFarmState.ConsumeGold(cost);
+        }
+
+        SetLevel(harvesterLevel + 1, save: true);
+        return true;
+    }
+
+    private void UpdateBladeCountVisual()
+    {
+        int totalArms = _spawnedHarvesterArms.Count;
+        for (int i = 0; i < totalArms; i++)
+        {
+            if (_spawnedHarvesterArms[i] != null)
+            {
+                int bladeCount = Config != null ? Config.GetBladeCount(harvesterLevel, i) : Mathf.Clamp(harvesterLevel - i * 3, 1, 3);
+                _spawnedHarvesterArms[i].SetBladeCount(bladeCount);
+            }
+        }
+    }
+
+    private void RotateHarvester()
+    {
+        float speed = RotationSpeed;
+        float dt = Time.deltaTime;
+        for (int i = 0; i < _spawnedHarvesterArms.Count; i++)
+        {
+            HarvesterArm arm = _spawnedHarvesterArms[i];
+            if (arm != null)
+            {
+                arm.RotateArm(speed, dt);
+                arm.SpinBlades(dt);
+            }
+        }
+    }
+
+    private void CheckPlotAlignment()
+    {
+        FarmPlotSystem plots = PlotSystem;
+        if (plots == null || _spawnedHarvesterArms.Count == 0)
+        {
+            return;
+        }
+
+        foreach (FarmPlotData plot in plots.Plots)
+        {
+            HarvesterArm alignedArm = null;
+
+            for (int i = 0; i < _spawnedHarvesterArms.Count; i++)
+            {
+                HarvesterArm arm = _spawnedHarvesterArms[i];
+                if (arm == null) continue;
+
+                if (plot.RingIndex >= arm.CurrentBladeCount)
+                    continue;
+
+                Vector3 harvesterForward = arm.GetForwardDirection();
+                Vector3 plotDirection = plots.GetPlotDirection(plot.Id, arm.Pivot.position);
+                if (Vector3.Angle(harvesterForward, plotDirection) <= AlignmentTolerance)
+                {
+                    alignedArm = arm;
+                    break;
+                }
+            }
+
+            HandlePlotAlignment(plot, alignedArm != null, alignedArm);
+        }
+    }
+
+    private void HandlePlotAlignment(FarmPlotData plot, bool aligned, HarvesterArm sourceArm)
+    {
+        if (!aligned)
+        {
+            _reachedPlotIds.Remove(plot.Id);
+            return;
+        }
+
+        if (_reachedPlotIds.Add(plot.Id))
+        {
+            HarvestPlot(plot, sourceArm);
+        }
+    }
+
+    private void HarvestPlot(FarmPlotData plotData, HarvesterArm sourceArm)
+    {
+        FarmPlotSystem plots = PlotSystem;
+        if (plots == null || plotData == null)
+            return;
+
+        Plot targetPlot = plots.GetPlotComponent(plotData.Id);
+        if (targetPlot == null || targetPlot.State != FarmPlotState.Occupied || targetPlot.CurrentPlant == null)
+            return;
+
+        Plant plant = targetPlot.CurrentPlant;
+        if (!plant.CanHarvest())
+            return;
+
+        double revenue = plant.Harvest();
+        if (revenue > 0 || plant.FilledSlotCount == 0)
+        {
+            LogHarvest(targetPlot, revenue);
+            PlotHarvested?.Invoke(targetPlot, revenue);
+        }
+    }
+
+    private void LogHarvest(Plot plot, double revenue)
+    {
+        if (!logPlotHarvested)
+            return;
+
+        Debug.Log($"Harvester harvested plot {plot.PlotId} yielding {revenue:F1} coins.", this);
+    }
+
+    private void EnsureHarvesterArms()
+    {
+        Transform parent = harvesterArmParent != null ? harvesterArmParent : transform;
+        int targetCount = Mathf.Max(1, HarvesterCount);
+
+        if (_spawnedHarvesterArms.Count == 0)
+        {
+            HarvesterArm[] existingArms = parent.GetComponentsInChildren<HarvesterArm>(true);
+            foreach (HarvesterArm arm in existingArms)
+            {
+                if (arm != null && !_spawnedHarvesterArms.Contains(arm))
+                {
+                    _spawnedHarvesterArms.Add(arm);
+                }
+            }
+        }
+
+        // LÆ°u gÃ³c cÆ¡ sá»Ÿ hiá»‡n táº¡i náº¿u Ä‘Ã£ cÃ³ arm quay Ä‘á»ƒ trÃ¡nh giáº­t hÃ¬nh khi nÃ¢ng cáº¥p
+        float baseZ = (_spawnedHarvesterArms.Count > 0 && _spawnedHarvesterArms[0] != null && _spawnedHarvesterArms[0].Pivot != null)
+            ? _spawnedHarvesterArms[0].Pivot.localEulerAngles.z
+            : (ArmConfig != null ? ArmConfig.rotationOffsetZ : 0f);
+
+        while (_spawnedHarvesterArms.Count < targetCount)
+        {
+            if (harvesterArmPrefab != null)
+            {
+                HarvesterArm newArm = Instantiate(harvesterArmPrefab, parent);
+                newArm.transform.localPosition = Vector3.zero;
+                newArm.transform.localScale = Vector3.one;
+                _spawnedHarvesterArms.Add(newArm);
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        while (_spawnedHarvesterArms.Count > targetCount)
+        {
+            int lastIndex = _spawnedHarvesterArms.Count - 1;
+            HarvesterArm excessArm = _spawnedHarvesterArms[lastIndex];
+            _spawnedHarvesterArms.RemoveAt(lastIndex);
+            if (excessArm != null)
+            {
+                if (Application.isPlaying)
+                {
+                    Destroy(excessArm.gameObject);
+                }
+                else
+                {
+                    DestroyImmediate(excessArm.gameObject);
+                }
+            }
+        }
+
+        float angleStep = 360f / targetCount;
+        for (int i = 0; i < _spawnedHarvesterArms.Count; i++)
+        {
+            HarvesterArm arm = _spawnedHarvesterArms[i];
+            if (arm != null && arm.Pivot != null)
+            {
+                arm.Pivot.localRotation = Quaternion.Euler(0f, 0f, baseZ + i * angleStep);
+                int bladeCount = Config != null ? Config.GetBladeCount(harvesterLevel, i) : Mathf.Clamp(harvesterLevel - i * 3, 1, 3);
+                arm.SetBladeCount(bladeCount);
+            }
+        }
+    }
+}

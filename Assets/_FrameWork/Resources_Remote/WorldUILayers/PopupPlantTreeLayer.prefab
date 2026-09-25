@@ -276,7 +276,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 1730657447
+  m_SortingLayerID: -17376981
   m_SortingOrder: 500
   m_TargetDisplay: 0
 --- !u!225 &7287304085438179876
@@ -334,12 +334,11 @@ MonoBehaviour:
   graphicRaycaster: {fileID: 5830335586846865767}
   billboardFollower: {fileID: 6657654056315702846}
   animHandler: {fileID: -5185731462699085400}
+  layerDepth: 500
   blockSelectionClick: 1
   focusCameraOnShow: 1
   useCustomFocusOffset: 0
   customFocusOffset: {x: 0, y: 0, z: 0}
-  layerDepth: 500
-  additionalOrder: 0
   OnShowLayer:
     m_PersistentCalls:
       m_Calls: []
@@ -362,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c607e24332606f543a29126b81d725e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldLayerBase: {fileID: 0}
+  worldLayerBase: {fileID: 9457244427059466}
   panelRect: {fileID: 665603444079575887}
   canvasGroup: {fileID: 7287304085438179876}
   useScale: 1
@@ -402,7 +401,7 @@ MonoBehaviour:
   target: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
-  billboardMode: 3
+  billboardMode: 0
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
   manageScale: 0
   flipX: 0

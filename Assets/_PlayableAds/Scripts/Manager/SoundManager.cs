@@ -12,10 +12,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     [SerializeField] private GameObject sfxPrefab;
     [SerializeField] public SoundDataSO soundDataSO;
     [SerializeField] private List<AudioSource> sfxSource = new List<AudioSource>();
-    private readonly Dictionary<AudioClipName, float> soundCooldowns = new Dictionary<AudioClipName, float>()
-    {
-        {AudioClipName.sfx_praise_user, 1.5f}
-    };
+    private readonly Dictionary<AudioClipName, float> soundCooldowns = new Dictionary<AudioClipName, float>();
 
     private readonly Dictionary<AudioClipName, float> lastPlayTime = new Dictionary<AudioClipName, float>();
     private const int MaxSfxSources = 8;
@@ -23,16 +20,12 @@ public class SoundManager : MonoSingleton<SoundManager>
     void OnEnable()
     {
         GameEventBus.OnStartGame += StartGame;
-        GameEventBus.OnLoseGame += LoseGame;
-        GameEventBus.OnWinGame += WinGame;
 
     }
 
     private void OnDisable()
     {
         GameEventBus.OnStartGame -= StartGame;
-        GameEventBus.OnLoseGame -= LoseGame;
-        GameEventBus.OnWinGame -= WinGame;
     }
 
     void Start()
@@ -65,69 +58,13 @@ public class SoundManager : MonoSingleton<SoundManager>
         RestartMusic();
     }
 
-    private void OnCarrierFinished()
-    {
-        PlayOneShot(AudioClipName.sfx_complete_box);
-        if(LunaUIManager.Instance != null && LunaUIManager.Instance.PlayPraiseSfx)
-        {
-            PlayOneShot(AudioClipName.sfx_praise_user);
-        }
-    }
-
-
-    [SerializeField]private float musicVolume = 0.25f;
+    [SerializeField] private float musicVolume = 0.25f;
     private void RestartMusic()
     {
         musicSource.Stop();
         musicSource.volume = musicVolume;
         musicSource.Play();
     }
-
-    private Coroutine musicCoroutine;
-    private void LoseGame()
-    {
-        if (musicCoroutine != null)
-        {
-            StopCoroutine(musicCoroutine);
-        }
-        musicCoroutine = StartCoroutine(PlayMusicWithDelay(AudioClipName.sfx_lose));
-    }
-    private void WinGame()
-    {
-        if (musicCoroutine != null)
-        {
-            StopCoroutine(musicCoroutine);
-        }
-        musicCoroutine = StartCoroutine(PlayMusicWithDelay(AudioClipName.sfx_victory_1));
-    }
-    private IEnumerator PlayMusicWithDelay(AudioClipName clipName, float delay = 0.15f)
-    {
-        yield return new WaitForSeconds(delay);
-        StopMusic();
-        StopAllSfx();
-        PlayOneShot(clipName);
-    }
-    private void StopMusic()
-    {
-        musicSource.Stop();
-    }
-    private void StopSFX()
-    {
-        foreach (AudioSource source in sfxSource)
-        {
-            source.Stop();
-        }
-    }
-    private void StopAllSound()
-    {
-        StopMusic();
-        StopSFX();
-    }
-    private void PauseMusic()
-    {
-        musicSource.Pause();
-    }
-
 
     public void SetMusicVolume(float volume)
     {
@@ -145,7 +82,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         List<SoundData> sounds = soundDataSO.soundDataList.FindAll(sound => sound.Name == name);
         if (sounds.Count == 0)
             return null;
-        
+
         int randomIndex = Random.Range(0, sounds.Count);
         return sounds[randomIndex];
     }
@@ -188,10 +125,6 @@ public class SoundManager : MonoSingleton<SoundManager>
         {
             Debug.LogWarning("SoundManager: failed to get or create an SFX AudioSource.");
             return;
-        }
-        if(name == AudioClipName.sfx_praise_user)
-        {
-            LunaUIManager.Instance.PlayPraiseVfx(soundData.Clip.name);
         }
 
         source.PlayOneShot(soundData.Clip, soundData.VolumeDefault);
@@ -262,7 +195,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         return source;
     }
 
-    
+
     [SerializeField] private AudioSource loopFxSource;
     private AudioClipName? _currentLoopClipName = null;
     private AudioClipName? _pausedLoopClipName = null;
@@ -276,11 +209,11 @@ public class SoundManager : MonoSingleton<SoundManager>
     /// </summary>
     public IEnumerator PlayLoop(AudioClipName clipName, float delay = 0f)
     {
-        if(isPlayingLoopSound)
+        if (isPlayingLoopSound)
         {
             yield break;
         }
-        if(clipName == AudioClipName.sfx_merge_loop)
+        if (clipName == AudioClipName.sfx_merge_loop)
         {
             yield return new WaitForSeconds(delay);
         }
@@ -296,7 +229,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         loopFxSource.Play();
     }
 
-    
+
 
 
     /// <summary>

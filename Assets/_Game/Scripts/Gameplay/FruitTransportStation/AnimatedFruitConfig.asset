@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab58bcab53edc5428047e60477c66dd, type: 3}
+  m_Name: AnimatedFruitConfig
+  m_EditorClassIdentifier: 
+  popDuration: 0.5
+  popRadius: 1.5
+  popInitialScale: 0.2
+  popPeakScale: 1
+  popEase: 5
+  flightDuration: 0.55
+  startScale: 1
+  endScale: 1
+  flightEase: 4

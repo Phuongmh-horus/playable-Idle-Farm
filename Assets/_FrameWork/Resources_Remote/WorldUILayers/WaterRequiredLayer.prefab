@@ -65,8 +65,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 430800306, guid: e6f61f34b59e49c48bbbf73a304f9735, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 91241bf6a7200604e82bd2bd660bfb03, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -133,14 +133,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.4696021, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 430800306, guid: e6f61f34b59e49c48bbbf73a304f9735, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9d3a0bc30c0c014ba77ecf64d00db18, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -163,7 +163,6 @@ GameObject:
   - component: {fileID: 7717261187999291012}
   - component: {fileID: 3001638579006843917}
   - component: {fileID: 8896602052558243847}
-  - component: {fileID: 5280485913555170932}
   m_Layer: 0
   m_Name: WaterRequiredLayer
   m_TagString: Untagged
@@ -190,7 +189,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1.2, y: 0.2}
+  m_SizeDelta: {x: 1.3, y: 0.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4347676586087060360
 Canvas:
@@ -212,7 +211,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 1730657447
+  m_SortingLayerID: -17376981
   m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!225 &7717261187999291012
@@ -244,13 +243,12 @@ MonoBehaviour:
   rectTransform: {fileID: 5420652896716273521}
   graphicRaycaster: {fileID: 0}
   billboardFollower: {fileID: 8896602052558243847}
+  animHandler: {fileID: 0}
+  layerDepth: 200
   blockSelectionClick: 1
-  animHandler: {fileID: 5280485913555170932}
   focusCameraOnShow: 0
   useCustomFocusOffset: 0
   customFocusOffset: {x: 0, y: 0, z: 0}
-  layerDepth: 200
-  additionalOrder: 0
   OnShowLayer:
     m_PersistentCalls:
       m_Calls: []
@@ -274,44 +272,8 @@ MonoBehaviour:
   target: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
-  billboardMode: 3
+  billboardMode: 0
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
   manageScale: 0
   flipX: 0
   customScale: {x: 1, y: 1, z: 1}
---- !u!114 &5280485913555170932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6436284887233763905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c607e24332606f543a29126b81d725e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  worldLayerBase: {fileID: 3001638579006843917}
-  panelRect: {fileID: 5420652896716273521}
-  canvasGroup: {fileID: 7717261187999291012}
-  useScale: 1
-  autoDetectTargetScale: 1
-  targetScale: {x: 0.01, y: 0.01, z: 0.01}
-  useFade: 1
-  duration: 0.3
-  easeType: 26
-  interval: 0
-  OnStartAnim:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCompleteAnim:
-    m_PersistentCalls:
-      m_Calls: []
-  hideDuration: 0.2
-  hideEaseType: 25
-  OnStartHideAnim:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCompleteHideAnim:
-    m_PersistentCalls:
-      m_Calls: []

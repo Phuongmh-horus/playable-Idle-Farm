@@ -2,6 +2,20 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlantType
+{
+    Tomato = 0,
+    Pumpkin = 1,
+    Eggplant = 2,
+    Cabbage = 3,
+    Wheat = 4,
+    Beet = 5,
+    Pepper = 6,
+    Watermelon = 7,
+    Corn = 8,
+    Spinach = 9
+}
+
 [CreateAssetMenu(fileName = "PlantConfig", menuName = "Farm/PlantConfig")]
 public class PlantConfig : ScriptableObject
 {
@@ -9,205 +23,179 @@ public class PlantConfig : ScriptableObject
 
     #region Query Methods
 
-    /// <summary>
-    /// Lấy cấu hình cây theo plantId
-    /// </summary>
+    public PlantConfigData GetPlant(PlantType plantType)
+    {
+        return plants.Find(p => p.plantType == plantType);
+    }
+
     public PlantConfigData GetPlant(int plantId)
     {
-        return plants.Find(p => p.id == plantId);
-    }
-
-    /// <summary>
-    /// Lấy cấu hình cây theo tên
-    /// </summary>
-    public PlantConfigData GetPlant(string plantName)
-    {
-        return plants.Find(p => string.Equals(p.plantName, plantName, StringComparison.OrdinalIgnoreCase));
-    }
-
-    /// <summary>
-    /// Kiểm tra cây có tồn tại trong config không
-    /// </summary>
-    public bool HasPlant(int plantId)
-    {
-        return plants.Exists(p => p.id == plantId);
-    }
-
-    /// <summary>
-    /// Lấy cấu hình của một level cụ thể của cây
-    /// </summary>
-    public PlantLevelConfig GetLevelConfig(int plantId, int level)
-    {
-        return GetPlant(plantId)?.GetLevelConfig(level);
-    }
-
-    /// <summary>
-    /// Lấy cấp độ tối đa của cây
-    /// </summary>
-    public int GetMaxLevel(int plantId)
-    {
-        PlantConfigData plant = GetPlant(plantId);
-        return plant != null ? plant.GetMaxLevel() : 0;
-    }
-
-    /// <summary>
-    /// Lấy màu nước ép của cây
-    /// </summary>
-    public Color GetJuiceColor(int plantId)
-    {
-        return GetPlant(plantId)?.juiceColor ?? Color.white;
-    }
-
-    /// <summary>
-    /// Lấy lượng nước ép cây sinh ra khi thu hoạch
-    /// </summary>
-    public float GetJuiceAmount(int plantId, int level = 1)
-    {
-        PlantConfigData plant = GetPlant(plantId);
-        return plant != null ? plant.GetJuiceAmount(level) : 0.05f;
-    }
-
-    /// <summary>
-    /// Lấy chỉ số cụ thể của cây theo level (WaterRequirement, UpgradeCost, FruitPrice, JuiceAmount)
-    /// </summary>
-    public float GetStatValue(int plantId, int level, StatType statType, float defaultValue = 0f)
-    {
-        PlantLevelConfig levelConfig = GetLevelConfig(plantId, level);
-        return levelConfig != null ? levelConfig.GetStat(statType, defaultValue) : defaultValue;
+        return plants.Find(p => (int)p.plantType == plantId);
     }
 
     #endregion
+}
+
+[Serializable]
+public class PlantRingStats
+{
+    [Tooltip("Chi phí nâng cấp cơ bản tại Level 1 cho ring này")]
+    public double baseUpgradeCost = 100;
+
+    [Tooltip("Giá bán quả cơ bản tại Level 1 cho ring này")]
+    public double baseFruitPrice = 10;
+
+    [Tooltip("Lượng nước yêu cầu cho mỗi slot quả ở ring này")]
+    public int waterRequirement = 10;
+
+    [Tooltip("Chi phí nâng cấp tăng thêm mỗi level ở ring này")]
+    public double levelUpCostSumPerLevel = 25;
+
+    [Tooltip("Giá bán quả tăng thêm mỗi level ở ring này")]
+    public double priceSumPerLevel = 5;
 }
 
 [Serializable]
 public class PlantConfigData
 {
-    [Header("Identity")]
-    public int id;
-    public string plantName;
-
-    [Header("Fruit Visuals")]
-    public string fruitName;
+    [Header("Identity & Visuals")]
+    public PlantType plantType;
+    public Sprite plantIcon;
     public Sprite fruitIcon;
-    public GameObject fruitPrefab;
+    public Plant plantPrefab;
 
-    [Header("Juice Settings")]
-    [Tooltip("Màu hiển thị của nước ép")]
-    public Color juiceColor = Color.white;
+    [Header("Ring Stats (Cây ở 3 ring đầu: có 3 phần tử cho Ring 0, 1, 2. Cây ở Ring 4 hoặc cây dùng chung: chỉ cần 1 phần tử)")]
+    public List<PlantRingStats> ringStats = new List<PlantRingStats>();
 
-    [Tooltip("Lượng nước ép cơ bản bơm vào vòng (0 - 1) khi thu hoạch")]
-    public float defaultJuiceAmount = 0.05f;
+    [Header("Plant Level Sprites (Mỗi level tương ứng 1 Sprite, Số lượng = Max Level)")]
+    public List<Sprite> plantSprites = new List<Sprite>();
 
-    [Header("Positions & Levels")]
-    public List<Vector2> fruitPositions = new List<Vector2>();
-    public List<PlantLevelConfig> plantLevelConfigs = new List<PlantLevelConfig>();
+    #region Properties
 
-    #region Query Methods
+    public int ID => (int)plantType;
+    public string PlantName => GetDisplayName();
+    public string FruitName => GetDisplayName();
 
-    /// <summary>
-    /// Lấy lượng nước ép theo level
-    /// </summary>
-    public float GetJuiceAmount(int level)
+    public string GetDisplayName()
     {
-        PlantLevelConfig levelConfig = GetLevelConfig(level);
-        return levelConfig != null ? levelConfig.GetStat(StatType.JuiceAmount, defaultJuiceAmount) : defaultJuiceAmount;
-    }
-
-    /// <summary>
-    /// Lấy cấu hình theo level cụ thể (level >= 1)
-    /// </summary>
-    public PlantLevelConfig GetLevelConfig(int level)
-    {
-        return plantLevelConfigs.Find(c => c.level == level);
-    }
-
-    /// <summary>
-    /// Lấy cấp độ tối đa hiện có của cây
-    /// </summary>
-    public int GetMaxLevel()
-    {
-        if (plantLevelConfigs == null || plantLevelConfigs.Count == 0)
-            return 0;
-
-        int max = 0;
-        foreach (var config in plantLevelConfigs)
-        {
-            if (config.level > max)
-                max = config.level;
-        }
-        return max;
-    }
-
-    /// <summary>
-    /// Lấy prefab mô hình theo level
-    /// </summary>
-    public GameObject GetPrefab(int level)
-    {
-        return GetLevelConfig(level)?.prefab;
-    }
-
-    /// <summary>
-    /// Lấy sprite icon theo level
-    /// </summary>
-    public Sprite GetIcon(int level)
-    {
-        return GetLevelConfig(level)?.icon;
-    }
-
-    /// <summary>
-    /// Lấy giá trị của một chỉ số theo level
-    /// </summary>
-    public float GetStatValue(int level, StatType statType, float defaultValue = 0f)
-    {
-        PlantLevelConfig levelConfig = GetLevelConfig(level);
-        return levelConfig != null ? levelConfig.GetStat(statType, defaultValue) : defaultValue;
+        return plantType.ToString();
     }
 
     #endregion
-}
-
-[Serializable]
-public class PlantLevelConfig
-{
-    public int level;
-    
-    public Sprite icon;
-    
-    public GameObject prefab;
-    
-    public List<StatData> stats = new List<StatData>(); // Các chỉ số tương ứng với level này
 
     #region Query Methods
 
-    /// <summary>
-    /// Lấy giá trị của một chỉ số (WaterRequirement, UpgradeCost, FruitPrice)
-    /// </summary>
-    public float GetStat(StatType type, float defaultValue = 0f)
+    public PlantRingStats GetRingStats(int ringIndex = 0)
     {
-        if (stats == null)
-            return defaultValue;
+        if (ringStats == null || ringStats.Count == 0)
+            return null;
 
-        StatData stat = stats.Find(s => s.type == type);
-        return stat != null ? stat.value : defaultValue;
+        if (ringStats.Count == 1)
+            return ringStats[0];
+
+        int clampedIndex = Mathf.Clamp(ringIndex, 0, ringStats.Count - 1);
+        return ringStats[clampedIndex];
+    }
+
+    public Sprite GetPlantSprite(int fruitCount = 0)
+    {
+        if (plantSprites == null || plantSprites.Count == 0)
+            return plantIcon != null ? plantIcon : fruitIcon;
+
+        int index = Mathf.Clamp(fruitCount, 0, plantSprites.Count - 1);
+        Sprite sp = plantSprites[index];
+        return sp != null ? sp : (plantIcon != null ? plantIcon : fruitIcon);
+    }
+
+    public List<Vector2> GetFruitPositions()
+    {
+        return new List<Vector2>();
+    }
+
+    public int GetMaxLevel()
+    {
+        return plantSprites != null && plantSprites.Count > 1 ? plantSprites.Count - 1 : 1;
+    }
+
+    public Plant GetPrefab()
+    {
+        return plantPrefab;
+    }
+
+    public Sprite GetIcon(int level = 1)
+    {
+        return GetPlantSprite(level);
+    }
+
+    public int GetWaterRequirement(int ringIndex = 0)
+    {
+        PlantRingStats stats = GetRingStats(ringIndex);
+        return stats?.waterRequirement ?? 10;
     }
 
     /// <summary>
-    /// Thử lấy giá trị chỉ số nếu tồn tại
+    /// Lấy chi phí nâng cấp lên level tiếp theo cho ring cụ thể.
+    /// Nếu LevelUpCostSumPerLevel > 0, tính theo: BaseCost + (level - 1) * LevelUpCostSumPerLevel
     /// </summary>
-    public bool TryGetStat(StatType type, out float value)
+    public double GetUpgradeCost(int level, int ringIndex = 0)
     {
-        if (stats != null)
+        PlantRingStats stats = GetRingStats(ringIndex);
+        double baseCost = stats != null ? stats.baseUpgradeCost : 100;
+        double sumPerLevel = stats != null ? stats.levelUpCostSumPerLevel : 25;
+
+        if (sumPerLevel > 0)
         {
-            StatData stat = stats.Find(s => s.type == type);
-            if (stat != null)
-            {
-                value = stat.value;
-                return true;
-            }
+            return baseCost + (Mathf.Max(1, level) - 1) * sumPerLevel;
         }
 
-        value = 0f;
-        return false;
+        return baseCost;
+    }
+
+    /// <summary>
+    /// Lấy giá bán trái cây theo level của cây trồng cho ring cụ thể.
+    /// Nếu PriceSumPerLevel > 0, tính theo: BasePrice + (level - 1) * PriceSumPerLevel
+    /// </summary>
+    public double GetFruitPrice(int level, int ringIndex = 0)
+    {
+        PlantRingStats stats = GetRingStats(ringIndex);
+        double basePrice = stats != null ? stats.baseFruitPrice : 10;
+        double sumPerLevel = stats != null ? stats.priceSumPerLevel : 5;
+
+        double price = basePrice;
+        if (sumPerLevel > 0)
+        {
+            price = basePrice + (Mathf.Max(1, level) - 1) * sumPerLevel;
+        }
+
+        return price;
+    }
+
+    /// <summary>
+    /// Tính tổng chi phí nâng cấp từ fromLevel đến toLevel cho ring cụ thể
+    /// </summary>
+    public double GetTotalUpgradeCost(int fromLevel, int toLevel, int ringIndex = 0)
+    {
+        double total = 0;
+        for (int l = fromLevel; l < toLevel; l++)
+        {
+            total += GetUpgradeCost(l, ringIndex);
+        }
+        return total;
+    }
+
+    public double GetStatValue(int level, StatType statType, double defaultValue = 0, int ringIndex = 0)
+    {
+        switch (statType)
+        {
+            case StatType.UpgradeCost:
+                return GetUpgradeCost(level, ringIndex);
+            case StatType.FruitPrice:
+                return GetFruitPrice(level, ringIndex);
+            case StatType.WaterRequirement:
+                return GetWaterRequirement(ringIndex);
+            default:
+                return defaultValue;
+        }
     }
 
     #endregion

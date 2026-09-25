@@ -24,7 +24,8 @@ public class PlantStore : MonoBehaviour
         }
     }
 
-    public void SetupStore(List<PlantConfigData> plantConfigs)
+    /// <summary>Builds choices in the provided order; scenarios must not randomize this list.</summary>
+    public void SetupStore(IReadOnlyList<PlantConfigData> plantConfigs)
     {
         if (Panel == null || ColumnPrefab == null || ItemInColumnPrefab == null)
         {
@@ -36,6 +37,8 @@ public class PlantStore : MonoBehaviour
             Debug.LogWarning("PlantStore: No plant configurations provided.");
             return;
         }
+        // The scene keeps SelectPlantStore inactive except in scenario 125.
+        gameObject.SetActive(true);
         Panel.SetActive(true);
         ClearStore();
         int count = plantConfigs.Count;
@@ -53,7 +56,7 @@ public class PlantStore : MonoBehaviour
                 GameObject item = Instantiate(ItemInColumnPrefab, column.transform);
                 // count++;
                 PlantItem plantItem = item.GetComponent<PlantItem>();
-                plantItem.plantConfigData = plantConfigs[i * maxItemPerColumn + j]; 
+                if (plantItem != null) plantItem.SetData(plantConfigs[index]);
             }
         }
         UpdateLayout();
@@ -61,13 +64,13 @@ public class PlantStore : MonoBehaviour
 
     private void UpdateLayout()
     {
-       LayoutRebuilder.ForceRebuildLayoutImmediate(Panel.GetComponent<RectTransform>());
+       if (Panel != null) LayoutRebuilder.ForceRebuildLayoutImmediate(Panel.GetComponent<RectTransform>());
     }
 
 
     public void HideStore()
     {
-        Panel.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
 

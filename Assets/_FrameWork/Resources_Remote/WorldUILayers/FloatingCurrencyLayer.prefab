@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 100}
+  m_AnchoredPosition: {x: 0.50041, y: 0}
+  m_SizeDelta: {x: 2.002, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2096484915888089862
 CanvasRenderer:
@@ -65,10 +65,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 12
+  m_text: 125
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 2bde33b94ce9ba14bb1c318315242a16, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0bb93445c9a10a345b7338d3be619f26, type: 2}
+  m_sharedMaterial: {fileID: -8313916626228410150, guid: 0bb93445c9a10a345b7338d3be619f26, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -92,12 +92,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
+  m_fontSize: 0.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 60
+  m_fontSizeMin: 0.1
+  m_fontSizeMax: 2
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -166,10 +166,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2529537330917345619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 0.8, y: 0.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6570220081042803975
 CanvasRenderer:
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1208965484, guid: e6f61f34b59e49c48bbbf73a304f9735, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 30ae071cc8902144384c22e38db341b2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -224,7 +224,6 @@ GameObject:
   - component: {fileID: 579250753834133914}
   - component: {fileID: 8920826630562756975}
   - component: {fileID: 6309950946250198978}
-  - component: {fileID: 696204320709522756}
   m_Layer: 0
   m_Name: FloatingCurrencyLayer
   m_TagString: Untagged
@@ -251,7 +250,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 3, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3085606860416098646
 Canvas:
@@ -273,7 +272,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 1730657447
+  m_SortingLayerID: -17376981
   m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!225 &3005641139432229701
@@ -351,8 +350,8 @@ MonoBehaviour:
   rectTransform: {fileID: 2529537330917345619}
   graphicRaycaster: {fileID: 3385190042842603120}
   billboardFollower: {fileID: 8920826630562756975}
-  animHandler: {fileID: 696204320709522756}
-  layerDepth: 1000
+  animHandler: {fileID: 0}
+  layerDepth: 200
   blockSelectionClick: 1
   focusCameraOnShow: 0
   useCustomFocusOffset: 0
@@ -368,39 +367,3 @@ MonoBehaviour:
   floatDuration: 1
   delayBeforeFade: 0.5
   fadeDuration: 0.3
---- !u!114 &696204320709522756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7711532618495119571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c607e24332606f543a29126b81d725e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  worldLayerBase: {fileID: 6309950946250198978}
-  panelRect: {fileID: 2529537330917345619}
-  canvasGroup: {fileID: 3005641139432229701}
-  useScale: 1
-  autoDetectTargetScale: 1
-  targetScale: {x: 0.01, y: 0.01, z: 0.01}
-  useFade: 1
-  duration: 0.3
-  easeType: 26
-  interval: 0
-  OnStartAnim:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCompleteAnim:
-    m_PersistentCalls:
-      m_Calls: []
-  hideDuration: 0.2
-  hideEaseType: 25
-  OnStartHideAnim:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCompleteHideAnim:
-    m_PersistentCalls:
-      m_Calls: []
