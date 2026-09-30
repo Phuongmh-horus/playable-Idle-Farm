@@ -179,13 +179,25 @@ public sealed class FruitTransportStation : MonoBehaviour
         RefreshCapacityLayer();
     }
 
-    public void Sell()
+    /// <summary>
+    /// Starts a real sale only when the vehicle can depart. Tutorial phase 3
+    /// is reported after that validation, never merely because a disabled or
+    /// invalid Sell button was clicked.
+    /// </summary>
+    public bool TrySell()
     {
         if (!IsIdleAtStation || _loadedFruitCount <= 0)
-            return;
+            return false;
+
+        if (!StartDeparture())
+            return false;
+
         PlayableTutorialFlow.Instance?.ReportSellOutClicked();
-        StartDeparture();
+        return true;
     }
+
+    // Compatibility entry point for existing inspector button bindings.
+    public void Sell() { TrySell(); }
 
     public bool TryUpgrade()
     {
@@ -203,17 +215,18 @@ public sealed class FruitTransportStation : MonoBehaviour
         return true;
     }
 
-    private void StartDeparture()
+    private bool StartDeparture()
     {
         CancelActiveMotions();
         if (vehicle == null || exitPoint == null || config == null)
         {
             SetState(TransportVehicleState.IdleAtStation);
-            return;
+            return false;
         }
 
         SetState(TransportVehicleState.Departing);
         vehicle.MoveTo(vehicle.transform.position, exitPoint.position, config.DepartureDuration, Ease.InQuad, OnReachedOffScreen);
+        return true;
     }
 
     private void OnReachedOffScreen()

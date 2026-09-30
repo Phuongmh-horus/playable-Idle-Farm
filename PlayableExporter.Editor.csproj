@@ -79,8 +79,8 @@
     <Compile Include="Assets\Editor\PlayableExporter\Patching\HtmlPatchOperationResult.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\PlayableExportModels.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\LunaXBuildModels.cs" />
-    <Compile Include="Assets\Editor\PlayableExporter\LunaXSharedCoreBuilder.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Networks\NetworkMarkupTemplates.cs" />
+    <Compile Include="Assets\Editor\PlayableExporter\LunaXSharedCoreBuilder.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Networks\MolocoNetworkMarkupBuilder.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Networks\NetworkMarkupBuilderFactory.cs" />
     <Compile Include="Assets\Editor\PlayableExporter\Patching\HtmlPatchExecutor.cs" />
@@ -94,8 +94,10 @@
     <Compile Include="Assets\Editor\PlayableExporter\Networks\VungleNetworkMarkupBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Editor\PlayableExporter\Templates\lunax_preloader_shell.txt" />
     <None Include="Assets\Editor\PlayableExporter\PlayableExporter.Editor.asmdef" />
     <None Include="Assets\Editor\PlayableExporter\Templates\brotli_decoder.txt" />
+    <None Include="Assets\Editor\PlayableExporter\Templates\lunax_worker_bootstrap.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

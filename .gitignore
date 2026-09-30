@@ -123,17 +123,6 @@ dist/
 bin/
 
 
-# Playable Exports folder
-/[Pp]layableExports
-
-# MCP Unity cache (nếu có)
-.mcp/
-.mcp-cache/
-
-# Playable export cache
-dist/
-bin/
 Assets/Editor/PlayableExporter
 LunaTemp
 ReferenceSync/GameplayScripts_Reference
-Assets/Editor/ReferencesSync

@@ -12,3 +12,4 @@
 - Do not retain DataManager in a playable when the requested runtime state is explicitly local; migrate callers to one small session-state owner rather than hiding DataManager behind another adapter.
 - For playable world UI explicitly required to be pre-attached, register inactive scene instances and fail visibly when the finite pool is exhausted; never silently instantiate a prefab during Play.
 - When a UI manager and GameplayWorldCanvas are separate scene roots, resolve pre-attached world UI through its owning manager/registry rather than only from the UI manager's transform root.
+- For gated tutorial phases, re-evaluate the gate when the flow enters the phase; an earlier one-shot availability notification can otherwise be missed and leave the tutorial stalled.

@@ -336,7 +336,7 @@ MonoBehaviour:
     isUnlockedByDefault: 0
   sprinkler:
     maxLevel: 10
-    rotationDuration: 10
+    rotationDuration: 8
     level1Cost: 19
     sprinklerBasePrice: 190
     sprinklerUpdateScale: 2.25

@@ -158,7 +158,7 @@ public class Plant : MonoBehaviour
         _plantLevel++;
         _currentWater = 0f;
         UpdatePlantSprite();
-        PlayableTutorialFlow.Instance?.ReportFirstPlantUpgraded();
+        PlayableTutorialFlow.Instance?.ReportFirstPlantUpgraded(this);
         return true;
     }
 

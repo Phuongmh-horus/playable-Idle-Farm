@@ -108,9 +108,9 @@
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\Editor\Events\SessionEventInfo.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\Editor\CoverageResultWriterBase.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\Editor\Events\Events.cs" />
+    <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\Editor\Filtering\PathFiltering.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\Editor\CoverageRunData.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\Editor\CommandLineParser\CommandLineOption.cs" />
-    <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\Editor\Filtering\PathFiltering.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\Editor\CoverageStats\ICoverageStatsProvider.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\Editor\Analytics\CoverageAnalyticsEnums.cs" />
   </ItemGroup>

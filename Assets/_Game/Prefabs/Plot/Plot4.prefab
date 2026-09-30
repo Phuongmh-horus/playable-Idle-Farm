@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1913317632114106275}
   plotVisual: {fileID: 9099247650663404639}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
 --- !u!114 &9099247650663404639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +183,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2049194685
+  m_SortingLayerID: -496145767
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: f5f3980e46a70754b801c68704c1e37e, type: 3}

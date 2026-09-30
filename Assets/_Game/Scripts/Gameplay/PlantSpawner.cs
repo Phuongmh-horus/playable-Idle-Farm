@@ -23,4 +23,19 @@ public static class PlantSpawner
 
         Object.Destroy(plant.gameObject);
     }
+
+    public static Plant SpawnMegaPlant(int plantId, Transform parent, Vector3 localPosition, Plot owner)
+    {
+        Plant plantPrefab = ConfigHolder.Instance?.PlantConfig?.GetPlant(plantId)?.GetPrefab();
+        if (plantPrefab == null) return null;
+
+        Plant plant = Object.Instantiate(plantPrefab, parent);
+        if (plant != null)
+        {
+            plant.transform.localPosition = localPosition;
+            plant.transform.rotation = Quaternion.Euler(90, 0, 0);
+            plant.Init(plantId, owner.PlotData?.PlantLevel ?? 1, owner.RingIndex);
+        }
+        return plant;
+    }
 }

@@ -1299,6 +1299,7 @@ GameObject:
   - component: {fileID: 1686311379238746894}
   - component: {fileID: 6122923162592401298}
   - component: {fileID: 4496904775179982671}
+  - component: {fileID: 697144009151324099}
   m_Layer: 5
   m_Name: TutorialLayer
   m_TagString: Untagged
@@ -1337,6 +1338,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8004001557940829506}
   m_CullTransparentMesh: 1
+--- !u!225 &697144009151324099
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004001557940829506}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!114 &4496904775179982671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1375,5 +1388,3 @@ MonoBehaviour:
   handTapDuration: 0.25
   handTapDistance: {x: 18, y: 18}
   handTapScale: 0.9
-  showTemporaryNextPhaseButton: 1
-  temporaryButtonAnchoredPosition: {x: -155, y: -75}

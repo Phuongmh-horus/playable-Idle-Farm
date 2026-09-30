@@ -483,7 +483,21 @@ public class LunaUIManager : MonoBehaviour
         {
             sceneObject = FindChildByName(WorldLayerManager.Instance.transform, objectName);
         }
-        return sceneObject != null ? sceneObject.GetComponent<PlayableUpgradePopupView>() : null;
+        if (sceneObject == null)
+        {
+            return null;
+        }
+
+        PlayableUpgradePopupView popup = sceneObject.GetComponent<PlayableUpgradePopupView>();
+        if (popup != null)
+        {
+            return popup;
+        }
+
+        // Migration safety for a scene that contains the imported popup artwork
+        // but predates PlayableUpgradePopupView. This adds behaviour to the
+        // already scene-attached object; it never creates a popup GameObject.
+        return sceneObject.AddComponent<PlayableUpgradePopupView>();
     }
 
     private static void HidePopupAtStartup(PlayableUpgradePopupView popup)

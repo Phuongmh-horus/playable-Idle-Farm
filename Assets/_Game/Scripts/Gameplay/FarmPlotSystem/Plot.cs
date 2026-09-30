@@ -1,18 +1,18 @@
 using System;
 using UnityEngine;
 
-public sealed class Plot : MonoBehaviour
+public class Plot : MonoBehaviour
 {
-    [SerializeField] private StaticSelectable plantRoot;
+    [SerializeField] protected StaticSelectable plantRoot;
     [SerializeField] private PlotVisual plotVisual;
     [SerializeField] private Vector3 upgradeIconOffset = new Vector3(0, 1.2f, 0);
 
     private int _plotId;
     private int _ringIndex;
 
-    private FarmPlotSystem _slotSystem;
+    protected FarmPlotSystem _slotSystem;
     private FarmPlotData _plotData;
-    private Plant _spawnedPlant;
+    protected Plant _spawnedPlant;
 
     private bool _isShowingUpgradeIcon;
     private bool _isGoldSubscribed;
@@ -246,7 +246,7 @@ public sealed class Plot : MonoBehaviour
         }
     }
 
-    private void ClearSpawnedPlant()
+    protected void ClearSpawnedPlant()
     {
         if (_spawnedPlant != null)
         {
@@ -275,7 +275,7 @@ public sealed class Plot : MonoBehaviour
         }
     }
 
-    private void HandlePlantRootTapped(StaticSelectable selectable)
+    protected virtual void HandlePlantRootTapped(StaticSelectable selectable)
     {
         if (_plotData == null)
             return;
@@ -411,7 +411,7 @@ public sealed class Plot : MonoBehaviour
 
         // Tutorial milestone: the first visible affordable upgrade is the
         // authoritative signal until scenario-specific upgrade rules exist.
-        PlayableTutorialFlow.Instance?.ReportFirstPlantUpgradeAffordable();
+        PlayableTutorialFlow.Instance?.ReportFirstPlantUpgradeAffordable(this);
     }
 
     private void OnUpgradeIconClicked()

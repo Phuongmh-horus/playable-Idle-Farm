@@ -199,11 +199,12 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
             return;
         }
 
-        // Upgrade must wait until its affordability milestone. Sell and the
-        // other immediate transitions may reveal the next expected phase.
+        // Upgrade must wait until the starter plant is affordable. The check
+        // below also covers an icon that became available before Sell ended.
         if (_expectedPhase == Phase.Upgrade)
         {
             HideCurrentPhase();
+            ShowExpectedPhase();
             return;
         }
 
@@ -233,6 +234,14 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
     [ContextMenu("Simulate: Sell Out Clicked")]
     public void ReportSellOutClicked() => CompleteIfCurrent(Phase.Sell);
 
+    // Called by the starter plot when it becomes affordable. Keeping the plot
+    // argument prevents a later/optional plot from advancing this tutorial.
+    public void ReportFirstPlantUpgradeAffordable(Plot plot)
+    {
+        if (!IsStarterPlot(plot)) return;
+        ReportFirstPlantUpgradeAffordable();
+    }
+
     // TODO(gameplay): call when the first plant can be upgraded for the first time.
     [ContextMenu("Simulate: First Plant Upgrade Affordable")]
     public void ReportFirstPlantUpgradeAffordable()
@@ -241,6 +250,14 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
         {
             ShowExpectedPhase();
         }
+    }
+
+    // Called only after Plant.TryUpgrade succeeds. The plant argument ensures
+    // that upgrades on optional plots never complete the starter tutorial.
+    public void ReportFirstPlantUpgraded(Plant plant)
+    {
+        if (!IsStarterPlant(plant)) return;
+        ReportFirstPlantUpgraded();
     }
 
     // TODO(gameplay): bind the real Upgrade button's successful click to this method.
@@ -264,14 +281,54 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
         }
 
         HideCurrentPhase();
+        // Harvest normally waits for cargo arrival before showing Sell. If a
+        // scenario skips Sell, the next gate is Upgrade and may already be
+        // ready, so it is safe to evaluate that one immediately.
+        if (_expectedPhase == Phase.Upgrade)
+        {
+            ShowExpectedPhase();
+        }
     }
 
     private void ShowExpectedPhase()
     {
-        if (_expectedPhase.HasValue && !HasCompleted)
+        if (!_expectedPhase.HasValue || HasCompleted)
         {
-            Show(_expectedPhase.Value);
+            return;
         }
+
+        if (_expectedPhase == Phase.Upgrade && !IsStarterPlantUpgradeAffordable())
+        {
+            return;
+        }
+
+        Show(_expectedPhase.Value);
+    }
+
+    private static bool IsStarterPlot(Plot plot)
+    {
+        if (plot == null || plot.PlotId != 0) return false;
+
+        FarmPlotSystem plotSystem = FarmSystem.Instance != null ? FarmSystem.Instance.PlotSystem : null;
+        return plotSystem == null || plotSystem.GetPlotComponent(0) == plot;
+    }
+
+    private static bool IsStarterPlant(Plant plant)
+    {
+        if (plant == null) return false;
+
+        FarmPlotSystem plotSystem = FarmSystem.Instance != null ? FarmSystem.Instance.PlotSystem : null;
+        if (plotSystem == null) return false;
+
+        Plot starterPlot = plotSystem.GetPlotComponent(0);
+        return starterPlot != null && starterPlot.CurrentPlant == plant;
+    }
+
+    private static bool IsStarterPlantUpgradeAffordable()
+    {
+        FarmPlotSystem plotSystem = FarmSystem.Instance != null ? FarmSystem.Instance.PlotSystem : null;
+        Plot starterPlot = plotSystem != null ? plotSystem.GetPlotComponent(0) : null;
+        return starterPlot != null && starterPlot.CanUpgradePlant();
     }
 
     private void HideCurrentPhase()
