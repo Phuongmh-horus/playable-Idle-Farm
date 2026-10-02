@@ -101,10 +101,14 @@ public class PopupPlantPriceLayer : WorldLayerBase
         }
         else if (_data.TargetPlot != null)
         {
-            _data.TargetPlot.PurchasePlot(_data.Price);
+            _data.TargetPlot.PurchasePlot();
         }
+    }
 
-        WorldLayerManager.Instance.Hide(this);
+    public override void CleanupBeforeHide()
+    {
+        _data = null;
+        base.CleanupBeforeHide();
     }
 }
 

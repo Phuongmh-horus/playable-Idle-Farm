@@ -63,7 +63,11 @@ public class AnimShowPopupWorld : MonoBehaviour
         _isAnimating = false;
         if (_isShowing)
         {
-            if (canvasGroup != null) canvasGroup.blocksRaycasts = true;
+            if (canvasGroup != null)
+            {
+                canvasGroup.blocksRaycasts = true;
+                canvasGroup.interactable = true;
+            }
             OnCompleteAnim?.Invoke();
         }
         else
@@ -75,12 +79,14 @@ public class AnimShowPopupWorld : MonoBehaviour
         Action completed = _onComplete;
         _onComplete = null;
         if (completed != null) completed();
+        enabled = false;
     }
 
     public void CancelAnim()
     {
         _isAnimating = false;
         _onComplete = null;
+        enabled = false;
     }
 
     public void PlayShowAnim(Action onComplete) { PlayAnim(onComplete); }
@@ -99,6 +105,7 @@ public class AnimShowPopupWorld : MonoBehaviour
     private void StartAnimation(bool showing, float animationDuration, Action onComplete)
     {
         CancelAnim();
+        enabled = true;
         Transform target = TargetTransform;
         _isShowing = showing;
         _animationDuration = Mathf.Max(0f, animationDuration);

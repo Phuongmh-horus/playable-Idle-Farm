@@ -264,6 +264,14 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
     [ContextMenu("Simulate: First Plant Upgraded")]
     public void ReportFirstPlantUpgraded() => CompleteIfCurrent(Phase.Upgrade);
 
+    // The upgrade icon is the tutorial's intended interaction target. Do not
+    // hold phase 4 open until the later confirmation button is pressed.
+    public void ReportFirstPlantUpgradeIconClicked(Plot plot)
+    {
+        if (!IsStarterPlot(plot)) return;
+        CompleteIfCurrent(Phase.Upgrade);
+    }
+
     private void CompleteIfCurrent(Phase expected)
     {
         if (CurrentPhase == expected) CompleteCurrentPhase();

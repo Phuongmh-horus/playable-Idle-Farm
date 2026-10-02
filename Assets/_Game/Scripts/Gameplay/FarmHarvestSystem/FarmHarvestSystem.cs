@@ -10,6 +10,9 @@ public sealed class FarmHarvestSystem : MonoBehaviour
     [SerializeField] private HarvesterArm harvesterArmPrefab;
     [SerializeField] private Transform harvesterArmParent;
 
+    [Header("Playable Modes")]
+    [SerializeField] private HarvestMachine harvestMachine;
+
     [SerializeField] private bool logPlotHarvested = true;
 
     private FarmPlotSystem _plotSystem;
@@ -17,6 +20,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
 
     private readonly HashSet<int> _reachedPlotIds = new HashSet<int>();
     private readonly List<HarvesterArm> _spawnedHarvesterArms = new List<HarvesterArm>();
+    private PlayableHarvestMode _harvestMode = PlayableHarvestMode.ManualBlade;
 
     public IReadOnlyList<HarvesterArm> Arms => _spawnedHarvesterArms;
     public HarvesterArm PrimaryArm => _spawnedHarvesterArms.Count > 0 ? _spawnedHarvesterArms[0] : null;
@@ -32,6 +36,8 @@ public sealed class FarmHarvestSystem : MonoBehaviour
     public int HarvesterCount => Config != null ? Config.GetHarvesterCount(harvesterLevel) : ((harvesterLevel + 2) / 3);
     public int TotalBladeCount => Config != null ? Config.GetTotalBlades(harvesterLevel) : harvesterLevel;
     public int Level => harvesterLevel;
+    public PlayableHarvestMode HarvestMode => _harvestMode;
+    public bool AutomaticArmEnabled => UsesAutomaticArm;
     public double NextUpgradeCost => (Config != null && harvesterLevel < MaxLevel) ? Config.GetUpgradeCost(harvesterLevel) : -1;
     public bool IsMaxLevel => harvesterLevel >= MaxLevel;
     public bool CanUpgrade => !IsMaxLevel && (NextUpgradeCost <= 0 || PlayableFarmState.HasEnoughGold(NextUpgradeCost));
@@ -41,6 +47,9 @@ public sealed class FarmHarvestSystem : MonoBehaviour
 
     private void Update()
     {
+        if (!UsesAutomaticArm)
+            return;
+
         RotateHarvester();
         CheckPlotAlignment();
     }
@@ -48,8 +57,42 @@ public sealed class FarmHarvestSystem : MonoBehaviour
     public void Initialize()
     {
         _reachedPlotIds.Clear();
+        ResolveSceneReferences();
+        ConfigureMode(PlayableScenarioRuntime.CurrentScenario != null
+            ? PlayableScenarioRuntime.CurrentScenario.harvestMode
+            : PlayableHarvestMode.ManualBlade);
         LoadSavedLevel();
     }
+
+    public void ConfigureMode(PlayableHarvestMode mode)
+    {
+        _harvestMode = mode;
+        ResolveSceneReferences();
+
+        if (harvestMachine != null)
+        {
+            harvestMachine.gameObject.SetActive(UsesManualBlade);
+        }
+
+        CollectExistingArms();
+        for (int i = 0; i < _spawnedHarvesterArms.Count; i++)
+        {
+            HarvesterArm arm = _spawnedHarvesterArms[i];
+            if (arm != null)
+            {
+                arm.gameObject.SetActive(UsesAutomaticArm);
+            }
+        }
+        if (UsesAutomaticArm)
+        {
+            EnsureHarvesterArms();
+        }
+
+        _reachedPlotIds.Clear();
+    }
+
+    private bool UsesManualBlade => _harvestMode == PlayableHarvestMode.ManualBlade || _harvestMode == PlayableHarvestMode.Hybrid;
+    private bool UsesAutomaticArm => _harvestMode == PlayableHarvestMode.AutomaticArm || _harvestMode == PlayableHarvestMode.Hybrid;
 
     private void LoadSavedLevel()
     {
@@ -68,7 +111,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
 
     private void SetLevel(int level, bool save = true)
     {
-        harvesterLevel = Math.Clamp(level, 1, MaxLevel);
+        harvesterLevel = Mathf.Clamp(level, 1, MaxLevel);
         if (save)
         {
             PlayableFarmState.UpdateHarvesterLevel(harvesterLevel);
@@ -133,6 +176,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
             return;
         }
 
+        float minimumAlignmentDot = Mathf.Cos(AlignmentTolerance * Mathf.Deg2Rad);
         foreach (FarmPlotData plot in plots.Plots)
         {
             HarvesterArm alignedArm = null;
@@ -140,14 +184,18 @@ public sealed class FarmHarvestSystem : MonoBehaviour
             for (int i = 0; i < _spawnedHarvesterArms.Count; i++)
             {
                 HarvesterArm arm = _spawnedHarvesterArms[i];
-                if (arm == null) continue;
+                if (arm == null || !arm.gameObject.activeInHierarchy) continue;
 
                 if (plot.RingIndex >= arm.CurrentBladeCount)
                     continue;
 
                 Vector3 harvesterForward = arm.GetForwardDirection();
                 Vector3 plotDirection = plots.GetPlotDirection(plot.Id, arm.Pivot.position);
-                if (Vector3.Angle(harvesterForward, plotDirection) <= AlignmentTolerance)
+                plotDirection = Vector3.ProjectOnPlane(plotDirection, arm.Pivot.forward);
+                if (plotDirection.sqrMagnitude <= Mathf.Epsilon)
+                    continue;
+
+                if (Vector3.Dot(harvesterForward, plotDirection.normalized) >= minimumAlignmentDot)
                 {
                     alignedArm = arm;
                     break;
@@ -207,16 +255,20 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         Transform parent = harvesterArmParent != null ? harvesterArmParent : transform;
         int targetCount = Mathf.Max(1, HarvesterCount);
 
-        if (_spawnedHarvesterArms.Count == 0)
+        CollectExistingArms();
+
+        if (!UsesAutomaticArm)
         {
-            HarvesterArm[] existingArms = parent.GetComponentsInChildren<HarvesterArm>(true);
-            foreach (HarvesterArm arm in existingArms)
-            {
-                if (arm != null && !_spawnedHarvesterArms.Contains(arm))
-                {
-                    _spawnedHarvesterArms.Add(arm);
-                }
-            }
+            return;
+        }
+
+        if (PoolHolder.Instance != null && harvesterArmPrefab != null)
+        {
+            int maxArmCount = Config != null ? Mathf.Max(1, Config.GetHarvesterCount(MaxLevel)) : targetCount;
+            PoolHolder.Instance.Prewarm(
+                harvesterArmPrefab,
+                Mathf.Max(0, maxArmCount - _spawnedHarvesterArms.Count),
+                maxArmCount);
         }
 
         // LÆ°u gÃ³c cÆ¡ sá»Ÿ hiá»‡n táº¡i náº¿u Ä‘Ã£ cÃ³ arm quay Ä‘á»ƒ trÃ¡nh giáº­t hÃ¬nh khi nÃ¢ng cáº¥p
@@ -228,9 +280,14 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         {
             if (harvesterArmPrefab != null)
             {
-                HarvesterArm newArm = Instantiate(harvesterArmPrefab, parent);
+                HarvesterArm newArm = PoolHolder.Instance != null
+                    ? PoolHolder.Instance.Get((MonoBehaviour)harvesterArmPrefab, parent) as HarvesterArm
+                    : Instantiate(harvesterArmPrefab, parent);
+                if (newArm == null) break;
                 newArm.transform.localPosition = Vector3.zero;
+                newArm.transform.localRotation = Quaternion.identity;
                 newArm.transform.localScale = Vector3.one;
+                newArm.gameObject.SetActive(true);
                 _spawnedHarvesterArms.Add(newArm);
             }
             else
@@ -248,7 +305,10 @@ public sealed class FarmHarvestSystem : MonoBehaviour
             {
                 if (Application.isPlaying)
                 {
-                    Destroy(excessArm.gameObject);
+                    if (PoolHolder.Instance != null && harvesterArmPrefab != null)
+                        PoolHolder.Instance.Release(excessArm, PoolHolder.GetKey(harvesterArmPrefab));
+                    else
+                        Destroy(excessArm.gameObject);
                 }
                 else
                 {
@@ -266,6 +326,36 @@ public sealed class FarmHarvestSystem : MonoBehaviour
                 arm.Pivot.localRotation = Quaternion.Euler(0f, 0f, baseZ + i * angleStep);
                 int bladeCount = Config != null ? Config.GetBladeCount(harvesterLevel, i) : Mathf.Clamp(harvesterLevel - i * 3, 1, 3);
                 arm.SetBladeCount(bladeCount);
+                arm.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void ResolveSceneReferences()
+    {
+        if (harvestMachine == null)
+        {
+            harvestMachine = GetComponentInChildren<HarvestMachine>(true);
+        }
+
+        if (harvesterArmParent == null)
+        {
+            Transform farmRoot = transform.parent;
+            harvesterArmParent = farmRoot != null ? farmRoot.Find("AutoHarvesterRoot") : null;
+        }
+    }
+
+    private void CollectExistingArms()
+    {
+        _spawnedHarvesterArms.RemoveAll(arm => arm == null);
+        Transform parent = harvesterArmParent != null ? harvesterArmParent : transform;
+        HarvesterArm[] existingArms = parent.GetComponentsInChildren<HarvesterArm>(true);
+        for (int i = 0; i < existingArms.Length; i++)
+        {
+            HarvesterArm arm = existingArms[i];
+            if (arm != null && !_spawnedHarvesterArms.Contains(arm))
+            {
+                _spawnedHarvesterArms.Add(arm);
             }
         }
     }

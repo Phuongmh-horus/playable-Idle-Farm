@@ -15,8 +15,10 @@ public class Plant : MonoBehaviour
 
     public int PlantId => _plantId;
     public int PlantLevel => _plantLevel;
+    public int RingIndex => _ringIndex;
     public int FilledSlotCount => _filledSlotCount;
-    public bool IsFull => _filledSlotCount >= _plantLevel;
+    public int FruitCapacity => Config?.GetFruitCount(_plantLevel) ?? _plantLevel;
+    public bool IsFull => _filledSlotCount >= FruitCapacity;
     public bool IsPlantMaxLevel => _plantLevel >= MaxLevel;
 
     #region Config Shortcuts
@@ -49,6 +51,15 @@ public class Plant : MonoBehaviour
         LastWaterStartProgress = 0f;
         LastWaterTargetProgress = 0f;
         UpdatePlantSprite();
+    }
+
+    public void ResetForPool()
+    {
+        _cachedTransportStation = null;
+        _currentWater = 0f;
+        _filledSlotCount = 0;
+        LastWaterStartProgress = 0f;
+        LastWaterTargetProgress = 0f;
     }
 
     private void UpdatePlantSprite()

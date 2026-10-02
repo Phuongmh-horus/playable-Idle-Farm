@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public enum TransportVehicleState
@@ -20,7 +19,7 @@ public sealed class FruitTransportStation : MonoBehaviour
     [SerializeField] private FruitTransportStationConfig config;
     [SerializeField] private TransportVehicle vehicle;
     [Header("Playable cargo UI")]
-    [SerializeField] private Vector3 capacityLayerOffset = new Vector3(0f, 1.25f, 0f);
+    [SerializeField] private Vector3 capacityLayerOffset = new Vector3(0f, 1.8f, 0f);
 
     private int _vehicleLevel;
     private int _loadedFruitCount;
@@ -36,6 +35,7 @@ public sealed class FruitTransportStation : MonoBehaviour
     public double LoadedRevenue => _loadedRevenue;
     public int Capacity => GetMaxCapacity();
     public bool IsIdleAtStation => _state == TransportVehicleState.IdleAtStation;
+    public Transform VehicleTransform => vehicle != null ? vehicle.transform : transform;
     public int Level => _vehicleLevel;
     public int MaxLevel => ConfigHolder.Instance?.FarmConfig?.transport?.MaxLevel ?? 1;
     public double NextUpgradeCost => _vehicleLevel < MaxLevel
@@ -71,7 +71,12 @@ public sealed class FruitTransportStation : MonoBehaviour
     {
         GameEventBus.OnUpdateTransportStation -= UpdateFromSave;
         CancelActiveMotions();
-        if (WorldLayerManager.Instance != null) WorldLayerManager.Instance.HideCapacityFruitTransport(transform);
+        HideCapacityLayer(false);
+    }
+
+    private void OnDisable()
+    {
+        HideCapacityLayer(false);
     }
 
     private void UpdateFromSave()
@@ -91,8 +96,15 @@ public sealed class FruitTransportStation : MonoBehaviour
     private void SetState(TransportVehicleState newState)
     {
         _state = newState;
+        if (_state == TransportVehicleState.IdleAtStation)
+        {
+            RefreshCapacityLayer();
+        }
+        else
+        {
+            HideCapacityLayer(false);
+        }
         OnVehicleStateChanged?.Invoke(_state);
-
     }
 
     public void CollectFruitsWithAnimation(int plantId, int fruitCount, Vector3 startPos, int plantLevel, int ringIndex)
@@ -124,10 +136,8 @@ public sealed class FruitTransportStation : MonoBehaviour
 
         Transform targetCargo = vehicle != null && vehicle.CargoRoot != null ? vehicle.CargoRoot : (idlePoint != null ? idlePoint : transform);
 
-        for (int i = 0; i < fruitCount; i++)
+        for (int i = 0; i < acceptedCount; i++)
         {
-            bool isAccepted = i < acceptedCount;
-
             AnimatedFruit animFruit = FruitSpawner.SpawnAnimatedFruit(transform, startPos);
             if (animFruit == null)
                 continue;
@@ -141,20 +151,17 @@ public sealed class FruitTransportStation : MonoBehaviour
                 onArrived: () =>
                 {
                     _activeAnimatedFruits.Remove(animFruit);
-                    if (isAccepted && vehicle)
+                    if (vehicle)
                     {
                         vehicle.SpawnFruitVisuals(plantId, 1);
                     }
-                    if (isAccepted)
+                    _arrivedFruitCount++;
+                    OnFruitLoaded?.Invoke(plantId, 1);
+                    RefreshCapacityLayer();
+                    if (_arrivedFruitCount == 1)
                     {
-                        _arrivedFruitCount++;
-                        OnFruitLoaded?.Invoke(plantId, 1);
-                        RefreshCapacityLayer();
-                        if (_arrivedFruitCount == 1)
-                        {
-                            // First cargo arrival is the playable's sale-ready milestone.
-                            PlayableTutorialFlow.Instance?.ReportJuiceDeliveredToBottles();
-                        }
+                        // First cargo arrival is the playable's sale-ready milestone.
+                        PlayableTutorialFlow.Instance?.ReportJuiceDeliveredToBottles();
                     }
                     FruitSpawner.DespawnAnimatedFruit(animFruit);
                 }
@@ -174,7 +181,7 @@ public sealed class FruitTransportStation : MonoBehaviour
 
     private void SetLevel(int level)
     {
-        _vehicleLevel = Mathf.Max(1, level);
+        _vehicleLevel = Mathf.Clamp(level, 1, MaxLevel);
         OnVehicleLevelChanged?.Invoke(_vehicleLevel);
         RefreshCapacityLayer();
     }
@@ -225,7 +232,7 @@ public sealed class FruitTransportStation : MonoBehaviour
         }
 
         SetState(TransportVehicleState.Departing);
-        vehicle.MoveTo(vehicle.transform.position, exitPoint.position, config.DepartureDuration, Ease.InQuad, OnReachedOffScreen);
+        vehicle.MoveTo(vehicle.transform.position, exitPoint.position, config.DepartureDuration, OnReachedOffScreen);
         return true;
     }
 
@@ -264,7 +271,7 @@ public sealed class FruitTransportStation : MonoBehaviour
         }
 
         SetState(TransportVehicleState.Returning);
-        vehicle.MoveTo(startPoint.position, idlePoint.position, config.ReturnDuration, Ease.OutQuad,
+        vehicle.MoveTo(startPoint.position, idlePoint.position, config.ReturnDuration,
             () => SetState(TransportVehicleState.IdleAtStation));
     }
 
@@ -293,16 +300,37 @@ public sealed class FruitTransportStation : MonoBehaviour
     /// </summary>
     private void RefreshCapacityLayer()
     {
+        if (!IsIdleAtStation)
+        {
+            HideCapacityLayer(false);
+            return;
+        }
+
         if (_capacityLayer == null && WorldLayerManager.Instance != null)
         {
+            Transform target = idlePoint != null ? idlePoint : transform;
             _capacityLayer = WorldLayerManager.Instance.ShowCapacityFruitTransport(
-                transform, capacityLayerOffset, _loadedFruitCount, GetMaxCapacity());
+                target, capacityLayerOffset, _loadedFruitCount, GetMaxCapacity());
         }
 
         if (_capacityLayer != null)
         {
             _capacityLayer.UpdateCapacity(_loadedFruitCount, GetMaxCapacity());
         }
+    }
+
+    private void HideCapacityLayer(bool animate)
+    {
+        if (_capacityLayer == null) return;
+        if (WorldLayerManager.Instance != null)
+        {
+            WorldLayerManager.Instance.Hide(_capacityLayer, animate);
+        }
+        else
+        {
+            _capacityLayer.gameObject.SetActive(false);
+        }
+        _capacityLayer = null;
     }
 
 #if UNITY_EDITOR

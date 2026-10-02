@@ -17,22 +17,25 @@ MonoBehaviour:
     plantIcon: {fileID: 21300000, guid: 3b2a8923418e25a4b920d08ee245c206, type: 3}
     fruitIcon: {fileID: 21300000, guid: 3b2a8923418e25a4b920d08ee245c206, type: 3}
     plantPrefab: {fileID: 2747681241958203882, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 8
-      baseFruitPrice: 14
-      waterRequirement: 7
-      levelUpCostSumPerLevel: 8
-      priceSumPerLevel: 5
+    - baseUpgradeCost: 32
+      baseFruitPrice: 40
+      waterRequirement: 5
+      levelUpCostSumPerLevel: 57
+      priceSumPerLevel: 0
     - baseUpgradeCost: 48
       baseFruitPrice: 14
       waterRequirement: 11
       levelUpCostSumPerLevel: 45
-      priceSumPerLevel: 5
+      priceSumPerLevel: 5000
     - baseUpgradeCost: 120
       baseFruitPrice: 21
       waterRequirement: 16
       levelUpCostSumPerLevel: 252
-      priceSumPerLevel: 7
+      priceSumPerLevel: 7000
     plantSprites:
     - {fileID: 21300000, guid: e464170f7ee67564f912391856b4716f, type: 3}
     - {fileID: 21300000, guid: ff00284af0906c749b5d430df87506f0, type: 3}
@@ -44,23 +47,26 @@ MonoBehaviour:
   - plantType: 1
     plantIcon: {fileID: 21300000, guid: 02fa8b8d895969c4ab0f45fa1cbc25bf, type: 3}
     fruitIcon: {fileID: 21300000, guid: 02fa8b8d895969c4ab0f45fa1cbc25bf, type: 3}
-    plantPrefab: {fileID: 2108421722821967915, guid: 042c932482451994588ff6775b1f0595, type: 3}
+    plantPrefab: {fileID: 7292942727523549358, guid: 741b3a7e58d1d8546a1d3202d8fa2ba2, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 75
-      baseFruitPrice: 26
-      waterRequirement: 8
-      levelUpCostSumPerLevel: 75
-      priceSumPerLevel: 20
+    - baseUpgradeCost: 88
+      baseFruitPrice: 110
+      waterRequirement: 7
+      levelUpCostSumPerLevel: 132
+      priceSumPerLevel: 22
     - baseUpgradeCost: 450
       baseFruitPrice: 26
       waterRequirement: 12
       levelUpCostSumPerLevel: 450
-      priceSumPerLevel: 20
+      priceSumPerLevel: 20000
     - baseUpgradeCost: 2700
       baseFruitPrice: 39
       waterRequirement: 18
       levelUpCostSumPerLevel: 2700
-      priceSumPerLevel: 30
+      priceSumPerLevel: 300000
     plantSprites:
     - {fileID: 21300000, guid: a0ddb4d09bca1e14283ebd071fef9b56, type: 3}
     - {fileID: 21300000, guid: 2d35d963e7455a341abc232e99291bad, type: 3}
@@ -73,12 +79,15 @@ MonoBehaviour:
     plantIcon: {fileID: 21300000, guid: 86c2e50510ffc314c87ef53179fa66ef, type: 3}
     fruitIcon: {fileID: 21300000, guid: 86c2e50510ffc314c87ef53179fa66ef, type: 3}
     plantPrefab: {fileID: 7376260434647007569, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 562
-      baseFruitPrice: 74
+    - baseUpgradeCost: 288
+      baseFruitPrice: 360
       waterRequirement: 10
-      levelUpCostSumPerLevel: 562
-      priceSumPerLevel: 80
+      levelUpCostSumPerLevel: 432
+      priceSumPerLevel: 72
     - baseUpgradeCost: 3372
       baseFruitPrice: 74
       waterRequirement: 15
@@ -101,12 +110,15 @@ MonoBehaviour:
     plantIcon: {fileID: 21300000, guid: 7ab6805c11adf104c999246874d14a7d, type: 3}
     fruitIcon: {fileID: 21300000, guid: 7ab6805c11adf104c999246874d14a7d, type: 3}
     plantPrefab: {fileID: 2090809617196704299, guid: 81d44e6c50e825b4b8c5b7038bc293cb, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 3750
-      baseFruitPrice: 266
-      waterRequirement: 30
-      levelUpCostSumPerLevel: 3750
-      priceSumPerLevel: 320
+    - baseUpgradeCost: 864
+      baseFruitPrice: 1080
+      waterRequirement: 14
+      levelUpCostSumPerLevel: 1296
+      priceSumPerLevel: 216
     - baseUpgradeCost: 22500
       baseFruitPrice: 266
       waterRequirement: 45
@@ -126,25 +138,28 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 5c3910961e1fa4b498af375a363a317c, type: 3}
     - {fileID: 21300000, guid: 88353faaa223b9848bfbf4ab8c14b2a9, type: 3}
   - plantType: 4
-    plantIcon: {fileID: 21300000, guid: 9342e0ce280b69445b708eb13d4e64e2, type: 3}
-    fruitIcon: {fileID: 21300000, guid: 9342e0ce280b69445b708eb13d4e64e2, type: 3}
+    plantIcon: {fileID: 21300000, guid: dcded2e8169a5b14383a747a7b131e55, type: 3}
+    fruitIcon: {fileID: 21300000, guid: dcded2e8169a5b14383a747a7b131e55, type: 3}
     plantPrefab: {fileID: 21777259753631421, guid: 018bf408639e03242b0356409f99cdb4, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 18750
-      baseFruitPrice: 798
-      waterRequirement: 45
-      levelUpCostSumPerLevel: 18750
-      priceSumPerLevel: 1280
+    - baseUpgradeCost: 2592
+      baseFruitPrice: 3240
+      waterRequirement: 18
+      levelUpCostSumPerLevel: 912
+      priceSumPerLevel: 324
     - baseUpgradeCost: 112500
       baseFruitPrice: 798
       waterRequirement: 68
       levelUpCostSumPerLevel: 112500
-      priceSumPerLevel: 1280
+      priceSumPerLevel: 128000
     - baseUpgradeCost: 675000
       baseFruitPrice: 1197
       waterRequirement: 101
       levelUpCostSumPerLevel: 675000
-      priceSumPerLevel: 1920
+      priceSumPerLevel: 192000
     plantSprites:
     - {fileID: 21300000, guid: 75b7dccd8ee7d2841bcd1791a0459c42, type: 3}
     - {fileID: 21300000, guid: 3653bb74e8aae0343afde09353c1a05c, type: 3}
@@ -157,12 +172,15 @@ MonoBehaviour:
     plantIcon: {fileID: 21300000, guid: 5bc47f9f9cb3b524c847a6ad42ff54b8, type: 3}
     fruitIcon: {fileID: 21300000, guid: 5bc47f9f9cb3b524c847a6ad42ff54b8, type: 3}
     plantPrefab: {fileID: 7292942727523549358, guid: 5d690d29a0ac05d4aa0e049e9939e682, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 93750
-      baseFruitPrice: 2394
-      waterRequirement: 68
-      levelUpCostSumPerLevel: 93750
-      priceSumPerLevel: 5120
+    - baseUpgradeCost: 7776
+      baseFruitPrice: 9720
+      waterRequirement: 22
+      levelUpCostSumPerLevel: 11664
+      priceSumPerLevel: 1944
     - baseUpgradeCost: 562500
       baseFruitPrice: 2394
       waterRequirement: 102
@@ -184,13 +202,16 @@ MonoBehaviour:
   - plantType: 6
     plantIcon: {fileID: 21300000, guid: 07e681a0660a3b64f96e3b13ed979cdc, type: 3}
     fruitIcon: {fileID: 21300000, guid: 07e681a0660a3b64f96e3b13ed979cdc, type: 3}
-    plantPrefab: {fileID: 7756525101406347104, guid: 9f09eac0119821048941f708ad0c85ff, type: 3}
+    plantPrefab: {fileID: 8157951851769301973, guid: f7afdb5e54d1dbe4692015146f1e7a8e, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 468750
-      baseFruitPrice: 7182
-      waterRequirement: 102
-      levelUpCostSumPerLevel: 468750
-      priceSumPerLevel: 20480
+    - baseUpgradeCost: 23328
+      baseFruitPrice: 29160
+      waterRequirement: 27
+      levelUpCostSumPerLevel: 34882
+      priceSumPerLevel: 5830
     - baseUpgradeCost: 2812500
       baseFruitPrice: 7182
       waterRequirement: 153
@@ -210,15 +231,18 @@ MonoBehaviour:
     - {fileID: 21300000, guid: c02ef68e2d8d9b948a973271c4c976a9, type: 3}
     - {fileID: 21300000, guid: 3f737b7774935f74ebef6ce64ef813c6, type: 3}
   - plantType: 7
-    plantIcon: {fileID: 21300000, guid: 6885a11fe8adbe2428e8b842c0809b63, type: 3}
-    fruitIcon: {fileID: 21300000, guid: 6885a11fe8adbe2428e8b842c0809b63, type: 3}
-    plantPrefab: {fileID: 6861620595050215266, guid: beb01025a5325e84991c00dec801a690, type: 3}
+    plantIcon: {fileID: 21300000, guid: 5af89528d473c9e49868373cf1067dc4, type: 3}
+    fruitIcon: {fileID: 21300000, guid: 5af89528d473c9e49868373cf1067dc4, type: 3}
+    plantPrefab: {fileID: 6861620595050215266, guid: 9f09eac0119821048941f708ad0c85ff, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 2343750
-      baseFruitPrice: 21546
-      waterRequirement: 153
-      levelUpCostSumPerLevel: 2343750
-      priceSumPerLevel: 81920
+    - baseUpgradeCost: 70084
+      baseFruitPrice: 87480
+      waterRequirement: 32
+      levelUpCostSumPerLevel: 1049760
+      priceSumPerLevel: 17496
     - baseUpgradeCost: 14062500
       baseFruitPrice: 21546
       waterRequirement: 230
@@ -241,12 +265,15 @@ MonoBehaviour:
     plantIcon: {fileID: 21300000, guid: 221e5db01b12bce4e89a8049e488a0d4, type: 3}
     fruitIcon: {fileID: 21300000, guid: 221e5db01b12bce4e89a8049e488a0d4, type: 3}
     plantPrefab: {fileID: 3418310729356881154, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 11718750
-      baseFruitPrice: 64638
-      waterRequirement: 230
-      levelUpCostSumPerLevel: 11718750
-      priceSumPerLevel: 327680
+    - baseUpgradeCost: 200950
+      baseFruitPrice: 262438
+      waterRequirement: 38
+      levelUpCostSumPerLevel: 314925
+      priceSumPerLevel: 52487
     - baseUpgradeCost: 70312500
       baseFruitPrice: 64638
       waterRequirement: 345
@@ -269,12 +296,15 @@ MonoBehaviour:
     plantIcon: {fileID: 21300000, guid: c58b19e80c62bc748ab1cd76a391c586, type: 3}
     fruitIcon: {fileID: 21300000, guid: c58b19e80c62bc748ab1cd76a391c586, type: 3}
     plantPrefab: {fileID: 7046204497938297139, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
+    maxLevel: 5
+    baseFruitCount: 1
+    fruitCountPerLevel: 1
     ringStats:
-    - baseUpgradeCost: 58593750
-      baseFruitPrice: 193914
-      waterRequirement: 345
-      levelUpCostSumPerLevel: 58593750
-      priceSumPerLevel: 1310720
+    - baseUpgradeCost: 585937
+      baseFruitPrice: 787314
+      waterRequirement: 45
+      levelUpCostSumPerLevel: 859376
+      priceSumPerLevel: 157462
     - baseUpgradeCost: 351562500
       baseFruitPrice: 193914
       waterRequirement: 518

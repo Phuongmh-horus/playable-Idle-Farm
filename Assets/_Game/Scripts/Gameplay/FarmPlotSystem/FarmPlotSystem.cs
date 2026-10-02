@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public sealed class FarmPlotSystem : MonoBehaviour
 {
     [SerializeField] private CircularFarmPlotLayoutHelper layoutHelper;
     [SerializeField] private Transform slotRoot;
     [SerializeField, Min(1)] private int maxSpawnedPlots = 10;
-    [Tooltip("Reuse Plot objects already authored under Slot Root. Disable to remove those scene slots at runtime and instantiate the configured prefabs instead.")]
-    [SerializeField] private bool useSceneSlots = true;
+    [Tooltip("Use the Plot objects already authored under Slot Root. When disabled, runtime removes them, creates fresh prefab instances, then the Editor syncs equivalent prefab instances back to the scene after Play Mode stops.")]
+    [FormerlySerializedAs("useSceneSlots")]
+    [SerializeField] private bool useScenePlots = true;
 
     private readonly List<FarmPlotData> _plots = new List<FarmPlotData>();
     private readonly Dictionary<int, Plot> _plotComponents = new Dictionary<int, Plot>();
@@ -17,6 +19,9 @@ public sealed class FarmPlotSystem : MonoBehaviour
 
     public IReadOnlyList<FarmPlotData> Plots => _plots;
     public IReadOnlyList<Plot> SpawnedPlotComponents => _cachedPlotList;
+    public IReadOnlyList<Plot> RuntimeSpawnedPlots => _runtimeSpawnedSlots;
+    public bool UseScenePlots => useScenePlots;
+    public Transform SlotRoot => GetSlotRoot();
 
     public event Action<int> OnRingUnlocked;
     public event Action<FarmPlotData> OnPlotUnlocked;
@@ -58,6 +63,14 @@ public sealed class FarmPlotSystem : MonoBehaviour
     private int RingCount => layoutHelper != null ? layoutHelper.RingCount : 0;
     private int PlotsPerRing => layoutHelper != null ? layoutHelper.SectorCount : 0;
     private Plot[] PlotPrefabs => ConfigHolder.Instance?.FarmPlotConfigSO?.PlotPrefabs;
+
+    public Plot GetPlotPrefabForRing(int ringIndex)
+    {
+        Plot[] prefabs = PlotPrefabs;
+        return prefabs != null && ringIndex >= 0 && ringIndex < prefabs.Length
+            ? prefabs[ringIndex]
+            : null;
+    }
 
     private Vector3 GetPlotPosition(int ringIndex, int sectorIndex)
     {
@@ -120,16 +133,16 @@ public sealed class FarmPlotSystem : MonoBehaviour
         if (layoutHelper == null) return;
         CreatePlots();
 
-        if (useSceneSlots)
+        if (useScenePlots)
         {
             BindSceneSlots();
+            WarnIfScenePlotsAreMissing();
         }
         else
         {
             ClearSceneSlots();
+            SpawnMissingSlots();
         }
-
-        SpawnMissingSlots();
     }
 
     public FarmPlotData GetPlot(int plotId)
@@ -397,6 +410,19 @@ public sealed class FarmPlotSystem : MonoBehaviour
                 availableSlots[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    private void WarnIfScenePlotsAreMissing()
+    {
+        if (_plotComponents.Count >= _plots.Count)
+        {
+            return;
+        }
+
+        Debug.LogWarning(
+            $"[FarmPlotSystem] Use Scene Plots is enabled, but only {_plotComponents.Count}/{_plots.Count} Plot objects were found under '{GetSlotRoot().name}'. " +
+            "Disable Use Scene Plots for one Play Mode run to regenerate prefab-linked scene plots.",
+            this);
     }
 
     private static Plot GetNextSceneSlot(List<Plot> availableSlots)

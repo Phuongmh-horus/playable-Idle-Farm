@@ -17,3 +17,5 @@ MonoBehaviour:
   - {fileID: 4855643226965046834, guid: d36942091164efe4e8734a43ab5e3c4d, type: 3}
   - {fileID: 3128230447634368269, guid: 82853762d3253384d82703bb3d0b769a, type: 3}
   - {fileID: 8895674178016037332, guid: 011af6e4bfe445947badc8df2aee6228, type: 3}
+  animatedHoePrefab: {fileID: 766547497135767590, guid: 6a94072468f85624a8b68a39716014ef, type: 3}
+  fadeDuration: 0.5

@@ -12,20 +12,21 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
     private PlayableUpgradePopupView _popupView;
     private CanvasGroup _canvasGroup;
     private Func<int> _getLevel;
+    private Func<int> _getMaxLevel;
     private Func<double> _getCost;
     private Func<bool> _canUpgrade;
     private Func<bool> _performUpgrade;
     private string _title;
-    private string _statDescription;
-    private Sprite _illustration;
+    private Func<string> _getStatDescription;
+    private Func<Sprite> _getIllustration;
 
     public bool IsVisible { get { return _popupView != null && _popupView.gameObject.activeSelf; } }
 
     private void OnEnable() { GameEventBus.OnGoldChange += Refresh; }
     private void OnDisable() { GameEventBus.OnGoldChange -= Refresh; }
 
-    public void Show(PlayableUpgradePopupView popupView, string title, string statDescription, Sprite illustration,
-        Func<int> getLevel, Func<double> getCost, Func<bool> canUpgrade, Func<bool> performUpgrade)
+    public void Show(PlayableUpgradePopupView popupView, string title, Func<string> getStatDescription, Func<Sprite> getIllustration,
+        Func<int> getLevel, Func<int> getMaxLevel, Func<double> getCost, Func<bool> canUpgrade, Func<bool> performUpgrade)
     {
         Hide();
         if (popupView == null)
@@ -36,12 +37,13 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
 
         _popupView = popupView;
         _getLevel = getLevel;
+        _getMaxLevel = getMaxLevel;
         _getCost = getCost;
         _canUpgrade = canUpgrade;
         _performUpgrade = performUpgrade;
         _title = title;
-        _statDescription = statDescription;
-        _illustration = illustration;
+        _getStatDescription = getStatDescription;
+        _getIllustration = getIllustration;
         _popupView.ResolveMissingReferences();
         _canvasGroup = _popupView.GetComponent<CanvasGroup>();
         if (_canvasGroup == null)
@@ -79,12 +81,13 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         _popupView = null;
         _canvasGroup = null;
         _getLevel = null;
+        _getMaxLevel = null;
         _getCost = null;
         _canUpgrade = null;
         _performUpgrade = null;
         _title = null;
-        _statDescription = null;
-        _illustration = null;
+        _getStatDescription = null;
+        _getIllustration = null;
     }
 
     private void WireButtons()
@@ -112,6 +115,8 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
     {
         if (_popupView == null) return;
         int level = _getLevel != null ? _getLevel() : 0;
+        int maxLevel = _getMaxLevel != null ? Mathf.Max(1, _getMaxLevel()) : Mathf.Max(1, level);
+        level = Mathf.Clamp(level, 1, maxLevel);
         double cost = _getCost != null ? _getCost() : -1d;
         TMP_Text titleText = _popupView.TitleText;
         TMP_Text levelText = _popupView.LevelText;
@@ -121,12 +126,13 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         Button upgradeButton = _popupView.UpgradeButton;
 
         if (titleText != null) titleText.text = _title;
-        if (levelText != null) levelText.text = "Lv. " + level;
-        if (statText != null) statText.text = _statDescription;
+        if (levelText != null) levelText.text = maxLevel > 0 ? "LV. " + level + "/" + maxLevel : "LV. " + level;
+        if (statText != null) statText.text = _getStatDescription != null ? _getStatDescription() : string.Empty;
         if (costText != null) costText.text = cost > 0d ? T_Utility.FormatGold(cost) : "MAX";
-        if (illustration != null && _illustration != null)
+        Sprite illustrationSprite = _getIllustration != null ? _getIllustration() : null;
+        if (illustration != null && illustrationSprite != null)
         {
-            illustration.sprite = _illustration;
+            illustration.sprite = illustrationSprite;
             illustration.preserveAspect = true;
         }
         if (upgradeButton != null) upgradeButton.interactable = _canUpgrade != null && _canUpgrade();

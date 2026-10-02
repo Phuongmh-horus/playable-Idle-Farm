@@ -4,17 +4,23 @@ using UnityEngine.UI;
 public class UpgradeFruitTransportStationButton : StaticSelectableButtonBase
 {
     [Header("Upgrade Icon Settings")]
+    [SerializeField] private FruitTransportStation transportStation;
     [SerializeField] private Transform targetTransform;
     [SerializeField] private Vector3 iconOffset = new Vector3(0, 1.5f, 0);
 
-    private bool _isShowingIcon;
+    private IconUpgradeLayer _iconLayer;
     private bool _isGoldSubscribed;
     private bool _isTransportSubscribed;
 
-    private Transform Target => targetTransform != null ? targetTransform : transform;
-    private TransportConfig Config => ConfigHolder.Instance != null && ConfigHolder.Instance.FarmConfig != null
-        ? ConfigHolder.Instance.FarmConfig.transport
-        : null;
+    private Transform Target => targetTransform != null
+        ? targetTransform
+        : (transportStation != null ? transportStation.VehicleTransform : transform);
+
+    private void OnValidate()
+    {
+        if (transportStation == null) transportStation = GetComponent<FruitTransportStation>();
+        if (targetTransform == null && transportStation != null) targetTransform = transportStation.VehicleTransform;
+    }
 
     private void Start()
     {
@@ -42,6 +48,8 @@ public class UpgradeFruitTransportStationButton : StaticSelectableButtonBase
 
     protected override void OnButtonClicked(StaticSelectable selectable)
     {
+        ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
+        if (scenario != null && (!scenario.showUpgrade || !scenario.showConveyorAndSell)) return;
         LunaUIManager.Instance?.ShowTransportUpgrade();
     }
 
@@ -55,7 +63,12 @@ public class UpgradeFruitTransportStationButton : StaticSelectableButtonBase
 
         if (!_isTransportSubscribed)
         {
-            GameEventBus.OnUpdateTransportStation += OnTransportStationUpdated;
+            if (transportStation == null) transportStation = GetComponent<FruitTransportStation>();
+            if (transportStation != null)
+            {
+                transportStation.OnVehicleLevelChanged += OnVehicleLevelChanged;
+                transportStation.OnVehicleStateChanged += OnVehicleStateChanged;
+            }
             _isTransportSubscribed = true;
         }
     }
@@ -70,7 +83,11 @@ public class UpgradeFruitTransportStationButton : StaticSelectableButtonBase
 
         if (_isTransportSubscribed)
         {
-            GameEventBus.OnUpdateTransportStation -= OnTransportStationUpdated;
+            if (transportStation != null)
+            {
+                transportStation.OnVehicleLevelChanged -= OnVehicleLevelChanged;
+                transportStation.OnVehicleStateChanged -= OnVehicleStateChanged;
+            }
             _isTransportSubscribed = false;
         }
     }
@@ -80,7 +97,12 @@ public class UpgradeFruitTransportStationButton : StaticSelectableButtonBase
         UpdateUpgradeIconState();
     }
 
-    private void OnTransportStationUpdated()
+    private void OnVehicleLevelChanged(int level)
+    {
+        UpdateUpgradeIconState();
+    }
+
+    private void OnVehicleStateChanged(TransportVehicleState state)
     {
         UpdateUpgradeIconState();
     }
@@ -89,7 +111,8 @@ public class UpgradeFruitTransportStationButton : StaticSelectableButtonBase
     {
         SubscribeEvents();
 
-        bool canUpgrade = CanUpgrade();
+        ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
+        bool canUpgrade = (scenario == null || (scenario.showUpgrade && scenario.showConveyorAndSell)) && CanUpgrade();
         if (canUpgrade)
         {
             ShowIcon();
@@ -102,36 +125,32 @@ public class UpgradeFruitTransportStationButton : StaticSelectableButtonBase
 
     public bool CanUpgrade()
     {
-        var config = Config;
-        int currentLevel = PlayableFarmState.GetTransportSaveData()?.currentLevel ?? 1;
-        int maxLevel = config != null ? config.MaxLevel : 30;
-        if (currentLevel >= maxLevel) return false;
-
-        double cost = config != null ? config.GetUpgradeCost(currentLevel) : 0;
-        return cost <= 0 || PlayableFarmState.HasEnoughGold(cost);
+        if (transportStation == null) transportStation = GetComponent<FruitTransportStation>();
+        return transportStation != null && transportStation.IsIdleAtStation && transportStation.CanUpgrade;
     }
 
     private void ShowIcon()
     {
-        if (_isShowingIcon) return;
+        if (_iconLayer != null && _iconLayer.gameObject.activeInHierarchy && _iconLayer.FollowTarget == Target) return;
+        _iconLayer = null;
         if (WorldLayerManager.Instance == null) return;
 
-        WorldLayerManager.Instance.ShowIconUpgradeLayer(Target, iconOffset, OnUpgradeIconClicked);
-        _isShowingIcon = true;
+        _iconLayer = WorldLayerManager.Instance.ShowIconUpgradeLayer(Target, iconOffset, OnUpgradeIconClicked);
     }
 
     private void OnUpgradeIconClicked()
     {
+        ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
+        if (scenario != null && (!scenario.showUpgrade || !scenario.showConveyorAndSell)) return;
         LunaUIManager.Instance?.ShowTransportUpgrade();
     }
 
     private void HideIcon()
     {
-        if (!_isShowingIcon) return;
-        if (WorldLayerManager.Instance != null)
+        if (_iconLayer != null && WorldLayerManager.Instance != null)
         {
-            WorldLayerManager.Instance.HideIconUpgradeLayer(Target);
+            WorldLayerManager.Instance.Hide(_iconLayer, false);
         }
-        _isShowingIcon = false;
+        _iconLayer = null;
     }
 }

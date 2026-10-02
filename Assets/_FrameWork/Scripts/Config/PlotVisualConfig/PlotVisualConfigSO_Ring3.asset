@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateSprites:
   - state: 0
-    sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
-  - state: 1
     sprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  - state: 1
+    sprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
   - state: 2
-    sprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+    sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   - state: 3
-    sprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+    sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}

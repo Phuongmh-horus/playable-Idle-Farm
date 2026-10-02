@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,19 +6,35 @@ public class PlantStore : MonoBehaviour
 {
     private const int maxItemPerColumn = 4;
 
+    [SerializeField, Min(1)] private int prewarmItemCount = maxItemPerColumn;
+
+    private readonly List<GameObject> _columns = new List<GameObject>();
+    private readonly List<GameObject> _itemObjects = new List<GameObject>();
+    private readonly List<PlantItem> _plantItems = new List<PlantItem>();
+    private readonly List<bool> _itemListenersInitialized = new List<bool>();
+
     [Header ("Prefab")]
     public GameObject ColumnPrefab;
 
     public GameObject ItemInColumnPrefab;
 
     public GameObject Panel;
+
+    private void Awake()
+    {
+        if (Panel != null && ColumnPrefab != null && ItemInColumnPrefab != null)
+        {
+            EnsurePoolCapacity(prewarmItemCount);
+        }
+    }
+
     public void ClearStore()
     {
-        if (Panel != null)
+        for (int i = 0; i < _columns.Count; i++)
         {
-            foreach (Transform child in Panel.transform)
+            if (_columns[i] != null)
             {
-                Destroy(child.gameObject);
+                _columns[i].SetActive(false);
             }
         }
     }
@@ -44,27 +59,74 @@ public class PlantStore : MonoBehaviour
         int count = plantConfigs.Count;
         int columnCount = Mathf.CeilToInt((float)count / maxItemPerColumn);
 
+        EnsurePoolCapacity(Mathf.Max(count, prewarmItemCount));
+
         for (int i = 0; i < columnCount; i++)
         {
-            GameObject column = Instantiate(ColumnPrefab, Panel.transform);
-            for (int j = 0; j < maxItemPerColumn; j++)
-            {
-                // if (count >= count) break;
-                int index = i * maxItemPerColumn + j;
-                if (index >= plantConfigs.Count) break;
+            _columns[i].SetActive(true);
+        }
 
-                GameObject item = Instantiate(ItemInColumnPrefab, column.transform);
-                // count++;
-                PlantItem plantItem = item.GetComponent<PlantItem>();
-                if (plantItem != null) plantItem.SetData(plantConfigs[index]);
+        for (int i = 0; i < _itemObjects.Count; i++)
+        {
+            GameObject itemObject = _itemObjects[i];
+            bool isUsed = i < count;
+            itemObject.SetActive(isUsed);
+            if (!isUsed)
+            {
+                continue;
             }
+
+            BindItem(i, plantConfigs[i]);
         }
         UpdateLayout();
     }
 
+    private void EnsurePoolCapacity(int requiredItemCount)
+    {
+        int requiredColumnCount = Mathf.CeilToInt((float)Mathf.Max(1, requiredItemCount) / maxItemPerColumn);
+        while (_columns.Count < requiredColumnCount)
+        {
+            GameObject column = Instantiate(ColumnPrefab, Panel.transform);
+            column.SetActive(false);
+            _columns.Add(column);
+
+            for (int i = 0; i < maxItemPerColumn; i++)
+            {
+                GameObject itemObject = Instantiate(ItemInColumnPrefab, column.transform);
+                itemObject.SetActive(false);
+                _itemObjects.Add(itemObject);
+                _plantItems.Add(itemObject.GetComponent<PlantItem>());
+                _itemListenersInitialized.Add(false);
+            }
+        }
+    }
+
+    private void BindItem(int index, PlantConfigData data)
+    {
+        PlantItem plantItem = _plantItems[index];
+        if (plantItem == null)
+        {
+            Debug.LogError("PlantStore: ItemInColumnPrefab needs a PlantItem component.");
+            return;
+        }
+
+        plantItem.plantConfigData = data;
+        if (!_itemListenersInitialized[index])
+        {
+            plantItem.SetData(data);
+            _itemListenersInitialized[index] = true;
+        }
+        else if (plantItem.fruitIconImage != null)
+        {
+            plantItem.fruitIconImage.sprite = data != null ? data.fruitIcon : null;
+        }
+    }
+
     private void UpdateLayout()
     {
-       if (Panel != null) LayoutRebuilder.ForceRebuildLayoutImmediate(Panel.GetComponent<RectTransform>());
+        if (Panel == null) return;
+        RectTransform panelRect = Panel.GetComponent<RectTransform>();
+        if (panelRect != null) LayoutRebuilder.ForceRebuildLayoutImmediate(panelRect);
     }
 
 

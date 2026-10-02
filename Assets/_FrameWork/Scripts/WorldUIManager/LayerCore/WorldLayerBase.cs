@@ -62,6 +62,11 @@ public class WorldLayerBase : MonoBehaviour
         if (canvas != null)
         {
             canvas.overrideSorting = true;
+            Canvas parentCanvas = transform.parent != null ? transform.parent.GetComponentInParent<Canvas>() : null;
+            if (parentCanvas != null)
+            {
+                canvas.sortingLayerID = parentCanvas.sortingLayerID;
+            }
             canvas.sortingOrder = (int)layerDepth;
         }
     }
@@ -122,12 +127,12 @@ public class WorldLayerBase : MonoBehaviour
 
     private void SetupCameraForWorldCanvas()
     {
-        if (canvas != null && canvas.renderMode == RenderMode.WorldSpace)
+        if (canvas != null)
         {
-            if (canvas.worldCamera == null)
-            {
-                canvas.worldCamera = mainCamera != null ? mainCamera : Camera.main;
-            }
+            // All WorldLayerBase instances follow a scene target, so they must
+            // render in world space regardless of the imported prefab setting.
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = mainCamera != null ? mainCamera : Camera.main;
         }
     }
 

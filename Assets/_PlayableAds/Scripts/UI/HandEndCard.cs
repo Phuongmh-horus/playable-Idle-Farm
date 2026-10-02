@@ -1,6 +1,6 @@
-
+using System.Collections;
 using UnityEngine;
-using DG.Tweening;
+
 public class HandEndCard : MonoBehaviour
 {
     [SerializeField] private bool isWinningEndCard = true;
@@ -22,8 +22,9 @@ public class HandEndCard : MonoBehaviour
     // [SerializeField] private float PulseScale = 1.1f;
 
 
-    private Sequence _moveSequence;
-    private Sequence _pulseSequence;
+    private Coroutine _moveRoutine;
+    private Coroutine _pulseRoutine;
+    private Transform _pulsedButton;
 
     private Vector3 GetWorldOffset()
     {
@@ -31,42 +32,29 @@ public class HandEndCard : MonoBehaviour
         return new Vector3(offset.x * transform.lossyScale.x, offset.y * transform.lossyScale.y, 0f);
     }
 
-    protected void Start()
-    {
-        
-    }
     void OnEnable()
     {
+        CancelAnimations();
         if (isWinningEndCard)
-        {        
+        {
+            if (transform1ToMove == null || transform2ToMove == null) return;
             Vector3 worldOffset = GetWorldOffset();
             Vector3 transform1ToMovePosition = transform1ToMove.position + worldOffset;
             Vector3 transform2ToMovePosition = transform2ToMove.position + worldOffset;
             transform.position = transform1ToMovePosition;
-
-            _moveSequence = DOTween.Sequence()
-                .Append(transform.DOMove(transform2ToMovePosition, moveDuration).SetEase(Ease.InOutSine))
-                .AppendCallback(() => AnimationClickButton(transform2ToMove))
-                .AppendInterval(pulseHandDuration)
-                .Append(transform.DOMove(transform1ToMovePosition, moveDuration).SetEase(Ease.InOutSine))
-                .AppendCallback(() => AnimationClickButton(transform1ToMove))
-                .AppendInterval(pulseHandDuration)
-                .SetLoops(-1, LoopType.Restart);
+            _moveRoutine = StartCoroutine(WinningLoop(transform1ToMovePosition, transform2ToMovePosition));
         }
-        else
+        else if (transformToMove != null)
         {
             transform.position = transformToMove.position + GetWorldOffset();
-            _moveSequence = DOTween.Sequence()
-                .AppendCallback(() => AnimationClickButton(transformToMove))
-                .AppendInterval(pulseHandDuration)
-                .SetLoops(-1, LoopType.Restart);
+            _moveRoutine = StartCoroutine(LosingLoop());
         }
     }
     
     void OnDisable()
     {
-        if (_moveSequence != null) _moveSequence.Kill();
-        if (_pulseSequence != null) _pulseSequence.Kill();
+        CancelAnimations();
+        ResetPulseVisuals();
     }
 
 
@@ -84,19 +72,119 @@ public class HandEndCard : MonoBehaviour
     
     public void AnimationClickButton(Transform buttonTransform)
     {
-        if (_pulseSequence != null) _pulseSequence.Kill();
+        if (buttonTransform == null) return;
+        CancelPulse();
+        ResetPulseVisuals();
         transform.position = buttonTransform.position + GetWorldOffset();
         buttonTransform.localScale = Vector3.one * normalScale;
-        _pulseSequence = DOTween.Sequence()
-            .Append(transform.DORotate(new Vector3(0f, 0f, rotateHand), pulseHandDuration / 2f).SetEase(Ease.InOutSine))
-            .Join(transform.DOScale(pulseHandScale, pulseHandDuration / 2f).SetEase(Ease.InOutSine))
-            .Join(buttonTransform.DOScale(StartScale, pulseHandDuration / 2f).SetEase(Ease.InOutSine))
-            // .Append(buttonTransform.DORotate(new Vector3(0f, 0f, -rotateHand), pulseHandDuration).SetEase(Ease.InOutSine))
-            .Append(transform.DORotate(new Vector3(0f, 0f, 0f), pulseHandDuration / 2f).SetEase(Ease.InOutSine))
-            .Join(transform.DOScale(startHandScale, pulseHandDuration / 2f).SetEase(Ease.InOutSine))
-            .Join(buttonTransform.DOScale(normalScale, pulseHandDuration / 2f).SetEase(Ease.InOutSine));
+        _pulsedButton = buttonTransform;
+        _pulseRoutine = StartCoroutine(PulseRoutine(buttonTransform));
     }
 
+    private IEnumerator WinningLoop(Vector3 firstPosition, Vector3 secondPosition)
+    {
+        while (true)
+        {
+            yield return MoveTo(secondPosition);
+            AnimationClickButton(transform2ToMove);
+            yield return WaitForDuration(pulseHandDuration);
+
+            yield return MoveTo(firstPosition);
+            AnimationClickButton(transform1ToMove);
+            yield return WaitForDuration(pulseHandDuration);
+        }
+    }
+
+    private IEnumerator LosingLoop()
+    {
+        while (true)
+        {
+            AnimationClickButton(transformToMove);
+            yield return WaitForDuration(pulseHandDuration);
+        }
+    }
+
+    private IEnumerator MoveTo(Vector3 targetPosition)
+    {
+        Vector3 startPosition = transform.position;
+        float duration = Mathf.Max(0f, moveDuration);
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float progress = RuntimeEaseUtility.Evaluate(RuntimeEase.InOutSine, elapsed / duration);
+            transform.position = Vector3.LerpUnclamped(startPosition, targetPosition, progress);
+            yield return null;
+        }
+        transform.position = targetPosition;
+    }
+
+    private IEnumerator PulseRoutine(Transform buttonTransform)
+    {
+        float halfDuration = Mathf.Max(0f, pulseHandDuration * 0.5f);
+        yield return AnimatePulseHalf(buttonTransform, 0f, rotateHand, startHandScale, pulseHandScale, normalScale, StartScale, halfDuration);
+        yield return AnimatePulseHalf(buttonTransform, rotateHand, 0f, pulseHandScale, startHandScale, StartScale, normalScale, halfDuration);
+        ResetPulseVisuals();
+        _pulseRoutine = null;
+    }
+
+    private IEnumerator AnimatePulseHalf(
+        Transform buttonTransform,
+        float fromRotation,
+        float toRotation,
+        float fromHandScale,
+        float toHandScale,
+        float fromButtonScale,
+        float toButtonScale,
+        float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration && buttonTransform != null)
+        {
+            elapsed += Time.deltaTime;
+            float progress = RuntimeEaseUtility.Evaluate(RuntimeEase.InOutSine, elapsed / duration);
+            transform.rotation = Quaternion.Euler(0f, 0f, Mathf.LerpUnclamped(fromRotation, toRotation, progress));
+            transform.localScale = Vector3.one * Mathf.LerpUnclamped(fromHandScale, toHandScale, progress);
+            buttonTransform.localScale = Vector3.one * Mathf.LerpUnclamped(fromButtonScale, toButtonScale, progress);
+            yield return null;
+        }
+
+        transform.rotation = Quaternion.Euler(0f, 0f, toRotation);
+        transform.localScale = Vector3.one * toHandScale;
+        if (buttonTransform != null) buttonTransform.localScale = Vector3.one * toButtonScale;
+    }
+
+    private static IEnumerator WaitForDuration(float duration)
+    {
+        float remaining = Mathf.Max(0f, duration);
+        do
+        {
+            remaining -= Time.deltaTime;
+            yield return null;
+        }
+        while (remaining > 0f);
+    }
+
+    private void CancelAnimations()
+    {
+        if (_moveRoutine != null) StopCoroutine(_moveRoutine);
+        _moveRoutine = null;
+        CancelPulse();
+    }
+
+    private void CancelPulse()
+    {
+        if (_pulseRoutine != null) StopCoroutine(_pulseRoutine);
+        _pulseRoutine = null;
+    }
+
+    private void ResetPulseVisuals()
+    {
+        transform.rotation = Quaternion.identity;
+        transform.localScale = Vector3.one * startHandScale;
+        if (_pulsedButton != null) _pulsedButton.localScale = Vector3.one * normalScale;
+        _pulsedButton = null;
+    }
 
 
 }

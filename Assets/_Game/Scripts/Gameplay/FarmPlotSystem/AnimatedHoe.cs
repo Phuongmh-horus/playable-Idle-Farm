@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using UnityEngine;
-using DG.Tweening;
 
 public class AnimatedHoe : MonoBehaviour
 {
@@ -18,12 +18,10 @@ public class AnimatedHoe : MonoBehaviour
     [SerializeField] private float popDuration = 0.2f;
     [SerializeField] private Vector3 baseEulerRotation = new Vector3(90f, 0f, 0f);
 
-    private Vector3 _initialLocalPosition = Vector3.zero;
-    private Quaternion _initialLocalRotation = Quaternion.identity;
+    private Vector3 _initialLocalPosition;
+    private Quaternion _initialLocalRotation;
     private Vector3 _initialLocalScale = Vector3.one;
-
-    private Sequence _animationSequence;
-    private bool _isPlaying;
+    private Coroutine _animationRoutine;
 
     private Transform TargetTransform => hoeTransform != null ? hoeTransform : transform;
 
@@ -37,18 +35,13 @@ public class AnimatedHoe : MonoBehaviour
 
     private void Awake()
     {
-        if (hoeTransform == null)
-        {
-            hoeTransform = transform;
-        }
-
-        if (smokeParticle == null)
-        {
-            smokeParticle = GetComponentInChildren<ParticleSystem>(true);
-        }
-
+        if (hoeTransform == null) hoeTransform = transform;
+        if (smokeParticle == null) smokeParticle = GetComponentInChildren<ParticleSystem>(true);
         SaveInitialState();
     }
+
+    private void OnDisable() { CancelAnimation(); }
+    private void OnDestroy() { CancelAnimation(); }
 
     private void SaveInitialState()
     {
@@ -61,32 +54,16 @@ public class AnimatedHoe : MonoBehaviour
     private void ResetToInitialState()
     {
         Transform target = TargetTransform;
-        if (target != null)
-        {
-            target.localPosition = _initialLocalPosition;
-            target.localRotation = _initialLocalRotation;
-            target.localScale = _initialLocalScale;
-        }
-    }
-
-    private void OnDisable()
-    {
-        CancelAnimation();
-    }
-
-    private void OnDestroy()
-    {
-        CancelAnimation();
+        if (target == null) return;
+        target.localPosition = _initialLocalPosition;
+        target.localRotation = _initialLocalRotation;
+        target.localScale = _initialLocalScale;
     }
 
     private void CancelAnimation()
     {
-        if (_animationSequence != null && _animationSequence.IsActive())
-        {
-            _animationSequence.Kill();
-        }
-        _animationSequence = null;
-        _isPlaying = false;
+        if (_animationRoutine != null) StopCoroutine(_animationRoutine);
+        _animationRoutine = null;
         StopSmokeParticle();
         ResetToInitialState();
     }
@@ -101,134 +78,113 @@ public class AnimatedHoe : MonoBehaviour
     private void StopSmokeParticle()
     {
         if (smokeParticle != null)
-        {
             smokeParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        }
     }
 
     private void SetHoeRotationZ(float relativeZ)
     {
         Transform target = TargetTransform;
         if (target != null)
-        {
-            target.localRotation = Quaternion.Euler(
-                baseEulerRotation.x,
-                baseEulerRotation.y,
-                baseEulerRotation.z + relativeZ
-            );
-        }
+            target.localRotation = Quaternion.Euler(baseEulerRotation.x, baseEulerRotation.y, baseEulerRotation.z + relativeZ);
     }
 
     public void PlayDigAnimation(Vector3 targetPosition, Action onComplete = null)
     {
         CancelAnimation();
-        _isPlaying = true;
-
         transform.position = targetPosition;
         Transform target = TargetTransform;
-
         target.localPosition = _initialLocalPosition;
         SetHoeRotationZ(0f);
         target.localScale = Vector3.zero;
+        _animationRoutine = StartCoroutine(PlayDigRoutine(onComplete));
+    }
 
-        _animationSequence = DOTween.Sequence();
+    private IEnumerator PlayDigRoutine(Action onComplete)
+    {
+        Transform target = TargetTransform;
+        yield return AnimateScale(target, Vector3.zero, _initialLocalScale, popDuration, true);
 
-        // 1. Pop in xuất hiện
-        _animationSequence.Append(target.DOScale(_initialLocalScale, popDuration).SetEase(Ease.OutBack));
-
-        float currentRelativeZ = 0f;
-
-        // 2. Thực hiện các nhịp cuốc đất
-        for (int i = 0; i < digCount; i++)
+        float currentAngle = 0f;
+        for (int i = 0; i < Mathf.Max(1, digCount); i++)
         {
-            // --- Giai đoạn 1: Vung lên (Wind-up) ---
-            Vector3 liftedPos = _initialLocalPosition + new Vector3(0f, liftHeight, 0f);
-            float windUpTime = swingDuration * 0.35f;
-            float targetLiftZ = liftAngle;
+            Vector3 liftedPosition = _initialLocalPosition + new Vector3(0f, liftHeight, 0f);
+            yield return AnimatePose(target, target.localPosition, liftedPosition, currentAngle, liftAngle,
+                swingDuration * 0.35f, false);
+            currentAngle = liftAngle;
 
-            Sequence windUpSeq = DOTween.Sequence();
-            windUpSeq.Join(target.DOLocalMove(liftedPos, windUpTime).SetEase(Ease.OutQuad));
-            
-            float zStart1 = currentRelativeZ;
-            float zEnd1 = targetLiftZ;
-            windUpSeq.Join(DOVirtual.Float(zStart1, zEnd1, windUpTime, SetHoeRotationZ).SetEase(Ease.OutQuad));
-            
-            currentRelativeZ = targetLiftZ;
-            _animationSequence.Append(windUpSeq);
+            Vector3 strikePosition = _initialLocalPosition + new Vector3(0.05f, 0.05f, 0f);
+            yield return AnimatePose(target, target.localPosition, strikePosition, currentAngle, hitAngle,
+                swingDuration * 0.25f, true);
+            currentAngle = hitAngle;
+            PlaySmokeParticle();
 
-            // --- Giai đoạn 2: Bổ xuống đất (Strike down) ---
-            Vector3 strikePos = _initialLocalPosition + new Vector3(0.05f, 0.05f, 0f);
-            float strikeTime = swingDuration * 0.25f;
-            float targetStrikeZ = hitAngle;
-
-            Sequence strikeSeq = DOTween.Sequence();
-            strikeSeq.Join(target.DOLocalMove(strikePos, strikeTime).SetEase(Ease.InQuad));
-            
-            float zStart2 = currentRelativeZ;
-            float zEnd2 = targetStrikeZ;
-            strikeSeq.Join(DOVirtual.Float(zStart2, zEnd2, strikeTime, SetHoeRotationZ).SetEase(Ease.InQuad));
-            
-            strikeSeq.OnComplete(PlaySmokeParticle);
-
-            currentRelativeZ = targetStrikeZ;
-            _animationSequence.Append(strikeSeq);
-
-            // --- Giai đoạn 3: Kéo cuốc về sau (Pull back) ---
-            Vector3 pullPos = strikePos + new Vector3(pullDistance, 0f, 0f);
-            float pullTime = swingDuration * 0.4f;
-            float targetPullZ = hitAngle - 10f;
-
-            Sequence pullSeq = DOTween.Sequence();
-            pullSeq.Join(target.DOLocalMove(pullPos, pullTime).SetEase(Ease.OutQuad));
-            
-            float zStart3 = currentRelativeZ;
-            float zEnd3 = targetPullZ;
-            pullSeq.Join(DOVirtual.Float(zStart3, zEnd3, pullTime, SetHoeRotationZ).SetEase(Ease.Linear));
-
-            currentRelativeZ = targetPullZ;
-            _animationSequence.Append(pullSeq);
+            Vector3 pullPosition = strikePosition + new Vector3(pullDistance, 0f, 0f);
+            float pullAngle = hitAngle - 10f;
+            yield return AnimatePose(target, target.localPosition, pullPosition, currentAngle, pullAngle,
+                swingDuration * 0.4f, false);
+            currentAngle = pullAngle;
         }
 
-        // 3. Pop out biến mất
-        _animationSequence.Append(target.DOScale(Vector3.zero, popDuration).SetEase(Ease.InBack));
+        yield return AnimateScale(target, target.localScale, Vector3.zero, popDuration, false);
+        _animationRoutine = null;
+        ResetToInitialState();
+        onComplete?.Invoke();
+        Despawn();
+    }
 
-        _animationSequence.OnComplete(() =>
+    private IEnumerator AnimatePose(Transform target, Vector3 fromPosition, Vector3 toPosition,
+        float fromAngle, float toAngle, float duration, bool easeIn)
+    {
+        duration = Mathf.Max(0.01f, duration);
+        for (float elapsed = 0f; elapsed < duration; elapsed += Time.deltaTime)
         {
-            _isPlaying = false;
-            ResetToInitialState();
-            onComplete?.Invoke();
-            Despawn();
-        });
-        
-        _animationSequence.OnKill(() => 
+            float progress = Mathf.Clamp01(elapsed / duration);
+            float eased = easeIn ? progress * progress : 1f - (1f - progress) * (1f - progress);
+            target.localPosition = Vector3.LerpUnclamped(fromPosition, toPosition, eased);
+            SetHoeRotationZ(Mathf.LerpUnclamped(fromAngle, toAngle, eased));
+            yield return null;
+        }
+        target.localPosition = toPosition;
+        SetHoeRotationZ(toAngle);
+    }
+
+    private static IEnumerator AnimateScale(Transform target, Vector3 fromScale, Vector3 toScale,
+        float duration, bool overshoot)
+    {
+        duration = Mathf.Max(0.01f, duration);
+        for (float elapsed = 0f; elapsed < duration; elapsed += Time.deltaTime)
         {
-            _isPlaying = false;
-        });
+            float progress = Mathf.Clamp01(elapsed / duration);
+            float eased = progress * progress * (3f - 2f * progress);
+            if (overshoot)
+            {
+                const float amount = 1.15f;
+                float delta = progress - 1f;
+                eased = 1f + (amount + 1f) * delta * delta * delta + amount * delta * delta;
+            }
+            target.localScale = Vector3.LerpUnclamped(fromScale, toScale, eased);
+            yield return null;
+        }
+        target.localScale = toScale;
     }
 
     private void Despawn()
     {
-        if (gameObject == null) return;
         transform.SetParent(null);
-        PoolHolder.Instance.Release(this);
+        if (PoolHolder.Instance != null) PoolHolder.Instance.Release(this);
+        else Destroy(gameObject);
     }
 
     public static void SpawnAndPlay(AnimatedHoe prefab, Vector3 worldPosition, Transform parent = null, Action onComplete = null)
     {
-        if (prefab == null)
+        if (prefab == null || PoolHolder.Instance == null)
         {
             onComplete?.Invoke();
             return;
         }
 
-        AnimatedHoe hoeInstance = PoolHolder.Instance.Get(prefab, parent, worldPosition, Quaternion.identity);
-        if (hoeInstance != null)
-        {
-            hoeInstance.PlayDigAnimation(worldPosition, onComplete);
-        }
-        else
-        {
-            onComplete?.Invoke();
-        }
+        AnimatedHoe instance = PoolHolder.Instance.Get(prefab, parent, worldPosition, Quaternion.identity) as AnimatedHoe;
+        if (instance != null) instance.PlayDigAnimation(worldPosition, onComplete);
+        else onComplete?.Invoke();
     }
 }

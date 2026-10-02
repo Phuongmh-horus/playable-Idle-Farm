@@ -44,5 +44,7 @@ Spawn subagents liberally to keep main context window clean Offload research, ex
 ### 9. Playable Ads Specify
 If converting form game to PLA í required, follow these rules:
 - Analyze scripts, prefabs, inspector setups... of original game to understand its logic, runtime flow, scene/gameobject/component setup before changing/modifying PLA.
-- Playable ads sdk use C# .Net 7, so downgrade code if they use higher vesion
-- Litmotion, Unitask, Attributes, SerializedCollections are must not used. replace them by simplier, more compatible with playable(luna playworks plugin) logic, plugins.
+- Playable ads sdk use C# .Net 7, so downgrade code if they use higher vesion. 
+Example 1: 'new' cannot be used with tuple type. Use a tuple literal expression instead.
+Example 2: A new expression requires (), [], or {} after type
+- Litmotion, Unitask, Attributes, SerializedCollections are must not used. replace them by simplier, more compatible with playable(luna playworks plugin) logic, library.

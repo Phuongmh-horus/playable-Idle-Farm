@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 548253945695487305}
   - component: {fileID: 4469160913366988074}
   - component: {fileID: 6115551011480240737}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 5763274559931514105}
   - component: {fileID: 7458687475878890815}
   - component: {fileID: 5159254854496014922}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,8 +143,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1/10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 19d9882c40ff19648aedb2ceb058956f, type: 2}
+  m_sharedMaterial: {fileID: -8313916626228410150, guid: 19d9882c40ff19648aedb2ceb058956f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 66.85
+  m_fontSize: 54.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -221,12 +221,10 @@ GameObject:
   - component: {fileID: 5796944530445732252}
   - component: {fileID: 878222837312233357}
   - component: {fileID: 4361352500554325144}
-  - component: {fileID: 7739958599648242753}
-  - component: {fileID: 1575033356179932097}
   - component: {fileID: 5630424664412128158}
   - component: {fileID: 6052973665435823649}
   - component: {fileID: 1326599234417705533}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CapacityFruitTransport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +271,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: -17376981
+  m_SortingLayerID: -1822937161
   m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!225 &4361352500554325144
@@ -285,34 +283,9 @@ CanvasGroup:
   m_GameObject: {fileID: 7280854541471931380}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &7739958599648242753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7280854541471931380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!222 &1575033356179932097
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7280854541471931380}
-  m_CullTransparentMesh: 1
 --- !u!114 &5630424664412128158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,7 +301,7 @@ MonoBehaviour:
   canvas: {fileID: 878222837312233357}
   canvasGroup: {fileID: 4361352500554325144}
   rectTransform: {fileID: 5796944530445732252}
-  graphicRaycaster: {fileID: 7739958599648242753}
+  graphicRaycaster: {fileID: 0}
   billboardFollower: {fileID: 6052973665435823649}
   animHandler: {fileID: 1326599234417705533}
   layerDepth: 200
@@ -355,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d055129047de0645a077afce2d580b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionUpdateMode: 0
+  positionUpdateMode: 1
   target: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
@@ -380,20 +353,15 @@ MonoBehaviour:
   panelRect: {fileID: 5796944530445732252}
   canvasGroup: {fileID: 4361352500554325144}
   useScale: 1
-  autoDetectTargetScale: 1
-  targetScale: {x: 0.01, y: 0.01, z: 0.01}
   useFade: 1
   duration: 0.3
-  easeType: 26
-  interval: 0
+  hideDuration: 0.2
   OnStartAnim:
     m_PersistentCalls:
       m_Calls: []
   OnCompleteAnim:
     m_PersistentCalls:
       m_Calls: []
-  hideDuration: 0.2
-  hideEaseType: 25
   OnStartHideAnim:
     m_PersistentCalls:
       m_Calls: []

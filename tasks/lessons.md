@@ -12,4 +12,11 @@
 - Do not retain DataManager in a playable when the requested runtime state is explicitly local; migrate callers to one small session-state owner rather than hiding DataManager behind another adapter.
 - For playable world UI explicitly required to be pre-attached, register inactive scene instances and fail visibly when the finite pool is exhausted; never silently instantiate a prefab during Play.
 - When a UI manager and GameplayWorldCanvas are separate scene roots, resolve pre-attached world UI through its owning manager/registry rather than only from the UI manager's transform root.
-- For gated tutorial phases, re-evaluate the gate when the flow enters the phase; an earlier one-shot availability notification can otherwise be missed and leave the tutorial stalled.
+- Do not activate or extend reference-only gameplay paths in a playable: confirm which mechanics each active scenario actually uses or essential for playable, then gate non-scenario systems, game product systems explicitly. 
+- For irrigation verification, let the real rotating sprinkler cross the starter plant in Play Mode and assert pump count, water progress, fruit growth, and tutorial advancement; calling Plant.AddWater directly does not validate alignment or scenario pacing.
+- For rotating farm arms, compare target directions only after projecting them onto the arm's actual rotation plane; a small pivot/plant height offset can make a visually correct pass fail a strict 3D angle test.
+- Do not classify an orthographic camera as 2D from a loose forward/Z dot-product alone; tilted orthographic gameplay cameras still need pointer rays projected onto the farm's XZ ground plane.
+- Author playable modal UI on an explicit high-order overlay Canvas; verify it against world-space icons and moving gameplay sprites, not only against the main screen Canvas.
+- Pause the recurring endcard countdown while tutorial, selection, or upgrade modal UI owns the interaction; two independently timed overlays must never compete for the same input frame.
+- For Luna builds, do not route a concrete component through a generic pool cast (as T / generic Get<T>); use a non-generic MonoBehaviour acquire plus an explicit concrete cast at the caller, then verify the Luna local-web transpile path.
+- When a tutorial phase is triggered by a world upgrade icon, complete that phase at the icon click boundary; do not wait for a later popup button action unless the phase explicitly teaches that button.

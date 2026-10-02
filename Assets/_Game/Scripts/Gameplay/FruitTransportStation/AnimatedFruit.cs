@@ -1,5 +1,5 @@
 using System;
-using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class AnimatedFruit : MonoBehaviour
@@ -7,12 +7,19 @@ public class AnimatedFruit : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private AnimatedFruitConfig config;
 
-    private Sequence _flightSequence;
+    private Coroutine _flightRoutine;
     private Action _onArrived;
 
     private AnimatedFruitConfig Config
     {
-        get { return config != null ? config : ConfigHolder.Instance.FruitConfig.animatedFruitConfig; }
+        get
+        {
+            return config != null
+                ? config
+                : ConfigHolder.Instance != null && ConfigHolder.Instance.FruitConfig != null
+                    ? ConfigHolder.Instance.FruitConfig.animatedFruitConfig
+                    : null;
+        }
     }
 
     private void Awake()
@@ -40,12 +47,41 @@ public class AnimatedFruit : MonoBehaviour
 
         transform.position = startPosition;
         transform.localScale = Vector3.one * initialScale;
-        _flightSequence = DOTween.Sequence();
-        _flightSequence.Append(transform.DOMove(popPosition, cfg != null ? cfg.popDuration : 0.25f).SetEase(cfg != null ? cfg.popEase : Ease.OutQuad));
-        _flightSequence.Join(transform.DOScale(peakScale, (cfg != null ? cfg.popDuration : 0.25f) * 0.5f).SetLoops(2, LoopType.Yoyo));
-        _flightSequence.Append(transform.DOMove(targetTransform != null ? targetTransform.position : popPosition, cfg != null ? cfg.flightDuration : 0.55f).SetEase(cfg != null ? cfg.flightEase : Ease.InQuad));
-        _flightSequence.Join(transform.DOScale(endScale, cfg != null ? cfg.flightDuration : 0.55f).SetEase(Ease.InQuad));
-        _flightSequence.OnComplete(CompleteFlight);
+        float popDuration = cfg != null ? cfg.popDuration : 0.25f;
+        float flightDuration = cfg != null ? cfg.flightDuration : 0.55f;
+        _flightRoutine = StartCoroutine(FlightRoutine(popPosition, targetTransform, peakScale, flightStartScale, endScale, popDuration, flightDuration));
+    }
+
+    private IEnumerator FlightRoutine(Vector3 popPosition, Transform targetTransform, float peakScale, float flightStartScale,
+        float endScale, float popDuration, float flightDuration)
+    {
+        Vector3 startPosition = transform.position;
+        Vector3 initialScale = transform.localScale;
+        popDuration = Mathf.Max(0.01f, popDuration);
+        for (float elapsed = 0f; elapsed < popDuration; elapsed += Time.deltaTime)
+        {
+            float progress = Mathf.Clamp01(elapsed / popDuration);
+            float eased = 1f - (1f - progress) * (1f - progress);
+            transform.position = Vector3.Lerp(startPosition, popPosition, eased);
+            transform.localScale = Vector3.one * Mathf.Lerp(initialScale.x, peakScale, Mathf.Sin(progress * Mathf.PI));
+            yield return null;
+        }
+
+        transform.position = popPosition;
+        transform.localScale = Vector3.one * flightStartScale;
+        flightDuration = Mathf.Max(0.01f, flightDuration);
+        for (float elapsed = 0f; elapsed < flightDuration; elapsed += Time.deltaTime)
+        {
+            float progress = Mathf.Clamp01(elapsed / flightDuration);
+            float eased = progress * progress;
+            Vector3 targetPosition = targetTransform != null ? targetTransform.position : popPosition;
+            transform.position = Vector3.Lerp(popPosition, targetPosition, eased);
+            transform.localScale = Vector3.one * Mathf.Lerp(flightStartScale, endScale, eased);
+            yield return null;
+        }
+
+        _flightRoutine = null;
+        CompleteFlight();
     }
 
     private void CompleteFlight()
@@ -57,8 +93,8 @@ public class AnimatedFruit : MonoBehaviour
 
     public void CancelMotion()
     {
-        if (_flightSequence != null) _flightSequence.Kill();
-        _flightSequence = null;
+        if (_flightRoutine != null) StopCoroutine(_flightRoutine);
+        _flightRoutine = null;
         _onArrived = null;
     }
 }

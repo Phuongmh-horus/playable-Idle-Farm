@@ -147,7 +147,9 @@ public static class PlayableFarmState
 
     public static void UpdateTransportLevel(int level)
     {
-        GetTransportSaveData().currentLevel = Mathf.Max(1, level);
+        TransportConfig config = ConfigHolder.Instance?.FarmConfig?.transport;
+        int maxLevel = config != null ? config.MaxLevel : 20;
+        GetTransportSaveData().currentLevel = Mathf.Clamp(level, 1, Mathf.Max(1, maxLevel));
         if (GameEventBus.OnUpdateTransportStation != null)
         {
             GameEventBus.OnUpdateTransportStation();
@@ -210,9 +212,11 @@ public static class PlayableFarmState
 /// </summary>
 public static class PlayableScenarioRuntime
 {
-    public const int InitialPlotCount = 1;
-
     public static ScenePlayableSO CurrentScenario { get; private set; }
+
+    public static int InitialPlotCount => CurrentScenario != null
+        ? Mathf.Max(1, CurrentScenario.initialPlotCount)
+        : 1;
 
     public static void Prepare(ScenePlayableSO scenario)
     {
@@ -220,7 +224,8 @@ public static class PlayableScenarioRuntime
         // Currency is an inspector-authored scenario value; all later income
         // and spending remains session-only in PlayableFarmState.
         PlayableFarmState.ResetPlayableState(scenario != null ? scenario.startingCurrency : 0d);
-        for (int plotId = 0; plotId < InitialPlotCount; plotId++)
+        int initialPlotCount = InitialPlotCount;
+        for (int plotId = 0; plotId < initialPlotCount; plotId++)
         {
             int plantId = scenario != null ? GetInitialPlantId(scenario, plotId) : -1;
             PlotState state = plantId >= 0 ? PlotState.Planted : PlotState.Empty;
@@ -238,8 +243,7 @@ public static class PlayableScenarioRuntime
 
         if (plotId < 0 || plotId >= InitialPlotCount)
         {
-            data = new PlotSaveData { plotId = plotId, state = PlotState.Locked, plantedPlantId = -1, currentLevel = 1 };
-            return true;
+            return false;
         }
 
         int plantId = GetInitialPlantId(CurrentScenario, plotId);

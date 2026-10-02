@@ -6,6 +6,8 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
 {
     [Header("Sprinkler Settings")]
     [SerializeField] private SprinklerArmConfig armConfig;
+    [Tooltip("Playable pacing: every sprinkler pass completes one fruit slot, regardless of the product game's long-form water requirement.")]
+    [SerializeField] private bool completeOneFruitPerPass = true;
 
     [Header("Prefab & Spawning")]
     [SerializeField] private SprinklerArm sprinklerArmPrefab;
@@ -23,7 +25,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
     public float AlignmentTolerance => ArmConfig != null ? ArmConfig.alignmentTolerance : 3f;
     public float WaterAnimationDuration => ArmConfig != null ? ArmConfig.waterAnimationDuration : 0.5f;
 
-    private int MaxLevel => (Config != null && Config.maxLevel > 0) ? Config.maxLevel : 30;
+    public int MaxLevel => (Config != null && Config.maxLevel > 0) ? Config.maxLevel : 30;
 
     private int _sprinklerLevel = 1;
     public int Level => _sprinklerLevel;
@@ -87,7 +89,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
 
     private void SetLevel(int level, bool save = true)
     {
-        _sprinklerLevel = Math.Clamp(level, 1, MaxLevel);
+        _sprinklerLevel = Mathf.Clamp(level, 1, MaxLevel);
         if (save)
         {
             PlayableFarmState.UpdateSprinklerLevel(_sprinklerLevel);
@@ -130,7 +132,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
 
     private void RotateSprinkler()
     {
-        float speed = (Config != null) ? Config.GetRotationSpeed() : 0;
+        float speed = Config != null ? Config.GetRotationSpeed(_sprinklerLevel) : 0f;
         float dt = Time.deltaTime;
         for (int i = 0; i < _spawnedSprinklerArms.Count; i++)
         {
@@ -149,6 +151,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
             return;
         }
 
+        float minimumAlignmentDot = Mathf.Cos(AlignmentTolerance * Mathf.Deg2Rad);
         foreach (FarmPlotData plot in plots.Plots)
         {
             SprinklerArm alignedArm = null;
@@ -156,7 +159,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
             for (int i = 0; i < _spawnedSprinklerArms.Count; i++)
             {
                 SprinklerArm arm = _spawnedSprinklerArms[i];
-                if (arm == null) continue;
+                if (arm == null || !arm.gameObject.activeInHierarchy) continue;
 
                 // Chá»‰ tÆ°á»›i Ä‘Æ°á»£c náº¿u Ä‘á»™ dÃ i cÃ¡nh tay vÆ°Æ¡n tá»›i Ring cá»§a Ã´ Ä‘áº¥t
                 if (plot.RingIndex >= arm.CurrentArmLength)
@@ -164,7 +167,13 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
 
                 Vector3 sprinklerForward = arm.GetForwardDirection();
                 Vector3 plotDirection = plots.GetPlotDirection(plot.Id, arm.Pivot.position);
-                if (Vector3.Angle(sprinklerForward, plotDirection) <= AlignmentTolerance)
+                // The arm rotates around its local Z axis. Ignore height/depth outside that
+                // rotation plane so a visually aligned sprinkler can reach the plant.
+                plotDirection = Vector3.ProjectOnPlane(plotDirection, arm.Pivot.forward);
+                if (plotDirection.sqrMagnitude <= Mathf.Epsilon)
+                    continue;
+
+                if (Vector3.Dot(sprinklerForward, plotDirection.normalized) >= minimumAlignmentDot)
                 {
                     alignedArm = arm;
                     break;
@@ -207,6 +216,10 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         if (targetPlot.State == FarmPlotState.Occupied && targetPlot.CurrentPlant != null && !targetPlot.CurrentPlant.IsFull)
         {
             Plant plant = targetPlot.CurrentPlant;
+            if (completeOneFruitPerPass)
+            {
+                amount = Mathf.Max(amount, plant.WaterRequirement);
+            }
             // Progress-bar feedback is intentionally omitted from the playable.
             // Plant owns the immediate growth visual when this water completes a slot.
             plant.AddWater(amount);
@@ -237,6 +250,15 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         // Dá»n dáº¹p null items
         _spawnedSprinklerArms.RemoveAll(arm => arm == null);
 
+        if (PoolHolder.Instance != null && sprinklerArmPrefab != null)
+        {
+            int maxArmCount = Config != null ? Mathf.Max(1, Config.GetNozzleCount(MaxLevel)) : targetCount;
+            PoolHolder.Instance.Prewarm(
+                sprinklerArmPrefab,
+                Mathf.Max(0, maxArmCount - _spawnedSprinklerArms.Count),
+                maxArmCount);
+        }
+
         // LÆ°u gÃ³c cÆ¡ sá»Ÿ hiá»‡n táº¡i náº¿u Ä‘Ã£ cÃ³ arm quay Ä‘á»ƒ trÃ¡nh giáº­t hÃ¬nh khi nÃ¢ng cáº¥p
         float baseZ = (_spawnedSprinklerArms.Count > 0 && _spawnedSprinklerArms[0] != null && _spawnedSprinklerArms[0].Pivot != null)
             ? _spawnedSprinklerArms[0].Pivot.localEulerAngles.z
@@ -247,8 +269,12 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         {
             if (sprinklerArmPrefab != null)
             {
-                SprinklerArm newArm = Instantiate(sprinklerArmPrefab, parent);
+                SprinklerArm newArm = PoolHolder.Instance != null
+                    ? PoolHolder.Instance.Get((MonoBehaviour)sprinklerArmPrefab, parent) as SprinklerArm
+                    : Instantiate(sprinklerArmPrefab, parent);
+                if (newArm == null) break;
                 newArm.transform.localPosition = Vector3.zero;
+                newArm.transform.localRotation = Quaternion.identity;
                 newArm.transform.localScale = Vector3.one;
                 _spawnedSprinklerArms.Add(newArm);
             }
@@ -268,7 +294,10 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
             {
                 if (Application.isPlaying)
                 {
-                    Destroy(excessArm.gameObject);
+                    if (PoolHolder.Instance != null && sprinklerArmPrefab != null)
+                        PoolHolder.Instance.Release(excessArm, PoolHolder.GetKey(sprinklerArmPrefab));
+                    else
+                        Destroy(excessArm.gameObject);
                 }
                 else
                 {

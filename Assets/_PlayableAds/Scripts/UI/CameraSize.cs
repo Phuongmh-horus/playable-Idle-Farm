@@ -1,6 +1,4 @@
-
-
-using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 
@@ -25,7 +23,7 @@ public class CameraSize : MonoSingleton<CameraSize>
     [SerializeField] private float minOrthoSize = 15f;
     [SerializeField] private float maxOrthoSize = 35f;
 
-    [Header("Tween")]
+    [Header("Animation")]
     [SerializeField] private float cameraMoveDuration = 0.3f;
     [SerializeField] private float sizeTweenDuration = 0.3f;
 
@@ -36,20 +34,24 @@ public class CameraSize : MonoSingleton<CameraSize>
     /// </summary>
     public int currentViewIndex = 0;
 
-    private Tween moveTween;
-    private Tween sizeTween;
-    private Tween fovTween;
+    private Coroutine moveRoutine;
+    private Coroutine sizeRoutine;
+    private Coroutine fovRoutine;
 
     protected override void Awake()
     {
         base.Awake();
     }
 
-    protected void OnDestroy()
+    private void OnDisable()
     {
-        moveTween?.Kill();
-        sizeTween?.Kill();
-        fovTween?.Kill();
+        CancelAnimations();
+    }
+
+    protected override void OnDestroy()
+    {
+        CancelAnimations();
+        base.OnDestroy();
     }
 
     private void Start()
@@ -108,11 +110,8 @@ public class CameraSize : MonoSingleton<CameraSize>
             currentViewIndex = 0;
         }
 
-        moveTween?.Kill();
-
-        moveTween = transform
-        .DOMove(views[currentViewIndex].pos, cameraMoveDuration)
-        .SetEase(Ease.OutQuad);
+        if (moveRoutine != null) StopCoroutine(moveRoutine);
+        moveRoutine = StartCoroutine(MoveCameraRoutine(views[currentViewIndex].pos));
 
         if (cameraU.orthographic)
         {
@@ -134,14 +133,8 @@ public class CameraSize : MonoSingleton<CameraSize>
             finalSize = Mathf.Clamp(finalSize, minOrthoSize, maxOrthoSize);
         }
 
-        sizeTween?.Kill();
-
-        sizeTween = DOTween.To(
-            () => cameraU.orthographicSize,
-            x => cameraU.orthographicSize = x,
-            finalSize,
-            sizeTweenDuration
-            ).SetEase(Ease.OutQuad);
+        if (sizeRoutine != null) StopCoroutine(sizeRoutine);
+        sizeRoutine = StartCoroutine(OrthographicSizeRoutine(finalSize));
     }
 
     private float GetAspectCorrectedOrthoSize(float baseSize)
@@ -166,14 +159,66 @@ public class CameraSize : MonoSingleton<CameraSize>
 
     private void OnFieldOfView(ViewCamera[] views)
     {
-    fovTween?.Kill();
+        if (fovRoutine != null) StopCoroutine(fovRoutine);
+        fovRoutine = StartCoroutine(FieldOfViewRoutine(views[currentViewIndex].fieldOfView));
+    }
 
-    fovTween = DOTween.To(
-    () => cameraU.fieldOfView,
-    x => cameraU.fieldOfView = x,
-    views[currentViewIndex].fieldOfView,
-    sizeTweenDuration
-    ).SetEase(Ease.OutQuad);
+    private IEnumerator MoveCameraRoutine(Vector3 targetPosition)
+    {
+        Vector3 startPosition = transform.position;
+        float duration = Mathf.Max(0f, cameraMoveDuration);
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float progress = RuntimeEaseUtility.Evaluate(RuntimeEase.OutQuad, elapsed / duration);
+            transform.position = Vector3.LerpUnclamped(startPosition, targetPosition, progress);
+            yield return null;
+        }
+        transform.position = targetPosition;
+        moveRoutine = null;
+    }
+
+    private IEnumerator OrthographicSizeRoutine(float targetSize)
+    {
+        float startSize = cameraU.orthographicSize;
+        float duration = Mathf.Max(0f, sizeTweenDuration);
+        float elapsed = 0f;
+        while (elapsed < duration && cameraU != null)
+        {
+            elapsed += Time.deltaTime;
+            float progress = RuntimeEaseUtility.Evaluate(RuntimeEase.OutQuad, elapsed / duration);
+            cameraU.orthographicSize = Mathf.LerpUnclamped(startSize, targetSize, progress);
+            yield return null;
+        }
+        if (cameraU != null) cameraU.orthographicSize = targetSize;
+        sizeRoutine = null;
+    }
+
+    private IEnumerator FieldOfViewRoutine(float targetFov)
+    {
+        float startFov = cameraU.fieldOfView;
+        float duration = Mathf.Max(0f, sizeTweenDuration);
+        float elapsed = 0f;
+        while (elapsed < duration && cameraU != null)
+        {
+            elapsed += Time.deltaTime;
+            float progress = RuntimeEaseUtility.Evaluate(RuntimeEase.OutQuad, elapsed / duration);
+            cameraU.fieldOfView = Mathf.LerpUnclamped(startFov, targetFov, progress);
+            yield return null;
+        }
+        if (cameraU != null) cameraU.fieldOfView = targetFov;
+        fovRoutine = null;
+    }
+
+    private void CancelAnimations()
+    {
+        if (moveRoutine != null) StopCoroutine(moveRoutine);
+        if (sizeRoutine != null) StopCoroutine(sizeRoutine);
+        if (fovRoutine != null) StopCoroutine(fovRoutine);
+        moveRoutine = null;
+        sizeRoutine = null;
+        fovRoutine = null;
     }
 
     #if UNITY_EDITOR

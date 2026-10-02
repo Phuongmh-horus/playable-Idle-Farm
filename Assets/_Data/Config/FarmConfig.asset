@@ -18,7 +18,6 @@ MonoBehaviour:
     ringIndex: 0
     sectorIndex: 0
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 0
     unlockCost: 0
     isUnlockedByDefault: 1
@@ -26,332 +25,85 @@ MonoBehaviour:
     ringIndex: 0
     sectorIndex: 1
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 1
-    unlockCost: 40
+    unlockCost: 80
     isUnlockedByDefault: 0
   - id: 2
     ringIndex: 0
     sectorIndex: 2
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 2
-    unlockCost: 80
+    unlockCost: 350
     isUnlockedByDefault: 0
   - id: 3
     ringIndex: 0
     sectorIndex: 3
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 3
-    unlockCost: 160
+    unlockCost: 1440
     isUnlockedByDefault: 0
   - id: 4
     ringIndex: 0
     sectorIndex: 4
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 4
-    unlockCost: 320
+    unlockCost: 6000
     isUnlockedByDefault: 0
   - id: 5
     ringIndex: 0
     sectorIndex: 5
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 5
-    unlockCost: 640
+    unlockCost: 26000
     isUnlockedByDefault: 0
   - id: 6
     ringIndex: 0
     sectorIndex: 6
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 6
-    unlockCost: 1280
+    unlockCost: 100000
     isUnlockedByDefault: 0
   - id: 7
     ringIndex: 0
     sectorIndex: 7
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 7
-    unlockCost: 2560
+    unlockCost: 365000
     isUnlockedByDefault: 0
   - id: 8
     ringIndex: 0
     sectorIndex: 8
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 8
-    unlockCost: 5120
+    unlockCost: 1444000
     isUnlockedByDefault: 0
   - id: 9
     ringIndex: 0
     sectorIndex: 9
     plotType: 0
-    plantPosition: {x: 0, y: 0}
     defaultPlantId: 9
-    unlockCost: 10240
-    isUnlockedByDefault: 0
-  - id: 10
-    ringIndex: 1
-    sectorIndex: 0
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 760
-    isUnlockedByDefault: 0
-  - id: 11
-    ringIndex: 1
-    sectorIndex: 1
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 1
-    unlockCost: 7500
-    isUnlockedByDefault: 0
-  - id: 12
-    ringIndex: 1
-    sectorIndex: 2
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 2
-    unlockCost: 56200
-    isUnlockedByDefault: 0
-  - id: 13
-    ringIndex: 1
-    sectorIndex: 3
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 3
-    unlockCost: 376000
-    isUnlockedByDefault: 0
-  - id: 14
-    ringIndex: 1
-    sectorIndex: 4
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 4
-    unlockCost: 2256000
-    isUnlockedByDefault: 0
-  - id: 15
-    ringIndex: 1
-    sectorIndex: 5
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 5
-    unlockCost: 13536000
-    isUnlockedByDefault: 0
-  - id: 16
-    ringIndex: 1
-    sectorIndex: 6
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 6
-    unlockCost: 81216000
-    isUnlockedByDefault: 0
-  - id: 17
-    ringIndex: 1
-    sectorIndex: 7
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 7
-    unlockCost: 487296000
-    isUnlockedByDefault: 0
-  - id: 18
-    ringIndex: 1
-    sectorIndex: 8
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 8
-    unlockCost: 2923776000
-    isUnlockedByDefault: 0
-  - id: 19
-    ringIndex: 1
-    sectorIndex: 9
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 9
-    unlockCost: 17542656000
-    isUnlockedByDefault: 0
-  - id: 20
-    ringIndex: 2
-    sectorIndex: 0
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 11400
-    isUnlockedByDefault: 0
-  - id: 21
-    ringIndex: 2
-    sectorIndex: 1
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 1
-    unlockCost: 112500
-    isUnlockedByDefault: 0
-  - id: 22
-    ringIndex: 2
-    sectorIndex: 2
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 2
-    unlockCost: 843000
-    isUnlockedByDefault: 0
-  - id: 23
-    ringIndex: 2
-    sectorIndex: 3
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 3
-    unlockCost: 5640000
-    isUnlockedByDefault: 0
-  - id: 24
-    ringIndex: 2
-    sectorIndex: 4
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 4
-    unlockCost: 33840000
-    isUnlockedByDefault: 0
-  - id: 25
-    ringIndex: 2
-    sectorIndex: 5
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 5
-    unlockCost: 203040000
-    isUnlockedByDefault: 0
-  - id: 26
-    ringIndex: 2
-    sectorIndex: 6
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 6
-    unlockCost: 1218240000
-    isUnlockedByDefault: 0
-  - id: 27
-    ringIndex: 2
-    sectorIndex: 7
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 7
-    unlockCost: 7309440000
-    isUnlockedByDefault: 0
-  - id: 28
-    ringIndex: 2
-    sectorIndex: 8
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 8
-    unlockCost: 43856640000
-    isUnlockedByDefault: 0
-  - id: 29
-    ringIndex: 2
-    sectorIndex: 9
-    plotType: 0
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 9
-    unlockCost: 263139840000
-    isUnlockedByDefault: 0
-  - id: 30
-    ringIndex: 3
-    sectorIndex: 0
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 10000
-    isUnlockedByDefault: 0
-  - id: 31
-    ringIndex: 3
-    sectorIndex: 1
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 11500
-    isUnlockedByDefault: 0
-  - id: 32
-    ringIndex: 3
-    sectorIndex: 2
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 13000
-    isUnlockedByDefault: 0
-  - id: 33
-    ringIndex: 3
-    sectorIndex: 3
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 14500
-    isUnlockedByDefault: 0
-  - id: 34
-    ringIndex: 3
-    sectorIndex: 4
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 16000
-    isUnlockedByDefault: 0
-  - id: 35
-    ringIndex: 3
-    sectorIndex: 5
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 17500
-    isUnlockedByDefault: 0
-  - id: 36
-    ringIndex: 3
-    sectorIndex: 6
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 19000
-    isUnlockedByDefault: 0
-  - id: 37
-    ringIndex: 3
-    sectorIndex: 7
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 20500
-    isUnlockedByDefault: 0
-  - id: 38
-    ringIndex: 3
-    sectorIndex: 8
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 22000
-    isUnlockedByDefault: 0
-  - id: 39
-    ringIndex: 3
-    sectorIndex: 9
-    plotType: 1
-    plantPosition: {x: 0, y: 0}
-    defaultPlantId: 0
-    unlockCost: 23500
+    unlockCost: 6000000
     isUnlockedByDefault: 0
   sprinkler:
-    maxLevel: 10
-    rotationDuration: 8
-    level1Cost: 19
-    sprinklerBasePrice: 190
-    sprinklerUpdateScale: 2.25
-    baseWaterAmount: 5
-    waterAmountSumPerLevel: 2
+    maxLevel: 20
+    rotationDuration: 10
+    rotationDurationReductionPerMilestone: 1
+    minimumRotationDuration: 5
+    level1Cost: 88
+    sprinklerBasePrice: 40
+    sprinklerUpdateScale: 2.3
+    baseWaterAmount: 10
+    waterAmountSumPerLevel: 3
   harvester:
-    maxLevel: 10
-    rotationDuration: 45
+    maxLevel: 9
+    rotationDuration: 5
     level1Cost: 130
     harvesterBasePrice: 9750
     harvesterUpdateScale: 3
   transport:
-    maxLevel: 10
-    baseCapacity: 10
+    maxLevel: 20
+    baseCapacity: 3
     capacitySumPerLevel: 1
-    level1Cost: 19
-    cargoBasePrice: 190
-    cargoUpdateScale: 2.25
+    level1Cost: 40
+    cargoBasePrice: 40
+    cargoUpdateScale: 2.3

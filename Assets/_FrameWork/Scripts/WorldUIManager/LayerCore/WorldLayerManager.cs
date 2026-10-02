@@ -8,8 +8,8 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
     [SerializeField] private RectTransform worldLayerParent;
     [SerializeField] private WorldLayerReferenceSO worldLayerReferenceSO;
 
-    private readonly Dictionary<WorldLayerType, Queue<WorldLayerBase>> _poolDic = new();
-    private readonly List<WorldLayerBase> _activeLayers = new();
+    private readonly Dictionary<WorldLayerType, Queue<WorldLayerBase>> _poolDic = new Dictionary<WorldLayerType, Queue<WorldLayerBase>>();
+    private readonly List<WorldLayerBase> _activeLayers = new List<WorldLayerBase>();
 
     private void Reset()
     {
@@ -45,7 +45,10 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
     private static WorldLayerType GetLayerType(WorldLayerBase layer)
     {
         if (layer is PopupUpgradePlantLayer) return WorldLayerType.PopupUpgradePlantLayer;
+        if (layer is PopupPlantPriceLayer) return WorldLayerType.PopupPlantPriceLayer;
+        if (layer is WaterRequiredLayer) return WorldLayerType.WaterRequiredLayer;
         if (layer is PopupBuyPlotLayer) return WorldLayerType.PopupBuyPlotLayer;
+        if (layer is PopupPlantTreeLayer) return WorldLayerType.PopupPlantTreeLayer;
         if (layer is IconUpgradeLayer) return WorldLayerType.IconUpgradeLayer;
         if (layer is CapacityFruitTransport) return WorldLayerType.CapacityFruitTransport;
         if (layer is FloatingCurrencyLayer) return WorldLayerType.FloatingCurrencyLayer;

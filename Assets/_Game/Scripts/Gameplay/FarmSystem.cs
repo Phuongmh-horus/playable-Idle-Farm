@@ -16,6 +16,8 @@ public sealed class FarmSystem : MonoSingleton<FarmSystem>
     {
         base.Awake();
 
+        PrewarmRuntimePools();
+
         if (slotSystem == null) 
             slotSystem = GetComponentInChildren<FarmPlotSystem>();
         if (slotSystem != null)
@@ -25,17 +27,44 @@ public sealed class FarmSystem : MonoSingleton<FarmSystem>
 
         if (irrigationSystem == null)
             irrigationSystem = GetComponentInChildren<FarmIrrigationSystem>();
-        irrigationSystem?.Initialize();
+
+        ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
+        bool irrigationEnabled = scenario == null || scenario.enableIrrigation;
+        if (irrigationSystem != null)
+        {
+            irrigationSystem.gameObject.SetActive(irrigationEnabled);
+            if (irrigationEnabled)
+            {
+                irrigationSystem.Initialize();
+            }
+        }
 
         if (harvestSystem == null)
             harvestSystem = GetComponentInChildren<FarmHarvestSystem>();
         harvestSystem?.Initialize();
 
-        ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
         FruitTransportStation station = TransportStation;
         if (station != null && scenario != null)
         {
             station.gameObject.SetActive(scenario.showConveyorAndSell);
         }
+    }
+
+    private static void PrewarmRuntimePools()
+    {
+        const int plantCountPerPrefab = 0;
+        const int fallbackFruitCapacity = 10;
+
+        int fruitCapacity = fallbackFruitCapacity;
+        int maxFruitCapacity = fallbackFruitCapacity;
+        FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+        if (farmConfig != null && farmConfig.transport != null)
+        {
+            fruitCapacity = Mathf.Max(1, farmConfig.transport.GetCapacity(1));
+            maxFruitCapacity = Mathf.Max(fruitCapacity, farmConfig.transport.GetCapacity(farmConfig.transport.MaxLevel));
+        }
+
+        PlantSpawner.Prewarm(plantCountPerPrefab);
+        FruitSpawner.Prewarm(fruitCapacity, fruitCapacity, maxFruitCapacity, maxFruitCapacity);
     }
 }

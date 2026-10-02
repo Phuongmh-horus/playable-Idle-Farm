@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 
 public class ShakingZAnimation : MonoBehaviour
@@ -11,31 +10,80 @@ public class ShakingZAnimation : MonoBehaviour
     [SerializeField] private float delayBetweenShakes = 0.3f;
     [SerializeField] private float pauseBetweenGroups = 3f;
 
-    private Sequence _sequence;
+    private enum ShakePhase { FirstShake, ShortDelay, SecondShake, LongDelay }
+
+    private ShakePhase _phase;
+    private Quaternion _baseRotation;
+    private float _phaseElapsed;
+    private float _fromOffset;
+    private float _toOffset;
+    private int _segmentIndex;
 
     private void OnEnable()
     {
-        _sequence?.Kill();
-
-        _sequence = DOTween.Sequence()
-            .Append(CreateShake())
-            .AppendInterval(delayBetweenShakes)
-            .Append(CreateShake())
-            .AppendInterval(pauseBetweenGroups)
-            .SetLoops(-1);
+        _baseRotation = transform.localRotation;
+        BeginShake(ShakePhase.FirstShake);
     }
 
-    private Tween CreateShake()
+    private void Update()
     {
-        return transform.DOShakeRotation(
-            shakeDuration,
-            new Vector3(0, 0, shakeStrength),
-            shakeVibrato,
-            shakeRandomness);
+        _phaseElapsed += Time.deltaTime;
+        if (_phase == ShakePhase.FirstShake || _phase == ShakePhase.SecondShake)
+        {
+            UpdateShake();
+            return;
+        }
+
+        float delay = _phase == ShakePhase.ShortDelay ? Mathf.Max(0f, delayBetweenShakes) : Mathf.Max(0f, pauseBetweenGroups);
+        if (_phaseElapsed < delay) return;
+        BeginShake(_phase == ShakePhase.ShortDelay ? ShakePhase.SecondShake : ShakePhase.FirstShake);
+    }
+
+    private void UpdateShake()
+    {
+        float duration = Mathf.Max(0f, shakeDuration);
+        if (duration <= 0f || _phaseElapsed >= duration)
+        {
+            transform.localRotation = _baseRotation;
+            _phase = _phase == ShakePhase.FirstShake ? ShakePhase.ShortDelay : ShakePhase.LongDelay;
+            _phaseElapsed = 0f;
+            return;
+        }
+
+        int vibrato = Mathf.Max(1, shakeVibrato);
+        float segmentProgress = _phaseElapsed / duration * vibrato;
+        int segment = Mathf.FloorToInt(segmentProgress);
+        if (segment != _segmentIndex)
+        {
+            _segmentIndex = segment;
+            _fromOffset = _toOffset;
+            _toOffset = NextOffset(segment);
+        }
+
+        float localProgress = segmentProgress - segment;
+        float fade = 1f - _phaseElapsed / duration;
+        float offset = Mathf.Lerp(_fromOffset, _toOffset, Mathf.SmoothStep(0f, 1f, localProgress)) * fade;
+        transform.localRotation = _baseRotation * Quaternion.Euler(0f, 0f, offset);
+    }
+
+    private void BeginShake(ShakePhase phase)
+    {
+        _phase = phase;
+        _phaseElapsed = 0f;
+        _segmentIndex = 0;
+        _fromOffset = 0f;
+        _toOffset = NextOffset(0);
+    }
+
+    private float NextOffset(int segment)
+    {
+        float randomness = Mathf.Clamp01(shakeRandomness / 180f);
+        float variedStrength = Mathf.Lerp(1f, Random.Range(0.35f, 1f), randomness) * shakeStrength;
+        return (segment & 1) == 0 ? variedStrength : -variedStrength;
     }
 
     private void OnDisable()
     {
-        _sequence?.Kill();
+        transform.localRotation = _baseRotation;
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6672312808377253305}
   - component: {fileID: 2208178496728900128}
   - component: {fileID: 3814094144928383713}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 171.6, y: 68.26}
+  m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6672312808377253305
 CanvasRenderer:
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1386323750, guid: 28be0d2e738a9e04d86ebeb468c53965, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 216eb9e2a291fe040a85919b84985044, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2.4
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &3814094144928383713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 7488771674303765860}
   - component: {fileID: 374445093109963992}
   - component: {fileID: 496943629217450780}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,15 +188,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 19d9882c40ff19648aedb2ceb058956f, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 85749a4b0ccba5e4eb3c4f1d5f2f06c4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -213,10 +213,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 36.4
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -267,11 +267,10 @@ GameObject:
   - component: {fileID: 2814552865368207669}
   - component: {fileID: 5977291571568196148}
   - component: {fileID: 4032792612371224977}
-  - component: {fileID: 7444841846879646067}
   - component: {fileID: 1546417842263282939}
   - component: {fileID: 5431721070515583798}
   - component: {fileID: 784504334761080217}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PopupPlantPriceLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,8 +286,8 @@ RectTransform:
   m_GameObject: {fileID: 8693924638750920791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.015, y: 0.015, z: 0.015}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6368778427832533200}
   m_Father: {fileID: 0}
@@ -296,7 +295,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 170, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2814552865368207669
 Canvas:
@@ -318,7 +317,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: -17376981
+  m_SortingLayerID: -1822937161
   m_SortingOrder: 200
   m_TargetDisplay: 0
 --- !u!225 &5977291571568196148
@@ -350,14 +349,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!222 &7444841846879646067
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8693924638750920791}
-  m_CullTransparentMesh: 1
 --- !u!114 &1546417842263282939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,20 +396,15 @@ MonoBehaviour:
   panelRect: {fileID: 4946480342243207771}
   canvasGroup: {fileID: 5977291571568196148}
   useScale: 1
-  autoDetectTargetScale: 1
-  targetScale: {x: 0.01, y: 0.01, z: 0.01}
   useFade: 1
   duration: 0.3
-  easeType: 26
-  interval: 0
+  hideDuration: 0.2
   OnStartAnim:
     m_PersistentCalls:
       m_Calls: []
   OnCompleteAnim:
     m_PersistentCalls:
       m_Calls: []
-  hideDuration: 0.2
-  hideEaseType: 25
   OnStartHideAnim:
     m_PersistentCalls:
       m_Calls: []

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5063398781595163915}
   - component: {fileID: 7046083437982802605}
   - component: {fileID: 5701245428032756180}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,11 +132,10 @@ GameObject:
   - component: {fileID: 3922321403667873367}
   - component: {fileID: 4699249898474013207}
   - component: {fileID: 5543442537288267282}
-  - component: {fileID: 8836889910922612980}
   - component: {fileID: 8190794302820951950}
   - component: {fileID: 7878175853418721860}
   - component: {fileID: 163347352585999886}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: IconUpgradeLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,8 +151,8 @@ RectTransform:
   m_GameObject: {fileID: 4504062229381536321}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8970909233634574538}
   m_Father: {fileID: 0}
@@ -161,7 +160,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3922321403667873367
 Canvas:
@@ -215,14 +214,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!222 &8836889910922612980
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504062229381536321}
-  m_CullTransparentMesh: 1
 --- !u!114 &8190794302820951950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,15 +235,15 @@ MonoBehaviour:
   layerDepth: 200
   blockSelectionClick: 0
   focusCameraOnShow: 0
-  useCustomFocusOffset: 1
-  customFocusOffset: {x: 0, y: 1, z: 1}
+  useCustomFocusOffset: 0
+  customFocusOffset: {x: 0, y: 0, z: 0}
   OnShowLayer:
     m_PersistentCalls:
       m_Calls: []
   OnHideLayer:
     m_PersistentCalls:
       m_Calls: []
-  upgradeButton: {fileID: 0}
+  upgradeButton: {fileID: 5701245428032756180}
 --- !u!114 &7878175853418721860
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -172,7 +172,6 @@ public class PopupPlantTreeLayer : WorldLayerBase
         bool success = _currentPlot.TryOccupy(plantId);
         if (success)
         {
-            PlayableFarmState.UpdatePlotData(_currentPlot.PlotId, PlotState.Planted, plantId, 1);
             PlayableFarmState.UnlockCollectionPlant(plantId, 1);
             Plot plantedPlot = _currentPlot;
             OnPlantSuccess?.Invoke(plantedPlot);
@@ -184,6 +183,13 @@ public class PopupPlantTreeLayer : WorldLayerBase
     public void Close()
     {
         WorldLayerManager.Instance.Hide(this);
+    }
+
+    public override void CleanupBeforeHide()
+    {
+        _currentPlot = null;
+        _data = null;
+        base.CleanupBeforeHide();
     }
 }
 

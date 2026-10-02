@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public sealed class TransportVehicle : MonoBehaviour
@@ -9,7 +9,7 @@ public sealed class TransportVehicle : MonoBehaviour
     [SerializeField] private float spawnRadius = 0.4f;
 
     private readonly List<Fruit> _spawnedFruitVisuals = new List<Fruit>();
-    private Tween _moveTween;
+    private Coroutine _moveRoutine;
     public Transform CargoRoot { get { return cargoRoot; } }
 
     private void OnDestroy()
@@ -23,25 +23,34 @@ public sealed class TransportVehicle : MonoBehaviour
         transform.position = new Vector3(position.x, position.y, transform.position.z);
     }
 
-    public void MoveTo(Vector3 startPosition, Vector3 targetPosition, float duration, Ease ease, Action onComplete)
+    public void MoveTo(Vector3 startPosition, Vector3 targetPosition, float duration, Action onComplete)
     {
         CancelMotions();
         float fixedY = transform.position.y;
         float fixedZ = transform.position.z;
         transform.position = new Vector3(startPosition.x, fixedY, fixedZ);
-        _moveTween = transform.DOMoveX(targetPosition.x, Mathf.Max(0.01f, duration))
-            .SetEase(ease)
-            .OnComplete(() =>
-            {
-                transform.position = new Vector3(targetPosition.x, fixedY, fixedZ);
-                onComplete?.Invoke();
-            });
+        _moveRoutine = StartCoroutine(MoveRoutine(startPosition.x, targetPosition.x, fixedY, fixedZ, duration, onComplete));
+    }
+
+    private IEnumerator MoveRoutine(float startX, float targetX, float fixedY, float fixedZ, float duration, Action onComplete)
+    {
+        duration = Mathf.Max(0.01f, duration);
+        for (float elapsed = 0f; elapsed < duration; elapsed += Time.deltaTime)
+        {
+            float progress = Mathf.Clamp01(elapsed / duration);
+            float eased = progress * progress * (3f - 2f * progress);
+            transform.position = new Vector3(Mathf.Lerp(startX, targetX, eased), fixedY, fixedZ);
+            yield return null;
+        }
+        transform.position = new Vector3(targetX, fixedY, fixedZ);
+        _moveRoutine = null;
+        onComplete?.Invoke();
     }
 
     public void CancelMotions()
     {
-        if (_moveTween != null) _moveTween.Kill();
-        _moveTween = null;
+        if (_moveRoutine != null) StopCoroutine(_moveRoutine);
+        _moveRoutine = null;
     }
 
     public void SpawnFruitVisuals(int plantId, int count)
@@ -56,8 +65,7 @@ public sealed class TransportVehicle : MonoBehaviour
             Fruit fruit = FruitSpawner.SpawnFruit(plantId, cargoRoot, new Vector3(offset.x, offset.y, 0f), Quaternion.identity);
             if (fruit == null) continue;
             fruit.SetLayer("Fruit", 20 + _spawnedFruitVisuals.Count);
-            fruit.transform.localScale = Vector3.zero;
-            fruit.transform.DOScale(Vector3.one, 0.25f).SetEase(Ease.OutBack);
+            fruit.PlaySpawnScale();
             _spawnedFruitVisuals.Add(fruit);
         }
     }

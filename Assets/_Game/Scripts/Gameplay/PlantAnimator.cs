@@ -1,4 +1,4 @@
-using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>Small plant-growth feedback for the playable.</summary>
@@ -7,10 +7,9 @@ public class PlantAnimator : MonoBehaviour
     [SerializeField] private Transform targetTransform;
     [SerializeField] private float growScaleMultiplier = 1.25f;
     [SerializeField] private float growDuration = 0.25f;
-    [SerializeField] private Ease growEase = Ease.OutQuad;
 
     private Vector3 _baseScale = Vector3.one;
-    private Tween _growTween;
+    private Coroutine _growRoutine;
 
     private void Awake()
     {
@@ -27,16 +26,28 @@ public class PlantAnimator : MonoBehaviour
         StopAnimation();
         _baseScale = targetTransform.localScale;
         Vector3 peak = new Vector3(_baseScale.x * growScaleMultiplier, _baseScale.y * growScaleMultiplier, _baseScale.z);
-        _growTween = targetTransform.DOScale(peak, growDuration * 0.5f)
-            .SetDelay(delay)
-            .SetEase(growEase)
-            .SetLoops(2, LoopType.Yoyo)
-            .OnComplete(ResetScale);
+        _growRoutine = StartCoroutine(GrowRoutine(peak, delay));
+    }
+
+    private IEnumerator GrowRoutine(Vector3 peakScale, float delay)
+    {
+        if (delay > 0f) yield return new WaitForSeconds(delay);
+        float duration = Mathf.Max(0.01f, growDuration);
+        for (float elapsed = 0f; elapsed < duration; elapsed += Time.deltaTime)
+        {
+            float progress = Mathf.Clamp01(elapsed / duration);
+            float pulse = Mathf.Sin(progress * Mathf.PI);
+            targetTransform.localScale = Vector3.Lerp(_baseScale, peakScale, pulse);
+            yield return null;
+        }
+        _growRoutine = null;
+        ResetScale();
     }
 
     private void StopAnimation()
     {
-        if (_growTween != null) _growTween.Kill();
+        if (_growRoutine != null) StopCoroutine(_growRoutine);
+        _growRoutine = null;
         ResetScale();
     }
 

@@ -13,18 +13,9 @@ MonoBehaviour:
   m_Name: WorldLayerReferenceSO
   m_EditorClassIdentifier: 
   layerReferenceList:
-  - layerType: 2
-    layerBase: {fileID: 4410973512393710407, guid: da3a388cfc013ee4d81799454ff5bb84, type: 3}
-    spawnMode: 1
   - layerType: 3
     layerBase: {fileID: 1546417842263282939, guid: e4697a8239b8c47458d04f178b310a0e, type: 3}
     spawnMode: 0
-  - layerType: 4
-    layerBase: {fileID: 3001638579006843917, guid: c532323cf81a7494a810bcd4640de55f, type: 3}
-    spawnMode: 0
-  - layerType: 5
-    layerBase: {fileID: 7257373352541104280, guid: d0636129f65b99c46af75017916aa1b2, type: 3}
-    spawnMode: 1
   - layerType: 6
     layerBase: {fileID: 9457244427059466, guid: eea265c0241ef1244a93abeb9ce24100, type: 3}
     spawnMode: 1
@@ -33,7 +24,4 @@ MonoBehaviour:
     spawnMode: 0
   - layerType: 8
     layerBase: {fileID: 5630424664412128158, guid: 7ad3f8432aeaac74bb63b55f158b28bb, type: 3}
-    spawnMode: 0
-  - layerType: 9
-    layerBase: {fileID: 6309950946250198978, guid: 0f9576eb7ee6ed741a702b9d9195944f, type: 3}
     spawnMode: 0

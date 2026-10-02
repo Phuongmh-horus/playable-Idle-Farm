@@ -1,5 +1,3 @@
-using DG.Tweening;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +7,11 @@ public class SliderValidator : MonoBehaviour
     [SerializeField] private Slider slider;
     public Vector2 Range = Vector2.up;
     [Range(0f, 1f)] public float Progress;
-    private Tween motionTween;
+    private bool _isAnimating;
+    private float _animationElapsed;
+    private float _animationDuration;
+    private float _animationStart;
+    private float _animationTarget;
 
     [SerializeField] private Image fillImage;
     void Start()
@@ -26,9 +28,20 @@ public class SliderValidator : MonoBehaviour
         UpdateProgress();
     }
 
+    private void Update()
+    {
+        if (!_isAnimating) return;
+        _animationElapsed += Time.unscaledDeltaTime;
+        float progress = _animationDuration <= 0f ? 1f : Mathf.Clamp01(_animationElapsed / _animationDuration);
+        float eased = progress * progress * (3f - 2f * progress);
+        Progress = Mathf.Lerp(_animationStart, _animationTarget, eased);
+        UpdateProgress();
+        if (progress >= 1f) _isAnimating = false;
+    }
+
     public float Value
     {
-        get => (Progress - Range.x) / (Range.y - Range.x);
+        get => Mathf.Approximately(Range.x, Range.y) ? 0f : (Progress - Range.x) / (Range.y - Range.x);
         set
         {
             Progress = Mathf.Clamp(value * (Range.y - Range.x) + Range.x, Range.x, Range.y);
@@ -38,17 +51,11 @@ public class SliderValidator : MonoBehaviour
 
     public void SetValueSmooth(float value, float duration)
     {
-        if (motionTween != null && motionTween.IsActive())
-        {
-            motionTween.Kill();
-        }
-
-        var targetValue = Mathf.Clamp(value * (Range.y - Range.x) + Range.x, Range.x, Range.y);
-        motionTween = DOVirtual.Float(Progress, targetValue, duration, x =>
-        {
-            Progress = x;
-            UpdateProgress();
-        }).SetEase(Ease.OutQuad);
+        _animationStart = Progress;
+        _animationTarget = Mathf.Clamp(value * (Range.y - Range.x) + Range.x, Range.x, Range.y);
+        _animationDuration = Mathf.Max(0f, duration);
+        _animationElapsed = 0f;
+        _isAnimating = true;
     }
 
     private void UpdateProgress()
@@ -56,6 +63,7 @@ public class SliderValidator : MonoBehaviour
         if (slider)
         {
             slider.value = Mathf.Clamp(Progress, Range.x, Range.y);
+            if (fillImage == null) return;
             if (slider.value <= 0.01f)
             {
                 slider.value = 0f;

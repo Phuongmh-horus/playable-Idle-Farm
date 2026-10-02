@@ -6,6 +6,8 @@ public class Plot : MonoBehaviour
     [SerializeField] protected StaticSelectable plantRoot;
     [SerializeField] private PlotVisual plotVisual;
     [SerializeField] private Vector3 upgradeIconOffset = new Vector3(0, 1.2f, 0);
+    [SerializeField] private Vector3 plotPriceOffset = new Vector3(0f, 0.8f, 0f);
+    [SerializeField] private Vector3 plantTreeOffset = new Vector3(0f, 1.1f, 0f);
 
     private int _plotId;
     private int _ringIndex;
@@ -16,6 +18,7 @@ public class Plot : MonoBehaviour
 
     private bool _isShowingUpgradeIcon;
     private bool _isGoldSubscribed;
+    private bool _isPurchasingPlot;
 
     public int PlotId => _plotId;
     public int RingIndex => _ringIndex;
@@ -39,13 +42,13 @@ public class Plot : MonoBehaviour
 
     private void Start()
     {
-        SubscribeGoldEvent();
+        RefreshGoldSubscription();
         UpdateUpgradeIconState();
     }
 
     private void OnEnable()
     {
-        SubscribeGoldEvent();
+        RefreshGoldSubscription();
         UpdateUpgradeIconState();
     }
 
@@ -74,6 +77,7 @@ public class Plot : MonoBehaviour
 
     public void ResetForPool()
     {
+        _isPurchasingPlot = false;
         UnsubscribeFromPlotData();
         UnsubscribeGoldEvent();
         HideUpgradeIcon();
@@ -110,6 +114,7 @@ public class Plot : MonoBehaviour
 
     public void Bind(FarmPlotSystem owner, FarmPlotData farmPlot)
     {
+        _isPurchasingPlot = false;
         UnsubscribeFromPlotData();
         _slotSystem = owner;
         _plotData = farmPlot;
@@ -124,6 +129,7 @@ public class Plot : MonoBehaviour
         }
 
         UpStatePlot();
+        RefreshGoldSubscription();
         UpdateUpgradeIconState();
     }
 
@@ -136,7 +142,13 @@ public class Plot : MonoBehaviour
         // Chá»‰ hiá»‡n popup giÃ¡ náº¿u Ã´ Ä‘áº¥t Ä‘ang Locked (chÆ°a má»Ÿ khÃ³a)
         if (_plotData.State == FarmPlotState.Locked)
         {
-            double cost = _plotData.Config != null ? _plotData.Config.unlockCost : 10;
+            if (_plotData.Config == null)
+            {
+                WorldLayerManager.Instance.HidePlantPriceLayer(popupTarget);
+                return;
+            }
+
+            double cost = _plotData.Config.unlockCost;
 
             WorldLayerManager.Instance.ShowPopupPlantPriceLayer(new PlantPriceData
             {
@@ -144,7 +156,7 @@ public class Plot : MonoBehaviour
                 Price = cost,
                 TargetPlot = this,
                 OnBuyClicked = OnBuyPlotClicked
-            }, popupTarget);
+            }, popupTarget, plotPriceOffset);
         }
         else
         {
@@ -155,14 +167,26 @@ public class Plot : MonoBehaviour
 
     private void OnBuyPlotClicked(PlantPriceData priceData)
     {
-        PurchasePlot(priceData.Price);
+        PurchasePlot();
     }
 
     /// <summary>
     /// Mua má»Ÿ khÃ³a Ã´ Ä‘áº¥t: trá»« tiá»n, chuyá»ƒn Ã´ Ä‘áº¥t sang tráº¡ng thÃ¡i Empty (Ä‘áº¥t trá»‘ng)
     /// </summary>
-    public bool PurchasePlot(double price)
+    public bool PurchasePlot()
     {
+        if (_isPurchasingPlot || _plotData == null || _plotData.State != FarmPlotState.Locked)
+        {
+            return false;
+        }
+
+        if (_plotData.Config == null)
+        {
+            Debug.LogError($"[Plot] Missing PlotConfig for plot {PlotId}.", this);
+            return false;
+        }
+
+        double price = _plotData.Config.unlockCost;
         if (price > 0)
         {
             if (!PlayableFarmState.ConsumeGold(price))
@@ -172,18 +196,52 @@ public class Plot : MonoBehaviour
             }
         }
 
-        // Má»Ÿ khÃ³a Ã´ Ä‘áº¥t -> chuyá»ƒn sang Empty
-        bool success = UnlockPlot();
-        if (success)
+        Transform popupTarget = plantRoot != null ? plantRoot.transform : transform;
+        if (WorldLayerManager.Instance != null)
         {
-            Transform popupTarget = plantRoot != null ? plantRoot.transform : transform;
-            if (WorldLayerManager.Instance != null)
-            {
-                WorldLayerManager.Instance.HidePlantPriceLayer(popupTarget);
-            }
+            WorldLayerManager.Instance.HidePlantPriceLayer(popupTarget);
         }
 
-        return success;
+        AnimatedHoe hoePrefab = ConfigHolder.Instance != null && ConfigHolder.Instance.FarmPlotConfigSO != null
+            ? ConfigHolder.Instance.FarmPlotConfigSO.animatedHoePrefab
+            : null;
+
+        if (hoePrefab == null)
+        {
+            return CompletePlotPurchase();
+        }
+
+        _isPurchasingPlot = true;
+        AnimatedHoe.SpawnAndPlay(hoePrefab, PlantPosition, transform, CompletePlotPurchaseAfterAnimation);
+        return true;
+    }
+
+    private void CompletePlotPurchaseAfterAnimation()
+    {
+        if (this == null)
+        {
+            return;
+        }
+
+        _isPurchasingPlot = false;
+        CompletePlotPurchase();
+    }
+
+    private bool CompletePlotPurchase()
+    {
+        bool success = UnlockPlot();
+        if (!success)
+        {
+            UpStatePlot();
+            return false;
+        }
+
+        Transform popupTarget = plantRoot != null ? plantRoot.transform : transform;
+        if (WorldLayerManager.Instance != null)
+        {
+            WorldLayerManager.Instance.ShowPopupPlantTreeLayer(this, popupTarget, plantTreeOffset);
+        }
+        return true;
     }
 
     public bool UnlockPlot()
@@ -211,11 +269,24 @@ public class Plot : MonoBehaviour
         UpdateUpgradeIconState();
     }
 
+    public void SetPlantActive(bool active)
+    {
+        if (_spawnedPlant != null)
+        {
+            _spawnedPlant.gameObject.SetActive(active);
+        }
+        if (plantRoot != null)
+        {
+            plantRoot.gameObject.SetActive(active);
+        }
+    }
+
     private void HandlePlotStateChanged(FarmPlotData plotData, FarmPlotState newState)
     {
         UpdateVisualByState(newState);
         UpdatePlantInstance();
         UpStatePlot();
+        RefreshGoldSubscription();
         UpdateUpgradeIconState();
     }
 
@@ -329,6 +400,18 @@ public class Plot : MonoBehaviour
         }
     }
 
+    private void RefreshGoldSubscription()
+    {
+        if (isActiveAndEnabled && _plotData != null && _plotData.State == FarmPlotState.Occupied)
+        {
+            SubscribeGoldEvent();
+        }
+        else
+        {
+            UnsubscribeGoldEvent();
+        }
+    }
+
     private void UnsubscribeGoldEvent()
     {
         if (_isGoldSubscribed)
@@ -406,16 +489,20 @@ public class Plot : MonoBehaviour
         if (WorldLayerManager.Instance == null) return;
 
         Transform popupTarget = plantRoot != null ? plantRoot.transform : transform;
-        WorldLayerManager.Instance.ShowIconUpgradeLayer(popupTarget, upgradeIconOffset, OnUpgradeIconClicked);
-        _isShowingUpgradeIcon = true;
+        IconUpgradeLayer icon = WorldLayerManager.Instance.ShowIconUpgradeLayer(popupTarget, upgradeIconOffset, OnUpgradeIconClicked);
+        _isShowingUpgradeIcon = icon != null;
 
         // Tutorial milestone: the first visible affordable upgrade is the
         // authoritative signal until scenario-specific upgrade rules exist.
-        PlayableTutorialFlow.Instance?.ReportFirstPlantUpgradeAffordable(this);
+        if (_isShowingUpgradeIcon)
+        {
+            PlayableTutorialFlow.Instance?.ReportFirstPlantUpgradeAffordable(this);
+        }
     }
 
     private void OnUpgradeIconClicked()
     {
+        PlayableTutorialFlow.Instance?.ReportFirstPlantUpgradeIconClicked(this);
         LunaUIManager.Instance?.ShowPlantUpgrade(this);
     }
 

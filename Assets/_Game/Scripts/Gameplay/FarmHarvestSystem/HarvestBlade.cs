@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public class HarvestBlade : MonoBehaviour
@@ -18,9 +17,6 @@ public class HarvestBlade : MonoBehaviour
     [Tooltip("Thời gian bay về vị trí gốc sau khi thả (giây)")]
     [SerializeField] private float returnDuration = 0.35f;
 
-    [Tooltip("Hiệu ứng Ease khi bay về vị trí gốc")]
-    [SerializeField] private Ease returnEase = Ease.OutBack;
-
     [Header("Harvest Detection")]
     [Tooltip("Bán kính quét thu hoạch các ô đất xung quanh lưỡi dao (world units)")]
     [SerializeField] private float harvestRadius = 0.8f;
@@ -37,8 +33,13 @@ public class HarvestBlade : MonoBehaviour
     private FarmPlotSystem _plotSystem;
     private bool _isDragging;
     private Vector3 _dragOffset;
-    private Tween _returnTween;
-    private Tween _scaleTween;
+    private bool _isReturning;
+    private float _returnElapsed;
+    private Vector3 _returnStartPosition;
+    private Quaternion _returnStartRotation;
+    private Vector3 _returnStartScale;
+    private float _sliceFeedbackElapsed = -1f;
+    private const float SliceFeedbackDuration = 0.16f;
 
     public static HarvestBlade Instance { get; private set; }
 
@@ -55,14 +56,15 @@ public class HarvestBlade : MonoBehaviour
     {
         Instance = this;
         _mainCamera = Camera.main;
-        if (fireFlare == null)
-        {
-            fireFlare = GetComponentInChildren<ParticleSystem>();
-        }
+        // if (fireFlare == null)
+        // {
+        //     fireFlare = GetComponentInChildren<ParticleSystem>();
+        // }
     }
 
     private void OnDestroy()
     {
+        CancelMotions();
         if (Instance == this)
         {
             Instance = null;
@@ -71,8 +73,10 @@ public class HarvestBlade : MonoBehaviour
 
     private void OnDisable()
     {
-        StopFireFlare();
+        // StopFireFlare();
         CancelMotions();
+        _isDragging = false;
+        transform.localScale = Vector3.one;
     }
 
     public void Initialize(Transform root, FarmPlotSystem plots = null)
@@ -90,7 +94,7 @@ public class HarvestBlade : MonoBehaviour
     {
         CancelMotions();
         _isDragging = false;
-        StopFireFlare();
+        // StopFireFlare();
 
         if (harvesterBladeRoot != null)
         {
@@ -108,7 +112,12 @@ public class HarvestBlade : MonoBehaviour
         if (_isDragging)
         {
             SpinVisual(Time.deltaTime);
+            UpdateDragScale(Time.deltaTime);
             CheckAndHarvestNearbyPlants();
+        }
+        else if (_isReturning)
+        {
+            UpdateReturnMotion(Time.deltaTime);
         }
     }
 
@@ -116,7 +125,10 @@ public class HarvestBlade : MonoBehaviour
     {
         if (LunaUIManager.Instance != null && LunaUIManager.Instance.IsGameplayInputBlocked)
         {
-            _isDragging = false;
+            if (_isDragging)
+            {
+                StopDragging();
+            }
             return;
         }
 
@@ -162,7 +174,9 @@ public class HarvestBlade : MonoBehaviour
         Ray ray = _mainCamera.ScreenPointToRay(screenPos);
         Vector3 planePoint = harvesterBladeRoot != null ? harvesterBladeRoot.position : transform.position;
 
-        bool is2DMode = _mainCamera.orthographic && Mathf.Abs(Vector3.Dot(_mainCamera.transform.forward, Vector3.forward)) > 0.5f;
+        bool is2DMode = _mainCamera.orthographic &&
+                        Mathf.Abs(Vector3.Dot(_mainCamera.transform.forward, Vector3.forward)) > 0.95f &&
+                        Mathf.Abs(_mainCamera.transform.forward.y) < 0.2f;
         Vector3 planeNormal = is2DMode ? Vector3.back : Vector3.up;
 
         Plane groundPlane = new Plane(planeNormal, planePoint);
@@ -196,10 +210,9 @@ public class HarvestBlade : MonoBehaviour
 
         _isDragging = true;
 
-        PlayFireFlare();
+        // PlayFireFlare();
 
-        // Phóng to nhẹ khi cầm lưỡi dao
-        _scaleTween = transform.DOScale(Vector3.one * dragScale, 0.15f).SetEase(Ease.OutQuad);
+        transform.localScale = Vector3.one * dragScale;
 
         OnDragStarted?.Invoke();
     }
@@ -210,7 +223,7 @@ public class HarvestBlade : MonoBehaviour
             return;
 
         _isDragging = false;
-        StopFireFlare();
+        // StopFireFlare();
 
         OnDragEnded?.Invoke();
         ReturnToRoot();
@@ -223,11 +236,34 @@ public class HarvestBlade : MonoBehaviour
         Vector3 targetPos = harvesterBladeRoot != null ? harvesterBladeRoot.position : transform.position;
         Quaternion targetRot = harvesterBladeRoot != null ? harvesterBladeRoot.rotation : Quaternion.identity;
 
-        Sequence returnSequence = DOTween.Sequence();
-        returnSequence.Join(transform.DOMove(targetPos, returnDuration).SetEase(returnEase));
-        returnSequence.Join(transform.DORotateQuaternion(targetRot, returnDuration).SetEase(returnEase));
-        _returnTween = returnSequence;
-        _scaleTween = transform.DOScale(Vector3.one, returnDuration * 0.5f).SetEase(Ease.OutQuad);
+        if (returnDuration <= 0f)
+        {
+            transform.SetPositionAndRotation(targetPos, targetRot);
+            transform.localScale = Vector3.one;
+            return;
+        }
+
+        _returnStartPosition = transform.position;
+        _returnStartRotation = transform.rotation;
+        _returnStartScale = transform.localScale;
+        _returnElapsed = 0f;
+        _isReturning = true;
+    }
+
+    private void UpdateReturnMotion(float deltaTime)
+    {
+        _returnElapsed += deltaTime;
+        float progress = Mathf.Clamp01(_returnElapsed / returnDuration);
+        float eased = progress * progress * (3f - 2f * progress);
+        Vector3 targetPosition = harvesterBladeRoot != null ? harvesterBladeRoot.position : _returnStartPosition;
+        Quaternion targetRotation = harvesterBladeRoot != null ? harvesterBladeRoot.rotation : _returnStartRotation;
+        transform.position = Vector3.Lerp(_returnStartPosition, targetPosition, eased);
+        transform.rotation = Quaternion.Slerp(_returnStartRotation, targetRotation, eased);
+        transform.localScale = Vector3.Lerp(_returnStartScale, Vector3.one, eased);
+        if (progress >= 1f)
+        {
+            _isReturning = false;
+        }
     }
 
     private void SpinVisual(float deltaTime)
@@ -269,35 +305,46 @@ public class HarvestBlade : MonoBehaviour
 
     private void PlaySliceFeedback()
     {
-        // Hiệu ứng nảy nhẹ khi chém trúng cây
-        Vector3 targetScale = Vector3.one * (dragScale * 1.1f);
-        _scaleTween = transform.DOScale(targetScale, 0.08f)
-            .SetEase(Ease.OutQuad)
-            .SetLoops(2, LoopType.Yoyo);
+        _sliceFeedbackElapsed = 0f;
     }
 
-    public void PlayFireFlare()
+    private void UpdateDragScale(float deltaTime)
     {
-        if (fireFlare != null && !fireFlare.isPlaying)
+        float multiplier = 1f;
+        if (_sliceFeedbackElapsed >= 0f)
         {
-            fireFlare.Play();
+            _sliceFeedbackElapsed += deltaTime;
+            float progress = Mathf.Clamp01(_sliceFeedbackElapsed / SliceFeedbackDuration);
+            multiplier += 0.1f * Mathf.Sin(progress * Mathf.PI);
+            if (progress >= 1f)
+            {
+                _sliceFeedbackElapsed = -1f;
+            }
         }
+        transform.localScale = Vector3.one * (dragScale * multiplier);
     }
 
-    public void StopFireFlare()
-    {
-        if (fireFlare != null && fireFlare.isPlaying)
-        {
-            fireFlare.Stop();
-        }
-    }
+    // public void PlayFireFlare()
+    // {
+    //     if (fireFlare != null && !fireFlare.isPlaying)
+    //     {
+    //         fireFlare.Play();
+    //     }
+    // }
+
+    // public void StopFireFlare()
+    // {
+    //     if (fireFlare != null && fireFlare.isPlaying)
+    //     {
+    //         fireFlare.Stop();
+    //     }
+    // }
 
     private void CancelMotions()
     {
-        if (_returnTween != null) _returnTween.Kill();
-        if (_scaleTween != null) _scaleTween.Kill();
-        _returnTween = null;
-        _scaleTween = null;
+        _isReturning = false;
+        _returnElapsed = 0f;
+        _sliceFeedbackElapsed = -1f;
     }
 
 
@@ -329,7 +376,9 @@ public class HarvestBlade : MonoBehaviour
     {
         Vector3 center = transform.position;
         Camera cam = _mainCamera != null ? _mainCamera : Camera.main;
-        bool is2DMode = cam != null && cam.orthographic && Mathf.Abs(Vector3.Dot(cam.transform.forward, Vector3.forward)) > 0.5f;
+        bool is2DMode = cam != null && cam.orthographic &&
+                        Mathf.Abs(Vector3.Dot(cam.transform.forward, Vector3.forward)) > 0.95f &&
+                        Mathf.Abs(cam.transform.forward.y) < 0.2f;
         Vector3 discNormal = is2DMode ? Vector3.forward : Vector3.up;
 
         // 1. Harvest Radius (Màu đỏ/cam đặc trưng cho vùng chém thu hoạch)

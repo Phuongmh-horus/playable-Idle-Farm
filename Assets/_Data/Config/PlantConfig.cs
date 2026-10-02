@@ -5,15 +5,15 @@ using UnityEngine;
 public enum PlantType
 {
     Tomato = 0,
-    Pumpkin = 1,
-    Eggplant = 2,
-    Cabbage = 3,
-    Wheat = 4,
-    Beet = 5,
-    Pepper = 6,
-    Watermelon = 7,
-    Corn = 8,
-    Spinach = 9
+    Potato = 1,
+    Lettuce = 2,
+    Carrot = 3,
+    Eggplant = 4,
+    Pumpkin = 5,
+    Wheat = 6,
+    ChiliPepper = 7,
+    Radish = 8,
+    BellPepper = 9
 }
 
 [CreateAssetMenu(fileName = "PlantConfig", menuName = "Farm/PlantConfig")]
@@ -63,6 +63,11 @@ public class PlantConfigData
     public Sprite plantIcon;
     public Sprite fruitIcon;
     public Plant plantPrefab;
+
+    [Header("Playable Progression")]
+    [Min(1)] public int maxLevel = 5;
+    [Min(1)] public int baseFruitCount = 1;
+    [Min(0)] public int fruitCountPerLevel = 1;
 
     [Header("Ring Stats (Cây ở 3 ring đầu: có 3 phần tử cho Ring 0, 1, 2. Cây ở Ring 4 hoặc cây dùng chung: chỉ cần 1 phần tử)")]
     public List<PlantRingStats> ringStats = new List<PlantRingStats>();
@@ -114,7 +119,13 @@ public class PlantConfigData
 
     public int GetMaxLevel()
     {
-        return plantSprites != null && plantSprites.Count > 1 ? plantSprites.Count - 1 : 1;
+        return Mathf.Max(1, maxLevel);
+    }
+
+    public int GetFruitCount(int level)
+    {
+        int clampedLevel = Mathf.Clamp(level, 1, GetMaxLevel());
+        return Mathf.Max(1, baseFruitCount + (clampedLevel - 1) * fruitCountPerLevel);
     }
 
     public Plant GetPrefab()

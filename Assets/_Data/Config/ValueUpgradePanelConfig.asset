@@ -15,89 +15,78 @@ MonoBehaviour:
   upgradeEntries:
   - upgradeType: 0
     targetId: 0
-    targetName: Wheat
     maxLevel: 10
     firstCost: 50
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 0
     targetId: 1
-    targetName: Corn
     maxLevel: 10
     firstCost: 200
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 0
     targetId: 2
-    targetName: Carrot
     maxLevel: 10
     firstCost: 800
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 0
     targetId: 3
-    targetName: Tomato
     maxLevel: 10
     firstCost: 3200
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 0
     targetId: 4
-    targetName: Eggplant
     maxLevel: 10
     firstCost: 12800
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 0
     targetId: 5
-    targetName: Pumpkin
     maxLevel: 10
     firstCost: 51200
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 0
     targetId: 6
-    targetName: Watermelon
     maxLevel: 10
     firstCost: 204800
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 0
     targetId: 7
-    targetName: Strawberry
     maxLevel: 10
     firstCost: 819200
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 0
     targetId: 8
-    targetName: Grape
     maxLevel: 10
     firstCost: 3276800
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 0
     targetId: 9
-    targetName: Banana
     maxLevel: 10
     firstCost: 13107200
     costMultiplier: 3
     upgradeEffect: 0.08
-    effectDescription: "T\u0103ng 8% Coin s\u1EA3n l\u01B0\u1EE3ng g\u1ED1c"
+    effectDescription: "T\u0103ng 8% Cash s\u1ea3n l\u01b0\u1ee3ng"
   - upgradeType: 1
     targetId: 0
-    targetName: Sprinkler
     maxLevel: 10
     firstCost: 660
     costMultiplier: 3
     upgradeEffect: 0.02
-    effectDescription: "T\u0103ng 2% T\u1ED1c \u0111\u1ED9 quay v\xF2i"
+    effectDescription: "T\u0103ng 2% T\u1ed1c \u0111\u1ed9 quay v\u00f2i"

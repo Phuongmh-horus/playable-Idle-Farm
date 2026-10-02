@@ -31,7 +31,7 @@ public class IconUpgradeLayer : WorldLayerBase
         }
     }
 
-    protected virtual void OnDestroy()
+    protected override void OnDestroy()
     {
         if (upgradeButton != null)
         {
@@ -61,5 +61,11 @@ public class IconUpgradeLayer : WorldLayerBase
     private void HandleButtonClicked()
     {
         _onClickAction?.Invoke();
+    }
+
+    public override void CleanupBeforeHide()
+    {
+        _onClickAction = null;
+        base.CleanupBeforeHide();
     }
 }

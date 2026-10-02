@@ -86,7 +86,7 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
                 _isIrrigationSubscribed = false;
             }
 
-            if (!_isHarvestSubscribed && farm.HarvestSystem != null)
+            if (_isHarvestSubscribed && farm.HarvestSystem != null)
             {
                 farm.HarvestSystem.OnHarvesterLevelChanged -= OnHarvesterLevelChanged;
                 _isHarvestSubscribed = false;
@@ -118,7 +118,8 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
     {
         SubscribeEvents();
 
-        bool canUpgrade = CanUpgradeAny();
+        ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
+        bool canUpgrade = (scenario == null || scenario.showUpgrade) && CanUpgradeAny();
         if (canUpgrade)
         {
             ShowIcon();
@@ -154,8 +155,12 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
     {
         if (HarvestSystem != null)
         {
-            return HarvestSystem.CanUpgrade;
+            return HarvestSystem.AutomaticArmEnabled && HarvestSystem.CanUpgrade;
         }
+
+        ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
+        if (scenario == null || scenario.harvestMode == PlayableHarvestMode.ManualBlade)
+            return false;
 
         var config = ConfigHolder.Instance?.FarmConfig?.harvester;
         int currentLevel = PlayableFarmState.GetHarvesterSaveData()?.currentLevel ?? 1;
@@ -171,8 +176,7 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
         if (_isShowingIcon) return;
         if (WorldLayerManager.Instance == null) return;
 
-        WorldLayerManager.Instance.ShowIconUpgradeLayer(Target, iconOffset, OnUpgradeIconClicked);
-        _isShowingIcon = true;
+        _isShowingIcon = WorldLayerManager.Instance.ShowIconUpgradeLayer(Target, iconOffset, OnUpgradeIconClicked) != null;
     }
 
     private void OnUpgradeIconClicked()
@@ -184,6 +188,9 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
     // sprinkler when both are affordable; otherwise open the harvester popup.
     private void ShowAvailableUpgrade()
     {
+        ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
+        if (scenario != null && !scenario.showUpgrade) return;
+
         if (CanUpgradeSprinkler()) LunaUIManager.Instance?.ShowIrrigationUpgrade();
         else if (CanUpgradeHarvester()) LunaUIManager.Instance?.ShowHarvestUpgrade();
     }

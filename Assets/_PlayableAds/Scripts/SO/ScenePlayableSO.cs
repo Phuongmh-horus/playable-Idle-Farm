@@ -21,9 +21,20 @@ public class ScenePlayableSO : ScriptableObject
     [Min(0)] public int startingCurrency;
     public bool showConveyorAndSell = true;
     public bool showUpgrade = true;
+    [Header("Farm mechanics")]
+    [Tooltip("Manual uses the draggable blade, Automatic uses rotating harvester arms, Hybrid enables both.")]
+    public PlayableHarvestMode harvestMode = PlayableHarvestMode.ManualBlade;
+    public bool enableIrrigation = true;
     [Header("Repeating endcard")]
     [Tooltip("Seconds of uninterrupted play before this scenario shows the endcard again.")]
     [Min(1f)] public float endcardDelaySeconds = 60f;
 }
 
 public enum PlayableScenarioId { Scenario123 = 123, Scenario124 = 124, Scenario125 = 125, Scenario126 = 126 }
+
+public enum PlayableHarvestMode
+{
+    ManualBlade = 0,
+    AutomaticArm = 1,
+    Hybrid = 2
+}

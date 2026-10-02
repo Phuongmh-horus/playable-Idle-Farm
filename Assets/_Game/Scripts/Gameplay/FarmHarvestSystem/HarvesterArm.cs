@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public class HarvesterArm : MonoBehaviour
@@ -10,7 +9,7 @@ public class HarvesterArm : MonoBehaviour
     [SerializeField] private List<Transform> blades = new List<Transform>();
 
     private Vector3[] _initialBladeScales;
-    private Sequence _punchSequence;
+    private float _pulseElapsed;
     public HarvesterArmConfig Config { get { return config; } }
     public Transform Pivot { get { return armPivot != null ? armPivot : transform; } }
     public int CurrentBladeCount { get; private set; } = 1;
@@ -22,9 +21,13 @@ public class HarvesterArm : MonoBehaviour
         CacheInitialScales();
     }
 
-    private void OnEnable() { StartScaleAnimation(); }
-    private void OnDisable() { StopScaleAnimation(); }
-    private void OnDestroy() { StopScaleAnimation(); }
+    private void OnEnable() { _pulseElapsed = 0f; }
+    private void OnDisable() { ResetBladeScale(); }
+
+    private void Update()
+    {
+        AnimateBladePulse(Time.deltaTime);
+    }
 
     private void CacheInitialScales()
     {
@@ -32,25 +35,22 @@ public class HarvesterArm : MonoBehaviour
         for (int i = 0; i < blades.Count; i++) _initialBladeScales[i] = blades[i] != null ? blades[i].localScale : Vector3.one;
     }
 
-    private void StartScaleAnimation()
+    private void AnimateBladePulse(float deltaTime)
     {
-        StopScaleAnimation();
         if (blades.Count == 0) return;
-        float duration = config != null ? Mathf.Max(0.01f, config.punchDuration * 0.5f) : 0.1f;
-        float scale = config != null ? config.harvestPunchScale : 1.15f;
-        float interval = config != null ? Mathf.Max(0f, config.punchInterval) : 0.5f;
-        _punchSequence = DOTween.Sequence();
-        _punchSequence.Append(DOTween.To(() => 1f, ApplyBladeScale, scale, duration).SetEase(Ease.OutQuad));
-        _punchSequence.Append(DOTween.To(() => scale, ApplyBladeScale, 1f, duration).SetEase(Ease.InQuad));
-        _punchSequence.AppendInterval(interval);
-        _punchSequence.SetLoops(-1).SetLink(gameObject);
-    }
 
-    private void StopScaleAnimation()
-    {
-        if (_punchSequence != null) _punchSequence.Kill();
-        _punchSequence = null;
-        ApplyBladeScale(1f);
+        float duration = config != null ? Mathf.Max(0.02f, config.punchDuration) : 0.2f;
+        float peakScale = config != null ? config.harvestPunchScale : 1.15f;
+        float interval = config != null ? Mathf.Max(0f, config.punchInterval) : 0.5f;
+        float cycleDuration = duration + interval;
+        _pulseElapsed = Mathf.Repeat(_pulseElapsed + deltaTime, cycleDuration);
+        float multiplier = 1f;
+        if (_pulseElapsed < duration)
+        {
+            float progress = _pulseElapsed / duration;
+            multiplier = Mathf.Lerp(1f, peakScale, Mathf.Sin(progress * Mathf.PI));
+        }
+        ApplyBladeScale(multiplier);
     }
 
     private void ApplyBladeScale(float multiplier)
@@ -59,6 +59,12 @@ public class HarvesterArm : MonoBehaviour
         {
             if (blades[i] != null) blades[i].localScale = _initialBladeScales[i] * multiplier;
         }
+    }
+
+    private void ResetBladeScale()
+    {
+        _pulseElapsed = 0f;
+        ApplyBladeScale(1f);
     }
 
     public void RotateArm(float speed, float deltaTime) { Pivot.Rotate(0f, 0f, -speed * deltaTime, Space.Self); }

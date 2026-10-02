@@ -57,10 +57,6 @@ public class PlotConfig
     public int sectorIndex;
     public PlotType plotType = PlotType.Normal;
 
-    [Header("Plant Placement")]
-    [Tooltip("Vị trí đặt cây (local offset so với ô đất)")]
-    public Vector2 plantPosition;
-
     [Header("Gameplay")]
     public int defaultPlantId = -1;
     public double unlockCost;
@@ -91,17 +87,28 @@ public class SprinklerConfig
 {
     [Header("General Settings")]
     [Tooltip("Cấp độ tối đa của vòi phun")]
-    public int maxLevel = 30;
+    public int maxLevel = 20;
 
     [Tooltip("Chu kỳ quay 1 vòng 360 độ (giây/vòng)")]
     public float rotationDuration = 10f;
 
-    [Tooltip("Tốc độ quay (độ/giây). Nếu rotationDuration > 0 thì tự tính 360 / rotationDuration")]
-    public float rotationSpeed => rotationDuration > 0f ? 360f / rotationDuration : 27.6923f;
+    [Tooltip("Seconds removed from one revolution at every 5-level milestone.")]
+    [Min(0f)] public float rotationDurationReductionPerMilestone = 2f;
 
-    public float GetRotationSpeed()
+    [Tooltip("Shortest allowed revolution duration.")]
+    [Min(0.1f)] public float minimumRotationDuration = 2f;
+
+    public float GetRotationDuration(int level)
     {
-        return rotationSpeed;
+        int clampedLevel = Mathf.Clamp(level, 1, Mathf.Max(1, maxLevel));
+        int milestoneCount = clampedLevel / 5;
+        return Mathf.Max(minimumRotationDuration, rotationDuration - milestoneCount * rotationDurationReductionPerMilestone);
+    }
+
+    public float GetRotationSpeed(int level)
+    {
+        float duration = GetRotationDuration(level);
+        return duration > 0f ? 360f / duration : 0f;
     }
 
     [Header("Upgrade Cost Formula Settings")]
@@ -118,8 +125,8 @@ public class SprinklerConfig
     [Tooltip("Lượng nước phun gốc (Level 1)")]
     public float baseWaterAmount = 5f;
 
-    [Tooltip("Lượng nước tăng thêm theo cấp (+2 nước / cấp)")]
-    public float waterAmountSumPerLevel = 2f;
+    [Tooltip("Lượng nước tăng thêm theo cấp (+3 nước / cấp)")]
+    public float waterAmountSumPerLevel = 3f;
 
     public float GetWaterAmount(int level)
     {
@@ -136,9 +143,10 @@ public class SprinklerConfig
 
     public int GetNozzleCount(int level)
     {
-        if (level >= 30) return 4;
-        if (level >= 20) return 3;
-        if (level >= 10) return 2;
+        int clampedLevel = Mathf.Clamp(level, 1, Mathf.Max(1, maxLevel));
+        if (clampedLevel >= 20) return 4;
+        if (clampedLevel >= 10) return 3;
+        if (clampedLevel >= 2) return 2;
         return 1;
     }
 }
@@ -157,7 +165,6 @@ public class HarvesterConfig
     [Tooltip("Chu kỳ quay 1 vòng 360 độ (giây/vòng)")]
     public float rotationDuration = 45f;
 
-    [Tooltip("Tốc độ quay (độ/giây). Nếu rotationDuration > 0 thì tự tính 360 / rotationDuration")]
     public float rotationSpeed => rotationDuration > 0f ? 360f / rotationDuration : 8f;
 
     [Header("Upgrade Cost Formula Settings")]
@@ -205,7 +212,7 @@ public class TransportConfig
 {
     [Header("General Settings")]
     [Tooltip("Cấp độ tối đa của xe tải")]
-    public int maxLevel = 30;
+    public int maxLevel = 20;
 
     [Header("Capacity Settings")]
     [Tooltip("Sức chứa khởi đầu (Level 1)")]
