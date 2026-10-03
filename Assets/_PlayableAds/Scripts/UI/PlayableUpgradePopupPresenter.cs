@@ -17,7 +17,7 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
     private Func<bool> _canUpgrade;
     private Func<bool> _performUpgrade;
     private string _title;
-    private Func<string> _getStatDescription;
+    private Func<UpgradeStatRow[]> _getStatRows;
     private Func<Sprite> _getIllustration;
 
     public bool IsVisible { get { return _popupView != null && _popupView.gameObject.activeSelf; } }
@@ -25,7 +25,7 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
     private void OnEnable() { GameEventBus.OnGoldChange += Refresh; }
     private void OnDisable() { GameEventBus.OnGoldChange -= Refresh; }
 
-    public void Show(PlayableUpgradePopupView popupView, string title, Func<string> getStatDescription, Func<Sprite> getIllustration,
+    public void Show(PlayableUpgradePopupView popupView, string title, Func<UpgradeStatRow[]> getStatRows, Func<Sprite> getIllustration,
         Func<int> getLevel, Func<int> getMaxLevel, Func<double> getCost, Func<bool> canUpgrade, Func<bool> performUpgrade)
     {
         Hide();
@@ -42,7 +42,7 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         _canUpgrade = canUpgrade;
         _performUpgrade = performUpgrade;
         _title = title;
-        _getStatDescription = getStatDescription;
+        _getStatRows = getStatRows;
         _getIllustration = getIllustration;
         _popupView.ResolveMissingReferences();
         _canvasGroup = _popupView.GetComponent<CanvasGroup>();
@@ -86,7 +86,7 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         _canUpgrade = null;
         _performUpgrade = null;
         _title = null;
-        _getStatDescription = null;
+        _getStatRows = null;
         _getIllustration = null;
     }
 
@@ -120,14 +120,15 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         double cost = _getCost != null ? _getCost() : -1d;
         TMP_Text titleText = _popupView.TitleText;
         TMP_Text levelText = _popupView.LevelText;
-        TMP_Text statText = _popupView.StatText;
         TMP_Text costText = _popupView.CostText;
         Image illustration = _popupView.Illustration;
         Button upgradeButton = _popupView.UpgradeButton;
 
         if (titleText != null) titleText.text = _title;
         if (levelText != null) levelText.text = maxLevel > 0 ? "LV. " + level + "/" + maxLevel : "LV. " + level;
-        if (statText != null) statText.text = _getStatDescription != null ? _getStatDescription() : string.Empty;
+        UpgradeStatRow[] statRows = _getStatRows != null ? _getStatRows() : null;
+        ApplyStatRow(0, statRows != null && statRows.Length > 0 ? statRows[0] : default(UpgradeStatRow));
+        ApplyStatRow(1, statRows != null && statRows.Length > 1 ? statRows[1] : default(UpgradeStatRow));
         if (costText != null) costText.text = cost > 0d ? T_Utility.FormatGold(cost) : "MAX";
         Sprite illustrationSprite = _getIllustration != null ? _getIllustration() : null;
         if (illustration != null && illustrationSprite != null)
@@ -136,5 +137,33 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
             illustration.preserveAspect = true;
         }
         if (upgradeButton != null) upgradeButton.interactable = _canUpgrade != null && _canUpgrade();
+    }
+
+    private void ApplyStatRow(int rowIndex, UpgradeStatRow row)
+    {
+        bool visible = !string.IsNullOrEmpty(row.Label) || !string.IsNullOrEmpty(row.Current) || !string.IsNullOrEmpty(row.Next);
+        GameObject root = rowIndex == 0 ? null : _popupView.StatTwoRoot;
+        if (root != null) root.SetActive(visible);
+
+        TMP_Text current = rowIndex == 0 ? _popupView.StatOneCurrentText : _popupView.StatTwoCurrentText;
+        TMP_Text next = rowIndex == 0 ? _popupView.StatOneNextText : _popupView.StatTwoNextText;
+        Image arrow = rowIndex == 0 ? _popupView.StatOneArrowImage : _popupView.StatTwoArrowImage;
+        if (current != null) current.text = string.IsNullOrEmpty(row.Label) ? row.Current ?? string.Empty : row.Label + " " + (row.Current ?? string.Empty);
+        if (next != null) next.text = row.Next ?? string.Empty;
+        if (arrow != null) arrow.gameObject.SetActive(visible && !string.IsNullOrEmpty(row.Next));
+    }
+}
+
+public struct UpgradeStatRow
+{
+    public string Label;
+    public string Current;
+    public string Next;
+
+    public UpgradeStatRow(string label, string current, string next)
+    {
+        Label = label;
+        Current = current;
+        Next = next;
     }
 }

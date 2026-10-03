@@ -169,6 +169,7 @@ public class Plant : MonoBehaviour
         _plantLevel++;
         _currentWater = 0f;
         UpdatePlantSprite();
+        SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_upgrade);
         PlayableTutorialFlow.Instance?.ReportFirstPlantUpgraded(this);
         return true;
     }

@@ -16,6 +16,8 @@ MonoBehaviour:
   popRadius: 1.5
   popInitialScale: 0.2
   popPeakScale: 1
+  preFlightScaleMultiplier: 1.25
   flightDuration: 0.55
   startScale: 1
+  flightScaleMultiplier: 1.15
   endScale: 1

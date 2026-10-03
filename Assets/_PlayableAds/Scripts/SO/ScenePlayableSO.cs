@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "ScenePlayable", menuName = "PLA/Scene Playable")]
 public class ScenePlayableSO : ScriptableObject
@@ -10,10 +11,14 @@ public class ScenePlayableSO : ScriptableObject
     public bool showTutorial = true;
     public PlayableTutorialFlow.Phase tutorialStartPhase = PlayableTutorialFlow.Phase.Sprinklers;
     public List<PlayableTutorialFlow.Phase> skippedTutorialPhases = new List<PlayableTutorialFlow.Phase>();
-    [Header("Fruit picker - scenario 125")]
-    [Tooltip("Shown only for Scenario 125. IDs stay in this exact display order.")]
-    public bool showFruitPicker;
+    [Header("Plant selection flow")]
+    [Tooltip("Show PlantStore at startup and after every plot unlock. When disabled, each unlocked plot immediately grows its configured default plant.")]
+    [FormerlySerializedAs("showFruitPicker")]
+    public bool enablePlantPicker;
+    [Tooltip("Plant IDs shown by PlantStore, kept in this exact display order.")]
     public List<int> selectablePlantIds = new List<int>();
+
+    public bool UsesPlantPicker => enablePlantPicker;
     [Header("Farm preset")]
     [Min(1)] public int initialPlotCount = 1;
     [Tooltip("Starter plant IDs applied left-to-right to the first plots for this scenario.")]

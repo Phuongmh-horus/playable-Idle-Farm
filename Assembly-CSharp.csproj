@@ -106,7 +106,6 @@
     <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\LayerCore\WorldLayerBase.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\FarmPlotSystem\AnimatedHoe.cs" />
-    <Compile Include="Assets\_Data\Config\PlantVisualSO.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\LayerCore\WorldLayerManager.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\UI\PlantStore.cs" />
     <Compile Include="Assets\_Game\Scripts\BillboardJobManager\BillboardJobFollower.cs" />
@@ -165,6 +164,7 @@
     <Compile Include="Assets\_Game\Scripts\ClickBasedSelection\Scripts\JobSelectionManager.cs" />
     <Compile Include="Assets\_Data\Config\FarmConfig.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\Fruit.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\CurrencyFlyEffect.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\FarmHarvestSystem\FarmHarvestSystem.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\CapacityTextUI.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\General\WorldLayerSourcePath.cs" />
@@ -202,6 +202,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\2D\Shaders\WaterParticle.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />

@@ -12,7 +12,13 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
     [SerializeField] private Image illustration;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text levelText;
-    [SerializeField] private TMP_Text statText;
+    [SerializeField] private TMP_Text statOneCurrentText;
+    [SerializeField] private Image statOneArrowImage;
+    [SerializeField] private TMP_Text statOneNextText;
+    [SerializeField] private GameObject statTwoRoot;
+    [SerializeField] private TMP_Text statTwoCurrentText;
+    [SerializeField] private Image statTwoArrowImage;
+    [SerializeField] private TMP_Text statTwoNextText;
     [SerializeField] private TMP_Text costText;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button closeButton;
@@ -22,7 +28,13 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
     public Image Illustration { get { ResolveMissingReferences(); return illustration; } }
     public TMP_Text TitleText { get { ResolveMissingReferences(); return titleText; } }
     public TMP_Text LevelText { get { ResolveMissingReferences(); return levelText; } }
-    public TMP_Text StatText { get { ResolveMissingReferences(); return statText; } }
+    public TMP_Text StatOneCurrentText { get { ResolveMissingReferences(); return statOneCurrentText; } }
+    public Image StatOneArrowImage { get { ResolveMissingReferences(); return statOneArrowImage; } }
+    public TMP_Text StatOneNextText { get { ResolveMissingReferences(); return statOneNextText; } }
+    public GameObject StatTwoRoot { get { ResolveMissingReferences(); return statTwoRoot; } }
+    public TMP_Text StatTwoCurrentText { get { ResolveMissingReferences(); return statTwoCurrentText; } }
+    public Image StatTwoArrowImage { get { ResolveMissingReferences(); return statTwoArrowImage; } }
+    public TMP_Text StatTwoNextText { get { ResolveMissingReferences(); return statTwoNextText; } }
     public TMP_Text CostText { get { ResolveMissingReferences(); return costText; } }
     public Button UpgradeButton { get { ResolveMissingReferences(); return upgradeButton; } }
     public Button CloseButton { get { ResolveMissingReferences(); return closeButton; } }
@@ -38,7 +50,10 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
             string itemName = texts[i].gameObject.name.ToLowerInvariant();
             if (titleText == null && itemName.Contains("titletext")) titleText = texts[i];
             else if (levelText == null && itemName.Contains("leveltext")) levelText = texts[i];
-            else if (statText == null && itemName.Contains("statinfo")) statText = texts[i];
+            else if (statOneCurrentText == null && itemName.Contains("stat1current")) statOneCurrentText = texts[i];
+            else if (statOneNextText == null && itemName.Contains("stat1next")) statOneNextText = texts[i];
+            else if (statTwoCurrentText == null && itemName.Contains("stat2current")) statTwoCurrentText = texts[i];
+            else if (statTwoNextText == null && itemName.Contains("stat2next")) statTwoNextText = texts[i];
             else if (costText == null && itemName.Contains("costtext")) costText = texts[i];
         }
 
@@ -63,9 +78,22 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
             }
         }
 
+        Image[] images = GetComponentsInChildren<Image>(true);
+        for (int i = 0; i < images.Length; i++)
+        {
+            string itemName = images[i].gameObject.name.ToLowerInvariant();
+            if (statOneArrowImage == null && itemName.Contains("stat1arrow")) statOneArrowImage = images[i];
+            else if (statTwoArrowImage == null && itemName.Contains("stat2arrow")) statTwoArrowImage = images[i];
+        }
+
+        if (statTwoRoot == null)
+        {
+            Transform statTwoTransform = transform.Find("Inner/Stat2Root");
+            if (statTwoTransform != null) statTwoRoot = statTwoTransform.gameObject;
+        }
+
         if (illustration == null)
         {
-            Image[] images = GetComponentsInChildren<Image>(true);
             for (int i = 0; i < images.Length; i++)
             {
                 if (images[i].gameObject.name == "Image")

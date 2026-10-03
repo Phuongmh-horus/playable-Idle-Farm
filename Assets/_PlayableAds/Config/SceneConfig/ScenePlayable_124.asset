@@ -16,7 +16,7 @@ MonoBehaviour:
   showTutorial: 1
   tutorialStartPhase: 2
   skippedTutorialPhases: 0000000001000000
-  showFruitPicker: 0
+  enablePlantPicker: 0
   selectablePlantIds: 
   initialPlotCount: 8
   initialPlantIds: 0000000001000000020000000300000004000000050000000600000007000000
@@ -25,4 +25,4 @@ MonoBehaviour:
   showUpgrade: 1
   harvestMode: 1
   enableIrrigation: 1
-  endcardDelaySeconds: 120
+  endcardDelaySeconds: 90

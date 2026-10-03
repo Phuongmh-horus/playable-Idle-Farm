@@ -17,11 +17,11 @@ public class CTAButton : MonoBehaviour
             _buttonPulseRoutine = StartCoroutine(ButtonImpactThenPulseRoutine());
         }
     }
-    
+
     protected virtual void OnButtonClicked()
     {
         // Play button click sound effect
-        SoundManager.Instance.PlayOneShot(AudioClipName.sfx_touch_box);
+        SoundManager.Instance.PlayOneShot(AudioClipName.sfx_ui_click);
 
     }
 
@@ -68,7 +68,7 @@ public class CTAButton : MonoBehaviour
 
 
         button.transform.localRotation = Quaternion.identity;
-        
+
 
         float duration = Mathf.Max(0.05f, buttonPulseDuration);
         while (true)
@@ -86,7 +86,7 @@ public class CTAButton : MonoBehaviour
             // }
 
             button.transform.localScale = new Vector3(scale, scale, scale);
-            
+
             yield return null;
         }
 

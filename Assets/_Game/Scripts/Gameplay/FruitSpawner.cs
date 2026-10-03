@@ -35,7 +35,7 @@ public static class FruitSpawner
         if (prefab == null) return null;
         PoolHolder pool = PoolHolder.Instance;
         Fruit fruit = pool != null
-            ? pool.Get((MonoBehaviour)prefab, parent) as Fruit
+            ? pool.Get(prefab, parent) as Fruit
             : Object.Instantiate(prefab, parent);
         if (fruit != null)
         {
@@ -68,7 +68,7 @@ public static class FruitSpawner
             return null;
 
         return PoolHolder.Instance != null
-            ? PoolHolder.Instance.Get((MonoBehaviour)fruitPrefab, parent, position, rotation) as AnimatedFruit
+            ? PoolHolder.Instance.Get(fruitPrefab, parent, position, rotation) as AnimatedFruit
             : Object.Instantiate(fruitPrefab, position, rotation, parent);
     }
 

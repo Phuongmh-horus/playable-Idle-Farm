@@ -87,6 +87,9 @@
         "assets": {
             "export": [],
             "excludes": [
+                "Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset",
+                "Assets/TextMesh Pro/Resources/Sprite Assets/EmojiOne.asset",
+                "Assets/TextMesh Pro/Sprites/EmojiOne.png",
                 "**/Editor/",
                 "**/FacebookSDK/",
                 "**/googleads**/",
@@ -1764,10 +1767,6 @@
                 "excluded": true
             },
             {
-                "name": "UnityEngine.PlayerPrefs.SessionStorageWrapper",
-                "excluded": true
-            },
-            {
                 "name": "UnityEngine.Profiling.Profiler",
                 "excluded": true
             },
@@ -1952,10 +1951,6 @@
                 "excluded": true
             },
             {
-                "name": "UnityEngine.TrailModule",
-                "excluded": true
-            },
-            {
                 "name": "UnityEngine.TrailRenderer.Parameters",
                 "excluded": true
             },
@@ -2100,10 +2095,6 @@
                 "excluded": true
             },
             {
-                "name": "UnityEngine.PlayerPrefs.SessionStorageProvider",
-                "excluded": true
-            },
-            {
                 "name": "UnityEngine.RuntimeInitializeOnLoadMethodAttribute",
                 "excluded": true
             },
@@ -2125,10 +2116,6 @@
             },
             {
                 "name": "UnityEngine.U2D.SpriteAtlas",
-                "excluded": true
-            },
-            {
-                "name": "UnityEngine.WaitForSeconds",
                 "excluded": true
             },
             {
@@ -2356,15 +2343,7 @@
                 "excluded": true
             },
             {
-                "name": "UnityEngine.MeshFilter",
-                "excluded": true
-            },
-            {
                 "name": "UnityEngine.ReflectionProbe",
-                "excluded": true
-            },
-            {
-                "name": "UnityEngine.Rendering.SortingGroup",
                 "excluded": true
             },
             {
@@ -6821,7 +6800,7 @@
             },
             {
                 "name": "UnityEngine.EventSystems.IScrollHandler",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.EventSystems.IDropHandler",
@@ -6829,7 +6808,7 @@
             },
             {
                 "name": "UnityEngine.EventSystems.IEndDragHandler",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.EventSystems.IDragHandler",
@@ -6837,11 +6816,11 @@
             },
             {
                 "name": "UnityEngine.EventSystems.IBeginDragHandler",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.EventSystems.IInitializePotentialDragHandler",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.EventSystems.IPointerClickHandler",
@@ -8866,6 +8845,10 @@
             {
                 "name": "DG.Tweening.Plugins.Core.ITPlugin$4",
                 "excluded": false
+            },
+            {
+                "name": "CurrencyFlyEffect.Token",
+                "excluded": false
             }
         ],
         "unusedMethods": [
@@ -9405,7 +9388,7 @@
                     },
                     {
                         "name": "clip32",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "clipu32",
@@ -9525,7 +9508,7 @@
                 "instanceMethods": [
                     {
                         "name": "format",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "equals",
@@ -11331,7 +11314,7 @@
                 "instanceMethods": [
                     {
                         "name": "init",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "getDefaultValue",
@@ -11339,7 +11322,7 @@
                     },
                     {
                         "name": "Current#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "System$Collections$IEnumerator$Current#get",
@@ -11359,7 +11342,7 @@
                     },
                     {
                         "name": "$ctor1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ctor",
@@ -11367,11 +11350,11 @@
                     },
                     {
                         "name": "moveNext",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Dispose",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "System$Collections$IEnumerator$reset",
@@ -12455,7 +12438,7 @@
                     },
                     {
                         "name": "Count#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsReadOnly#get",
@@ -12519,7 +12502,7 @@
                     },
                     {
                         "name": "GetEnumerator",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "System$Collections$Generic$IEnumerable$1$GetEnumerator",
@@ -12675,7 +12658,7 @@
                     },
                     {
                         "name": "Current#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "System$Collections$IEnumerator$Current#get",
@@ -12683,11 +12666,11 @@
                     },
                     {
                         "name": "init",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "$ctor1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ctor",
@@ -12695,11 +12678,11 @@
                     },
                     {
                         "name": "Dispose",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "moveNext",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "System$Collections$IEnumerator$reset",
@@ -14713,7 +14696,7 @@
                     },
                     {
                         "name": "Next$2",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Next$1",
@@ -17395,7 +17378,7 @@
                     },
                     {
                         "name": "localRotation#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "localRotation#set",
@@ -17511,11 +17494,11 @@
                     },
                     {
                         "name": "InverseTransformPoint",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "TransformPoint$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "TransformPoint",
@@ -18099,7 +18082,7 @@
                     },
                     {
                         "name": "depth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "depth#set",
@@ -18619,7 +18602,7 @@
                     },
                     {
                         "name": "anchoredPosition#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "sizeDelta#get",
@@ -19449,15 +19432,15 @@
                     },
                     {
                         "name": "raycastTarget#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "color#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "color#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ctor",
@@ -21919,7 +21902,7 @@
                     },
                     {
                         "name": "defaultFontAsset#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "defaultFontAssetPath#get",
@@ -23373,11 +23356,11 @@
                     },
                     {
                         "name": "ProcessTap",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SelectOrDeselect",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "RegisterSelectable",
@@ -23435,10 +23418,6 @@
                     },
                     {
                         "name": "Get",
-                        "excluded": false
-                    },
-                    {
-                        "name": "Get$1",
                         "excluded": false
                     },
                     {
@@ -23513,7 +23492,7 @@
                     },
                     {
                         "name": "GetRandomSound",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetSoundData",
@@ -23525,15 +23504,15 @@
                     },
                     {
                         "name": "PlayOneShot",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsOnCooldown",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetAvailableSfxSource",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CreateSfxSource",
@@ -23550,6 +23529,10 @@
                     {
                         "name": "StopAllSfx",
                         "excluded": true
+                    },
+                    {
+                        "name": "Awake",
+                        "excluded": false
                     }
                 ]
             },
@@ -23651,7 +23634,7 @@
                     },
                     {
                         "name": "ShowPopupPlantTreeLayer$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ShowPopupPlantTreeLayer",
@@ -23755,7 +23738,7 @@
                     },
                     {
                         "name": "HideAllSingleLayers",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HideAll",
@@ -24455,7 +24438,7 @@
                     },
                     {
                         "name": "LoadAll$2",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "LoadAll",
@@ -24463,11 +24446,11 @@
                     },
                     {
                         "name": "FindObjectsOfTypeAll$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "FindObjectsOfTypeAll",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "LoadAsync",
@@ -25751,7 +25734,7 @@
                     },
                     {
                         "name": "Get9SlicedMesh",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Get9TiledMesh",
@@ -26083,11 +26066,11 @@
                     },
                     {
                         "name": "init",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ctor",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetParticles",
@@ -26107,7 +26090,7 @@
                     },
                     {
                         "name": "Play",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Play$1",
@@ -26131,7 +26114,7 @@
                     },
                     {
                         "name": "Stop$2",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Emit",
@@ -26933,11 +26916,11 @@
                 "instanceMethods": [
                     {
                         "name": "renderOrderPriority#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "sortOrderPriority#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "rootRaycaster#get",
@@ -30491,7 +30474,7 @@
                 "instanceMethods": [
                     {
                         "name": "AnimateScale",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SpawnAndPlay",
@@ -30499,7 +30482,7 @@
                     },
                     {
                         "name": "TargetTransform#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "init",
@@ -30507,11 +30490,11 @@
                     },
                     {
                         "name": "Awake",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDisable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDestroy",
@@ -30519,43 +30502,43 @@
                     },
                     {
                         "name": "SaveInitialState",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ResetToInitialState",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CancelAnimation",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "PlaySmokeParticle",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "StopSmokeParticle",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetHoeRotationZ",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "PlayDigAnimation",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "PlayDigRoutine",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "AnimatePose",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Despawn",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -30703,7 +30686,7 @@
                     },
                     {
                         "name": "IsHiding#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ApplySorting",
@@ -31099,7 +31082,7 @@
                     },
                     {
                         "name": "Level#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CurrentArmLength#get",
@@ -31147,7 +31130,7 @@
                     },
                     {
                         "name": "TryUpgrade",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "UpdateSprinklerVisual",
@@ -31223,11 +31206,11 @@
                     },
                     {
                         "name": "UnlockPlot",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Occupy",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetPlantLevel",
@@ -31349,7 +31332,7 @@
                     },
                     {
                         "name": "UnlockPlot",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CanUnlockPlotToLockedState",
@@ -31361,11 +31344,11 @@
                     },
                     {
                         "name": "TryOccupyPlot",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CanOccupy",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ReleasePlot",
@@ -31417,6 +31400,10 @@
                     },
                     {
                         "name": "ClearRuntimeSlots",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RefreshBoundPlot",
                         "excluded": false
                     }
                 ]
@@ -31716,23 +31703,19 @@
                         "excluded": false
                     },
                     {
-                        "name": "SpinVisual",
-                        "excluded": false
-                    },
-                    {
                         "name": "CheckAndHarvestNearbyPlants",
                         "excluded": false
                     },
                     {
-                        "name": "PlaySliceFeedback",
-                        "excluded": false
-                    },
-                    {
-                        "name": "UpdateDragScale",
-                        "excluded": false
-                    },
-                    {
                         "name": "CancelMotions",
+                        "excluded": false
+                    },
+                    {
+                        "name": "PlayHarvestCuts",
+                        "excluded": false
+                    },
+                    {
+                        "name": "HarvestPendingPlots",
                         "excluded": false
                     }
                 ]
@@ -31906,14 +31889,6 @@
                         "excluded": true
                     },
                     {
-                        "name": "GetSprinklerUpgradeDescription",
-                        "excluded": true
-                    },
-                    {
-                        "name": "GetPlantUpgradeDescription",
-                        "excluded": false
-                    },
-                    {
                         "name": "GetHarvesterBladeCount",
                         "excluded": true
                     },
@@ -32047,11 +32022,11 @@
                     },
                     {
                         "name": "ShowIrrigationUpgrade",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ShowHarvestUpgrade",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ShowTransportUpgrade",
@@ -32091,11 +32066,23 @@
                     },
                     {
                         "name": "ResumeGameplay",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "NotifySelectableClick",
                         "excluded": true
+                    },
+                    {
+                        "name": "GetSprinklerUpgradeRows",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetPlantUpgradeRows",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OneStatRow",
+                        "excluded": false
                     }
                 ]
             },
@@ -32113,7 +32100,7 @@
                     },
                     {
                         "name": "PlotData#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "State#get",
@@ -32193,15 +32180,15 @@
                     },
                     {
                         "name": "CompletePlotPurchase",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "UnlockPlot",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "TryOccupy",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Release",
@@ -32277,6 +32264,10 @@
                     },
                     {
                         "name": "HideUpgradeIcon",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RefreshFromData",
                         "excluded": false
                     }
                 ]
@@ -32620,6 +32611,18 @@
                     {
                         "name": "Refresh",
                         "excluded": false
+                    },
+                    {
+                        "name": "ReceiveTarget#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "PlayReceiveFeedback",
+                        "excluded": false
+                    },
+                    {
+                        "name": "PulseRoutine",
+                        "excluded": false
                     }
                 ]
             },
@@ -32675,7 +32678,7 @@
                     },
                     {
                         "name": "UpdateSprinklerLevel",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetHarvesterSaveData",
@@ -32767,7 +32770,7 @@
                     },
                     {
                         "name": "Configure",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "StartAt",
@@ -32872,6 +32875,10 @@
                     {
                         "name": "EnsurePhaseViews",
                         "excluded": false
+                    },
+                    {
+                        "name": "ReportFirstPlantUpgradeIconClicked",
+                        "excluded": false
                     }
                 ]
             },
@@ -32952,6 +32959,10 @@
                     {
                         "name": "Refresh",
                         "excluded": false
+                    },
+                    {
+                        "name": "ApplyStatRow",
+                        "excluded": false
                     }
                 ]
             },
@@ -32972,10 +32983,6 @@
                         "excluded": false
                     },
                     {
-                        "name": "StatText#get",
-                        "excluded": false
-                    },
-                    {
                         "name": "CostText#get",
                         "excluded": false
                     },
@@ -32993,6 +33000,34 @@
                     },
                     {
                         "name": "ResolveMissingReferences",
+                        "excluded": false
+                    },
+                    {
+                        "name": "StatOneCurrentText#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "StatOneArrowImage#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "StatOneNextText#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "StatTwoRoot#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "StatTwoCurrentText#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "StatTwoArrowImage#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "StatTwoNextText#get",
                         "excluded": false
                     }
                 ]
@@ -33078,22 +33113,6 @@
                 "staticMethods": [],
                 "instanceMethods": [
                     {
-                        "name": "init",
-                        "excluded": false
-                    },
-                    {
-                        "name": "OnEnable",
-                        "excluded": false
-                    },
-                    {
-                        "name": "OnValidate",
-                        "excluded": true
-                    },
-                    {
-                        "name": "BuildLookup",
-                        "excluded": false
-                    },
-                    {
                         "name": "GetSprite",
                         "excluded": false
                     }
@@ -33145,7 +33164,7 @@
                     },
                     {
                         "name": "ClosePopupStore",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -33266,6 +33285,10 @@
                     {
                         "name": "GetForwardDirection",
                         "excluded": false
+                    },
+                    {
+                        "name": "GetAuthoredActiveSprinklerCount",
+                        "excluded": false
                     }
                 ]
             },
@@ -33335,15 +33358,15 @@
                     },
                     {
                         "name": "TryRaycast",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Select",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Deselect",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "DeselectInstant",
@@ -33351,7 +33374,7 @@
                     },
                     {
                         "name": "NotifyTapped",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetSelectable",
@@ -33359,7 +33382,7 @@
                     },
                     {
                         "name": "GetWorldBounds",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -33659,7 +33682,7 @@
                     },
                     {
                         "name": "CloseSinglePopups",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -33813,7 +33836,7 @@
                 "instanceMethods": [
                     {
                         "name": "Awake",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDestroy",
@@ -33821,11 +33844,11 @@
                     },
                     {
                         "name": "AutoFindUIElements",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "InitData$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "InitData",
@@ -33833,19 +33856,19 @@
                     },
                     {
                         "name": "RefreshUI",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetPlantId",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "PlantButtonOnClick",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Close",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CleanupBeforeHide",
@@ -34047,7 +34070,7 @@
                     },
                     {
                         "name": "ShowAvailableUpgrade",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HideIcon",
@@ -34361,7 +34384,7 @@
                     },
                     {
                         "name": "$clone",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -34375,7 +34398,7 @@
                     },
                     {
                         "name": "WorldToScreenPoint",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "FlipLayoutOnAxis",
@@ -34403,15 +34426,15 @@
                     },
                     {
                         "name": "ScreenPointToLocalPointInRectangle",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ScreenPointToWorldPointInRectangle",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ScreenPointToRay",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "PixelAdjustPoint",
@@ -34469,7 +34492,7 @@
                     },
                     {
                         "name": "Range",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "InitState",
@@ -34614,6 +34637,250 @@
                         "excluded": true
                     }
                 ]
+            },
+            {
+                "className": "UnityEngine.PlayerPrefs.SessionStorageWrapper",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "ctor",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetItem",
+                        "excluded": true
+                    },
+                    {
+                        "name": "SetItem",
+                        "excluded": true
+                    },
+                    {
+                        "name": "RemoveItem",
+                        "excluded": true
+                    },
+                    {
+                        "name": "Clear",
+                        "excluded": true
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.PlayerPrefs.SessionStorageProvider",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "Set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "Remove",
+                        "excluded": true
+                    },
+                    {
+                        "name": "Clear",
+                        "excluded": true
+                    },
+                    {
+                        "name": "Save",
+                        "excluded": true
+                    },
+                    {
+                        "name": "Has",
+                        "excluded": true
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.MeshFilter",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "mesh#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "mesh#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "sharedMesh#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "sharedMesh#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "ctor",
+                        "excluded": true
+                    },
+                    {
+                        "name": "UpdateMeshInHandle",
+                        "excluded": true
+                    }
+                ]
+            },
+            {
+                "className": "UpgradeStatRow",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "getDefaultValue",
+                        "excluded": false
+                    },
+                    {
+                        "name": "$ctor1",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ctor",
+                        "excluded": false
+                    },
+                    {
+                        "name": "getHashCode",
+                        "excluded": true
+                    },
+                    {
+                        "name": "equals",
+                        "excluded": true
+                    },
+                    {
+                        "name": "$clone",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.TrailModule",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "enabled#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "enabled#set",
+                        "excluded": true
+                    }
+                ]
+            },
+            {
+                "className": "CurrencyFlyEffect",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "PlayFromWorld",
+                        "excluded": false
+                    },
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Awake",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Start",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnDestroy",
+                        "excluded": true
+                    },
+                    {
+                        "name": "Initialize",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Play",
+                        "excluded": false
+                    },
+                    {
+                        "name": "PlayBatch",
+                        "excluded": false
+                    },
+                    {
+                        "name": "FlyToken",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetCanvasCamera",
+                        "excluded": false
+                    },
+                    {
+                        "name": "TryGetCanvasPosition",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.Rendering.SortingGroup",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "UpdateAllSortingGroups",
+                        "excluded": true
+                    },
+                    {
+                        "name": "sortingLayerIndex#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "sortingLayerIndex#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "sortingLayerID#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "sortingLayerID#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "sortingOrder#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "sortingOrder#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "sortingLayerName#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "ctor",
+                        "excluded": true
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.WaitForSeconds",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "ctor",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Update",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Reset",
+                        "excluded": false
+                    }
+                ]
             }
         ],
         "stubberDataList": [],
@@ -34691,6 +34958,196 @@
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Resources_Remote/Fonts/Baloo Bhaijaan Regular 400 SDF.asset"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites_Main/GamePlay/truck.png"
+                    },
+                    {
+                        "maxWidth": 1024,
+                        "maxHeight": 1024,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/UI_Maincenter.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "jpeg",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Resource2D/tx.png"
+                    },
+                    {
+                        "maxWidth": 1024,
+                        "maxHeight": 1024,
+                        "format": "jpeg",
+                        "compression": "quantSize",
+                        "quality": 70,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Resource2D/BG.psd"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_PlayableAds/Assets/Images/Tutorial/Hand.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/GamePlay/truck.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/GamePlay/icon_sprinkles3 1.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/Plant/1-7.png"
+                    },
+                    {
+                        "maxWidth": 1024,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/Fruit/fruit_atlas.spriteatlasv2"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/GamePlay/icn_cash2.png"
+                    },
+                    {
+                        "maxWidth": 1024,
+                        "maxHeight": 1024,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/Ground/ground_atlas.spriteatlasv2"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/GamePlay/scythe.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "jpeg",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Scenes/PLA.unity/PrefilteredEnvironment.exr"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/GamePlay/Hoe.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "jpeg",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Resource2D/Road.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/upgradable-notification-1.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Resource2D/Trinker.png"
+                    },
+                    {
+                        "maxWidth": 1024,
+                        "maxHeight": 1024,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/Plant/plant_atlas.spriteatlasv2"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "none",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_PlayableAds/Assets/Font/MUSEOSANSROUNDED/MUSEOSANSROUNDED-1000 SDF.asset"
                     }
                 ]
             },
@@ -34704,7 +35161,108 @@
                     "script": "",
                     "ext": ""
                 },
-                "overrides": []
+                "overrides": [
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:30.000",
+                        "lengthInSeconds": 30.0,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_PlayableAds/Assets/Audio/sfx_timeout.mp3"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.950",
+                        "lengthInSeconds": 0.949999988079071,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_selling.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.900",
+                        "lengthInSeconds": 0.8999999761581421,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_cash_fly.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.900",
+                        "lengthInSeconds": 0.8999999761581421,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_watering_machine.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.650",
+                        "lengthInSeconds": 0.6499999761581421,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_upgrade.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.550",
+                        "lengthInSeconds": 0.550000011920929,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_reaper_collect.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.440",
+                        "lengthInSeconds": 0.4399999976158142,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_cash.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.400",
+                        "lengthInSeconds": 0.4000000059604645,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_sickle_harvest.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.000",
+                        "lengthInSeconds": 0.0,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_plant_grow.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:30.000",
+                        "lengthInSeconds": 30.0,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/bg_music.ogg"
+                    }
+                ]
             },
             "font": {
                 "default": {

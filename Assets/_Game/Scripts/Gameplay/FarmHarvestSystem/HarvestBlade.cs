@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,10 @@ public class HarvestBlade : MonoBehaviour
     [Tooltip("Transform của phần lưỡi dao hiển thị để tự xoay khi kéo")]
     [SerializeField] private Transform bladeVisual;
 
-    [Tooltip("Tốc độ tự xoay của lưỡi dao khi đang kéo (độ/giây)")]
-    [SerializeField] private float bladeSpinSpeed = 720f;
+    [SerializeField] private float cutDownAngle = -40f;
+    [SerializeField] private float cutUpAngle = 10f;
+    [SerializeField] private float cutDuration = 0.3f;
+    [Range(0.1f, 0.9f)][SerializeField] private float harvestImpactNormalizedTime = 0.5f;
 
     [Tooltip("Tỉ lệ phóng to khi nhặt/kéo lưỡi dao")]
     [SerializeField] private float dragScale = 1.15f;
@@ -24,7 +27,6 @@ public class HarvestBlade : MonoBehaviour
     [Tooltip("Khoảng cách tối đa (bán kính) để chạm nhặt lưỡi dao (world units)")]
     [SerializeField] private float grabRadius = 1.0f;
 
-    [SerializeField] private ParticleSystem fireFlare;
 
     [Header("References")]
     [SerializeField] private Transform harvesterBladeRoot;
@@ -38,8 +40,10 @@ public class HarvestBlade : MonoBehaviour
     private Vector3 _returnStartPosition;
     private Quaternion _returnStartRotation;
     private Vector3 _returnStartScale;
-    private float _sliceFeedbackElapsed = -1f;
-    private const float SliceFeedbackDuration = 0.16f;
+    private readonly HashSet<Plot> _pendingHarvestPlots = new HashSet<Plot>();
+    private readonly List<Plot> _harvestBuffer = new List<Plot>();
+    private Coroutine _cutRoutine;
+    private Quaternion _visualRestRotation;
 
     public static HarvestBlade Instance { get; private set; }
 
@@ -56,6 +60,7 @@ public class HarvestBlade : MonoBehaviour
     {
         Instance = this;
         _mainCamera = Camera.main;
+        _visualRestRotation = Visual.localRotation;
         // if (fireFlare == null)
         // {
         //     fireFlare = GetComponentInChildren<ParticleSystem>();
@@ -111,8 +116,6 @@ public class HarvestBlade : MonoBehaviour
 
         if (_isDragging)
         {
-            SpinVisual(Time.deltaTime);
-            UpdateDragScale(Time.deltaTime);
             CheckAndHarvestNearbyPlants();
         }
         else if (_isReturning)
@@ -231,7 +234,10 @@ public class HarvestBlade : MonoBehaviour
 
     private void ReturnToRoot()
     {
-        CancelMotions();
+        // Releasing the drag must not cancel an already-started scythe cut:
+        // its impact is the authoritative harvest moment.
+        _isReturning = false;
+        _returnElapsed = 0f;
 
         Vector3 targetPos = harvesterBladeRoot != null ? harvesterBladeRoot.position : transform.position;
         Quaternion targetRot = harvesterBladeRoot != null ? harvesterBladeRoot.rotation : Quaternion.identity;
@@ -266,15 +272,6 @@ public class HarvestBlade : MonoBehaviour
         }
     }
 
-    private void SpinVisual(float deltaTime)
-    {
-        Transform visual = Visual;
-        if (visual == null || Mathf.Approximately(bladeSpinSpeed, 0f))
-            return;
-
-        visual.Rotate(0f, 0f, -bladeSpinSpeed * deltaTime, Space.Self);
-    }
-
     private void CheckAndHarvestNearbyPlants()
     {
         FarmPlotSystem plots = PlotSystem;
@@ -296,32 +293,73 @@ public class HarvestBlade : MonoBehaviour
             float dist = Vector3.Distance(currentBladePos, slot.PlantPosition);
             if (dist <= harvestRadius)
             {
-                double revenue = plant.Harvest();
-                PlaySliceFeedback();
-                OnPlantHarvested?.Invoke(slot, revenue);
+                _pendingHarvestPlots.Add(slot);
             }
         }
-    }
 
-    private void PlaySliceFeedback()
-    {
-        _sliceFeedbackElapsed = 0f;
-    }
-
-    private void UpdateDragScale(float deltaTime)
-    {
-        float multiplier = 1f;
-        if (_sliceFeedbackElapsed >= 0f)
+        if (_cutRoutine == null && _pendingHarvestPlots.Count > 0)
         {
-            _sliceFeedbackElapsed += deltaTime;
-            float progress = Mathf.Clamp01(_sliceFeedbackElapsed / SliceFeedbackDuration);
-            multiplier += 0.1f * Mathf.Sin(progress * Mathf.PI);
-            if (progress >= 1f)
-            {
-                _sliceFeedbackElapsed = -1f;
-            }
+            _cutRoutine = StartCoroutine(PlayHarvestCuts());
         }
-        transform.localScale = Vector3.one * (dragScale * multiplier);
+    }
+
+    private IEnumerator PlayHarvestCuts()
+    {
+        while (_pendingHarvestPlots.Count > 0)
+        {
+            SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_sickle_harvest);
+            bool harvested = false;
+            float duration = Mathf.Max(0.01f, cutDuration);
+            for (float elapsed = 0f; elapsed < duration; elapsed += Time.deltaTime)
+            {
+                float progress = Mathf.Clamp01(elapsed / duration);
+                if (!harvested && progress >= harvestImpactNormalizedTime)
+                {
+                    HarvestPendingPlots();
+                    harvested = true;
+                }
+
+                float angle;
+                if (progress < 0.35f)
+                {
+                    float p = progress / 0.35f;
+                    angle = Mathf.Lerp(0f, cutDownAngle, p * p);
+                }
+                else if (progress < 0.72f)
+                {
+                    float p = (progress - 0.35f) / 0.37f;
+                    angle = Mathf.Lerp(cutDownAngle, cutUpAngle, Mathf.SmoothStep(0f, 1f, p));
+                }
+                else
+                {
+                    float p = (progress - 0.72f) / 0.28f;
+                    angle = Mathf.Lerp(cutUpAngle, 0f, Mathf.SmoothStep(0f, 1f, p));
+                }
+                Visual.localRotation = _visualRestRotation * Quaternion.Euler(0f, 0f, angle);
+                yield return null;
+            }
+
+            if (!harvested) HarvestPendingPlots();
+            Visual.localRotation = _visualRestRotation;
+        }
+        _cutRoutine = null;
+    }
+
+    private void HarvestPendingPlots()
+    {
+        _harvestBuffer.Clear();
+        foreach (Plot plot in _pendingHarvestPlots) _harvestBuffer.Add(plot);
+        _pendingHarvestPlots.Clear();
+
+        for (int i = 0; i < _harvestBuffer.Count; i++)
+        {
+            Plot plot = _harvestBuffer[i];
+            Plant plant = plot != null ? plot.CurrentPlant : null;
+            if (plot == null || plot.State != FarmPlotState.Occupied || plant == null || !plant.CanHarvest()) continue;
+            double revenue = plant.Harvest();
+            OnPlantHarvested?.Invoke(plot, revenue);
+        }
+        _harvestBuffer.Clear();
     }
 
     // public void PlayFireFlare()
@@ -344,7 +382,10 @@ public class HarvestBlade : MonoBehaviour
     {
         _isReturning = false;
         _returnElapsed = 0f;
-        _sliceFeedbackElapsed = -1f;
+        if (_cutRoutine != null) StopCoroutine(_cutRoutine);
+        _cutRoutine = null;
+        _pendingHarvestPlots.Clear();
+        if (bladeVisual != null) bladeVisual.localRotation = _visualRestRotation;
     }
 
 

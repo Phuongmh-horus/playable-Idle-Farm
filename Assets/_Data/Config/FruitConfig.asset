@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fruitPrefab: {fileID: 1440556208443150728, guid: 3ab52b20bf02cc5478b0db053f7a6681, type: 3}
   animatedFruitPrefab: {fileID: 1000000000000000001, guid: 355717f91498f4c47b959bce2df1e345, type: 3}
+  animatedFruitConfig: {fileID: 11400000, guid: 023d7afd8218f1044a1fe6a74c043494, type: 2}

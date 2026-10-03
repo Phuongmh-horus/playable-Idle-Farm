@@ -117,6 +117,7 @@ public class AnimatedHoe : MonoBehaviour
                 swingDuration * 0.25f, true);
             currentAngle = hitAngle;
             PlaySmokeParticle();
+            SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_pickaxe);
 
             Vector3 pullPosition = strikePosition + new Vector3(pullDistance, 0f, 0f);
             float pullAngle = hitAngle - 10f;

@@ -122,15 +122,7 @@ public class Plot : MonoBehaviour
 
         ApplyPlotData(farmPlot);
 
-        if (farmPlot != null)
-        {
-            UpdateVisualByState(farmPlot.State);
-            UpdatePlantInstance();
-        }
-
-        UpStatePlot();
-        RefreshGoldSubscription();
-        UpdateUpgradeIconState();
+        RefreshFromData();
     }
 
     public void UpStatePlot()
@@ -236,11 +228,6 @@ public class Plot : MonoBehaviour
             return false;
         }
 
-        Transform popupTarget = plantRoot != null ? plantRoot.transform : transform;
-        if (WorldLayerManager.Instance != null)
-        {
-            WorldLayerManager.Instance.ShowPopupPlantTreeLayer(this, popupTarget, plantTreeOffset);
-        }
         return true;
     }
 
@@ -283,7 +270,17 @@ public class Plot : MonoBehaviour
 
     private void HandlePlotStateChanged(FarmPlotData plotData, FarmPlotState newState)
     {
-        UpdateVisualByState(newState);
+        RefreshFromData();
+    }
+
+    public void RefreshFromData(bool animateVisual = true)
+    {
+        if (_plotData == null)
+        {
+            return;
+        }
+
+        UpdateVisualByState(_plotData.State, animateVisual);
         UpdatePlantInstance();
         UpStatePlot();
         RefreshGoldSubscription();
@@ -304,7 +301,7 @@ public class Plot : MonoBehaviour
 
                 Transform parent = plantRoot != null ? plantRoot.transform : transform;
                 int ringIndex = _plotData != null ? _plotData.RingIndex : _ringIndex;
-                _spawnedPlant = PlantSpawner.SpawnPlant(_plotData.PlantId, _plotData.PlantLevel, parent, Vector3.zero, ringIndex);
+                _spawnedPlant = PlantSpawner.SpawnPlant(_plotData.PlantId, _plotData.PlantLevel, parent, plantTreeOffset, ringIndex);
             }
             else if (_spawnedPlant != null && _spawnedPlant.PlantLevel != _plotData.PlantLevel)
             {
@@ -329,12 +326,12 @@ public class Plot : MonoBehaviour
     /// <summary>
     /// Cáº­p nháº­t Sprite hiá»ƒn thá»‹ theo tráº¡ng thÃ¡i hiá»‡n táº¡i cá»§a Ã´ Ä‘áº¥t
     /// </summary>
-    public void UpdateVisualByState(FarmPlotState state)
+    public void UpdateVisualByState(FarmPlotState state, bool animate = true)
     {
         EnsureVisual();
         if (plotVisual != null)
         {
-            plotVisual.SetState(state);
+            plotVisual.SetState(state, animate);
         }
     }
 
@@ -360,10 +357,7 @@ public class Plot : MonoBehaviour
                 break;
 
             case FarmPlotState.Empty:
-                if (WorldLayerManager.Instance != null)
-                {
-                    WorldLayerManager.Instance.ShowPopupPlantTreeLayer(this, popupTarget);
-                }
+                LunaUIManager.Instance?.RequestPlantChoice(this);
                 break;
 
             case FarmPlotState.Occupied:

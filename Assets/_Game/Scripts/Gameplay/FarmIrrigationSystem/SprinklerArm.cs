@@ -6,6 +6,8 @@ public class SprinklerArm : MonoBehaviour
     [SerializeField] private Transform armPivot;
     [SerializeField] private GameObject[] sprinklers;
 
+    private int _minimumActiveSprinklerCount = 1;
+
     public SprinklerArmConfig Config => config;
     public Transform Pivot => armPivot != null ? armPivot : transform;
     public int CurrentArmLength { get; private set; } = 1;
@@ -18,6 +20,7 @@ public class SprinklerArm : MonoBehaviour
             armPivot = transform;
         }
 
+        _minimumActiveSprinklerCount = GetAuthoredActiveSprinklerCount();
         ApplyInitialRotation();
     }
 
@@ -41,18 +44,38 @@ public class SprinklerArm : MonoBehaviour
 
     public void SetArmLength(int length)
     {
-        CurrentArmLength = Mathf.Max(1, length);
         if (sprinklers == null || sprinklers.Length == 0)
+        {
+            CurrentArmLength = Mathf.Max(1, length);
             return;
+        }
 
-        int targetIndex = Mathf.Clamp(length - 1, 0, sprinklers.Length - 1);
+        int activeCount = Mathf.Clamp(
+            Mathf.Max(Mathf.Max(1, length), _minimumActiveSprinklerCount),
+            1,
+            sprinklers.Length);
+        CurrentArmLength = activeCount;
         for (int i = 0; i < sprinklers.Length; i++)
         {
             if (sprinklers[i] != null)
             {
-                sprinklers[i].SetActive(i <= targetIndex);
+                sprinklers[i].SetActive(i < activeCount);
             }
         }
+    }
+
+    private int GetAuthoredActiveSprinklerCount()
+    {
+        if (sprinklers == null || sprinklers.Length == 0)
+            return 1;
+
+        int activeCount = 0;
+        for (int i = 0; i < sprinklers.Length; i++)
+        {
+            if (sprinklers[i] != null && sprinklers[i].activeSelf)
+                activeCount = i + 1;
+        }
+        return Mathf.Max(1, activeCount);
     }
 
     public Vector3 GetForwardDirection(float additionalAngleOffset = 0f)

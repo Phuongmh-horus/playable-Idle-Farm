@@ -75,6 +75,7 @@
     <Compile Include="Assets\Editor\ReferencesSync\ReferenceSyncDashboardWindow.cs" />
     <Compile Include="Assets\_PlayableAds\Config\Sound\Editor\SoundDataSOEditor.cs" />
     <Compile Include="Assets\_PlayableAds\PlayableTool\Editor\SceneObjectFinder.cs" />
+    <Compile Include="Assets\Editor\OffShadowMeshRenderer.cs" />
     <Compile Include="Assets\_PlayableAds\PlayableTool\Editor\FarmPlotScenePersistence.cs" />
     <Compile Include="Assets\Editor\ReferencesSync\ReferenceSyncConfiguration.cs" />
   </ItemGroup>

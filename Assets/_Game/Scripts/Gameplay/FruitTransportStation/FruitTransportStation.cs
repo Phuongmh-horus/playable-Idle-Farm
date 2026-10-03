@@ -132,6 +132,7 @@ public sealed class FruitTransportStation : MonoBehaviour
             };
             _loadedFruits.Add(item);
             RefreshCapacityLayer();
+            SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_cash_fly);
         }
 
         Transform targetCargo = vehicle != null && vehicle.CargoRoot != null ? vehicle.CargoRoot : (idlePoint != null ? idlePoint : transform);
@@ -199,6 +200,7 @@ public sealed class FruitTransportStation : MonoBehaviour
         if (!StartDeparture())
             return false;
 
+        SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_selling);
         PlayableTutorialFlow.Instance?.ReportSellOutClicked();
         return true;
     }
@@ -219,6 +221,7 @@ public sealed class FruitTransportStation : MonoBehaviour
         }
 
         PlayableFarmState.UpdateTransportLevel(_vehicleLevel + 1);
+        SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_upgrade);
         return true;
     }
 
@@ -251,7 +254,12 @@ public sealed class FruitTransportStation : MonoBehaviour
 
         if (totalGoldGained > 0 && PlayableFarmState.PlayerData != null)
         {
-            PlayableFarmState.ChangeGold(totalGoldGained);
+            Vector3 payoutOrigin = idlePoint != null ? idlePoint.position : transform.position;
+            if (!CurrencyFlyEffect.PlayFromWorld(payoutOrigin, () => PlayableFarmState.ChangeGold(totalGoldGained)))
+            {
+                PlayableFarmState.ChangeGold(totalGoldGained);
+                SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_cash);
+            }
         }
 
         _loadedFruits.Clear();

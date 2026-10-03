@@ -41,8 +41,12 @@ public class AnimatedFruit : MonoBehaviour
         if (random.sqrMagnitude < 0.01f) random = Vector2.right;
         Vector3 popPosition = startPosition + new Vector3(random.x, 0f, random.y) * popRadius;
         float initialScale = cfg != null ? cfg.popInitialScale : 0f;
-        float peakScale = cfg != null ? cfg.popPeakScale : 0.42f;
-        float flightStartScale = cfg != null ? cfg.startScale : 0.35f;
+        float preFlightScaleMultiplier = cfg != null && cfg.preFlightScaleMultiplier > 0f
+            ? cfg.preFlightScaleMultiplier : 1.25f;
+        float flightScaleMultiplier = cfg != null && cfg.flightScaleMultiplier > 0f
+            ? cfg.flightScaleMultiplier : 1.15f;
+        float peakScale = (cfg != null ? cfg.popPeakScale : 0.42f) * preFlightScaleMultiplier;
+        float flightStartScale = (cfg != null ? cfg.startScale : 0.35f) * flightScaleMultiplier;
         float endScale = cfg != null ? cfg.endScale : 0.25f;
 
         transform.position = startPosition;
@@ -61,9 +65,21 @@ public class AnimatedFruit : MonoBehaviour
         for (float elapsed = 0f; elapsed < popDuration; elapsed += Time.deltaTime)
         {
             float progress = Mathf.Clamp01(elapsed / popDuration);
-            float eased = 1f - (1f - progress) * (1f - progress);
-            transform.position = Vector3.Lerp(startPosition, popPosition, eased);
-            transform.localScale = Vector3.one * Mathf.Lerp(initialScale.x, peakScale, Mathf.Sin(progress * Mathf.PI));
+            float positionProgress = 1f - (1f - progress) * (1f - progress);
+            float scale;
+            if (progress < 0.65f)
+            {
+                float growProgress = progress / 0.65f;
+                growProgress = 1f - (1f - growProgress) * (1f - growProgress);
+                scale = Mathf.Lerp(initialScale.x, peakScale, growProgress);
+            }
+            else
+            {
+                float settleProgress = (progress - 0.65f) / 0.35f;
+                scale = Mathf.Lerp(peakScale, flightStartScale, settleProgress);
+            }
+            transform.position = Vector3.Lerp(startPosition, popPosition, positionProgress);
+            transform.localScale = Vector3.one * scale;
             yield return null;
         }
 

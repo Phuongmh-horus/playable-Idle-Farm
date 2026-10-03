@@ -259,6 +259,12 @@ public static class PlayableScenarioRuntime
 
     private static int GetInitialPlantId(ScenePlayableSO scenario, int plotId)
     {
+        // The first visible plot must stay empty until the player picks a plant.
+        if (scenario.UsesPlantPicker && plotId == 0)
+        {
+            return -1;
+        }
+
         if (scenario.initialPlantIds != null && plotId < scenario.initialPlantIds.Count)
         {
             return scenario.initialPlantIds[plotId];

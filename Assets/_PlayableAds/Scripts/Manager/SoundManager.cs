@@ -17,6 +17,14 @@ public class SoundManager : MonoSingleton<SoundManager>
     private readonly Dictionary<AudioClipName, float> lastPlayTime = new Dictionary<AudioClipName, float>();
     private const int MaxSfxSources = 8;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        soundCooldowns[AudioClipName.sfx_watering_machine] = 0.08f;
+        soundCooldowns[AudioClipName.sfx_reaper_collect] = 0.1f;
+        soundCooldowns[AudioClipName.sfx_pickaxe] = 0.08f;
+    }
+
     void OnEnable()
     {
         GameEventBus.OnStartGame += StartGame;
@@ -213,7 +221,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         {
             yield break;
         }
-        if (clipName == AudioClipName.sfx_merge_loop)
+        if (clipName == AudioClipName.sfx_pickaxe)
         {
             yield return new WaitForSeconds(delay);
         }

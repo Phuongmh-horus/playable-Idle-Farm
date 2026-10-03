@@ -39,6 +39,16 @@ public class PlantStore : MonoBehaviour
         }
     }
 
+    public void Prewarm(int requiredItemCount)
+    {
+        if (Panel == null || ColumnPrefab == null || ItemInColumnPrefab == null)
+        {
+            return;
+        }
+
+        EnsurePoolCapacity(Mathf.Max(prewarmItemCount, requiredItemCount));
+    }
+
     /// <summary>Builds choices in the provided order; scenarios must not randomize this list.</summary>
     public void SetupStore(IReadOnlyList<PlantConfigData> plantConfigs)
     {
@@ -52,14 +62,13 @@ public class PlantStore : MonoBehaviour
             Debug.LogWarning("PlantStore: No plant configurations provided.");
             return;
         }
-        // The scene keeps SelectPlantStore inactive except in scenario 125.
+        int count = plantConfigs.Count;
+        int columnCount = Mathf.CeilToInt((float)count / maxItemPerColumn);
+        EnsurePoolCapacity(Mathf.Max(count, prewarmItemCount));
+
         gameObject.SetActive(true);
         Panel.SetActive(true);
         ClearStore();
-        int count = plantConfigs.Count;
-        int columnCount = Mathf.CeilToInt((float)count / maxItemPerColumn);
-
-        EnsurePoolCapacity(Mathf.Max(count, prewarmItemCount));
 
         for (int i = 0; i < columnCount; i++)
         {

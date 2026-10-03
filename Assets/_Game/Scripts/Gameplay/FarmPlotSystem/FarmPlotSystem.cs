@@ -59,6 +59,16 @@ public sealed class FarmPlotSystem : MonoBehaviour
         }
     }
 
+    private void RefreshBoundPlot(int plotId)
+    {
+        Plot plot;
+        if (_plotComponents.TryGetValue(plotId, out plot) && plot != null)
+        {
+            // Do not depend on FarmPlotData delegate dispatch in Luna local web.
+            plot.RefreshFromData(false);
+        }
+    }
+
     public CircularFarmPlotLayoutHelper LayoutHelper => layoutHelper;
     private int RingCount => layoutHelper != null ? layoutHelper.RingCount : 0;
     private int PlotsPerRing => layoutHelper != null ? layoutHelper.SectorCount : 0;
@@ -172,7 +182,12 @@ public sealed class FarmPlotSystem : MonoBehaviour
         if (plot != null && plot.UnlockPlot())
         {
             PlayableFarmState.UpdatePlotData(plotId, PlotState.Empty, -1, 1);
+            RefreshBoundPlot(plotId);
             CheckAndUnlockAvailablePlots();
+            if (!UsesPlantPicker())
+            {
+                TryPlantConfiguredPlot(plotId);
+            }
             OnPlotUnlocked?.Invoke(plot);
             GameEventBus.OnPlotUnlockedEvent?.Invoke(plotId);
             return true;
@@ -234,6 +249,7 @@ public sealed class FarmPlotSystem : MonoBehaviour
                         {
                             plot.UnlockRing();
                             PlayableFarmState.UpdatePlotData(plot.Id, PlotState.Locked, -1, 1);
+                            RefreshBoundPlot(plot.Id);
                             changed = true;
                         }
                     }
@@ -254,8 +270,30 @@ public sealed class FarmPlotSystem : MonoBehaviour
         if (success)
         {
             PlayableFarmState.UpdatePlotData(plotId, PlotState.Planted, plantId, 1);
+            RefreshBoundPlot(plotId);
+            SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_plant_grow);
         }
         return success;
+    }
+
+    public bool TryPlantConfiguredPlot(int plotId)
+    {
+        FarmPlotData plot = GetPlot(plotId);
+        int plantId = plot != null && plot.Config != null ? plot.Config.defaultPlantId : -1;
+        PlantConfig plantConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.PlantConfig : null;
+        if (plantId < 0 || plantConfig == null || plantConfig.GetPlant(plantId) == null)
+        {
+            Debug.LogWarning($"[FarmPlotSystem] Plot {plotId} has no valid default plant.", this);
+            return false;
+        }
+
+        return TryOccupyPlot(plotId, plantId);
+    }
+
+    private static bool UsesPlantPicker()
+    {
+        ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
+        return scenario != null && scenario.UsesPlantPicker;
     }
 
     private bool CanOccupy(FarmPlotData plot, int plantId)

@@ -115,6 +115,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         }
 
         SetLevel(_sprinklerLevel + 1, save: true);
+        SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_upgrade);
         return true;
     }
 
@@ -161,7 +162,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
                 SprinklerArm arm = _spawnedSprinklerArms[i];
                 if (arm == null || !arm.gameObject.activeInHierarchy) continue;
 
-                // Chá»‰ tÆ°á»›i Ä‘Æ°á»£c náº¿u Ä‘á»™ dÃ i cÃ¡nh tay vÆ°Æ¡n tá»›i Ring cá»§a Ã´ Ä‘áº¥t
+                // Chá»‰ tÆ°á»›i Ä‘Æ°á»£c nếu Ä‘á»™ dÃ i cánh tay vÆ°Æ¡n tá»›i Ring cá»§a Ã´ Ä‘áº¥t
                 if (plot.RingIndex >= arm.CurrentArmLength)
                     continue;
 
@@ -223,6 +224,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
             // Progress-bar feedback is intentionally omitted from the playable.
             // Plant owns the immediate growth visual when this water completes a slot.
             plant.AddWater(amount);
+            SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_watering_machine);
         }
 
         PlotWaterPumped?.Invoke(targetPlot, amount, WaterAnimationDuration);
@@ -234,7 +236,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         int nozzleCount = Config != null ? Config.GetNozzleCount(_sprinklerLevel) : 1;
         int targetCount = Mathf.Max(1, nozzleCount);
 
-        // Thu tháº­p cÃ¡c arm hiá»‡n cÃ³ náº¿u danh sÃ¡ch rá»—ng
+        // Thu tháº­p các arm hiện có nếu danh sách rỗng
         if (_spawnedSprinklerArms.Count == 0)
         {
             SprinklerArm[] existingArms = parent.GetComponentsInChildren<SprinklerArm>(true);
@@ -259,18 +261,18 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
                 maxArmCount);
         }
 
-        // LÆ°u gÃ³c cÆ¡ sá»Ÿ hiá»‡n táº¡i náº¿u Ä‘Ã£ cÃ³ arm quay Ä‘á»ƒ trÃ¡nh giáº­t hÃ¬nh khi nÃ¢ng cáº¥p
+        // LÆ°u góc cÆ¡ sá»Ÿ hiá»‡n táº¡i nếu Ä‘Ã£ có arm quay Ä‘á»ƒ tránh giáº­t hÃ¬nh khi nÃ¢ng cáº¥p
         float baseZ = (_spawnedSprinklerArms.Count > 0 && _spawnedSprinklerArms[0] != null && _spawnedSprinklerArms[0].Pivot != null)
             ? _spawnedSprinklerArms[0].Pivot.localEulerAngles.z
             : (ArmConfig != null ? ArmConfig.rotationOffsetZ : 0f);
 
-        // Náº¿u thiáº¿u arm thÃ¬ spawn thÃªm
+        // Nếu thiếu arm thÃ¬ spawn thÃªm
         while (_spawnedSprinklerArms.Count < targetCount)
         {
             if (sprinklerArmPrefab != null)
             {
                 SprinklerArm newArm = PoolHolder.Instance != null
-                    ? PoolHolder.Instance.Get((MonoBehaviour)sprinklerArmPrefab, parent) as SprinklerArm
+                    ? PoolHolder.Instance.Get(sprinklerArmPrefab, parent) as SprinklerArm
                     : Instantiate(sprinklerArmPrefab, parent);
                 if (newArm == null) break;
                 newArm.transform.localPosition = Vector3.zero;
@@ -284,7 +286,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
             }
         }
 
-        // Náº¿u thá»«a arm thÃ¬ áº©n hoáº·c xoÃ¡ bá»›t
+        // Nếu thá»«a arm thÃ¬ áº©n hoáº·c xoá bá»›t
         while (_spawnedSprinklerArms.Count > targetCount)
         {
             int lastIndex = _spawnedSprinklerArms.Count - 1;
@@ -306,7 +308,7 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
             }
         }
 
-        // Chia Ä‘á»u gÃ³c cho cÃ¡c arm theo nozzleCount (360 Ä‘á»™ / targetCount)
+        // Chia Ä‘á»u góc cho các arm theo nozzleCount (360 Ä‘á»™ / targetCount)
         float angleStep = 360f / targetCount;
         int length = CurrentArmLength;
         for (int i = 0; i < _spawnedSprinklerArms.Count; i++)

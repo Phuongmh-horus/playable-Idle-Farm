@@ -50,12 +50,13 @@ public static class PlantSpawner
         if (plantPrefab == null) return null;
 
         Plant plant = PoolHolder.Instance != null
-            ? PoolHolder.Instance.Get((MonoBehaviour)plantPrefab, parent) as Plant
+            ? PoolHolder.Instance.Get(plantPrefab, parent) as Plant
             : Object.Instantiate(plantPrefab, parent);
         if (plant != null)
         {
             plant.transform.localPosition = localPosition;
             plant.transform.rotation = Quaternion.Euler(90, 0, 0);
+            plant.transform.localScale = plantPrefab.transform.localScale;
             plant.Init(plantId, level, ringIndex);
         }
         return plant;
@@ -78,12 +79,13 @@ public static class PlantSpawner
         if (plantPrefab == null) return null;
 
         Plant plant = PoolHolder.Instance != null
-            ? PoolHolder.Instance.Get((MonoBehaviour)plantPrefab, parent) as Plant
+            ? PoolHolder.Instance.Get(plantPrefab, parent) as Plant
             : Object.Instantiate(plantPrefab, parent);
         if (plant != null)
         {
             plant.transform.localPosition = localPosition;
             plant.transform.rotation = Quaternion.Euler(90, 0, 0);
+            plant.transform.localScale = plantPrefab.transform.localScale;
             plant.Init(plantId, owner.PlotData?.PlantLevel ?? 1, owner.RingIndex);
         }
         return plant;

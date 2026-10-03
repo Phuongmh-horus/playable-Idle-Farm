@@ -54,12 +54,10 @@ MonoBehaviour:
   ctaButtons:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   endcardRoot: {fileID: 0}
   continueButton: {fileID: 0}
-  endcardStoreButtons: []
+  endcardStoreButtons:
+  - {fileID: 0}
   fallbackEndcardDelaySeconds: 60
   tutorialFlow: {fileID: 0}
   plantStore: {fileID: 0}
@@ -68,8 +66,8 @@ MonoBehaviour:
   selloutCanvasGroup: {fileID: 0}
   selloutValueText: {fileID: 0}
   upgradePopup: {fileID: 0}
-  sprinklerUpgradeIcon: {fileID: 21300000, guid: 3f7e616b5539a6c4da552243b0ec76a5, type: 3}
-  harvesterUpgradeIcon: {fileID: 21300000, guid: cf4d3c62f848e594988e058cf9dc6f07, type: 3}
+  sprinklerUpgradeIcon: {fileID: 21300000, guid: 9c0f6b73262c88d44ba1b3fa2270d6b1, type: 3}
+  harvesterUpgradeIcon: {fileID: 21300000, guid: 6be7d07c6d993984583c0c3f954713a6, type: 3}
   transportUpgradeIcon: {fileID: 21300000, guid: 91adfbe4a41fdf8468348d1779fc1393, type: 3}
   useSceneSoTutorialSettings: 0
   upgradePopupPresenter: {fileID: 7149765224746301888}
@@ -162,7 +160,6 @@ Transform:
   m_Children:
   - {fileID: 7109295499505047563}
   - {fileID: 5421162914921773137}
-  - {fileID: 9085839246517925803}
   - {fileID: 1697756570266761846}
   m_Father: {fileID: 1314559449361786356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -186,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54de28f6e2f82bf4c9c0259cf0964704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 4f536ed85fb70074689709f8931e62b6, type: 2}
   musicSource: {fileID: 2730766790868569243}
   sfxParentGO: {fileID: 4977256857507012174}
   sfxPrefab: {fileID: 339701916302653626, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
@@ -273,9 +270,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 3524732359855231607, guid: 6deb3f7f8686ea943a8956b650320b76, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 203a671fcfcfe5945b96de823082768e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6fc2ce1e75d93a947bc14102c6fde7bd, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -529,84 +526,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
   m_PrefabInstance: {fileID: 1546891973215352855}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &2384760061549800182
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4759752064383085816}
-    m_Modifications:
-    - target: {fileID: 339701916302653626, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_Name
-      value: SFX_loop_timer
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6896986759517456629, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: Loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6896986759517456629, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: e492b92ae16ecdd488522d636d40f6b0, type: 3}
-    - target: {fileID: 6896986759517456629, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6896986759517456629, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 9012635574107187234, guid: 6deb3f7f8686ea943a8956b650320b76, type: 2}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
---- !u!4 &9085839246517925803 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6849759545866460509, guid: a1b125bbe334201419475e981a70eb3f, type: 3}
-  m_PrefabInstance: {fileID: 2384760061549800182}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2912271735135493288
 PrefabInstance:

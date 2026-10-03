@@ -4,6 +4,8 @@ Shader "CoinCollector/Shared Unlit 3D"
     {
         _MainTex("Texture", 2D) = "white" {}
         _Color("Tint", Color) = (1, 1, 1, 1)
+        [Enum(Off, 0, On, 1)] _ZWrite("ZWrite", Float) = 0
+        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("ZTest", Float) = 4
     }
 
     SubShader
@@ -17,8 +19,8 @@ Shader "CoinCollector/Shared Unlit 3D"
             Tags { "LightMode" = "Always" }
 
             Cull Back
-            ZWrite On
-            ZTest LEqual
+            ZWrite [_ZWrite]
+            ZTest [_ZTest]
             Blend Off
 
             CGPROGRAM

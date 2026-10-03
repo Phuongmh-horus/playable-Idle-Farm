@@ -10,6 +10,9 @@ Shader "CoinCollector/Shared Stencil Shadow"
         [IntRange] _StencilRef("Shared Stencil ID", Range(1, 255)) = 1
         [IntRange] _StencilReadMask("Stencil Read Mask", Range(0, 255)) = 255
         [IntRange] _StencilWriteMask("Stencil Write Mask", Range(0, 255)) = 255
+
+        [Enum(Off, 0, On, 1)] _ZWrite("ZWrite", Float) = 0
+        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("ZTest", Float) = 4
     }
 
     SubShader
@@ -73,8 +76,8 @@ Shader "CoinCollector/Shared Stencil Shadow"
             Blend SrcAlpha OneMinusSrcAlpha
             Cull Off
             Lighting Off
-            ZWrite Off
-            ZTest LEqual
+            ZWrite [_ZWrite]
+            ZTest [_ZTest]
 
             Stencil
             {

@@ -137,6 +137,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         }
 
         SetLevel(harvesterLevel + 1, save: true);
+        SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_upgrade);
         return true;
     }
 
@@ -237,6 +238,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         double revenue = plant.Harvest();
         if (revenue > 0 || plant.FilledSlotCount == 0)
         {
+            SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_reaper_collect);
             LogHarvest(targetPlot, revenue);
             PlotHarvested?.Invoke(targetPlot, revenue);
         }
@@ -271,7 +273,6 @@ public sealed class FarmHarvestSystem : MonoBehaviour
                 maxArmCount);
         }
 
-        // LÆ°u gÃ³c cÆ¡ sá»Ÿ hiá»‡n táº¡i náº¿u Ä‘Ã£ cÃ³ arm quay Ä‘á»ƒ trÃ¡nh giáº­t hÃ¬nh khi nÃ¢ng cáº¥p
         float baseZ = (_spawnedHarvesterArms.Count > 0 && _spawnedHarvesterArms[0] != null && _spawnedHarvesterArms[0].Pivot != null)
             ? _spawnedHarvesterArms[0].Pivot.localEulerAngles.z
             : (ArmConfig != null ? ArmConfig.rotationOffsetZ : 0f);
@@ -281,7 +282,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
             if (harvesterArmPrefab != null)
             {
                 HarvesterArm newArm = PoolHolder.Instance != null
-                    ? PoolHolder.Instance.Get((MonoBehaviour)harvesterArmPrefab, parent) as HarvesterArm
+                    ? PoolHolder.Instance.Get(harvesterArmPrefab, parent) as HarvesterArm
                     : Instantiate(harvesterArmPrefab, parent);
                 if (newArm == null) break;
                 newArm.transform.localPosition = Vector3.zero;
