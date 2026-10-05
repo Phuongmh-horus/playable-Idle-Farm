@@ -21,3 +21,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 125684ec23ac45748b4edb0f8543290a, type: 3}
   - state: 3
     sprite: {fileID: 21300000, guid: 125684ec23ac45748b4edb0f8543290a, type: 3}
+  ringLockedSprite: {fileID: 21300000, guid: f5f3980e46a70754b801c68704c1e37e, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a7f4d380df278d34b8b77af9695b0c0a, type: 3}
+  emptySprite: {fileID: 21300000, guid: 125684ec23ac45748b4edb0f8543290a, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 125684ec23ac45748b4edb0f8543290a, type: 3}

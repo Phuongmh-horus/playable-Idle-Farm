@@ -29,13 +29,14 @@ public class CTAButton : MonoBehaviour
 
     [SerializeField] private float buttonPulseDuration = 0.6f;
 
-    [SerializeField] private float ctaImpactStartAngle = -18f;
+    // [SerializeField] private float ctaImpactStartAngle = -18f;
 
     [SerializeField] private float ctaImpactDuration = 0.18f;
     [SerializeField] private float ctaImpactStartScale = 1.7f;
     [SerializeField] private float ctaOnlyPulseScale = 1.1f;
     [SerializeField] private float ctaOnlyStartScale = 0.9f;
     [SerializeField] private float buttonPulseScale = 1.08f;
+
     private IEnumerator ButtonImpactThenPulseRoutine()
     {
         // float impactDuration = Mathf.Max(0.05f, ctaImpactDuration);

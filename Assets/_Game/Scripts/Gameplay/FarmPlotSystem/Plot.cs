@@ -27,9 +27,19 @@ public class Plot : MonoBehaviour
     public bool IsUnlocked => _plotData != null && _plotData.IsUnlocked;
     public Plant CurrentPlant => _spawnedPlant != null ? _spawnedPlant : GetComponentInChildren<Plant>();
 
-    public Vector3 PlantPosition => _spawnedPlant != null
-        ? _spawnedPlant.transform.position
-        : (plantRoot != null ? plantRoot.transform.position : transform.position);
+    public Vector3 PlantPosition
+    {
+        get
+        {
+            if (_spawnedPlant != null)
+                return _spawnedPlant.transform.position;
+            if (plantRoot != null)
+                return plantRoot.transform.position;
+
+            Transform childRoot = transform.Find("PlantRoot");
+            return childRoot != null ? childRoot.position : transform.position;
+        }
+    }
 
     private void Awake()
     {
@@ -152,7 +162,6 @@ public class Plot : MonoBehaviour
         }
         else
         {
-            // Náº¿u Ã´ Ä‘áº¥t Ä‘Ã£ Ä‘Æ°á»£c má»Ÿ khÃ³a hoáº·c á»Ÿ tráº¡ng thÃ¡i khÃ¡c, áº©n popup giÃ¡ náº¿u Ä‘ang hiá»ƒn thá»‹
             WorldLayerManager.Instance.HidePlantPriceLayer(popupTarget);
         }
     }
@@ -162,9 +171,6 @@ public class Plot : MonoBehaviour
         PurchasePlot();
     }
 
-    /// <summary>
-    /// Mua má»Ÿ khÃ³a Ã´ Ä‘áº¥t: trá»« tiá»n, chuyá»ƒn Ã´ Ä‘áº¥t sang tráº¡ng thÃ¡i Empty (Ä‘áº¥t trá»‘ng)
-    /// </summary>
     public bool PurchasePlot()
     {
         if (_isPurchasingPlot || _plotData == null || _plotData.State != FarmPlotState.Locked)
@@ -324,7 +330,7 @@ public class Plot : MonoBehaviour
     }
 
     /// <summary>
-    /// Cáº­p nháº­t Sprite hiá»ƒn thá»‹ theo tráº¡ng thÃ¡i hiá»‡n táº¡i cá»§a Ã´ Ä‘áº¥t
+    /// Updates the visual representation of the plot based on its current state.
     /// </summary>
     public void UpdateVisualByState(FarmPlotState state, bool animate = true)
     {

@@ -13,9 +13,6 @@ public class PlotVisualConfigSO : ScriptableObject
 
     [SerializeField] private PlotStateSpriteEntry[] stateSprites;
 
-    /// <summary>
-    /// Lấy Sprite tương ứng với FarmPlotState
-    /// </summary>
     public Sprite GetSprite(FarmPlotState state)
     {
         if (stateSprites == null)

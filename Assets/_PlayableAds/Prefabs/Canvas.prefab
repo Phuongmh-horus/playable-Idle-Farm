@@ -189,7 +189,7 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 19d9882c40ff19648aedb2ceb058956f, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -8313916626228410150, guid: 19d9882c40ff19648aedb2ceb058956f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -403,7 +403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonPulseDuration: 1
-  ctaImpactStartAngle: -18
   ctaImpactDuration: 0.18
   ctaImpactStartScale: 1.5
   ctaOnlyPulseScale: 1.05
@@ -664,14 +663,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4244069337251496067}
+  m_Children: []
   m_Father: {fileID: 5915459546102636211}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: 0}
-  m_SizeDelta: {x: 110, y: 50}
+  m_AnchoredPosition: {x: -20, y: 0}
+  m_SizeDelta: {x: 120, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4677825052227073473
 CanvasRenderer:
@@ -880,6 +878,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 91290486009655268}
+  - {fileID: 4244069337251496067}
   m_Father: {fileID: 1686311379238746894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -1048,7 +1047,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Continue
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 19d9882c40ff19648aedb2ceb058956f, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -8313916626228410150, guid: 19d9882c40ff19648aedb2ceb058956f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1145,11 +1144,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 91290486009655268}
+  m_Father: {fileID: 5915459546102636211}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 30, y: 0}
+  m_AnchoredPosition: {x: -40, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4716419151465214077
@@ -1513,7 +1512,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Idle Farm
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 19d9882c40ff19648aedb2ceb058956f, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -8313916626228410150, guid: 19d9882c40ff19648aedb2ceb058956f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

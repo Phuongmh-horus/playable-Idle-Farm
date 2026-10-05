@@ -145,10 +145,12 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         GameObject root = rowIndex == 0 ? null : _popupView.StatTwoRoot;
         if (root != null) root.SetActive(visible);
 
+        TMP_Text nameText = rowIndex == 0 ? _popupView.StatOneNameText : _popupView.StatTwoNameText;
         TMP_Text current = rowIndex == 0 ? _popupView.StatOneCurrentText : _popupView.StatTwoCurrentText;
         TMP_Text next = rowIndex == 0 ? _popupView.StatOneNextText : _popupView.StatTwoNextText;
         Image arrow = rowIndex == 0 ? _popupView.StatOneArrowImage : _popupView.StatTwoArrowImage;
-        if (current != null) current.text = string.IsNullOrEmpty(row.Label) ? row.Current ?? string.Empty : row.Label + " " + (row.Current ?? string.Empty);
+        if (nameText != null) nameText.text = row.Label ?? string.Empty;
+        if (current != null) current.text = row.Current ?? string.Empty;
         if (next != null) next.text = row.Next ?? string.Empty;
         if (arrow != null) arrow.gameObject.SetActive(visible && !string.IsNullOrEmpty(row.Next));
     }

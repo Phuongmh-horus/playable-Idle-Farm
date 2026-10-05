@@ -12,10 +12,12 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
     [SerializeField] private Image illustration;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text levelText;
+    [SerializeField] private TMP_Text statOneNameText;
     [SerializeField] private TMP_Text statOneCurrentText;
     [SerializeField] private Image statOneArrowImage;
     [SerializeField] private TMP_Text statOneNextText;
     [SerializeField] private GameObject statTwoRoot;
+    [SerializeField] private TMP_Text statTwoNameText;
     [SerializeField] private TMP_Text statTwoCurrentText;
     [SerializeField] private Image statTwoArrowImage;
     [SerializeField] private TMP_Text statTwoNextText;
@@ -28,10 +30,12 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
     public Image Illustration { get { ResolveMissingReferences(); return illustration; } }
     public TMP_Text TitleText { get { ResolveMissingReferences(); return titleText; } }
     public TMP_Text LevelText { get { ResolveMissingReferences(); return levelText; } }
+    public TMP_Text StatOneNameText { get { ResolveMissingReferences(); return statOneNameText; } }
     public TMP_Text StatOneCurrentText { get { ResolveMissingReferences(); return statOneCurrentText; } }
     public Image StatOneArrowImage { get { ResolveMissingReferences(); return statOneArrowImage; } }
     public TMP_Text StatOneNextText { get { ResolveMissingReferences(); return statOneNextText; } }
     public GameObject StatTwoRoot { get { ResolveMissingReferences(); return statTwoRoot; } }
+    public TMP_Text StatTwoNameText { get { ResolveMissingReferences(); return statTwoNameText; } }
     public TMP_Text StatTwoCurrentText { get { ResolveMissingReferences(); return statTwoCurrentText; } }
     public Image StatTwoArrowImage { get { ResolveMissingReferences(); return statTwoArrowImage; } }
     public TMP_Text StatTwoNextText { get { ResolveMissingReferences(); return statTwoNextText; } }
@@ -50,8 +54,10 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
             string itemName = texts[i].gameObject.name.ToLowerInvariant();
             if (titleText == null && itemName.Contains("titletext")) titleText = texts[i];
             else if (levelText == null && itemName.Contains("leveltext")) levelText = texts[i];
+            else if (statOneNameText == null && itemName.Contains("stat1name")) statOneNameText = texts[i];
             else if (statOneCurrentText == null && itemName.Contains("stat1current")) statOneCurrentText = texts[i];
             else if (statOneNextText == null && itemName.Contains("stat1next")) statOneNextText = texts[i];
+            else if (statTwoNameText == null && itemName.Contains("stat2name")) statTwoNameText = texts[i];
             else if (statTwoCurrentText == null && itemName.Contains("stat2current")) statTwoCurrentText = texts[i];
             else if (statTwoNextText == null && itemName.Contains("stat2next")) statTwoNextText = texts[i];
             else if (costText == null && itemName.Contains("costtext")) costText = texts[i];
@@ -88,7 +94,7 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
 
         if (statTwoRoot == null)
         {
-            Transform statTwoTransform = transform.Find("Inner/Stat2Root");
+            Transform statTwoTransform = transform.Find("Card/Inner/StatsRoot/Stat2Root");
             if (statTwoTransform != null) statTwoRoot = statTwoTransform.gameObject;
         }
 

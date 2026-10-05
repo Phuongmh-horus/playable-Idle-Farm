@@ -16,6 +16,7 @@ public sealed class FarmPlotSystem : MonoBehaviour
     private readonly Dictionary<int, Plot> _plotComponents = new Dictionary<int, Plot>();
     private readonly List<Plot> _cachedPlotList = new List<Plot>();
     private readonly List<Plot> _runtimeSpawnedSlots = new List<Plot>();
+    private readonly HashSet<int> _pendingVisualRefreshes = new HashSet<int>();
 
     public IReadOnlyList<FarmPlotData> Plots => _plots;
     public IReadOnlyList<Plot> SpawnedPlotComponents => _cachedPlotList;
@@ -23,7 +24,7 @@ public sealed class FarmPlotSystem : MonoBehaviour
     public bool UseScenePlots => useScenePlots;
     public Transform SlotRoot => GetSlotRoot();
 
-    public event Action<int> OnRingUnlocked;
+    // public event Action<int> OnRingUnlocked;
     public event Action<FarmPlotData> OnPlotUnlocked;
 
     public int GetOwnedRingCount()
@@ -139,6 +140,7 @@ public sealed class FarmPlotSystem : MonoBehaviour
         _plots.Clear();
         ClearRuntimeSlots();
         _plotComponents.Clear();
+        _pendingVisualRefreshes.Clear();
         _cachedPlotList.Clear();
         if (layoutHelper == null) return;
         CreatePlots();

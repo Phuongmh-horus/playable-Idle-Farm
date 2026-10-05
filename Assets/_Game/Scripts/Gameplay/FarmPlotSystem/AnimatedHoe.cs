@@ -22,6 +22,7 @@ public class AnimatedHoe : MonoBehaviour
     private Quaternion _initialLocalRotation;
     private Vector3 _initialLocalScale = Vector3.one;
     private Coroutine _animationRoutine;
+    private bool _isReleased;
 
     private Transform TargetTransform => hoeTransform != null ? hoeTransform : transform;
 
@@ -90,6 +91,7 @@ public class AnimatedHoe : MonoBehaviour
 
     public void PlayDigAnimation(Vector3 targetPosition, Action onComplete = null)
     {
+        _isReleased = false;
         CancelAnimation();
         transform.position = targetPosition;
         Transform target = TargetTransform;
@@ -129,8 +131,11 @@ public class AnimatedHoe : MonoBehaviour
         yield return AnimateScale(target, target.localScale, Vector3.zero, popDuration, false);
         _animationRoutine = null;
         ResetToInitialState();
-        onComplete?.Invoke();
+        // Hide/release the VFX before the plot state refreshes. Previously the
+        // callback refreshed the plot while the Hoe SpriteRenderer was still
+        // active under the plot, so Luna could capture the old composite.
         Despawn();
+        onComplete?.Invoke();
     }
 
     private IEnumerator AnimatePose(Transform target, Vector3 fromPosition, Vector3 toPosition,
@@ -169,8 +174,16 @@ public class AnimatedHoe : MonoBehaviour
         target.localScale = toScale;
     }
 
+    public void ForceDespawn()
+    {
+        CancelAnimation();
+        Despawn();
+    }
+
     private void Despawn()
     {
+        if (_isReleased) return;
+        _isReleased = true;
         transform.SetParent(null);
         if (PoolHolder.Instance != null) PoolHolder.Instance.Release(this);
         else Destroy(gameObject);

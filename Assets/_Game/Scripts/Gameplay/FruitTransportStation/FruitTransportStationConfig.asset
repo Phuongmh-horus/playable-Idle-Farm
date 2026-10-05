@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DepartureDuration: 0.5
   ReturnDuration: 0.5
-  CapacityPopupOffset: {x: 0, y: 0, z: -1}
+  CapacityPopupOffset: {x: 0, y: 0, z: -2}

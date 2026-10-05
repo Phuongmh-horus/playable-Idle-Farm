@@ -1,5 +1,9 @@
 # Lessons
 
+- When a user reports that the same Luna visual bug persists after a fix, add temporary identity/state/renderer diagnostics at bind, refresh, and assignment boundaries before making another visual-logic change; prove whether the wrong object, wrong state, or wrong sprite binding is responsible.
+
+- If a Luna plot visual fix passes Unity runtime but the local web still shows stale plot sprites, do not assume PlotVisual is the only writer; trace every SpriteRenderer assignment plus scene prefab overrides and exported scene data before changing the renderer again.
+
 - Before retiring playable UI, confirm the complete loop (including recurring endcard and resume behavior) rather than assuming the earlier tutorial flow is the final runtime flow.
 - When a scenario configures a non-default tutorial phase, do not let a second configuration source silently overwrite the scene instance; make the override explicit and verify the effective phase in Play mode.
 - When imported gameplay references missing original sources, compare the original implementation first and replace it with a small real playable subsystem, never a compile-only stub.
@@ -26,3 +30,6 @@
 - When unlocking a plot can change neighbouring plots from RingLocked to Locked, refresh every state transition through its owning Plot component; persisting the data alone is not a visual update in Luna runtime.
 - If a direct Plot refresh still leaves Luna sprites unchanged while gameplay state advances, validate the renderer/config binding itself and use a single serialized SpriteRenderer assignment path that does not rely on runtime ScriptableObject lookup or transition overlays.
 - When Luna excludes a coroutine method, never start that transition from an exported method: assign the main sprite synchronously and always clear any legacy overlay, including when the requested sprite is already assigned.
+- When plot state is evaluated before scene-authored plot components bind, queue the visual refresh by plot ID and replay it after registration; an explicit refresh call made against an empty component map is otherwise lost in exported runtime.
+- If Luna logs show the authoritative SpriteRenderer sprite changed correctly but pixels update only after another plot changes, treat SpriteRenderer sprite mutation as a stale batch/cache boundary; use pre-authored per-state renderers and switch active GameObjects instead of mutating atlas UV state in place.
+- When a fix appears absent in Luna, verify the active build scene and every prefab source GUID before changing code; scene instances can preserve null overrides from an older serialized component version.

@@ -90,7 +90,7 @@ MonoBehaviour:
     rotationDurationReductionPerMilestone: 1
     minimumRotationDuration: 5
     level1Cost: 88
-    sprinklerBasePrice: 40
+    sprinklerBasePrice: 88
     sprinklerUpdateScale: 2.3
     baseWaterAmount: 10
     waterAmountSumPerLevel: 3
@@ -105,5 +105,5 @@ MonoBehaviour:
     baseCapacity: 3
     capacitySumPerLevel: 1
     level1Cost: 40
-    cargoBasePrice: 40
+    cargoBasePrice: 80
     cargoUpdateScale: 2.3

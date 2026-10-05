@@ -147,6 +147,8 @@ public class PopupBuyPlotLayer : WorldLayerBase
         if (success)
         {
             PlayableFarmState.UpdatePlotData(_currentPlot.PlotId, PlotState.Empty, -1, 0);
+
+            _currentPlot.RefreshFromData(false);
             Plot unlockedPlot = _currentPlot;
             OnUnlockSuccess?.Invoke(unlockedPlot);
         }

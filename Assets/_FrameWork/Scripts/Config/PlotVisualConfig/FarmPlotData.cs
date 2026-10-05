@@ -1,6 +1,7 @@
 using System;
+using UnityEngine;
 
-public enum            FarmPlotState
+public enum FarmPlotState
 {
     RingLocked = 0, // Vành đai chưa mở khóa (chưa thể mua lẻ)
     Locked = 1,     // Đã mở vành đai, ô đất đang khóa (sẵn sàng mua)

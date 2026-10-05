@@ -170,8 +170,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 185771701}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &40966794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +193,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1803569165}
   plotVisual: {fileID: 40966793}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &45894089
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +267,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -484,8 +494,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 888651066}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &69882041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +517,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 751264455}
   plotVisual: {fileID: 69882040}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &70662166
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,8 +649,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1955316351}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &104470688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,6 +672,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 70662168}
   plotVisual: {fileID: 104470687}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &112893337
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,8 +723,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 382553814}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &112893340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,6 +746,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1218697860}
   plotVisual: {fileID: 112893339}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &131633105
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,7 +801,11 @@ MonoBehaviour:
   target: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
+  billboardMode: 0
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
+  manageScale: 0
+  flipX: 0
+  customScale: {x: 1, y: 1, z: 1}
 --- !u!1 &138598835
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +877,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 896113963
-  m_SortingLayer: 9
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 50dcb97db002b644caa535ec8b4ed2f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -917,7 +961,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1008,23 +1052,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3c26078a58435f47836a169f71d72fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelConfigSO: {fileID: 0}
-  AvatarConfigSO: {fileID: 0}
-  FrameConfigSO: {fileID: 0}
-  DailyGiftConfigSO: {fileID: 0}
-  FreeGoldConfigSO: {fileID: 0}
-  OfferPackSO: {fileID: 11400000, guid: 0e04c3a5b30083d42a3a522f56db11ee, type: 2}
-  ApplovinMaxAdsConfigSO: {fileID: 0}
   FarmPlotConfigSO: {fileID: 11400000, guid: 8e7b4d5f6a7c4b8d9e0f123456789abc, type: 2}
   CircularFarmPlotLayoutConfigSO: {fileID: 11400000, guid: 09b813e116dc2cf408bd2f97f4b2d2d4, type: 2}
   FarmConfig: {fileID: 11400000, guid: 20a3a8fab0d16254abd70fee4fca95b4, type: 2}
   PlantConfig: {fileID: 11400000, guid: 2b48e6ade1c6a8d47b920717148c09e2, type: 2}
   FruitConfig: {fileID: 11400000, guid: 37916fe2f4c63344aa029ce7bab463a7, type: 2}
   ValueUpgradePanelConfig: {fileID: 11400000, guid: 5d1e49c95a04467fb308a3299c158ea9, type: 2}
-  CollectionConfigSO: {fileID: 11400000, guid: 402028e99848d684d8c3762ecec384fb, type: 2}
-  MainQuestConfig: {fileID: 11400000, guid: 8f4a123bc67d498198de4b321a5ef890, type: 2}
-  DailyWeeklyQuestConfig: {fileID: 11400000, guid: fd6e7b04a19a4ad389f17dd0ed11e6b4, type: 2}
-  OfflineRewardConfigSO: {fileID: 11400000, guid: 48ce94e0d1bb6df47ba1606ed55251dc, type: 2}
 --- !u!4 &172050369
 Transform:
   m_ObjectHideFlags: 0
@@ -1088,8 +1121,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 263589843}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &175222085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1104,6 +1144,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1770353145}
   plotVisual: {fileID: 175222084}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &183209276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,9 +1193,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armConfig: {fileID: 11400000, guid: 19a617631dbccec4d966686030a3ee5f, type: 2}
+  harvesterLevel: 1
   harvesterArmPrefab: {fileID: 7029076277612158237, guid: 02afa45ffc78ed94d83fc49a9e56c66e, type: 3}
-  harvestBlade: {fileID: 918367999}
   harvesterArmParent: {fileID: 183209277}
+  harvestMachine: {fileID: 0}
+  logPlotHarvested: 1
 --- !u!1 &185771699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,7 +1269,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1285,8 +1330,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 444312198}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &225534249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1301,6 +1353,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 334285758}
   plotVisual: {fileID: 225534248}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &233877109
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1504,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1534,7 +1589,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 896113963
-  m_SortingLayer: 9
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 3cb987cc96318d44aa65e112066989cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1544,7 +1599,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &316503990
@@ -1618,7 +1673,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1679,8 +1734,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1969344054}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &317714939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1695,6 +1757,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1800981204}
   plotVisual: {fileID: 317714938}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &334285756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1824,8 +1889,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 316503992}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &352744644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1840,6 +1912,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1752434586}
   plotVisual: {fileID: 352744643}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &360425496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1888,8 +1963,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1742743218}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &360425499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1904,6 +1986,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 671781147}
   plotVisual: {fileID: 360425498}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &379641912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,7 +2045,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -355560971
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 89d41c6e21118d8409a72cb7db4f551c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1970,7 +2055,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &379641914
@@ -2060,7 +2145,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2293,7 +2378,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2377,7 +2462,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2493,7 +2578,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2586,6 +2671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layoutHelper: {fileID: 461989124}
   slotRoot: {fileID: 486004122}
+  maxSpawnedPlots: 10
+  useScenePlots: 1
 --- !u!114 &461989124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2598,7 +2685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a134572e0f52004c998df685220bf4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  farmConfig: {fileID: 11400000, guid: 20a3a8fab0d16254abd70fee4fca95b4, type: 2}
   config: {fileID: 11400000, guid: 09b813e116dc2cf408bd2f97f4b2d2d4, type: 2}
 --- !u!1 &470987516
 GameObject:
@@ -2648,8 +2734,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 162726639}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &470987519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2664,6 +2757,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1530328317}
   plotVisual: {fileID: 470987518}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &483437407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2854,8 +2950,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 2054965913}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &491429154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2870,6 +2973,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 2138687653}
   plotVisual: {fileID: 491429153}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &509450353
 GameObject:
   m_ObjectHideFlags: 0
@@ -3053,7 +3159,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3137,7 +3243,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -355560971
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 468b15a49a0b7b740b534f8c99162abb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3147,7 +3253,7 @@ SpriteRenderer:
   m_Size: {x: 4.96, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &555261484
@@ -3198,8 +3304,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 744255297}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &555261487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3214,6 +3327,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1343954952}
   plotVisual: {fileID: 555261486}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &564379535
 GameObject:
   m_ObjectHideFlags: 0
@@ -3285,7 +3401,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3346,8 +3462,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 606029313}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &570824936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3362,6 +3485,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1569122624}
   plotVisual: {fileID: 570824935}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &580501291
 GameObject:
   m_ObjectHideFlags: 0
@@ -3407,9 +3533,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animate: 1
-  closeOnCameraDrag: 1
-  closeOnSelectableClick: 1
-  autoClosePopupTypes: 0200000005000000
 --- !u!1 &581591054
 GameObject:
   m_ObjectHideFlags: 0
@@ -3490,8 +3613,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1071468553}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &597292814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3506,6 +3636,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 2025191969}
   plotVisual: {fileID: 597292813}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &606029311
 GameObject:
   m_ObjectHideFlags: 0
@@ -3577,7 +3710,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3638,8 +3771,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1266116444}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &609544620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3654,6 +3794,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 2088474420}
   plotVisual: {fileID: 609544619}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &624349860
 GameObject:
   m_ObjectHideFlags: 0
@@ -3702,8 +3845,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 2009999717}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &624349863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3718,6 +3868,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1211723572}
   plotVisual: {fileID: 624349862}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &627563216
 GameObject:
   m_ObjectHideFlags: 0
@@ -4017,7 +4170,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -596977661
-  m_SortingLayer: 7
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -1989419038, guid: 3d9edbbe470da8640b8acc17e12eb009, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4027,7 +4180,7 @@ SpriteRenderer:
   m_Size: {x: 3.22, y: 2.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &728372234
@@ -4101,7 +4254,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -355560971
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 468b15a49a0b7b740b534f8c99162abb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4111,7 +4264,7 @@ SpriteRenderer:
   m_Size: {x: 4.96, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &744255295
@@ -4185,7 +4338,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4438,7 +4591,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -355560971
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 464adb495a437f449b628133464e525e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4448,7 +4601,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &847194360
@@ -4531,8 +4684,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1143463568}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &853261108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4547,6 +4707,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1070380847}
   plotVisual: {fileID: 853261107}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &854746938
 GameObject:
   m_ObjectHideFlags: 0
@@ -4618,7 +4781,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1658628839
-  m_SortingLayer: 6
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0fc206b4463bf0a4196e6df33de34738, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4813,7 +4976,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -4871,10 +5034,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9091cd709c7b1864da572fcb7bbf34ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 19a617631dbccec4d966686030a3ee5f, type: 2}
   bladeVisual: {fileID: 918367997}
+  cutDownAngle: -40
+  cutUpAngle: 10
+  cutDuration: 0.3
+  harvestImpactNormalizedTime: 0.5
+  dragScale: 1.15
+  returnDuration: 0.35
+  harvestRadius: 0.8
+  grabRadius: 1
   harvesterBladeRoot: {fileID: 1494106939}
-  animTargetTransform: {fileID: 138598836}
   showGizmosAlways: 0
   showHarvestRadiusGizmo: 1
   showGrabRadiusGizmo: 1
@@ -5086,7 +5255,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -355560971
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 89d41c6e21118d8409a72cb7db4f551c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5096,7 +5265,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &937297061
@@ -5165,7 +5334,11 @@ MonoBehaviour:
   target: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
+  billboardMode: 0
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
+  manageScale: 0
+  flipX: 0
+  customScale: {x: 1, y: 1, z: 1}
 --- !u!1 &973684785
 GameObject:
   m_ObjectHideFlags: 0
@@ -5453,7 +5626,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -596977661
-  m_SortingLayer: 7
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -1379963380, guid: 3d9edbbe470da8640b8acc17e12eb009, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5463,7 +5636,7 @@ SpriteRenderer:
   m_Size: {x: 3.22, y: 2.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1070380845
@@ -5586,7 +5759,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5679,8 +5852,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1116201043}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &1107676445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5695,6 +5875,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 2120509399}
   plotVisual: {fileID: 1107676444}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1108512647
 GameObject:
   m_ObjectHideFlags: 0
@@ -5776,7 +5959,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1109212192
@@ -5827,8 +6010,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 544655685}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &1109212195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5843,6 +6033,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 653617617}
   plotVisual: {fileID: 1109212194}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1114813847
 GameObject:
   m_ObjectHideFlags: 0
@@ -5977,7 +6170,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6061,7 +6254,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6127,6 +6320,7 @@ MonoBehaviour:
   exitPoint: {fileID: 1052727800}
   config: {fileID: 11400000, guid: a895c334e7a42c047bb63b416638838a, type: 2}
   vehicle: {fileID: 1681632256}
+  capacityLayerOffset: {x: 0, y: 1.8, z: 0}
 --- !u!114 &1150394946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6157,6 +6351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StaticSelectable: {fileID: 1150394946}
+  transportStation: {fileID: 1150394945}
   targetTransform: {fileID: 1681632255}
   iconOffset: {x: 0, y: 1.5, z: 0}
 --- !u!1 &1158154224
@@ -6207,8 +6402,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1652207243}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &1158154227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6223,6 +6425,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 528633922}
   plotVisual: {fileID: 1158154226}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1191528756
 GameObject:
   m_ObjectHideFlags: 0
@@ -6352,8 +6557,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1501657820}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &1216042290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6368,6 +6580,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1336643263}
   plotVisual: {fileID: 1216042289}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1216696129
 GameObject:
   m_ObjectHideFlags: 0
@@ -6439,7 +6654,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1397544575
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e464170f7ee67564f912391856b4716f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6531,9 +6746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ecc8b6f08268a4c827a65a28db0dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellSize: 10
-  gridSize: {x: 100, y: 100}
-  gridOrigin: {x: -100, y: -100}
+  initialSelectables: []
 --- !u!114 &1228184484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6635,7 +6848,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -6784,8 +6997,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 424395518}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &1329776015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6800,6 +7020,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 863594182}
   plotVisual: {fileID: 1329776014}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1336643261
 GameObject:
   m_ObjectHideFlags: 0
@@ -6957,7 +7180,11 @@ MonoBehaviour:
   target: {fileID: 528633921}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
+  billboardMode: 0
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
+  manageScale: 0
+  flipX: 0
+  customScale: {x: 1, y: 1, z: 1}
 --- !u!114 &1346536735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6974,20 +7201,15 @@ MonoBehaviour:
   panelRect: {fileID: 1346536733}
   canvasGroup: {fileID: 1346536739}
   useScale: 1
-  autoDetectTargetScale: 1
-  targetScale: {x: 0.01, y: 0.01, z: 0.01}
   useFade: 1
   duration: 0.3
-  easeType: 26
-  interval: 0
+  hideDuration: 0.2
   OnStartAnim:
     m_PersistentCalls:
       m_Calls: []
   OnCompleteAnim:
     m_PersistentCalls:
       m_Calls: []
-  hideDuration: 0.2
-  hideEaseType: 25
   OnStartHideAnim:
     m_PersistentCalls:
       m_Calls: []
@@ -7188,7 +7410,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -355560971
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 468b15a49a0b7b740b534f8c99162abb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7198,7 +7420,7 @@ SpriteRenderer:
   m_Size: {x: 4.96, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1390945637
@@ -7316,7 +7538,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -355560971
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 468b15a49a0b7b740b534f8c99162abb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7326,7 +7548,7 @@ SpriteRenderer:
   m_Size: {x: 4.96, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1407632136
@@ -7520,8 +7742,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 564379537}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &1447352791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7536,6 +7765,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1949008999}
   plotVisual: {fileID: 1447352790}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1494106938
 GameObject:
   m_ObjectHideFlags: 0
@@ -7639,7 +7871,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8076,8 +8308,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 45894091}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &1613017772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8092,6 +8331,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 169882097}
   plotVisual: {fileID: 1613017771}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1614407719
 GameObject:
   m_ObjectHideFlags: 0
@@ -8140,8 +8382,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 418631444}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &1614407722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8156,6 +8405,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 490826959}
   plotVisual: {fileID: 1614407721}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1623255058
 GameObject:
   m_ObjectHideFlags: 0
@@ -8212,7 +8464,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -355560971
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 89d41c6e21118d8409a72cb7db4f551c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8222,7 +8474,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1623255060
@@ -8312,7 +8564,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8396,7 +8648,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8523,7 +8775,7 @@ SpriteRenderer:
   m_Size: {x: 3.88, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1674500517
@@ -8559,7 +8811,11 @@ MonoBehaviour:
   target: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
+  billboardMode: 0
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
+  manageScale: 0
+  flipX: 0
+  customScale: {x: 1, y: 1, z: 1}
 --- !u!1 &1681205072
 GameObject:
   m_ObjectHideFlags: 0
@@ -8609,10 +8865,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armConfig: {fileID: 11400000, guid: 4f37060f07fc1c84cb6431c289a600ff, type: 2}
+  completeOneFruitPerPass: 1
   sprinklerArmPrefab: {fileID: 434505365688929999, guid: 97d6c9fd1afb3cd4c82302668e131805, type: 3}
   sprinklerArmParent: {fileID: 1681205073}
-  miniSprinklerRoot: {fileID: 1951574330}
-  miniSprinklerPrefab: {fileID: 2109847120398471029, guid: 0da2d0887155d7149b59ad3d4e73c48f, type: 3}
 --- !u!114 &1681205075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8745,7 +9000,11 @@ MonoBehaviour:
   target: {fileID: 0}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
+  billboardMode: 0
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
+  manageScale: 0
+  flipX: 0
+  customScale: {x: 1, y: 1, z: 1}
 --- !u!1 &1705772899
 GameObject:
   m_ObjectHideFlags: 0
@@ -8977,8 +9236,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1886305752}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
+  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!114 &1723530106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8993,6 +9259,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 930469352}
   plotVisual: {fileID: 1723530105}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1742743216
 GameObject:
   m_ObjectHideFlags: 0
@@ -9064,7 +9333,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -9197,7 +9466,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -9379,7 +9648,6 @@ MonoBehaviour:
   worldCanvas: {fileID: 1781859054}
   worldLayerParent: {fileID: 1781859055}
   worldLayerReferenceSO: {fileID: 11400000, guid: 0ad5848f024c96b4cb823555991c72ba, type: 2}
-  layerPreload: []
 --- !u!1 &1797459690
 GameObject:
   m_ObjectHideFlags: 0
@@ -9558,8 +9826,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1757156625}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &1839831999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9574,6 +9849,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 2120430001}
   plotVisual: {fileID: 1839831998}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1843118168
 GameObject:
   m_ObjectHideFlags: 0
@@ -9603,7 +9881,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4551a0adf4977f84b800ad6fe669bd17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enableJobSystem: 1
   _customCamera: {fileID: 401541061}
 --- !u!4 &1843118170
 Transform:
@@ -9746,7 +10023,7 @@ SpriteRenderer:
   m_Size: {x: 13.26, y: 8.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1875145517
@@ -9805,7 +10082,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -355560971
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 89d41c6e21118d8409a72cb7db4f551c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -9815,7 +10092,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1875145519
@@ -9905,7 +10182,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10320,7 +10597,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10381,8 +10658,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1641733157}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &1962526531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10397,6 +10681,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1886325931}
   plotVisual: {fileID: 1962526530}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &1969344052
 GameObject:
   m_ObjectHideFlags: 0
@@ -10468,7 +10755,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10540,7 +10827,11 @@ MonoBehaviour:
   target: {fileID: 1444236949}
   positionOffset: {x: 0, y: 0, z: 0}
   rotationUpdateMode: 1
+  billboardMode: 0
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
+  manageScale: 0
+  flipX: 0
+  customScale: {x: 1, y: 1, z: 1}
 --- !u!114 &1987889095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10557,20 +10848,15 @@ MonoBehaviour:
   panelRect: {fileID: 1987889093}
   canvasGroup: {fileID: 1987889099}
   useScale: 1
-  autoDetectTargetScale: 1
-  targetScale: {x: 0.01, y: 0.01, z: 0.01}
   useFade: 1
   duration: 0.3
-  easeType: 26
-  interval: 0
+  hideDuration: 0.2
   OnStartAnim:
     m_PersistentCalls:
       m_Calls: []
   OnCompleteAnim:
     m_PersistentCalls:
       m_Calls: []
-  hideDuration: 0.2
-  hideEaseType: 25
   OnStartHideAnim:
     m_PersistentCalls:
       m_Calls: []
@@ -10739,7 +11025,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10823,7 +11109,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10999,8 +11285,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 1988679659}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: b14948a964f4453086ee50a1df2b8822, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: 456e52edaa827574caaa8c1a68fcb681, type: 3}
+  lockedSprite: {fileID: 21300000, guid: e60c3f9306692e949997d3e6c032d699, type: 3}
+  emptySprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: 301132f5254fb634cba6b0249efa94d5, type: 3}
 --- !u!114 &2034432334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11015,6 +11308,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1444236950}
   plotVisual: {fileID: 2034432333}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &2052952718
 GameObject:
   m_ObjectHideFlags: 0
@@ -11086,7 +11382,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -11234,7 +11530,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2049194685
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -11318,7 +11614,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -596977661
-  m_SortingLayer: 7
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: -1773742245, guid: 3d9edbbe470da8640b8acc17e12eb009, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -11328,7 +11624,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2079438509
@@ -11379,8 +11675,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotRenderer: {fileID: 2052952720}
-  overlayRenderer: {fileID: 0}
+  ringLockedRenderer: {fileID: 0}
+  lockedRenderer: {fileID: 0}
+  emptyRenderer: {fileID: 0}
+  occupiedRenderer: {fileID: 0}
   visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
+  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
+  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
+  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!114 &2079438512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11395,6 +11698,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 1705772901}
   plotVisual: {fileID: 2079438511}
+  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
+  plotPriceOffset: {x: 0, y: 0.8, z: 0}
+  plantTreeOffset: {x: 0, y: 1.1, z: 0}
 --- !u!1 &2088474418
 GameObject:
   m_ObjectHideFlags: 0
@@ -11672,7 +11978,6 @@ MonoBehaviour:
   targetTransform: {fileID: 1216696130}
   growScaleMultiplier: 1.25
   growDuration: 0.25
-  growEase: 5
 --- !u!114 &2143071809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11687,7 +11992,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantSprite: {fileID: 1216696131}
   plantAnimator: {fileID: 2143071808}
-  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

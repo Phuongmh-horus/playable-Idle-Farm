@@ -1,8 +1,8 @@
 {
     "version": "7.0.0",
     "projectId": "6de55b9e7b1f9804a859458bd0ec3af8",
-    "applicationID": 39501,
-    "creativeName": "",
+    "applicationID": 43232,
+    "creativeName": "kichban123",
     "pgServer": "EU",
     "window": {
         "‐⁏": true
@@ -204,7 +204,7 @@
         "disableRuntimeAnalysisForShaders": false,
         "useShadersCache": true,
         "preventUpdatingRAListWhenRAIsDisabled": false,
-        "bakeReferenceAmbientProbe": false,
+        "bakeReferenceAmbientProbe": true,
         "unusedClasses": [
             {
                 "name": "System.Reflection.AssemblyName",
@@ -4808,7 +4808,7 @@
             },
             {
                 "name": "UnityEngine.RectTransform.Edge",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.RemoteNotificationType",
@@ -6523,10 +6523,6 @@
                 "excluded": true
             },
             {
-                "name": "UnityEngine.UI.LayoutUtility",
-                "excluded": true
-            },
-            {
                 "name": "UnityEngine.UI.Misc",
                 "excluded": true
             },
@@ -6596,10 +6592,6 @@
             },
             {
                 "name": "UnityEngine.UI.Toggle",
-                "excluded": true
-            },
-            {
-                "name": "UnityEngine.UI.VerticalLayoutGroup",
                 "excluded": true
             },
             {
@@ -16002,11 +15994,11 @@
                     },
                     {
                         "name": "vertical#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "horizontal#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ctor",
@@ -17582,7 +17574,7 @@
                     },
                     {
                         "name": "GetSiblingIndex",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetSiblingIndex",
@@ -18650,7 +18642,7 @@
                     },
                     {
                         "name": "SetInsetAndSizeFromParentEdge",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ForceUpdateRectTransforms",
@@ -18900,7 +18892,7 @@
                     },
                     {
                         "name": "sprite#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "sprite#set",
@@ -19712,7 +19704,7 @@
                     },
                     {
                         "name": "type#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "type#set",
@@ -19792,11 +19784,11 @@
                     },
                     {
                         "name": "pixelsPerUnit#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "multipliedPixelsPerUnit#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "mainTexture#get",
@@ -19808,31 +19800,31 @@
                     },
                     {
                         "name": "minWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "preferredWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "flexibleWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "minHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "preferredHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "flexibleHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "layoutPriority#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "alphaHitTestMinimumThreshold#get",
@@ -19880,11 +19872,11 @@
                     },
                     {
                         "name": "CalculateLayoutInputHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CalculateLayoutInputVertical",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetNativeSize",
@@ -20976,19 +20968,19 @@
                     },
                     {
                         "name": "flexibleHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "flexibleWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "minWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "minHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "maxWidth#get",
@@ -21004,11 +20996,11 @@
                     },
                     {
                         "name": "preferredWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "preferredHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "renderedWidth#get",
@@ -21020,7 +21012,7 @@
                     },
                     {
                         "name": "layoutPriority#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnAfterDeserialize",
@@ -21320,7 +21312,7 @@
                     },
                     {
                         "name": "GetPreferredWidth",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetPreferredWidth$1",
@@ -21328,7 +21320,7 @@
                     },
                     {
                         "name": "GetPreferredHeight",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetPreferredHeight$1",
@@ -21360,7 +21352,7 @@
                     },
                     {
                         "name": "CalculatePreferredValues",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetCompoundBounds",
@@ -25626,11 +25618,11 @@
                     },
                     {
                         "name": "name#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "pixelsPerUnit#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "packed#get",
@@ -26392,7 +26384,7 @@
                     },
                     {
                         "name": "referencePixelsPerUnit#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "referencePixelsPerUnit#set",
@@ -26666,7 +26658,7 @@
                     },
                     {
                         "name": "RegisterCanvasElementForLayoutRebuild",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "RegisterCanvasElementForGraphicRebuild",
@@ -27118,7 +27110,7 @@
                 "instanceMethods": [
                     {
                         "name": "minWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "minWidth#set",
@@ -27126,7 +27118,7 @@
                     },
                     {
                         "name": "minHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "minHeight#set",
@@ -27134,7 +27126,7 @@
                     },
                     {
                         "name": "preferredWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "preferredWidth#set",
@@ -27142,7 +27134,7 @@
                     },
                     {
                         "name": "preferredHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "preferredHeight#set",
@@ -27150,7 +27142,7 @@
                     },
                     {
                         "name": "flexibleWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "flexibleWidth#set",
@@ -27158,7 +27150,7 @@
                     },
                     {
                         "name": "flexibleHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "flexibleHeight#set",
@@ -27166,11 +27158,11 @@
                     },
                     {
                         "name": "layoutPriority#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ignoreLayout#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ignoreLayout#set",
@@ -27186,7 +27178,7 @@
                     },
                     {
                         "name": "OnDisable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDidApplyAnimationProperties",
@@ -27198,11 +27190,11 @@
                     },
                     {
                         "name": "CalculateLayoutInputHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CalculateLayoutInputVertical",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetDirty",
@@ -27228,11 +27220,11 @@
                     },
                     {
                         "name": "Allocate",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "MarkLayoutRootForRebuild",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HasValidLayoutController",
@@ -27244,7 +27236,7 @@
                     },
                     {
                         "name": "LayoutComplete",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GraphicUpdateComplete",
@@ -27256,23 +27248,23 @@
                     },
                     {
                         "name": "Rebuild",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "PerformCalculateLayoutInputHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "PerformCalculateLayoutInputVertical",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "PerformSetLayoutHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "PerformSetLayoutVertical",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -27522,7 +27514,7 @@
                     },
                     {
                         "name": "padding#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "padding#set",
@@ -27554,7 +27546,7 @@
                     },
                     {
                         "name": "layoutPriority#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "rectChildren#get",
@@ -27562,7 +27554,7 @@
                     },
                     {
                         "name": "rectTransform#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "isRootLayoutGroup#get",
@@ -27574,15 +27566,15 @@
                     },
                     {
                         "name": "OnEnable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDisable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CalculateLayoutInputHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetChildAlongAxis",
@@ -27590,31 +27582,31 @@
                     },
                     {
                         "name": "SetChildAlongAxis$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetLayoutInputForAxis",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetStartOffset",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetAlignmentOnAxis",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetTotalMinSize",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetTotalPreferredSize",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetTotalFlexibleSize",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetProperty",
@@ -27634,7 +27626,7 @@
                     },
                     {
                         "name": "SetDirty",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "DelayedSetDirty",
@@ -27694,7 +27686,7 @@
                 "instanceMethods": [
                     {
                         "name": "spacing#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "spacing#set",
@@ -27702,7 +27694,7 @@
                     },
                     {
                         "name": "childForceExpandWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "childForceExpandWidth#set",
@@ -27710,7 +27702,7 @@
                     },
                     {
                         "name": "childForceExpandHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "childForceExpandHeight#set",
@@ -27738,15 +27730,15 @@
                     },
                     {
                         "name": "CalcAlongAxis",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetChildrenAlongAxis",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetChildSizes",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -27760,19 +27752,19 @@
                     },
                     {
                         "name": "CalculateLayoutInputHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CalculateLayoutInputVertical",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetLayoutHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetLayoutVertical",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -28062,7 +28054,7 @@
                     },
                     {
                         "name": "scale#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "scale#set",
@@ -30539,6 +30531,10 @@
                     {
                         "name": "Despawn",
                         "excluded": false
+                    },
+                    {
+                        "name": "ForceDespawn",
+                        "excluded": true
                     }
                 ]
             },
@@ -31405,6 +31401,14 @@
                     {
                         "name": "RefreshBoundPlot",
                         "excluded": false
+                    },
+                    {
+                        "name": "UsesPlantPicker",
+                        "excluded": false
+                    },
+                    {
+                        "name": "TryPlantConfiguredPlot",
+                        "excluded": false
                     }
                 ]
             },
@@ -31945,10 +31949,6 @@
                         "excluded": false
                     },
                     {
-                        "name": "ShowConfiguredFruitPicker",
-                        "excluded": true
-                    },
-                    {
                         "name": "GetConfiguredFruitChoices",
                         "excluded": true
                     },
@@ -32083,6 +32083,26 @@
                     {
                         "name": "OneStatRow",
                         "excluded": false
+                    },
+                    {
+                        "name": "TryShowPlantPicker",
+                        "excluded": true
+                    },
+                    {
+                        "name": "RequestPlantChoice",
+                        "excluded": true
+                    },
+                    {
+                        "name": "SubscribePlotSystem",
+                        "excluded": false
+                    },
+                    {
+                        "name": "HandlePlotUnlocked",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetFirstEmptyPlot",
+                        "excluded": true
                     }
                 ]
             },
@@ -32589,6 +32609,10 @@
                     {
                         "name": "HideStore",
                         "excluded": false
+                    },
+                    {
+                        "name": "Prewarm",
+                        "excluded": true
                     }
                 ]
             },
@@ -33029,6 +33053,14 @@
                     {
                         "name": "StatTwoNextText#get",
                         "excluded": false
+                    },
+                    {
+                        "name": "StatOneNameText#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "StatTwoNameText#get",
+                        "excluded": false
                     }
                 ]
             },
@@ -33046,14 +33078,6 @@
                 "className": "PlotVisual",
                 "staticMethods": [],
                 "instanceMethods": [
-                    {
-                        "name": "CopyRendererState",
-                        "excluded": true
-                    },
-                    {
-                        "name": "SetAlpha",
-                        "excluded": false
-                    },
                     {
                         "name": "VisualConfig#get",
                         "excluded": true
@@ -33075,35 +33099,27 @@
                         "excluded": true
                     },
                     {
-                        "name": "OnDestroy",
-                        "excluded": true
-                    },
-                    {
                         "name": "SetState",
                         "excluded": false
-                    },
-                    {
-                        "name": "FadeRoutine",
-                        "excluded": true
-                    },
-                    {
-                        "name": "ApplyFade",
-                        "excluded": true
-                    },
-                    {
-                        "name": "EnsureOverlayRenderer",
-                        "excluded": true
                     },
                     {
                         "name": "ResetRenderers",
                         "excluded": false
                     },
                     {
-                        "name": "CancelFade",
+                        "name": "EnsureRenderer",
                         "excluded": false
                     },
                     {
-                        "name": "EnsureRenderer",
+                        "name": "ResetRenderers$1",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetStateRenderer",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetStateRenderersActive",
                         "excluded": false
                     }
                 ]
@@ -33114,32 +33130,6 @@
                 "instanceMethods": [
                     {
                         "name": "GetSprite",
-                        "excluded": false
-                    }
-                ]
-            },
-            {
-                "className": "PlotVisualConfigSO.PlotStateSpriteEntry",
-                "staticMethods": [],
-                "instanceMethods": [
-                    {
-                        "name": "getDefaultValue",
-                        "excluded": false
-                    },
-                    {
-                        "name": "ctor",
-                        "excluded": false
-                    },
-                    {
-                        "name": "getHashCode",
-                        "excluded": true
-                    },
-                    {
-                        "name": "equals",
-                        "excluded": true
-                    },
-                    {
-                        "name": "$clone",
                         "excluded": false
                     }
                 ]
@@ -33202,6 +33192,10 @@
                 "instanceMethods": [
                     {
                         "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "UsesPlantPicker#get",
                         "excluded": false
                     }
                 ]
@@ -33370,7 +33364,7 @@
                     },
                     {
                         "name": "DeselectInstant",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "NotifyTapped",
@@ -34881,6 +34875,108 @@
                         "excluded": false
                     }
                 ]
+            },
+            {
+                "className": "UnityEngine.UI.VerticalLayoutGroup",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "ctor",
+                        "excluded": false
+                    },
+                    {
+                        "name": "CalculateLayoutInputHorizontal",
+                        "excluded": false
+                    },
+                    {
+                        "name": "CalculateLayoutInputVertical",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetLayoutHorizontal",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetLayoutVertical",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.UI.LayoutUtility",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "GetMinSize",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetPreferredSize",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetFlexibleSize",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetMinWidth",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetPreferredWidth",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetFlexibleWidth",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetMinHeight",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetPreferredHeight",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetFlexibleHeight",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetLayoutProperty",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetLayoutProperty$1",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "PlotVisualConfigSO.PlotStateSpriteEntry",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "getDefaultValue",
+                        "excluded": true
+                    },
+                    {
+                        "name": "ctor",
+                        "excluded": false
+                    },
+                    {
+                        "name": "getHashCode",
+                        "excluded": true
+                    },
+                    {
+                        "name": "equals",
+                        "excluded": true
+                    },
+                    {
+                        "name": "$clone",
+                        "excluded": true
+                    }
+                ]
             }
         ],
         "stubberDataList": [],
@@ -35060,7 +35156,7 @@
                         "name": "Assets/_FrameWork/Sprites/GamePlay/icn_cash2.png"
                     },
                     {
-                        "maxWidth": 1024,
+                        "maxWidth": 512,
                         "maxHeight": 1024,
                         "format": "png32",
                         "compression": "quantQuality",
@@ -35148,6 +35244,16 @@
                         "script": "",
                         "ext": "",
                         "name": "Assets/_PlayableAds/Assets/Font/MUSEOSANSROUNDED/MUSEOSANSROUNDED-1000 SDF.asset"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "jpeg",
+                        "compression": "quantSize",
+                        "quality": 60,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/UI/large_icon.png"
                     }
                 ]
             },
@@ -35255,12 +35361,32 @@
                     {
                         "channels": 1,
                         "startTime": "00:00.000",
-                        "endTime": "00:30.000",
-                        "lengthInSeconds": 30.0,
+                        "endTime": "00:24.393",
+                        "lengthInSeconds": 24.39299964904785,
                         "bitrate": 128,
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Sounds/bg_music.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.000",
+                        "lengthInSeconds": 0.0,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_pickaxe.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.000",
+                        "lengthInSeconds": 0.0,
+                        "bitrate": 128,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_ui_click.ogg"
                     }
                 ]
             },

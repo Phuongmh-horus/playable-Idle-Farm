@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb77959fc02bc9e43acdda08f2bbd063, type: 3}
   m_Name: SprinklerArmConfig
   m_EditorClassIdentifier: 
-  alignmentTolerance: 3
+  alignmentTolerance: 2
   waterAnimationDuration: 0.2
-  punchScale: 1.05
-  punchDuration: 0.2
-  punchInterval: 0.5
   rotationOffsetZ: 0

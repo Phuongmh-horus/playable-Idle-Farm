@@ -25,7 +25,7 @@ MonoBehaviour:
       baseFruitPrice: 40
       waterRequirement: 5
       levelUpCostSumPerLevel: 57
-      priceSumPerLevel: 0
+      priceSumPerLevel: 4
     - baseUpgradeCost: 48
       baseFruitPrice: 14
       waterRequirement: 11
