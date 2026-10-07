@@ -22,11 +22,6 @@ public class AnimatedFruit : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
-
     private void OnDisable() { CancelMotion(); }
 
     public void Fly(Vector3 startPosition, Transform targetTransform, Sprite fruitSprite, Action onArrived = null)

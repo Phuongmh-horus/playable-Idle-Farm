@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01716603a53492d9d05374a698601a1, type: 3}
+  m_Name: PlantVisual_2_Lettuce
+  m_EditorClassIdentifier: 
+  plantIcon: {fileID: 21300000, guid: 7100685b53e59944f8b06a29abc017f4, type: 3}
+  fruitIcon: {fileID: 21300000, guid: 10e333527d0104141a451b9c8ee8376e, type: 3}
+  plantPrefab: {fileID: 7376260434647007569, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
+  plantSprites:
+  - {fileID: 21300000, guid: 719bfbcfdcd9f0348bbc38183dfad779, type: 3}
+  - {fileID: 21300000, guid: 7100685b53e59944f8b06a29abc017f4, type: 3}
+  - {fileID: 21300000, guid: c1b2520d9495e2d49b96c45d11162f41, type: 3}
+  - {fileID: 21300000, guid: 2b2f5b312a3bea3468a501dfdbaa98df, type: 3}
+  - {fileID: 21300000, guid: 47e7b562a43c16c40960222d61da6af9, type: 3}

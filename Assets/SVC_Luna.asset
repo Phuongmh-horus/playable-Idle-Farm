@@ -50,36 +50,6 @@ MonoBehaviour:
     upToDate: 0
     keywords: []
   - shaderCompilerPlatform: 5
-    shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-    passType: 0
-    passId: 0
-    subShaderIndex: 0
-    upToDate: 0
-    keywords: []
-  - shaderCompilerPlatform: 9
-    shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-    passType: 0
-    passId: 0
-    subShaderIndex: 0
-    upToDate: 0
-    keywords: []
-  - shaderCompilerPlatform: 5
-    shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-    passType: 0
-    passId: 0
-    subShaderIndex: 0
-    upToDate: 0
-    keywords:
-    - PIXELSNAP_ON
-  - shaderCompilerPlatform: 9
-    shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-    passType: 0
-    passId: 0
-    subShaderIndex: 0
-    upToDate: 0
-    keywords:
-    - PIXELSNAP_ON
-  - shaderCompilerPlatform: 5
     shader: {fileID: 4800000, guid: eeac90e62b1376149821704ffb3e4f03, type: 3}
     passType: 0
     passId: 0
@@ -121,6 +91,36 @@ MonoBehaviour:
     subShaderIndex: 0
     upToDate: 0
     keywords: []
+  - shaderCompilerPlatform: 5
+    shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    passType: 0
+    passId: 0
+    subShaderIndex: 0
+    upToDate: 0
+    keywords: []
+  - shaderCompilerPlatform: 9
+    shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    passType: 0
+    passId: 0
+    subShaderIndex: 0
+    upToDate: 0
+    keywords: []
+  - shaderCompilerPlatform: 5
+    shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    passType: 0
+    passId: 0
+    subShaderIndex: 0
+    upToDate: 0
+    keywords:
+    - PIXELSNAP_ON
+  - shaderCompilerPlatform: 9
+    shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    passType: 0
+    passId: 0
+    subShaderIndex: 0
+    upToDate: 0
+    keywords:
+    - PIXELSNAP_ON
   - shaderCompilerPlatform: 5
     shader: {fileID: 4800000, guid: 91c4e7a2b5d84f09a6c3e8b1d7f20546, type: 3}
     passType: 0
@@ -413,6 +413,20 @@ MonoBehaviour:
     - UNITY_UI_CLIP_RECT
   _usedByLunaBuild:
   - shaderCompilerPlatform: 5
+    shader: {fileID: 4800000, guid: eeac90e62b1376149821704ffb3e4f03, type: 3}
+    passType: 0
+    passId: 0
+    subShaderIndex: 0
+    upToDate: 0
+    keywords: []
+  - shaderCompilerPlatform: 9
+    shader: {fileID: 4800000, guid: eeac90e62b1376149821704ffb3e4f03, type: 3}
+    passType: 0
+    passId: 0
+    subShaderIndex: 0
+    upToDate: 0
+    keywords: []
+  - shaderCompilerPlatform: 5
     shader: {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
     passType: 0
     passId: 0
@@ -457,20 +471,6 @@ MonoBehaviour:
     upToDate: 0
     keywords: []
   - shaderCompilerPlatform: 5
-    shader: {fileID: 4800000, guid: eeac90e62b1376149821704ffb3e4f03, type: 3}
-    passType: 0
-    passId: 0
-    subShaderIndex: 0
-    upToDate: 0
-    keywords: []
-  - shaderCompilerPlatform: 9
-    shader: {fileID: 4800000, guid: eeac90e62b1376149821704ffb3e4f03, type: 3}
-    passType: 0
-    passId: 0
-    subShaderIndex: 0
-    upToDate: 0
-    keywords: []
-  - shaderCompilerPlatform: 5
     shader: {fileID: 4800000, guid: 3455f961374422547bf26f50f9a6c01f, type: 3}
     passType: 0
     passId: 0
@@ -498,22 +498,6 @@ MonoBehaviour:
     subShaderIndex: 0
     upToDate: 0
     keywords: []
-  - shaderCompilerPlatform: 5
-    shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-    passType: 0
-    passId: 0
-    subShaderIndex: 0
-    upToDate: 0
-    keywords:
-    - UNDERLAY_ON
-  - shaderCompilerPlatform: 9
-    shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-    passType: 0
-    passId: 0
-    subShaderIndex: 0
-    upToDate: 0
-    keywords:
-    - UNDERLAY_ON
   - shaderCompilerPlatform: 5
     shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
     passType: 0
@@ -530,7 +514,7 @@ MonoBehaviour:
     keywords: []
   _includedShaderVariants: []
   _excludedShaderVariants: []
-  version: 1298
+  version: 1759
   _shaderParsedShaders:
   - ParsedSubShaders:
     - Index: 0
@@ -6963,9 +6947,9 @@ MonoBehaviour:
   _sceneLightData:
     PointLightCount: 0
     SpotLightCount: 0
-    DirectionalLightCount: 0
-    LightmapOn: 0
-    DirlightmapCombined: 0
+    DirectionalLightCount: 1
+    LightmapOn: 1
+    DirlightmapCombined: 1
     DirectionalCookieExists: 0
     PointCookieExists: 0
     SpotCookieExists: 0

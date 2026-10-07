@@ -35,9 +35,6 @@ public class AnimShowPopupWorld : MonoBehaviour
 
     private void Awake()
     {
-        if (worldLayerBase == null) worldLayerBase = GetComponentInParent<WorldLayerBase>();
-        if (panelRect == null) panelRect = GetComponent<RectTransform>();
-        if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
         _targetScale = TargetTransform.localScale == Vector3.zero ? Vector3.one : TargetTransform.localScale;
         if (worldLayerBase != null) worldLayerBase.OnShowLayer.AddListener(PlayAnim);
     }

@@ -9,6 +9,10 @@ public class FarmConfig : ScriptableObject
 
     public List<PlotConfig> plots = new List<PlotConfig>();
 
+    [Header("Initial Plant Order")]
+    [Tooltip("Plant IDs assigned to the first plots in order. Reorder this list to change which plant is built first.")]
+    public List<int> initialPlantOrder = new List<int>();
+
     public SprinklerConfig sprinkler;
 
     public HarvesterConfig harvester;
@@ -37,6 +41,47 @@ public class FarmConfig : ScriptableObject
     public List<PlotConfig> GetPlotsByType(PlotType plotType)
     {
         return plots.FindAll(p => p.plotType == plotType);
+    }
+
+    public bool HasInitialPlantOrder
+    {
+        get { return initialPlantOrder != null && initialPlantOrder.Count > 0; }
+    }
+
+    public int GetInitialPlantId(int plotId)
+    {
+        if (initialPlantOrder != null && plotId >= 0 && plotId < initialPlantOrder.Count)
+        {
+            return initialPlantOrder[plotId];
+        }
+
+        PlotConfig plot = GetPlotConfig(plotId);
+        return plot != null ? plot.defaultPlantId : -1;
+    }
+
+    /// <summary>
+    /// Resolves the first plant for a plot. An explicit FarmConfig order wins;
+    /// otherwise the order of PlantConfig.plants is used, while the legacy
+    /// per-plot default remains a fallback when no plant list is available.
+    /// </summary>
+    public int GetInitialPlantId(int plotId, PlantConfig plantConfig)
+    {
+        if (initialPlantOrder != null && plotId >= 0 && plotId < initialPlantOrder.Count)
+        {
+            return initialPlantOrder[plotId];
+        }
+
+        if (plantConfig != null)
+        {
+            int orderedPlantId = plantConfig.GetPlantIdAtOrder(plotId);
+            if (orderedPlantId >= 0)
+            {
+                return orderedPlantId;
+            }
+        }
+
+        PlotConfig plot = GetPlotConfig(plotId);
+        return plot != null ? plot.defaultPlantId : -1;
     }
 }
 

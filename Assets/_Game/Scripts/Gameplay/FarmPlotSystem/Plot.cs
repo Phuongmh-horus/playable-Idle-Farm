@@ -307,7 +307,7 @@ public class Plot : MonoBehaviour
 
                 Transform parent = plantRoot != null ? plantRoot.transform : transform;
                 int ringIndex = _plotData != null ? _plotData.RingIndex : _ringIndex;
-                _spawnedPlant = PlantSpawner.SpawnPlant(_plotData.PlantId, _plotData.PlantLevel, parent, plantTreeOffset, ringIndex);
+                _spawnedPlant = PlantSpawner.SpawnPlant(_plotData.PlantId, _plotData.PlantLevel, parent, plantTreeOffset, ringIndex, _plotData.VisualPlantId);
             }
             else if (_spawnedPlant != null && _spawnedPlant.PlantLevel != _plotData.PlantLevel)
             {

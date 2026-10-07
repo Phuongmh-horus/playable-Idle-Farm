@@ -262,16 +262,21 @@ public sealed class FarmPlotSystem : MonoBehaviour
 
     public bool TryOccupyPlot(int plotId, int plantId)
     {
+        return TryOccupyPlot(plotId, plantId, -1);
+    }
+
+    public bool TryOccupyPlot(int plotId, int plantId, int visualPlantId)
+    {
         FarmPlotData plot = GetPlot(plotId);
         if (!CanOccupy(plot, plantId))
         {
             return false;
         }
 
-        bool success = plot.Occupy(plantId, 1);
+        bool success = plot.Occupy(plantId, 1, visualPlantId);
         if (success)
         {
-            PlayableFarmState.UpdatePlotData(plotId, PlotState.Planted, plantId, 1);
+            PlayableFarmState.UpdatePlotData(plotId, PlotState.Planted, plantId, 1, visualPlantId);
             RefreshBoundPlot(plotId);
             SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_plant_grow);
         }
@@ -281,8 +286,11 @@ public sealed class FarmPlotSystem : MonoBehaviour
     public bool TryPlantConfiguredPlot(int plotId)
     {
         FarmPlotData plot = GetPlot(plotId);
-        int plantId = plot != null && plot.Config != null ? plot.Config.defaultPlantId : -1;
+        FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
         PlantConfig plantConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.PlantConfig : null;
+        int plantId = farmConfig != null
+            ? farmConfig.GetInitialPlantId(plotId, plantConfig)
+            : (plot != null && plot.Config != null ? plot.Config.defaultPlantId : -1);
         if (plantId < 0 || plantConfig == null || plantConfig.GetPlant(plantId) == null)
         {
             Debug.LogWarning($"[FarmPlotSystem] Plot {plotId} has no valid default plant.", this);
@@ -343,18 +351,21 @@ public sealed class FarmPlotSystem : MonoBehaviour
             PlotSaveData save = null;
             if (PlayableScenarioRuntime.TryGetInitialPlotData(plotId, out save))
             {
-                PlayableFarmState.UpdatePlotData(plotId, save.state, save.plantedPlantId, save.currentLevel);
+                PlayableFarmState.UpdatePlotData(plotId, save.state, save.plantedPlantId, save.currentLevel, save.visualPlantId);
             }
             else if (PlayableFarmState.PlayerData != null)
             {
                 save = PlayableFarmState.GetPlotSaveData(plotId);
                 if (save == null)
                 {
-                    // Láº§n Ä‘áº§u vÃ o game: Khá»Ÿi táº¡o SaveData ban Ä‘áº§u dá»±a theo Config
+                    //FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
                     if (config != null && config.isUnlockedByDefault)
                     {
-                        PlotState initialSaveState = config.defaultPlantId >= 0 ? PlotState.Planted : PlotState.Empty;
-                        save = PlayableFarmState.GetOrCreatePlotSaveData(plotId, initialSaveState, config.defaultPlantId, 1);
+                        int defaultPlantId = farmConfig != null
+                            ? farmConfig.GetInitialPlantId(plotId, ConfigHolder.Instance?.PlantConfig)
+                            : config.defaultPlantId;
+                        PlotState initialSaveState = defaultPlantId >= 0 ? PlotState.Planted : PlotState.Empty;
+                        save = PlayableFarmState.GetOrCreatePlotSaveData(plotId, initialSaveState, defaultPlantId, 1);
                     }
                     else if (ringIndex == 0 && sectorIndex == 0)
                     {

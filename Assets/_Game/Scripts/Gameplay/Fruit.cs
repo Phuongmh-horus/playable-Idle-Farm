@@ -6,14 +6,6 @@ public class Fruit : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     private Coroutine _scaleRoutine;
 
-    private void Awake()
-    {
-        if (spriteRenderer == null)
-        {
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
-    }
-
     public void Init(int id)
     {
         Sprite spriteToUse = ConfigHolder.Instance?.PlantConfig?.GetPlant(id)?.fruitIcon;

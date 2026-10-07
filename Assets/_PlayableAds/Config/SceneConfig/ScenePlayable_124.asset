@@ -18,8 +18,8 @@ MonoBehaviour:
   skippedTutorialPhases: 0000000001000000
   enablePlantPicker: 0
   selectablePlantIds: 
-  initialPlotCount: 8
-  initialPlantIds: 0000000001000000020000000300000004000000050000000600000007000000
+  initialPlotCount: 10
+  initialPlantIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
   startingCurrency: 0
   showConveyorAndSell: 1
   showUpgrade: 1

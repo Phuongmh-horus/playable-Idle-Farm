@@ -525,22 +525,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 849559893314315788, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: plantConfigData.fruitIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 0b74c2574e003cc4a9a0df5d976ffa1c, type: 3}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
-      objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -621,29 +605,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4187460994459159111, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_fontSize
-      value: 195.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 0b74c2574e003cc4a9a0df5d976ffa1c, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -667,22 +631,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 849559893314315788, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: plantConfigData.fruitIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 8993fef32e8c5374ebbae127308cd6df, type: 3}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
-      objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -763,29 +711,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4187460994459159111, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_fontSize
-      value: 195.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8993fef32e8c5374ebbae127308cd6df, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -809,22 +737,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 849559893314315788, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: plantConfigData.fruitIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 6885a11fe8adbe2428e8b842c0809b63, type: 3}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
-      objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -905,29 +817,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4187460994459159111, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_fontSize
-      value: 195.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 6885a11fe8adbe2428e8b842c0809b63, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore (8)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -951,22 +843,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 849559893314315788, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: plantConfigData.fruitIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 5a213f1cece0b324ca8813d5c3ec1246, type: 3}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
-      objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1047,29 +923,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4187460994459159111, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_fontSize
-      value: 195.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 5a213f1cece0b324ca8813d5c3ec1246, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore (6)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1175,11 +1031,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8920619931189490812, guid: 6ea3cb537e9ee0c4892af11cfeb98758, type: 3}
       propertyPath: m_Spacing.x
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8920619931189490812, guid: 6ea3cb537e9ee0c4892af11cfeb98758, type: 3}
       propertyPath: m_Spacing.y
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8920619931189490812, guid: 6ea3cb537e9ee0c4892af11cfeb98758, type: 3}
       propertyPath: m_StartAxis
@@ -1248,22 +1104,6 @@ PrefabInstance:
     - target: {fileID: 587632836988983583, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_SortingLayer
       value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 849559893314315788, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: plantConfigData.fruitIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 6662f5586c374844a9118c85d4bacb9a, type: 3}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
@@ -1345,29 +1185,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4187460994459159111, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_fontSize
-      value: 195.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 6662f5586c374844a9118c85d4bacb9a, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1394,14 +1214,6 @@ PrefabInstance:
     - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_SizeDelta.x
       value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
@@ -1491,18 +1303,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_PlantStore (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1524,22 +1324,6 @@ PrefabInstance:
     - target: {fileID: 587632836988983583, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_SortingLayer
       value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 849559893314315788, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: plantConfigData.fruitIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 2f6ac04b5ae0a0b4b81acafa3e9cc40f, type: 3}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
@@ -1621,29 +1405,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4187460994459159111, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_fontSize
-      value: 195.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 2f6ac04b5ae0a0b4b81acafa3e9cc40f, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1667,22 +1431,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 849559893314315788, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: plantConfigData.fruitIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: cc9e4d727080eae40a207f1a93b53696, type: 3}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
-      objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1763,29 +1511,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4187460994459159111, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_fontSize
-      value: 195.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: cc9e4d727080eae40a207f1a93b53696, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore (7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1809,22 +1537,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 849559893314315788, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: plantConfigData.fruitIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: a388c95ac45d9ed4697322d4eed369b0, type: 3}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
-      objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1905,29 +1617,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4187460994459159111, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_fontSize
-      value: 195.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a388c95ac45d9ed4697322d4eed369b0, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1951,22 +1643,6 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 849559893314315788, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: plantConfigData.fruitIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 644c7a3893bb0c149a800060ce28547d, type: 3}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 992356613400359467, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -35
-      objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2047,29 +1723,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4187460994459159111, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_fontSize
-      value: 195.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 644c7a3893bb0c149a800060ce28547d, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore (9)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

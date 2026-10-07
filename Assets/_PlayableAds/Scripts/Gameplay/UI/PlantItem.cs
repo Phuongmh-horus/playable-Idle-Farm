@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -20,22 +18,33 @@ public class PlantItem : MonoBehaviour
 
     public void SetData(PlantConfigData data)
     {
-        if (plantConfigData != null)
+        plantConfigData = data;
+        if (button == null)
         {
-            // Set the button image to the fruit icon
-            if (fruitIconImage != null && plantConfigData.fruitIcon != null)
-            {
-                fruitIconImage.sprite = plantConfigData.fruitIcon;
-            }
-
-            // Add a listener to the button click event
-            button.onClick.AddListener(OnPlantItemClicked);
+            Debug.LogError("PlantItem requires a Button component.", this);
+            return;
         }
+
+        if (fruitIconImage != null)
+        {
+            fruitIconImage.sprite = data != null ? (data.plantIcon != null ? data.plantIcon : data.fruitIcon) : null;
+        }
+
+        if (fruitNameText != null)
+        {
+            fruitNameText.text = data != null ? data.PlantName : string.Empty;
+        }
+
+        button.onClick.RemoveListener(OnPlantItemClicked);
+        button.onClick.AddListener(OnPlantItemClicked);
+        button.interactable = data != null;
     }
     private void OnPlantItemClicked()
     {
-        // Trigger the event when the plant item is clicked
-        GameEventBus.ActionOnPlantSelected?.Invoke(plantConfigData.ID);
+        if (plantConfigData != null)
+        {
+            GameEventBus.ActionOnPlantSelected?.Invoke(plantConfigData.ID);
+        }
     }
 
     private void OnDestroy()

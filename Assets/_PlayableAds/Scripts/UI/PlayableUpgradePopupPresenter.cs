@@ -121,25 +121,37 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         TMP_Text titleText = _popupView.TitleText;
         TMP_Text levelText = _popupView.LevelText;
         TMP_Text costText = _popupView.CostText;
+        TMP_Text costForegroundText = _popupView.CostForegroundText;
         Image illustration = _popupView.Illustration;
         Button upgradeButton = _popupView.UpgradeButton;
+        bool isMaxLevel = level >= maxLevel;
 
         if (titleText != null) titleText.text = _title;
         if (levelText != null) levelText.text = maxLevel > 0 ? "LV. " + level + "/" + maxLevel : "LV. " + level;
         UpgradeStatRow[] statRows = _getStatRows != null ? _getStatRows() : null;
-        ApplyStatRow(0, statRows != null && statRows.Length > 0 ? statRows[0] : default(UpgradeStatRow));
-        ApplyStatRow(1, statRows != null && statRows.Length > 1 ? statRows[1] : default(UpgradeStatRow));
-        if (costText != null) costText.text = cost > 0d ? T_Utility.FormatGold(cost) : "MAX";
+        ApplyStatRow(0, statRows != null && statRows.Length > 0 ? statRows[0] : default(UpgradeStatRow), isMaxLevel);
+        ApplyStatRow(1, statRows != null && statRows.Length > 1 ? statRows[1] : default(UpgradeStatRow), isMaxLevel);
+        string costValue = isMaxLevel || cost <= 0d ? "MAX" : T_Utility.FormatGold(cost);
+        if (costText != null) costText.text = costValue;
+        if (costForegroundText != null) costForegroundText.text = costValue;
         Sprite illustrationSprite = _getIllustration != null ? _getIllustration() : null;
         if (illustration != null && illustrationSprite != null)
         {
             illustration.sprite = illustrationSprite;
             illustration.preserveAspect = true;
         }
-        if (upgradeButton != null) upgradeButton.interactable = _canUpgrade != null && _canUpgrade();
+        bool canUpgrade = _canUpgrade != null && _canUpgrade();
+        if (upgradeButton != null) upgradeButton.interactable = canUpgrade;
+        Image currencyIcon = _popupView.UpgradeCurrencyIcon;
+        if (currencyIcon != null)
+        {
+            Color iconColor = currencyIcon.color;
+            iconColor.a = canUpgrade ? 1f : 0.35f;
+            currencyIcon.color = iconColor;
+        }
     }
 
-    private void ApplyStatRow(int rowIndex, UpgradeStatRow row)
+    private void ApplyStatRow(int rowIndex, UpgradeStatRow row, bool isMaxLevel)
     {
         bool visible = !string.IsNullOrEmpty(row.Label) || !string.IsNullOrEmpty(row.Current) || !string.IsNullOrEmpty(row.Next);
         GameObject root = rowIndex == 0 ? null : _popupView.StatTwoRoot;
@@ -150,9 +162,9 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         TMP_Text next = rowIndex == 0 ? _popupView.StatOneNextText : _popupView.StatTwoNextText;
         Image arrow = rowIndex == 0 ? _popupView.StatOneArrowImage : _popupView.StatTwoArrowImage;
         if (nameText != null) nameText.text = row.Label ?? string.Empty;
-        if (current != null) current.text = row.Current ?? string.Empty;
-        if (next != null) next.text = row.Next ?? string.Empty;
-        if (arrow != null) arrow.gameObject.SetActive(visible && !string.IsNullOrEmpty(row.Next));
+        if (current != null) current.text = isMaxLevel && visible ? "" : row.Current ?? string.Empty;
+        if (next != null) next.text = isMaxLevel && visible ? "MAX" : row.Next ?? string.Empty;
+        if (arrow != null) arrow.gameObject.SetActive(!isMaxLevel && visible && !string.IsNullOrEmpty(row.Next));
     }
 }
 

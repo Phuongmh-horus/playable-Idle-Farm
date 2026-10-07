@@ -84,6 +84,7 @@ MonoBehaviour:
     defaultPlantId: 9
     unlockCost: 6000000
     isUnlockedByDefault: 0
+  initialPlantOrder: 06000000030000000200000001000000080000000000000009000000040000000700000005000000
   sprinkler:
     maxLevel: 20
     rotationDuration: 10
@@ -91,7 +92,7 @@ MonoBehaviour:
     minimumRotationDuration: 5
     level1Cost: 88
     sprinklerBasePrice: 88
-    sprinklerUpdateScale: 2.3
+    sprinklerUpdateScale: 2.2
     baseWaterAmount: 10
     waterAmountSumPerLevel: 3
   harvester:
@@ -106,4 +107,4 @@ MonoBehaviour:
     capacitySumPerLevel: 1
     level1Cost: 40
     cargoBasePrice: 80
-    cargoUpdateScale: 2.3
+    cargoUpdateScale: 2.2

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -93,8 +93,8 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
             ? worldLayerReferenceSO.GetSpawnMode(layerType)
             : WorldLayerSpawnMode.Multiple;
 
-        // Nếu là chế độ Single: Chỉ cho phép 1 cái duy nhất hiển thị
-        // Tắt cái cũ đang hiển thị và tái sử dụng luôn
+        // Náº¿u lÃ  cháº¿ Ä‘á»™ Single: Chá»‰ cho phÃ©p 1 cÃ¡i duy nháº¥t hiá»ƒn thá»‹
+        // Táº¯t cÃ¡i cÅ© Ä‘ang hiá»ƒn thá»‹ vÃ  tÃ¡i sá»­ dá»¥ng luÃ´n
         if (spawnMode == WorldLayerSpawnMode.Single)
         {
             for (int i = _activeLayers.Count - 1; i >= 0; i--)
@@ -102,7 +102,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
                 var activeLayer = _activeLayers[i];
                 if (activeLayer != null && activeLayer.LayerType == layerType)
                 {
-                    ReleaseToPool(activeLayer); // Tắt ngay lập tức và đẩy về Pool
+                    ReleaseToPool(activeLayer); // Táº¯t ngay láº­p tá»©c vÃ  Ä‘áº©y vá» Pool
                     break;
                 }
             }
@@ -221,4 +221,241 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
             Hide(_activeLayers[i], animate);
         }
     }
+
+    // --- Merged from ShowWorldLayerHelper ---
+
+    // CÃ¡c hÃ m Show/Hide cá»¥ thá»ƒ cho tá»«ng WorldLayer sáº½ Ä‘Æ°á»£c sinh tá»± Ä‘á»™ng táº¡i Ä‘Ã¢y thÃ´ng qua Tool Generate Layer
+
+    public PopupUpgradePlantLayer ShowPopupUpgradePlantLayer(Plot plot, Transform target, Vector3 offset = default)
+    {
+        var layer = ShowWorldLayer<PopupUpgradePlantLayer>(WorldLayerType.PopupUpgradePlantLayer, target, offset);
+        if (layer != null)
+        {
+            layer.InitData(plot);
+        }
+        return layer;
+    }
+
+    public PopupUpgradePlantLayer ShowPopupUpgradePlantLayer(Plot plot, Vector3 position)
+    {
+        var layer = ShowWorldLayer<PopupUpgradePlantLayer>(WorldLayerType.PopupUpgradePlantLayer, position);
+        if (layer != null)
+        {
+            layer.InitData(plot);
+        }
+        return layer;
+    }
+
+    public PopupUpgradePlantLayer ShowPopupUpgradePlantLayer(Transform target, Vector3 offset = default)
+    {
+        Plot plot = target != null ? target.GetComponentInParent<Plot>() : null;
+        return ShowPopupUpgradePlantLayer(plot, target, offset);
+    }
+
+    public PopupUpgradePlantLayer ShowPopupUpgradePlantLayer(Vector3 position)
+    {
+        return ShowPopupUpgradePlantLayer((Plot)null, position);
+    }
+
+    public void HideBuyPlant(Transform target)
+    {
+        HideWorldLayer(WorldLayerType.PopupUpgradePlantLayer, target);
+    }
+
+    public PopupPlantPriceLayer ShowPopupPlantPriceLayer(PlantPriceData plantPriceData, Transform target, Vector3 offset = default)
+    {
+        var layer = ShowWorldLayer<PopupPlantPriceLayer>(WorldLayerType.PopupPlantPriceLayer, target, offset);
+        if (layer != null)
+        {
+            layer.InitData(plantPriceData) ;
+        }
+        return layer;
+    }
+
+    public PopupPlantPriceLayer ShowPopupPlantPriceLayer(PlantPriceData plantPriceData, Vector3 position)
+    {
+        var layer = ShowWorldLayer<PopupPlantPriceLayer>(WorldLayerType.PopupPlantPriceLayer, position);
+        if (layer != null)
+        {
+            layer.InitData(plantPriceData);
+        }
+        return layer;
+    }
+
+    public void HidePlantPriceLayer(Transform target)
+    {
+        HideWorldLayer(WorldLayerType.PopupPlantPriceLayer, target);
+    }
+
+    public WaterRequiredLayer ShowWaterRequiredLayer(Transform target, Vector3 offset = default)
+    {
+        return ShowWorldLayer<WaterRequiredLayer>(WorldLayerType.WaterRequiredLayer, target, offset);
+    }
+
+    public WaterRequiredLayer ShowWaterRequiredLayer(Vector3 position)
+    {
+        return ShowWorldLayer<WaterRequiredLayer>(WorldLayerType.WaterRequiredLayer, position);
+    }
+
+    public void HideWaterRequiredLayer(Transform target)
+    {
+        HideWorldLayer(WorldLayerType.WaterRequiredLayer, target);
+    }
+
+    public PopupBuyPlotLayer ShowPopupBuyPlotLayer(Plot plot, Transform target, Vector3 offset = default)
+    {
+        var layer = ShowWorldLayer<PopupBuyPlotLayer>(WorldLayerType.PopupBuyPlotLayer, target, offset);
+        if (layer != null)
+        {
+            layer.InitData(plot);
+        }
+        return layer;
+    }
+
+    public PopupBuyPlotLayer ShowPopupBuyPlotLayer(BuyPlotData buyPlotData, Transform target, Vector3 offset = default)
+    {
+        var layer = ShowWorldLayer<PopupBuyPlotLayer>(WorldLayerType.PopupBuyPlotLayer, target, offset);
+        if (layer != null)
+        {
+            layer.InitData(buyPlotData);
+        }
+        return layer;
+    }
+
+    public PopupBuyPlotLayer ShowPopupBuyPlotLayer(Plot plot, Vector3 position)
+    {
+        var layer = ShowWorldLayer<PopupBuyPlotLayer>(WorldLayerType.PopupBuyPlotLayer, position);
+        if (layer != null)
+        {
+            layer.InitData(plot);
+        }
+        return layer;
+    }
+
+    public void HidePopupBuyPlotLayer(Transform target)
+    {
+        HideWorldLayer(WorldLayerType.PopupBuyPlotLayer, target);
+    }
+
+    public PopupPlantTreeLayer ShowPopupPlantTreeLayer(Plot plot, Transform target, Vector3 offset = default)
+    {
+        var layer = ShowWorldLayer<PopupPlantTreeLayer>(WorldLayerType.PopupPlantTreeLayer, target, offset);
+        if (layer != null)
+        {
+            layer.InitData(plot);
+        }
+        return layer;
+    }
+
+    public PopupPlantTreeLayer ShowPopupPlantTreeLayer(PlantTreeData plantTreeData, Transform target, Vector3 offset = default)
+    {
+        var layer = ShowWorldLayer<PopupPlantTreeLayer>(WorldLayerType.PopupPlantTreeLayer, target, offset);
+        if (layer != null)
+        {
+            layer.InitData(plantTreeData);
+        }
+        return layer;
+    }
+
+    public PopupPlantTreeLayer ShowPopupPlantTreeLayer(Plot plot, Vector3 position)
+    {
+        var layer = ShowWorldLayer<PopupPlantTreeLayer>(WorldLayerType.PopupPlantTreeLayer, position);
+        if (layer != null)
+        {
+            layer.InitData(plot);
+        }
+        return layer;
+    }
+
+    public void HidePopupPlantTreeLayer(Transform target)
+    {
+        HideWorldLayer(WorldLayerType.PopupPlantTreeLayer, target);
+    }
+
+    public IconUpgradeLayer ShowIconUpgradeLayer(Transform target, Vector3 offset = default, Action onClick = null)
+    {
+        var layer = ShowWorldLayer<IconUpgradeLayer>(WorldLayerType.IconUpgradeLayer, target, offset);
+        if (layer != null)
+        {
+            layer.InitData(onClick);
+        }
+        return layer;
+    }
+
+    public IconUpgradeLayer ShowIconUpgradeLayer(Vector3 position, Action onClick = null)
+    {
+        var layer = ShowWorldLayer<IconUpgradeLayer>(WorldLayerType.IconUpgradeLayer, position);
+        if (layer != null)
+        {
+            layer.InitData(onClick);
+        }
+        return layer;
+    }
+
+    public void HideIconUpgradeLayer(Transform target)
+    {
+        HideWorldLayer(WorldLayerType.IconUpgradeLayer, target);
+    }
+
+    public CapacityFruitTransport ShowCapacityFruitTransport(Transform target, Vector3 offset = default)
+    {
+        var layer = ShowWorldLayer<CapacityFruitTransport>(WorldLayerType.CapacityFruitTransport, target, offset);
+        if (layer != null)
+        {
+            layer.InitData();
+        }
+        return layer;
+    }
+
+    public CapacityFruitTransport ShowCapacityFruitTransport(Transform target, Vector3 offset, int current, int max)
+    {
+        var layer = ShowWorldLayer<CapacityFruitTransport>(WorldLayerType.CapacityFruitTransport, target, offset);
+        if (layer != null)
+        {
+            layer.UpdateCapacity(current, max);
+        }
+        return layer;
+    }
+
+    public CapacityFruitTransport ShowCapacityFruitTransport(Vector3 position)
+    {
+        var layer = ShowWorldLayer<CapacityFruitTransport>(WorldLayerType.CapacityFruitTransport, position);
+        if (layer != null)
+        {
+            layer.InitData();
+        }
+        return layer;
+    }
+
+    public void HideCapacityFruitTransport(Transform target)
+    {
+        HideWorldLayer(WorldLayerType.CapacityFruitTransport, target);
+    }
+
+    public FloatingCurrencyLayer ShowFloatingCurrencyLayer(Transform target, Vector3 offset, double amount)
+    {
+        var layer = ShowWorldLayer<FloatingCurrencyLayer>(WorldLayerType.FloatingCurrencyLayer, target, offset);
+        if (layer != null)
+        {
+            layer.ShowAmount(amount);
+        }
+        return layer;
+    }
+
+    public FloatingCurrencyLayer ShowFloatingCurrencyLayer(Vector3 position, double amount)
+    {
+        var layer = ShowWorldLayer<FloatingCurrencyLayer>(WorldLayerType.FloatingCurrencyLayer, position);
+        if (layer != null)
+        {
+            layer.ShowAmount(amount);
+        }
+        return layer;
+    }
+
+    public void HideFloatingCurrencyLayer(Transform target)
+    {
+        HideWorldLayer(WorldLayerType.FloatingCurrencyLayer, target);
+    }
+
 }
+

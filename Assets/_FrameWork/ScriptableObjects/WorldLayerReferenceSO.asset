@@ -25,3 +25,6 @@ MonoBehaviour:
   - layerType: 8
     layerBase: {fileID: 5630424664412128158, guid: 7ad3f8432aeaac74bb63b55f158b28bb, type: 3}
     spawnMode: 0
+  - layerType: 9
+    layerBase: {fileID: 6309950946250198978, guid: 0f9576eb7ee6ed741a702b9d9195944f, type: 3}
+    spawnMode: 0

@@ -18,6 +18,7 @@ public sealed class FarmPlotData
     public PlotType PlotType { get; private set; }
     public FarmPlotState State { get; private set; }
     public int PlantId { get; private set; } = -1;
+    public int VisualPlantId { get; private set; } = -1;
     public int PlantLevel { get; private set; } = 1;
     public PlotConfig Config { get; private set; }
 
@@ -84,21 +85,25 @@ public sealed class FarmPlotData
                 case PlotState.Planted:
                     State = FarmPlotState.Occupied;
                     PlantId = save.plantedPlantId;
+                    VisualPlantId = save.visualPlantId;
                     PlantLevel = Math.Max(1, save.currentLevel);
                     break;
                 case PlotState.Empty:
                     State = FarmPlotState.Empty;
                     PlantId = -1;
+                    VisualPlantId = -1;
                     PlantLevel = 1;
                     break;
                 case PlotState.Locked:
                     State = FarmPlotState.Locked;
                     PlantId = -1;
+                    VisualPlantId = -1;
                     PlantLevel = 1;
                     break;
                 default:
                     State = (RingIndex == 0 && SectorIndex == 0) ? FarmPlotState.Locked : FarmPlotState.RingLocked;
                     PlantId = -1;
+                    VisualPlantId = -1;
                     PlantLevel = 1;
                     break;
             }
@@ -112,12 +117,14 @@ public sealed class FarmPlotData
                 {
                     State = FarmPlotState.Occupied;
                     PlantId = config.defaultPlantId;
+                    VisualPlantId = -1;
                     PlantLevel = 1;
                 }
                 else
                 {
                     State = FarmPlotState.Empty;
                     PlantId = -1;
+                    VisualPlantId = -1;
                     PlantLevel = 1;
                 }
             }
@@ -125,6 +132,7 @@ public sealed class FarmPlotData
             {
                 State = (RingIndex == 0 && SectorIndex == 0) ? FarmPlotState.Locked : FarmPlotState.RingLocked;
                 PlantId = -1;
+                VisualPlantId = -1;
                 PlantLevel = 1;
             }
         }
@@ -147,17 +155,19 @@ public sealed class FarmPlotData
             return false;
 
         PlantId = -1;
+        VisualPlantId = -1;
         PlantLevel = 1;
         SetState(FarmPlotState.Empty);
         return true;
     }
 
-    public bool Occupy(int plantId, int level = 1)
+    public bool Occupy(int plantId, int level = 1, int visualPlantId = -1)
     {
         if (State != FarmPlotState.Empty || plantId < 0)
             return false;
 
         PlantId = plantId;
+        VisualPlantId = visualPlantId;
         PlantLevel = Math.Max(1, level);
         SetState(FarmPlotState.Occupied);
         return true;
@@ -174,6 +184,7 @@ public sealed class FarmPlotData
             return false;
 
         PlantId = -1;
+        VisualPlantId = -1;
         PlantLevel = 1;
         SetState(FarmPlotState.Empty);
         return true;

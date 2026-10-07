@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01716603a53492d9d05374a698601a1, type: 3}
+  m_Name: PlantVisual_0_Tomato
+  m_EditorClassIdentifier: 
+  plantIcon: {fileID: 21300000, guid: ff00284af0906c749b5d430df87506f0, type: 3}
+  fruitIcon: {fileID: 21300000, guid: 3b2a8923418e25a4b920d08ee245c206, type: 3}
+  plantPrefab: {fileID: 2747681241958203882, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
+  plantSprites:
+  - {fileID: 21300000, guid: e464170f7ee67564f912391856b4716f, type: 3}
+  - {fileID: 21300000, guid: ff00284af0906c749b5d430df87506f0, type: 3}
+  - {fileID: 21300000, guid: 6b96b424e6029614a96263fdf493d451, type: 3}
+  - {fileID: 21300000, guid: 459f31888539c2f4297675c330d24a99, type: 3}
+  - {fileID: 21300000, guid: 2bca5c4faa2f597419618154de87fb70, type: 3}

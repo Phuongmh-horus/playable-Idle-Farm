@@ -254,8 +254,7 @@ public sealed class FruitTransportStation : MonoBehaviour
 
         if (totalGoldGained > 0 && PlayableFarmState.PlayerData != null)
         {
-            Vector3 payoutOrigin = idlePoint != null ? idlePoint.position : transform.position;
-            if (!CurrencyFlyEffect.PlayFromWorld(payoutOrigin, () => PlayableFarmState.ChangeGold(totalGoldGained)))
+            if (!CurrencyFlyEffect.PlayFromSellout(() => PlayableFarmState.ChangeGold(totalGoldGained)))
             {
                 PlayableFarmState.ChangeGold(totalGoldGained);
                 SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_cash);

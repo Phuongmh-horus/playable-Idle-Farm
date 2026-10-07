@@ -20,6 +20,11 @@ public class PlantStore : MonoBehaviour
 
     public GameObject Panel;
 
+    public bool IsGridStore
+    {
+        get { return ColumnPrefab != null && ColumnPrefab.name.Contains("Grid"); }
+    }
+
     private void Awake()
     {
         if (Panel != null && ColumnPrefab != null && ItemInColumnPrefab != null)
@@ -37,6 +42,8 @@ public class PlantStore : MonoBehaviour
                 _columns[i].SetActive(false);
             }
         }
+
+        Panel?.SetActive(false);
     }
 
     public void Prewarm(int requiredItemCount)
@@ -66,9 +73,9 @@ public class PlantStore : MonoBehaviour
         int columnCount = Mathf.CeilToInt((float)count / maxItemPerColumn);
         EnsurePoolCapacity(Mathf.Max(count, prewarmItemCount));
 
+        ClearStore();
         gameObject.SetActive(true);
         Panel.SetActive(true);
-        ClearStore();
 
         for (int i = 0; i < columnCount; i++)
         {
@@ -119,16 +126,10 @@ public class PlantStore : MonoBehaviour
             return;
         }
 
-        plantItem.plantConfigData = data;
-        if (!_itemListenersInitialized[index])
-        {
-            plantItem.SetData(data);
-            _itemListenersInitialized[index] = true;
-        }
-        else if (plantItem.fruitIconImage != null)
-        {
-            plantItem.fruitIconImage.sprite = data != null ? data.fruitIcon : null;
-        }
+        // Rebind every time the modal opens. The same pooled item can represent
+        // a different plant in the next unlock, so never leave stale name/art.
+        plantItem.SetData(data);
+        _itemListenersInitialized[index] = true;
     }
 
     private void UpdateLayout()

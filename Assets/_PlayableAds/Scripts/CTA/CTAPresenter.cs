@@ -33,12 +33,6 @@ public sealed class CTAPresenter : MonoBehaviour, ICTAPresenter
 
     public bool IsVisible { get; private set; }
 
-    private void Awake()
-    {
-        if (rootObject == null) rootObject = gameObject;
-        if (rootCanvasGroup == null) rootCanvasGroup = GetComponent<CanvasGroup>();
-    }
-
     private void OnEnable()
     {
         if (ctaButton != null) ctaButton.onClick.AddListener(HandleButtonClicked);

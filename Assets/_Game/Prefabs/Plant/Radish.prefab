@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantSprite: {fileID: 2311015659422341182}
   plantAnimator: {fileID: 6499519541636354319}
+  floatingCurrencyOffset: {x: 0, y: 1.3, z: 1.3}
 --- !u!114 &6499519541636354319
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scenario: 126
   showTutorial: 1
-  tutorialStartPhase: 2
-  skippedTutorialPhases: 0000000001000000
+  tutorialStartPhase: 0
+  skippedTutorialPhases: 
   enablePlantPicker: 0
+  plantPickerVariant: 0
   selectablePlantIds: 
-  initialPlotCount: 4
-  initialPlantIds: 00000000010000000200000003000000
+  initialPlotCount: 10
+  initialPlantIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
   startingCurrency: 0
   showConveyorAndSell: 1
   showUpgrade: 1
-  harvestMode: 1
+  harvestMode: 0
   enableIrrigation: 1
   endcardDelaySeconds: 90

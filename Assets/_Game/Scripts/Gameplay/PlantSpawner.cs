@@ -44,7 +44,7 @@ public static class PlantSpawner
         }
     }
 
-    public static Plant SpawnPlant(int plantId, int level, Transform parent, Vector3 localPosition = default, int ringIndex = 0)
+    public static Plant SpawnPlant(int plantId, int level, Transform parent, Vector3 localPosition = default, int ringIndex = 0, int visualPlantId = -1)
     {
         Plant plantPrefab = ConfigHolder.Instance?.PlantConfig?.GetPlant(plantId)?.GetPrefab();
         if (plantPrefab == null) return null;
@@ -57,7 +57,7 @@ public static class PlantSpawner
             plant.transform.localPosition = localPosition;
             plant.transform.rotation = Quaternion.Euler(90, 0, 0);
             plant.transform.localScale = plantPrefab.transform.localScale;
-            plant.Init(plantId, level, ringIndex);
+            plant.Init(plantId, level, ringIndex, visualPlantId);
         }
         return plant;
     }

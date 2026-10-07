@@ -15,6 +15,7 @@ public class ScenePlayableSO : ScriptableObject
     [Tooltip("Show PlantStore at startup and after every plot unlock. When disabled, each unlocked plot immediately grows its configured default plant.")]
     [FormerlySerializedAs("showFruitPicker")]
     public bool enablePlantPicker;
+    public PlayablePlantPickerVariant plantPickerVariant = PlayablePlantPickerVariant.ConfiguredPlants;
     [Tooltip("Plant IDs shown by PlantStore, kept in this exact display order.")]
     public List<int> selectablePlantIds = new List<int>();
 
@@ -36,6 +37,12 @@ public class ScenePlayableSO : ScriptableObject
 }
 
 public enum PlayableScenarioId { Scenario123 = 123, Scenario124 = 124, Scenario125 = 125, Scenario126 = 126 }
+
+public enum PlayablePlantPickerVariant
+{
+    ConfiguredPlants = 0,
+    AllPlants = 1
+}
 
 public enum PlayableHarvestMode
 {

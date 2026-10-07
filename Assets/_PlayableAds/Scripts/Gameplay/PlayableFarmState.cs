@@ -104,11 +104,12 @@ public static class PlayableFarmState
         return plot;
     }
 
-    public static void UpdatePlotData(int plotId, PlotState state, int plantId, int level)
+    public static void UpdatePlotData(int plotId, PlotState state, int plantId, int level, int visualPlantId = -1)
     {
         PlotSaveData plot = GetOrCreatePlotSaveData(plotId, state, plantId, level);
         plot.state = state;
         plot.plantedPlantId = plantId;
+        plot.visualPlantId = state == PlotState.Planted ? visualPlantId : -1;
         plot.currentLevel = Mathf.Max(1, level);
 
         if (state == PlotState.Planted && plantId >= 0)
@@ -263,6 +264,23 @@ public static class PlayableScenarioRuntime
         if (scenario.UsesPlantPicker && plotId == 0)
         {
             return -1;
+        }
+
+        FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+        PlantConfig plantConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.PlantConfig : null;
+        if (farmConfig != null && farmConfig.HasInitialPlantOrder &&
+            plotId >= 0 && plotId < farmConfig.initialPlantOrder.Count)
+        {
+            return farmConfig.initialPlantOrder[plotId];
+        }
+
+        if (farmConfig != null && plantConfig != null)
+        {
+            int orderedPlantId = farmConfig.GetInitialPlantId(plotId, plantConfig);
+            if (orderedPlantId >= 0)
+            {
+                return orderedPlantId;
+            }
         }
 
         if (scenario.initialPlantIds != null && plotId < scenario.initialPlantIds.Count)

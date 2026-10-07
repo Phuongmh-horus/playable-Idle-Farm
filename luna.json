@@ -133,7 +133,7 @@
             ]
         },
         "scenes": [
-            "Assets/_FrameWork/Scenes/PLA.unity"
+            "Assets/_FrameWork/Scenes/PLA/PLA.unity"
         ],
         "disabledScenes": [],
         "startupScene": 0,
@@ -7623,14 +7623,6 @@
                 "excluded": true
             },
             {
-                "name": "AnimShowPopup",
-                "excluded": true
-            },
-            {
-                "name": "ButtonBounceEffect",
-                "excluded": true
-            },
-            {
                 "name": "CollectionConfigSO",
                 "excluded": true
             },
@@ -7703,27 +7695,11 @@
                 "excluded": true
             },
             {
-                "name": "LayerBase",
-                "excluded": true
-            },
-            {
-                "name": "LayerGroup",
-                "excluded": true
-            },
-            {
-                "name": "RuntimeEaseUtility",
-                "excluded": true
-            },
-            {
                 "name": "UserSaveData",
                 "excluded": true
             },
             {
                 "name": "ViewCamera",
-                "excluded": true
-            },
-            {
-                "name": "FloatingCurrencyLayer",
                 "excluded": true
             },
             {
@@ -7775,10 +7751,6 @@
                 "excluded": true
             },
             {
-                "name": "LayerType",
-                "excluded": true
-            },
-            {
                 "name": "LoadedFruitItem",
                 "excluded": false
             },
@@ -7811,10 +7783,6 @@
                 "excluded": false
             },
             {
-                "name": "PlotSaveData",
-                "excluded": false
-            },
-            {
                 "name": "PlotState",
                 "excluded": false
             },
@@ -7824,7 +7792,7 @@
             },
             {
                 "name": "RuntimeEase",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "SelectableBoundsMode",
@@ -7873,10 +7841,6 @@
             {
                 "name": "WorldLayerType",
                 "excluded": false
-            },
-            {
-                "name": "UIGamePlayLayer",
-                "excluded": true
             },
             {
                 "name": "System.IComparable",
@@ -8841,6 +8805,10 @@
             {
                 "name": "CurrencyFlyEffect.Token",
                 "excluded": false
+            },
+            {
+                "name": "PlayablePlantPickerVariant",
+                "excluded": false
             }
         ],
         "unusedMethods": [
@@ -8996,7 +8964,7 @@
                     },
                     {
                         "name": "isPunctuation",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "isNumber",
@@ -15808,7 +15776,7 @@
                     },
                     {
                         "name": "center#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "center#set",
@@ -15836,7 +15804,7 @@
                     },
                     {
                         "name": "min#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "min#set",
@@ -15892,7 +15860,7 @@
                     },
                     {
                         "name": "xMin#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "xMin#set",
@@ -15916,7 +15884,7 @@
                     },
                     {
                         "name": "yMin#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "yMin#set",
@@ -18626,11 +18594,11 @@
                     },
                     {
                         "name": "SetSizeWithCurrentAnchors",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetParentSize",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetWorldCorners",
@@ -23670,7 +23638,7 @@
                     },
                     {
                         "name": "ShowFloatingCurrencyLayer",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ShowFloatingCurrencyLayer$1",
@@ -27398,7 +27366,7 @@
                 "instanceMethods": [
                     {
                         "name": "horizontalFit#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "horizontalFit#set",
@@ -27406,7 +27374,7 @@
                     },
                     {
                         "name": "verticalFit#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "verticalFit#set",
@@ -27414,7 +27382,7 @@
                     },
                     {
                         "name": "rectTransform#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "init",
@@ -27426,7 +27394,7 @@
                     },
                     {
                         "name": "OnEnable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDisable",
@@ -27434,23 +27402,23 @@
                     },
                     {
                         "name": "OnRectTransformDimensionsChange",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HandleSelfFittingAlongAxis",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetLayoutHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetLayoutVertical",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetDirty",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -30425,10 +30393,6 @@
                         "excluded": false
                     },
                     {
-                        "name": "Awake",
-                        "excluded": false
-                    },
-                    {
                         "name": "OnDisable",
                         "excluded": false
                     },
@@ -30899,6 +30863,18 @@
                     {
                         "name": "GetPlotsByType",
                         "excluded": true
+                    },
+                    {
+                        "name": "HasInitialPlantOrder#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetInitialPlantId",
+                        "excluded": true
+                    },
+                    {
+                        "name": "GetInitialPlantId$1",
+                        "excluded": false
                     }
                 ]
             },
@@ -31409,6 +31385,10 @@
                     {
                         "name": "TryPlantConfiguredPlot",
                         "excluded": false
+                    },
+                    {
+                        "name": "TryOccupyPlot$1",
+                        "excluded": false
                     }
                 ]
             },
@@ -31416,10 +31396,6 @@
                 "className": "Fruit",
                 "staticMethods": [],
                 "instanceMethods": [
-                    {
-                        "name": "Awake",
-                        "excluded": false
-                    },
                     {
                         "name": "Init",
                         "excluded": false
@@ -32103,6 +32079,30 @@
                     {
                         "name": "GetFirstEmptyPlot",
                         "excluded": true
+                    },
+                    {
+                        "name": "IsConfiguredPlantChoice",
+                        "excluded": true
+                    },
+                    {
+                        "name": "AddPlantChoice",
+                        "excluded": true
+                    },
+                    {
+                        "name": "IsPlantAlreadyPlanted",
+                        "excluded": true
+                    },
+                    {
+                        "name": "GetVisualPlantId",
+                        "excluded": true
+                    },
+                    {
+                        "name": "ResolveGameplayPlantId",
+                        "excluded": true
+                    },
+                    {
+                        "name": "GetActivePlantStore",
+                        "excluded": true
                     }
                 ]
             },
@@ -32387,6 +32387,14 @@
                     {
                         "name": "SetLevel",
                         "excluded": false
+                    },
+                    {
+                        "name": "VisualPlantId#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "VisualConfig#get",
+                        "excluded": false
                     }
                 ]
             },
@@ -32443,6 +32451,10 @@
                     {
                         "name": "GetPlant$1",
                         "excluded": false
+                    },
+                    {
+                        "name": "GetPlantIdAtOrder",
+                        "excluded": true
                     }
                 ]
             },
@@ -32516,6 +32528,22 @@
                     },
                     {
                         "name": "GetStatValue",
+                        "excluded": true
+                    },
+                    {
+                        "name": "plantIcon#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "fruitIcon#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "plantPrefab#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "plantSprites#get",
                         "excluded": true
                     }
                 ]
@@ -32613,6 +32641,10 @@
                     {
                         "name": "Prewarm",
                         "excluded": true
+                    },
+                    {
+                        "name": "IsGridStore#get",
+                        "excluded": true
                     }
                 ]
             },
@@ -32620,10 +32652,6 @@
                 "className": "PlayableCurrencyDisplay",
                 "staticMethods": [],
                 "instanceMethods": [
-                    {
-                        "name": "Awake",
-                        "excluded": false
-                    },
                     {
                         "name": "OnEnable",
                         "excluded": false
@@ -32903,6 +32931,10 @@
                     {
                         "name": "ReportFirstPlantUpgradeIconClicked",
                         "excluded": false
+                    },
+                    {
+                        "name": "ReportAnyUpgradeIconClicked",
+                        "excluded": false
                     }
                 ]
             },
@@ -33060,6 +33092,14 @@
                     },
                     {
                         "name": "StatTwoNameText#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "UpgradeCurrencyIcon#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "CostForegroundText#get",
                         "excluded": false
                     }
                 ]
@@ -34813,6 +34853,26 @@
                     {
                         "name": "TryGetCanvasPosition",
                         "excluded": false
+                    },
+                    {
+                        "name": "PlayFromSellout",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetPayoutSource",
+                        "excluded": false
+                    },
+                    {
+                        "name": "PlayFromPayoutSource",
+                        "excluded": false
+                    },
+                    {
+                        "name": "PlayFromScreenPosition",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ToTokenAnchoredPosition",
+                        "excluded": false
                     }
                 ]
             },
@@ -34977,6 +35037,98 @@
                         "excluded": true
                     }
                 ]
+            },
+            {
+                "className": "PlantVisualSO",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetPlantSprite",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "PlotSaveData",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "init",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "FloatingCurrencyLayer",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Awake",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ShowAmount",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ShowAmountRoutine",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnDisable",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnDestroy",
+                        "excluded": true
+                    },
+                    {
+                        "name": "CancelMotions",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ResetVisuals",
+                        "excluded": false
+                    },
+                    {
+                        "name": "CleanupBeforeHide",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Hide",
+                        "excluded": true
+                    },
+                    {
+                        "name": "EnsureCurrencyOutline",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "RuntimeEaseUtility",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Evaluate",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OutBounce",
+                        "excluded": true
+                    }
+                ]
             }
         ],
         "stubberDataList": [],
@@ -35086,8 +35238,8 @@
                         "name": "Assets/_Game/Resource2D/tx.png"
                     },
                     {
-                        "maxWidth": 1024,
-                        "maxHeight": 1024,
+                        "maxWidth": 2048,
+                        "maxHeight": 2048,
                         "format": "jpeg",
                         "compression": "quantSize",
                         "quality": 70,
@@ -35156,8 +35308,8 @@
                         "name": "Assets/_FrameWork/Sprites/GamePlay/icn_cash2.png"
                     },
                     {
-                        "maxWidth": 512,
-                        "maxHeight": 1024,
+                        "maxWidth": 1024,
+                        "maxHeight": 2048,
                         "format": "png32",
                         "compression": "quantQuality",
                         "quality": 65,
@@ -35169,7 +35321,7 @@
                         "maxWidth": 512,
                         "maxHeight": 512,
                         "format": "png32",
-                        "compression": "quantSize",
+                        "compression": "quantQuality",
                         "quality": 65,
                         "script": "",
                         "ext": "",
@@ -35226,8 +35378,8 @@
                         "name": "Assets/_Game/Resource2D/Trinker.png"
                     },
                     {
-                        "maxWidth": 1024,
-                        "maxHeight": 1024,
+                        "maxWidth": 2048,
+                        "maxHeight": 2048,
                         "format": "png32",
                         "compression": "quantQuality",
                         "quality": 65,
@@ -35250,10 +35402,30 @@
                         "maxHeight": 512,
                         "format": "jpeg",
                         "compression": "quantSize",
-                        "quality": 60,
+                        "quality": 65,
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Sprites/UI/large_icon.png"
+                    },
+                    {
+                        "maxWidth": 1024,
+                        "maxHeight": 1024,
+                        "format": "png32",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/MegaPlant/megaplant_atlas.spriteatlasv2"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "jpeg",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Scenes/PLA/PLA.unity/PrefilteredEnvironment.exr"
                     }
                 ]
             },
@@ -35361,8 +35533,8 @@
                     {
                         "channels": 1,
                         "startTime": "00:00.000",
-                        "endTime": "00:24.393",
-                        "lengthInSeconds": 24.39299964904785,
+                        "endTime": "00:23.000",
+                        "lengthInSeconds": 23.0,
                         "bitrate": 128,
                         "script": "",
                         "ext": "",

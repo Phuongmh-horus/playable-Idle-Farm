@@ -16,24 +16,6 @@ public sealed class PlayableCurrencyDisplay : MonoBehaviour
 
     public RectTransform ReceiveTarget => receiveTarget != null ? receiveTarget : transform as RectTransform;
 
-    private void Awake()
-    {
-        if (goldText == null) goldText = GetComponentInChildren<TMP_Text>(true);
-        if (coinIcon == null)
-        {
-            Image[] images = GetComponentsInChildren<Image>(true);
-            for (int i = 0; i < images.Length; i++)
-            {
-                if (images[i] != null && images[i].name.ToLowerInvariant().Contains("icon"))
-                {
-                    coinIcon = images[i];
-                    break;
-                }
-            }
-        }
-        if (receiveTarget == null && coinIcon != null) receiveTarget = coinIcon.rectTransform;
-    }
-
     private void OnEnable()
     {
         GameEventBus.OnGoldChange += Refresh;

@@ -60,6 +60,7 @@ public class IconUpgradeLayer : WorldLayerBase
 
     private void HandleButtonClicked()
     {
+        PlayableTutorialFlow.Instance?.ReportAnyUpgradeIconClicked();
         _onClickAction?.Invoke();
     }
 

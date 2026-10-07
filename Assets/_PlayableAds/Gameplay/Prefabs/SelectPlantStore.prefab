@@ -716,10 +716,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5699365293747598516, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 644c7a3893bb0c149a800060ce28547d, type: 3}
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore (1)

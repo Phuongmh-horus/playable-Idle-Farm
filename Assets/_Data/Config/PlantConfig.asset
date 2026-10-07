@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: PlantConfig
   m_EditorClassIdentifier: 
   plants:
-  - plantType: 0
-    plantIcon: {fileID: 21300000, guid: 3b2a8923418e25a4b920d08ee245c206, type: 3}
-    fruitIcon: {fileID: 21300000, guid: 3b2a8923418e25a4b920d08ee245c206, type: 3}
-    plantPrefab: {fileID: 2747681241958203882, guid: 3cae450d229379b46a475ff8c7a31b12, type: 3}
+  - plantType: 6
+    visual: {fileID: 11400000, guid: 3436be0c6053415395a605f5b46e0bd2, type: 2}
     maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -36,16 +34,8 @@ MonoBehaviour:
       waterRequirement: 16
       levelUpCostSumPerLevel: 252
       priceSumPerLevel: 7
-    plantSprites:
-    - {fileID: 21300000, guid: e464170f7ee67564f912391856b4716f, type: 3}
-    - {fileID: 21300000, guid: ff00284af0906c749b5d430df87506f0, type: 3}
-    - {fileID: 21300000, guid: 6b96b424e6029614a96263fdf493d451, type: 3}
-    - {fileID: 21300000, guid: 459f31888539c2f4297675c330d24a99, type: 3}
-    - {fileID: 21300000, guid: 2bca5c4faa2f597419618154de87fb70, type: 3}
-  - plantType: 1
-    plantIcon: {fileID: 21300000, guid: c20facc5f95915b4d9716495fd3bdee4, type: 3}
-    fruitIcon: {fileID: 21300000, guid: c20facc5f95915b4d9716495fd3bdee4, type: 3}
-    plantPrefab: {fileID: 2108421722821967915, guid: 042c932482451994588ff6775b1f0595, type: 3}
+  - plantType: 3
+    visual: {fileID: 11400000, guid: 65aec30947074d6fa505077d85f68394, type: 2}
     maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -65,16 +55,8 @@ MonoBehaviour:
       waterRequirement: 18
       levelUpCostSumPerLevel: 2700
       priceSumPerLevel: 30
-    plantSprites:
-    - {fileID: 21300000, guid: a0ddb4d09bca1e14283ebd071fef9b56, type: 3}
-    - {fileID: 21300000, guid: 2d35d963e7455a341abc232e99291bad, type: 3}
-    - {fileID: 21300000, guid: de625eae763cbc548804fca40334ff3a, type: 3}
-    - {fileID: 21300000, guid: c11ba70f99c7ef34a8a883db835936e1, type: 3}
-    - {fileID: 21300000, guid: e4c3b3820d95e2246a3d76ddac7809e7, type: 3}
   - plantType: 2
-    plantIcon: {fileID: 21300000, guid: 10e333527d0104141a451b9c8ee8376e, type: 3}
-    fruitIcon: {fileID: 21300000, guid: 10e333527d0104141a451b9c8ee8376e, type: 3}
-    plantPrefab: {fileID: 7376260434647007569, guid: 5b908557026aa2248b6f00b7117c8792, type: 3}
+    visual: {fileID: 11400000, guid: 8e233798ac994d348e95b54f415c02af, type: 2}
     maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -94,16 +76,8 @@ MonoBehaviour:
       waterRequirement: 23
       levelUpCostSumPerLevel: 20232
       priceSumPerLevel: 120
-    plantSprites:
-    - {fileID: 21300000, guid: 719bfbcfdcd9f0348bbc38183dfad779, type: 3}
-    - {fileID: 21300000, guid: 7100685b53e59944f8b06a29abc017f4, type: 3}
-    - {fileID: 21300000, guid: c1b2520d9495e2d49b96c45d11162f41, type: 3}
-    - {fileID: 21300000, guid: 2b2f5b312a3bea3468a501dfdbaa98df, type: 3}
-    - {fileID: 21300000, guid: 47e7b562a43c16c40960222d61da6af9, type: 3}
-  - plantType: 3
-    plantIcon: {fileID: 21300000, guid: e912001c9b3fb1449ab3b8ef7d4a9efb, type: 3}
-    fruitIcon: {fileID: 21300000, guid: e912001c9b3fb1449ab3b8ef7d4a9efb, type: 3}
-    plantPrefab: {fileID: 2090809617196704299, guid: 81d44e6c50e825b4b8c5b7038bc293cb, type: 3}
+  - plantType: 1
+    visual: {fileID: 11400000, guid: 1e200847bfd8418e9af563d48123dcfe, type: 2}
     maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -123,16 +97,8 @@ MonoBehaviour:
       waterRequirement: 68
       levelUpCostSumPerLevel: 135000
       priceSumPerLevel: 480
-    plantSprites:
-    - {fileID: 21300000, guid: 647b7dbd090738742b215650fe8ca3a6, type: 3}
-    - {fileID: 21300000, guid: 63f62762d49222c4b98e41d829c1a4a7, type: 3}
-    - {fileID: 21300000, guid: 26bdac68f67019846b2ccf40d8574691, type: 3}
-    - {fileID: 21300000, guid: 123776701ba6229439a2c4334a0b957c, type: 3}
-    - {fileID: 21300000, guid: 06e149aeb06d1ae46b002880add9652e, type: 3}
-  - plantType: 4
-    plantIcon: {fileID: 21300000, guid: 86c2e50510ffc314c87ef53179fa66ef, type: 3}
-    fruitIcon: {fileID: 21300000, guid: 86c2e50510ffc314c87ef53179fa66ef, type: 3}
-    plantPrefab: {fileID: 21777259753631421, guid: 018bf408639e03242b0356409f99cdb4, type: 3}
+  - plantType: 8
+    visual: {fileID: 11400000, guid: 37c1df8b1f1a4f349b19aeee30319ff0, type: 2}
     maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -152,16 +118,8 @@ MonoBehaviour:
       waterRequirement: 101
       levelUpCostSumPerLevel: 675000
       priceSumPerLevel: 1920
-    plantSprites:
-    - {fileID: 21300000, guid: 75b7dccd8ee7d2841bcd1791a0459c42, type: 3}
-    - {fileID: 21300000, guid: 3653bb74e8aae0343afde09353c1a05c, type: 3}
-    - {fileID: 21300000, guid: 593cc224af2c0f442a7b7ce9ee1eceaa, type: 3}
-    - {fileID: 21300000, guid: 5e490738b799ff04bb7f20ad1e52648f, type: 3}
-    - {fileID: 21300000, guid: e8ef856be585d8749b981b6cfc611525, type: 3}
-  - plantType: 5
-    plantIcon: {fileID: 21300000, guid: 02fa8b8d895969c4ab0f45fa1cbc25bf, type: 3}
-    fruitIcon: {fileID: 21300000, guid: 02fa8b8d895969c4ab0f45fa1cbc25bf, type: 3}
-    plantPrefab: {fileID: 7292942727523549358, guid: 5d690d29a0ac05d4aa0e049e9939e682, type: 3}
+  - plantType: 0
+    visual: {fileID: 11400000, guid: a481eddd426148978f28b4c743c88e88, type: 2}
     maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -181,16 +139,8 @@ MonoBehaviour:
       waterRequirement: 153
       levelUpCostSumPerLevel: 3375000
       priceSumPerLevel: 7680
-    plantSprites:
-    - {fileID: 21300000, guid: 0d4f0ce09837e14498ff9973a237df31, type: 3}
-    - {fileID: 21300000, guid: b719bca5e686f24469eafa91968f5156, type: 3}
-    - {fileID: 21300000, guid: 5524783a6fa37604683f77282d213870, type: 3}
-    - {fileID: 21300000, guid: 0c2852d26be02394bb0cb3de5208f2c4, type: 3}
-    - {fileID: 21300000, guid: 462c7970fbaa4a24899299112fa65ad6, type: 3}
-  - plantType: 6
-    plantIcon: {fileID: 21300000, guid: 0b461deebe24d1049b19b8a672a665e0, type: 3}
-    fruitIcon: {fileID: 21300000, guid: 0b461deebe24d1049b19b8a672a665e0, type: 3}
-    plantPrefab: {fileID: 7756525101406347104, guid: 1e202c5ddbf3eba4b866a33ce8f3d918, type: 3}
+  - plantType: 9
+    visual: {fileID: 11400000, guid: 872ebb6f476f419081d6865b3a7c16ab, type: 2}
     maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -210,16 +160,8 @@ MonoBehaviour:
       waterRequirement: 230
       levelUpCostSumPerLevel: 16875000
       priceSumPerLevel: 30720
-    plantSprites:
-    - {fileID: 21300000, guid: 001f3c8c4e7875844856035509ac9cd7, type: 3}
-    - {fileID: 21300000, guid: 972405f6c219aa74c8f4ac7cfaf1fa0c, type: 3}
-    - {fileID: 21300000, guid: e59d9510cc22ab44abc3cd26e3fa5c3a, type: 3}
-    - {fileID: 21300000, guid: b777726c8a4cc8c47938943ea5d71b04, type: 3}
-    - {fileID: 21300000, guid: 2ec960353274f1849b318a6994cc7ab9, type: 3}
-  - plantType: 7
-    plantIcon: {fileID: 21300000, guid: f3492ae7b9d28254daa1c0e527556917, type: 3}
-    fruitIcon: {fileID: 21300000, guid: f3492ae7b9d28254daa1c0e527556917, type: 3}
-    plantPrefab: {fileID: 6861620595050215266, guid: beb01025a5325e84991c00dec801a690, type: 3}
+  - plantType: 4
+    visual: {fileID: 11400000, guid: fd5b75ba5f394b25af1de10d52baee67, type: 2}
     maxLevel: 25
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -239,16 +181,8 @@ MonoBehaviour:
       waterRequirement: 344
       levelUpCostSumPerLevel: 84375000
       priceSumPerLevel: 122880
-    plantSprites:
-    - {fileID: 21300000, guid: b072d3a145c5d7140bfaba0ffd257780, type: 3}
-    - {fileID: 21300000, guid: 3cbb7c7abc7b0b44287c084a7387af46, type: 3}
-    - {fileID: 21300000, guid: 442319df11672bf4183a47e774db7cff, type: 3}
-    - {fileID: 21300000, guid: 9caa7d1aeb1863240978d2d00642617f, type: 3}
-    - {fileID: 21300000, guid: b052ec7ec9af531438c1e81540d874d2, type: 3}
-  - plantType: 8
-    plantIcon: {fileID: 21300000, guid: a1b7c28f8a8c44440bd802ea7239d342, type: 3}
-    fruitIcon: {fileID: 21300000, guid: a1b7c28f8a8c44440bd802ea7239d342, type: 3}
-    plantPrefab: {fileID: 3418310729356881154, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
+  - plantType: 7
+    visual: {fileID: 11400000, guid: 8195fb0dbf4f4164b4aa7790290d746a, type: 2}
     maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -268,16 +202,8 @@ MonoBehaviour:
       waterRequirement: 518
       levelUpCostSumPerLevel: 70312500
       priceSumPerLevel: 491520
-    plantSprites:
-    - {fileID: 21300000, guid: d7f0c1037ecf2e64eaeca781a530959f, type: 3}
-    - {fileID: 21300000, guid: 9380579e0daa6134a80d22fb7bf4eefe, type: 3}
-    - {fileID: 21300000, guid: 18d16b16e6fa94242892ed5ae1b73642, type: 3}
-    - {fileID: 21300000, guid: 4fb7f049578bcb04198f26929c364f57, type: 3}
-    - {fileID: 21300000, guid: 26f8c3bae85518e48b17b5cd38360a13, type: 3}
-  - plantType: 9
-    plantIcon: {fileID: 21300000, guid: 07e681a0660a3b64f96e3b13ed979cdc, type: 3}
-    fruitIcon: {fileID: 21300000, guid: 07e681a0660a3b64f96e3b13ed979cdc, type: 3}
-    plantPrefab: {fileID: 7046204497938297139, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
+  - plantType: 5
+    visual: {fileID: 11400000, guid: 909426651e1f43669c51c515097bf590, type: 2}
     maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
@@ -297,9 +223,3 @@ MonoBehaviour:
       waterRequirement: 776
       levelUpCostSumPerLevel: 351562500
       priceSumPerLevel: 1966080
-    plantSprites:
-    - {fileID: 21300000, guid: c687d29853b0d6d42ad3ea5ba09094e2, type: 3}
-    - {fileID: 21300000, guid: ac289503cfcc0d04dbd5005b5e1098d0, type: 3}
-    - {fileID: 21300000, guid: a0b7c5ff725137049bebc0884a5acf5d, type: 3}
-    - {fileID: 21300000, guid: 55c5bc9a637adc84f818fe75ee01980d, type: 3}
-    - {fileID: 21300000, guid: d5bcddfde2edca349ae85bc5ecc60ebf, type: 3}

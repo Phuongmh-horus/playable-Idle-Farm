@@ -20,6 +20,9 @@ public class PlotSaveData
     public PlotState state;
     public int currentLevel;
     public int plantedPlantId; // ID loại cây được trồng riêng trên ô đất này
+    // Optional art-only choice made by the playable plant picker. A negative
+    // value keeps the configured plant visual.
+    public int visualPlantId = -1;
 }
 
 [Serializable]

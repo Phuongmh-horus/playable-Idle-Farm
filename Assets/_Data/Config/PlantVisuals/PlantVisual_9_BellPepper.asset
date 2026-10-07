@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01716603a53492d9d05374a698601a1, type: 3}
+  m_Name: PlantVisual_9_BellPepper
+  m_EditorClassIdentifier: 
+  plantIcon: {fileID: 21300000, guid: ac289503cfcc0d04dbd5005b5e1098d0, type: 3}
+  fruitIcon: {fileID: 21300000, guid: 07e681a0660a3b64f96e3b13ed979cdc, type: 3}
+  plantPrefab: {fileID: 7046204497938297139, guid: c09fccedd3b6e3449a162d9c264fa348, type: 3}
+  plantSprites:
+  - {fileID: 21300000, guid: c687d29853b0d6d42ad3ea5ba09094e2, type: 3}
+  - {fileID: 21300000, guid: ac289503cfcc0d04dbd5005b5e1098d0, type: 3}
+  - {fileID: 21300000, guid: a0b7c5ff725137049bebc0884a5acf5d, type: 3}
+  - {fileID: 21300000, guid: 55c5bc9a637adc84f818fe75ee01980d, type: 3}
+  - {fileID: 21300000, guid: d5bcddfde2edca349ae85bc5ecc60ebf, type: 3}

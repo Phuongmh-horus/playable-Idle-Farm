@@ -9,11 +9,15 @@ public class Plant : MonoBehaviour
     private FruitTransportStation _cachedTransportStation;
     private int _plantLevel = 1;
     private int _plantId;
+    private int _visualPlantId = -1;
     private int _ringIndex;
     private float _currentWater;
     private int _filledSlotCount;
 
+    [SerializeField] private Vector3 floatingCurrencyOffset = new Vector3(0f, 1.2f, 0f);
+
     public int PlantId => _plantId;
+    public int VisualPlantId => _visualPlantId;
     public int PlantLevel => _plantLevel;
     public int RingIndex => _ringIndex;
     public int FilledSlotCount => _filledSlotCount;
@@ -24,6 +28,7 @@ public class Plant : MonoBehaviour
     #region Config Shortcuts
 
     public PlantConfigData Config => ConfigHolder.Instance?.PlantConfig?.GetPlant(_plantId);
+    private PlantConfigData VisualConfig => ConfigHolder.Instance?.PlantConfig?.GetPlant(_visualPlantId >= 0 ? _visualPlantId : _plantId);
     public int MaxLevel => Config?.GetMaxLevel() ?? 1;
     public float WaterRequirement => Config?.GetWaterRequirement(_ringIndex) ?? 0;
     public double UpgradeCost => Config?.GetUpgradeCost(_plantLevel, _ringIndex) ?? 0;
@@ -41,9 +46,10 @@ public class Plant : MonoBehaviour
         if (!plantAnimator) plantAnimator = gameObject.AddComponent<PlantAnimator>();
     }
 
-    public void Init(int id, int initialLevel = 1, int ring = 0)
+    public void Init(int id, int initialLevel = 1, int ring = 0, int visualPlantId = -1)
     {
         _plantId = id;
+        _visualPlantId = visualPlantId;
         _ringIndex = ring;
         _plantLevel = Math.Max(1, initialLevel);
         _currentWater = 0f;
@@ -64,9 +70,9 @@ public class Plant : MonoBehaviour
 
     private void UpdatePlantSprite()
     {
-        if (plantSprite != null && Config != null)
+        if (plantSprite != null && VisualConfig != null)
         {
-            Sprite sprite = Config.GetPlantSprite(_filledSlotCount);
+            Sprite sprite = VisualConfig.GetPlantSprite(_filledSlotCount);
             if (sprite != null)
             {
                 plantSprite.sprite = sprite;
@@ -141,6 +147,11 @@ public class Plant : MonoBehaviour
         int acceptedCount = Mathf.Min(_filledSlotCount, transport.GetCapacityLeft());
         double price = Config?.GetFruitPrice(_plantLevel, _ringIndex) ?? 0;
         double totalGained = price * acceptedCount;
+        if (totalGained > 0d && WorldLayerManager.Instance != null)
+        {
+            // Show the total value of every fruit accepted from this plant.
+            WorldLayerManager.Instance.ShowFloatingCurrencyLayer(transform, floatingCurrencyOffset, totalGained);
+        }
         if (transport != null)
         {
             transport.CollectFruitsWithAnimation(PlantId, _filledSlotCount, transform.position, _plantLevel, _ringIndex);

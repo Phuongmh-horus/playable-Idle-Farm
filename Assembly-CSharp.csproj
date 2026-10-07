@@ -92,7 +92,6 @@
     <Compile Include="Assets\_Game\Scripts\Gameplay\FarmPlotSystem\FarmPlotSystem.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\FloatingCurrencyLayer\FloatingCurrencyLayer.cs" />
     <Compile Include="Assets\_Data\Runtime\SaveData.cs" />
-    <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\General\ShowWorldLayerHelper.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\ObjectPooling\PoolHolder.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\FarmIrrigationSystem\SprinklerArm.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\UIHelper\UIAnimator\AnimShowPopupWorld.cs" />
@@ -101,7 +100,6 @@
     <Compile Include="Assets\_Game\Scripts\Gameplay\FruitSpawner.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\PopupStore.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\SpriteData.cs" />
-    <Compile Include="Assets\_FrameWork\Scripts\UIHelper\UIAnimator\AnimShowPopup.cs" />
     <Compile Include="Assets\_Game\Scripts\ClickBasedSelection\Scripts\StaticSelectionBaker.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\WorldUIManager\LayerCore\WorldLayerBase.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\GameManager.cs" />
@@ -114,7 +112,6 @@
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\General\LayerSourcePath.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\Singletons\MonoSingleton.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\BuyPlot\PopupBuyPlotLayer.cs" />
-    <Compile Include="Assets\_FrameWork\Scripts\UIHelper\ButtonBounceEffect.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\VideoEditor\HandCreative.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\PlayableCurrencyDisplay.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\UIHelper\ImageStateHandle.cs" />
@@ -133,6 +130,7 @@
     <Compile Include="Assets\_PlayableAds\Scripts\Tutorial\PlayableTutorialFlow.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\ObjectPooling\MonoPool.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\Config\PlotVisualConfig\PlotVisualConfigSO.cs" />
+    <Compile Include="Assets\_Data\Config\PlantVisuals\PlantVisualSO.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\VFXManager.cs" />
     <Compile Include="Assets\_Game\Scripts\UI\StaticSelectableButtonBase.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\CTA\NoOpPlayableAdapter.cs" />

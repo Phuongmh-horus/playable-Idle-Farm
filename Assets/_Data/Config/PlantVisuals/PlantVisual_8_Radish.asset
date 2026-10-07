@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01716603a53492d9d05374a698601a1, type: 3}
+  m_Name: PlantVisual_8_Radish
+  m_EditorClassIdentifier: 
+  plantIcon: {fileID: 21300000, guid: 9380579e0daa6134a80d22fb7bf4eefe, type: 3}
+  fruitIcon: {fileID: 21300000, guid: a1b7c28f8a8c44440bd802ea7239d342, type: 3}
+  plantPrefab: {fileID: 3418310729356881154, guid: 99fde0a76e916424487ef65f12352d06, type: 3}
+  plantSprites:
+  - {fileID: 21300000, guid: d7f0c1037ecf2e64eaeca781a530959f, type: 3}
+  - {fileID: 21300000, guid: 9380579e0daa6134a80d22fb7bf4eefe, type: 3}
+  - {fileID: 21300000, guid: 18d16b16e6fa94242892ed5ae1b73642, type: 3}
+  - {fileID: 21300000, guid: 4fb7f049578bcb04198f26929c364f57, type: 3}
+  - {fileID: 21300000, guid: 26f8c3bae85518e48b17b5cd38360a13, type: 3}

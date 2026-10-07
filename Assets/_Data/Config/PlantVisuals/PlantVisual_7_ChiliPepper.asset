@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01716603a53492d9d05374a698601a1, type: 3}
+  m_Name: PlantVisual_7_ChiliPepper
+  m_EditorClassIdentifier: 
+  plantIcon: {fileID: 21300000, guid: 3cbb7c7abc7b0b44287c084a7387af46, type: 3}
+  fruitIcon: {fileID: 21300000, guid: f3492ae7b9d28254daa1c0e527556917, type: 3}
+  plantPrefab: {fileID: 6861620595050215266, guid: beb01025a5325e84991c00dec801a690, type: 3}
+  plantSprites:
+  - {fileID: 21300000, guid: b072d3a145c5d7140bfaba0ffd257780, type: 3}
+  - {fileID: 21300000, guid: 3cbb7c7abc7b0b44287c084a7387af46, type: 3}
+  - {fileID: 21300000, guid: 442319df11672bf4183a47e774db7cff, type: 3}
+  - {fileID: 21300000, guid: 9caa7d1aeb1863240978d2d00642617f, type: 3}
+  - {fileID: 21300000, guid: b052ec7ec9af531438c1e81540d874d2, type: 3}

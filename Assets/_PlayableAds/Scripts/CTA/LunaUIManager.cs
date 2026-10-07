@@ -15,6 +15,8 @@ public class LunaUIManager : MonoBehaviour
     [Header("Scenario")]
     [SerializeField] private PlayableScenarioId scenario = PlayableScenarioId.Scenario123;
     [SerializeField] private List<ScenePlayableSO> scenePlayableSOs = new List<ScenePlayableSO>();
+    [Tooltip("Optional exact index in scenePlayableSOs. Use -1 to select the first config matching scenario.")]
+    [SerializeField] private int scenePlayableConfigIndex = -1;
     [Header("Persistent store CTAs")]
     [SerializeField] private List<Button> ctaButtons = new List<Button>();
     [Header("Repeating endcard")]
@@ -25,6 +27,7 @@ public class LunaUIManager : MonoBehaviour
     [Header("Optional references (auto-resolved when empty)")]
     [SerializeField] private PlayableTutorialFlow tutorialFlow;
     [SerializeField] private PlantStore plantStore;
+    [SerializeField] private List<PlantStore> plantStores = new List<PlantStore>();
     [SerializeField] private PlantConfig plantConfig;
     [SerializeField] private Button selloutButton;
     [SerializeField] private CanvasGroup selloutCanvasGroup;
@@ -117,6 +120,7 @@ public class LunaUIManager : MonoBehaviour
     {
         CurrentScenePlayableSO = FindScenarioConfig();
         SubscribePlotSystem();
+        HideFruitPicker();
         if (CurrentScenePlayableSO == null) { Debug.LogWarning("LunaUIManager: no ScenePlayableSO is assigned."); return; }
         bool useScenarioTutorial = useSceneSoTutorialSettings || CurrentScenePlayableSO.scenario != PlayableScenarioId.Scenario123;
         if (tutorialFlow != null && useScenarioTutorial)
@@ -137,6 +141,12 @@ public class LunaUIManager : MonoBehaviour
 
     private ScenePlayableSO FindScenarioConfig()
     {
+        if (scenePlayableConfigIndex >= 0 && scenePlayableConfigIndex < scenePlayableSOs.Count)
+        {
+            ScenePlayableSO indexedConfig = scenePlayableSOs[scenePlayableConfigIndex];
+            if (indexedConfig != null) return indexedConfig;
+        }
+
         foreach (ScenePlayableSO config in scenePlayableSOs) if (config != null && config.scenario == scenario) return config;
         foreach (ScenePlayableSO config in scenePlayableSOs) if (config != null) return config;
         return null;
@@ -151,7 +161,8 @@ public class LunaUIManager : MonoBehaviour
 
     private bool TryShowPlantPicker(Plot targetPlot, bool startTutorialAfterSelection)
     {
-        if (targetPlot == null || targetPlot.State != FarmPlotState.Empty || plantStore == null)
+        PlantStore activeStore = GetActivePlantStore();
+        if (targetPlot == null || targetPlot.State != FarmPlotState.Empty || activeStore == null)
         {
             return false;
         }
@@ -162,11 +173,11 @@ public class LunaUIManager : MonoBehaviour
             return false;
         }
 
-        plantStore.Prewarm(choices.Count);
+        activeStore.Prewarm(choices.Count);
         _pendingPlantPlotId = targetPlot.PlotId;
         _startTutorialAfterPlantSelection = startTutorialAfterSelection;
         _waitingForFruitSelection = true;
-        plantStore.SetupStore(choices);
+        activeStore.SetupStore(choices);
         return true;
     }
 
@@ -174,19 +185,65 @@ public class LunaUIManager : MonoBehaviour
     {
         List<PlantConfigData> choices = new List<PlantConfigData>();
         if (plantConfig == null || CurrentScenePlayableSO == null) return choices;
-        foreach (int id in CurrentScenePlayableSO.selectablePlantIds)
+        if (CurrentScenePlayableSO.plantPickerVariant == PlayablePlantPickerVariant.AllPlants)
         {
-            PlantConfigData plant = plantConfig.GetPlant(id);
-            if (plant != null) choices.Add(plant);
+            for (int i = 0; i < plantConfig.plants.Count; i++)
+            {
+                AddPlantChoice(choices, plantConfig.plants[i]);
+            }
+        }
+        else if (CurrentScenePlayableSO.selectablePlantIds != null)
+        {
+            foreach (int id in CurrentScenePlayableSO.selectablePlantIds)
+            {
+                AddPlantChoice(choices, plantConfig.GetPlant(id));
+            }
         }
         return choices;
+    }
+
+    private void AddPlantChoice(List<PlantConfigData> choices, PlantConfigData plant)
+    {
+        if (plant == null || IsPlantAlreadyPlanted(plant.ID) || choices.Exists(item => item.ID == plant.ID))
+        {
+            return;
+        }
+
+        choices.Add(plant);
+    }
+
+    private bool IsPlantAlreadyPlanted(int plantId)
+    {
+        List<PlotSaveData> plots = PlayableFarmState.PlayerData.GardenData.plots;
+        for (int i = 0; i < plots.Count; i++)
+        {
+            if (plots[i] != null && plots[i].state == PlotState.Planted && GetVisualPlantId(plots[i]) == plantId)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private int GetVisualPlantId(PlotSaveData plot)
+    {
+        return plot.visualPlantId >= 0 ? plot.visualPlantId : plot.plantedPlantId;
     }
 
     private void HandlePlantSelected(int plantId)
     {
         if (!_waitingForFruitSelection) return;
+        if (!GetConfiguredFruitChoices().Exists(plant => plant.ID == plantId))
+        {
+            Debug.LogWarning($"LunaUIManager: plant {plantId} is not a configured picker choice.");
+            return;
+        }
+
         Plot targetPlot = _plotSystem != null ? _plotSystem.GetPlotComponent(_pendingPlantPlotId) : null;
-        if (targetPlot == null || targetPlot.State != FarmPlotState.Empty || !_plotSystem.TryOccupyPlot(_pendingPlantPlotId, plantId))
+        int gameplayPlantId = ResolveGameplayPlantId(targetPlot, plantId);
+        if (gameplayPlantId < 0 || targetPlot == null || targetPlot.State != FarmPlotState.Empty ||
+            !_plotSystem.TryOccupyPlot(_pendingPlantPlotId, gameplayPlantId, plantId))
         {
             Debug.LogWarning("LunaUIManager: selected plant could not be placed on the pending plot.");
             return;
@@ -202,6 +259,37 @@ public class LunaUIManager : MonoBehaviour
         RestartEndcardCountdown();
     }
 
+    private int ResolveGameplayPlantId(Plot targetPlot, int visualPlantId)
+    {
+        if (targetPlot != null && targetPlot.PlotData != null && targetPlot.PlotData.Config != null &&
+            targetPlot.PlotData.Config.defaultPlantId >= 0)
+        {
+            return targetPlot.PlotData.Config.defaultPlantId;
+        }
+
+        FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+        PlantConfig config = plantConfig != null ? plantConfig : ConfigHolder.Instance?.PlantConfig;
+        int configuredId = farmConfig != null && targetPlot != null
+            ? farmConfig.GetInitialPlantId(targetPlot.PlotId, config)
+            : -1;
+        if (configuredId >= 0 && config != null && config.GetPlant(configuredId) != null)
+        {
+            return configuredId;
+        }
+
+        return visualPlantId;
+    }
+
+    private bool IsConfiguredPlantChoice(int plantId)
+    {
+        if (CurrentScenePlayableSO == null)
+        {
+            return false;
+        }
+
+        return GetConfiguredFruitChoices().Exists(plant => plant.ID == plantId);
+    }
+
     public void RequestPlantChoice(Plot plot)
     {
         if (plot == null || plot.State != FarmPlotState.Empty || _waitingForFruitSelection)
@@ -209,9 +297,13 @@ public class LunaUIManager : MonoBehaviour
             return;
         }
 
-        if (CurrentScenePlayableSO == null || !CurrentScenePlayableSO.UsesPlantPicker || !TryShowPlantPicker(plot, false))
+        if (CurrentScenePlayableSO == null || !CurrentScenePlayableSO.UsesPlantPicker)
         {
             _plotSystem?.TryPlantConfiguredPlot(plot.PlotId);
+        }
+        else
+        {
+            TryShowPlantPicker(plot, false);
         }
     }
 
@@ -248,7 +340,8 @@ public class LunaUIManager : MonoBehaviour
             return;
         }
 
-        _plotSystem?.TryPlantConfiguredPlot(plotData.Id);
+        // A picker plot must remain empty when every valid choice has already
+        // been used; never silently plant a duplicate fallback crop.
     }
 
     private Plot GetFirstEmptyPlot()
@@ -274,7 +367,15 @@ public class LunaUIManager : MonoBehaviour
     {
         Transform playableRoot = transform.root;
         if (tutorialFlow == null) tutorialFlow = playableRoot.GetComponentInChildren<PlayableTutorialFlow>(true);
-        if (plantStore == null) plantStore = playableRoot.GetComponentInChildren<PlantStore>(true);
+        PlantStore[] discoveredStores = playableRoot.GetComponentsInChildren<PlantStore>(true);
+        for (int i = 0; i < discoveredStores.Length; i++)
+        {
+            if (discoveredStores[i] != null && !plantStores.Contains(discoveredStores[i]))
+            {
+                plantStores.Add(discoveredStores[i]);
+            }
+        }
+        if (plantStore == null && plantStores.Count > 0) plantStore = plantStores[0];
         if (plantConfig == null && ConfigHolder.Instance != null) plantConfig = ConfigHolder.Instance.PlantConfig;
         if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "EndGamePanel");
         ResolvePreloadedUpgradePopups(playableRoot);
@@ -314,6 +415,7 @@ public class LunaUIManager : MonoBehaviour
             else
             {
                 currencyFlyEffect.Initialize(_currencyDisplay);
+                currencyFlyEffect.SetPayoutSource(selloutButton != null ? selloutButton.transform : null);
             }
         }
 
@@ -398,9 +500,10 @@ public class LunaUIManager : MonoBehaviour
             selloutCanvasGroup.blocksRaycasts = isVisible;
         }
         selloutButton.interactable = isVisible;
+        string selloutValue = station != null ? T_Utility.FormatGold(station.LoadedRevenue) : "0";
         if (selloutValueText != null)
         {
-            selloutValueText.text = station != null ? T_Utility.FormatGold(station.LoadedRevenue) : "0";
+            selloutValueText.text = selloutValue;
         }
     }
 
@@ -483,7 +586,26 @@ public class LunaUIManager : MonoBehaviour
         if (endcardRoot != null) endcardRoot.SetActive(false);
     }
 
-    private void HideFruitPicker() { if (plantStore != null) plantStore.HideStore(); }
+    private void HideFruitPicker()
+    {
+        for (int i = 0; i < plantStores.Count; i++)
+        {
+            if (plantStores[i] != null) plantStores[i].HideStore();
+        }
+        if (plantStore != null && !plantStores.Contains(plantStore)) plantStore.HideStore();
+    }
+
+    private PlantStore GetActivePlantStore()
+    {
+        bool wantsGrid = CurrentScenePlayableSO != null && CurrentScenePlayableSO.plantPickerVariant == PlayablePlantPickerVariant.AllPlants;
+        for (int i = 0; i < plantStores.Count; i++)
+        {
+            PlantStore candidate = plantStores[i];
+            if (candidate != null && candidate.IsGridStore == wantsGrid) return candidate;
+        }
+
+        return plantStore != null && plantStore.IsGridStore == wantsGrid ? plantStore : null;
+    }
 
     public void ShowIrrigationUpgrade()
     {
@@ -554,7 +676,10 @@ public class LunaUIManager : MonoBehaviour
         }
 
         plot.SetPlantLevel(plant.PlantLevel);
-        PlayableFarmState.UpdatePlotData(plot.PlotId, PlotState.Planted, plant.PlantId, plant.PlantLevel);
+        // Picker selection is an art-only override. Preserve it while the
+        // plot's gameplay plant continues to own price, water, and upgrade
+        // stats from its configured ring data.
+        PlayableFarmState.UpdatePlotData(plot.PlotId, PlotState.Planted, plant.PlantId, plant.PlantLevel, plant.VisualPlantId);
         GameEventBus.OnCropUpgradedEvent?.Invoke(plant.PlantId, plant.PlantLevel);
         return true;
     }

@@ -145,7 +145,10 @@ public class PopupPlantTreeLayer : WorldLayerBase
 
         if (_currentPlot != null && _currentPlot.PlotData != null && _currentPlot.PlotData.Config != null)
         {
-            int configPlantId = _currentPlot.PlotData.Config.defaultPlantId;
+            FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+            int configPlantId = farmConfig != null
+                ? farmConfig.GetInitialPlantId(_currentPlot.PlotId, ConfigHolder.Instance?.PlantConfig)
+                : _currentPlot.PlotData.Config.defaultPlantId;
             return configPlantId >= 0 ? configPlantId : 0;
         }
 

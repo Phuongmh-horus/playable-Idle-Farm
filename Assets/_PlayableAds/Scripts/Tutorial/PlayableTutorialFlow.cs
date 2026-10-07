@@ -272,6 +272,16 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
         CompleteIfCurrent(Phase.Upgrade);
     }
 
+    /// <summary>
+    /// Any upgrade icon is a valid acknowledgement of phase 4. The icon
+    /// layer is shared by plots, sprinkler/harvester, and transport, so this
+    /// keeps tutorial dismissal consistent for every upgrade target.
+    /// </summary>
+    public void ReportAnyUpgradeIconClicked()
+    {
+        CompleteIfCurrent(Phase.Upgrade);
+    }
+
     private void CompleteIfCurrent(Phase expected)
     {
         if (CurrentPhase == expected) CompleteCurrentPhase();

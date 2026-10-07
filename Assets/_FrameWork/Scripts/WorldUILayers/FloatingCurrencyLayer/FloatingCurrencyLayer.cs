@@ -6,6 +6,7 @@ using UnityEngine;
 public class FloatingCurrencyLayer : WorldLayerBase
 {
     [SerializeField] private TextMeshProUGUI currencyText;
+    [SerializeField] private TextMeshProUGUI currencyOutlineText;
     [SerializeField] private float floatDistance = 0.8f;
     [SerializeField] private float floatDuration = 0.75f;
     [SerializeField] private float delayBeforeFade = 0.35f;
@@ -20,13 +21,20 @@ public class FloatingCurrencyLayer : WorldLayerBase
         blockSelectionClick = false;
         base.Awake();
         if (currencyText == null) currencyText = GetComponentInChildren<TextMeshProUGUI>(true);
+        if (currencyOutlineText == null && currencyText != null && currencyText.transform.parent != null)
+        {
+            currencyOutlineText = currencyText.transform.parent.GetComponent<TextMeshProUGUI>();
+        }
+        EnsureCurrencyOutline();
         if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
     }
 
     public void ShowAmount(double amount, Action onComplete = null)
     {
         CancelMotions();
-        if (currencyText != null) currencyText.text = "+" + T_Utility.FormatGold(amount);
+        string value = "+ " + T_Utility.FormatGold(amount);
+        if (currencyText != null) currencyText.text = value;
+        if (currencyOutlineText != null) currencyOutlineText.text = value;
         if (canvasGroup != null) canvasGroup.alpha = 1f;
         Vector3 start = transform.position;
         _animationStartPosition = start;
@@ -98,4 +106,35 @@ public class FloatingCurrencyLayer : WorldLayerBase
 
     public override void CleanupBeforeHide() { CancelMotions(); ResetVisuals(); base.CleanupBeforeHide(); }
     public override void Hide() { CleanupBeforeHide(); base.Hide(); }
+
+    private void EnsureCurrencyOutline()
+    {
+        if (currencyText == null || currencyOutlineText != null) return;
+
+        Transform originalParent = currencyText.transform.parent;
+        if (originalParent == null) return;
+
+        GameObject outlineObject = new GameObject("Outline_Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        RectTransform outlineRect = outlineObject.GetComponent<RectTransform>();
+        outlineRect.SetParent(originalParent, false);
+        outlineRect.anchorMin = currencyText.rectTransform.anchorMin;
+        outlineRect.anchorMax = currencyText.rectTransform.anchorMax;
+        outlineRect.pivot = currencyText.rectTransform.pivot;
+        outlineRect.anchoredPosition = currencyText.rectTransform.anchoredPosition;
+        outlineRect.sizeDelta = currencyText.rectTransform.sizeDelta;
+        outlineRect.localScale = Vector3.one * 1.15f;
+
+        currencyText.transform.SetParent(outlineRect, false);
+        currencyText.rectTransform.localScale = Vector3.one * 0.95f;
+        outlineRect.SetAsFirstSibling();
+
+        currencyOutlineText = outlineObject.GetComponent<TextMeshProUGUI>();
+        currencyOutlineText.font = currencyText.font;
+        currencyOutlineText.fontSize = currencyText.fontSize;
+        currencyOutlineText.alignment = currencyText.alignment;
+        currencyOutlineText.enableAutoSizing = currencyText.enableAutoSizing;
+        currencyOutlineText.fontSizeMin = currencyText.fontSizeMin;
+        currencyOutlineText.fontSizeMax = currencyText.fontSizeMax;
+        currencyOutlineText.color = new Color(0.15994173f, 0.35547677f, 0f, 1f);
+    }
 }

@@ -22,6 +22,8 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
     [SerializeField] private Image statTwoArrowImage;
     [SerializeField] private TMP_Text statTwoNextText;
     [SerializeField] private TMP_Text costText;
+    [SerializeField] private TMP_Text costForegroundText;
+    [SerializeField] private Image upgradeCurrencyIcon;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button closeButton;
     [SerializeField] private Button dimButton;
@@ -40,6 +42,8 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
     public Image StatTwoArrowImage { get { ResolveMissingReferences(); return statTwoArrowImage; } }
     public TMP_Text StatTwoNextText { get { ResolveMissingReferences(); return statTwoNextText; } }
     public TMP_Text CostText { get { ResolveMissingReferences(); return costText; } }
+    public TMP_Text CostForegroundText { get { ResolveMissingReferences(); return costForegroundText; } }
+    public Image UpgradeCurrencyIcon { get { ResolveMissingReferences(); return upgradeCurrencyIcon; } }
     public Button UpgradeButton { get { ResolveMissingReferences(); return upgradeButton; } }
     public Button CloseButton { get { ResolveMissingReferences(); return closeButton; } }
     public Button DimButton { get { ResolveMissingReferences(); return dimButton; } }
@@ -90,12 +94,31 @@ public sealed class PlayableUpgradePopupView : MonoBehaviour
             string itemName = images[i].gameObject.name.ToLowerInvariant();
             if (statOneArrowImage == null && itemName.Contains("stat1arrow")) statOneArrowImage = images[i];
             else if (statTwoArrowImage == null && itemName.Contains("stat2arrow")) statTwoArrowImage = images[i];
+            else if (upgradeCurrencyIcon == null && upgradeButton != null &&
+                images[i].transform.IsChildOf(upgradeButton.transform) &&
+                (itemName.Contains("cash") || itemName.Contains("currency")))
+            {
+                upgradeCurrencyIcon = images[i];
+            }
         }
 
         if (statTwoRoot == null)
         {
             Transform statTwoTransform = transform.Find("Card/Inner/StatsRoot/Stat2Root");
             if (statTwoTransform != null) statTwoRoot = statTwoTransform.gameObject;
+        }
+
+        if (costForegroundText == null && costText != null)
+        {
+            TMP_Text[] costTexts = costText.GetComponentsInChildren<TMP_Text>(true);
+            for (int i = 0; i < costTexts.Length; i++)
+            {
+                if (costTexts[i] != costText)
+                {
+                    costForegroundText = costTexts[i];
+                    break;
+                }
+            }
         }
 
         if (illustration == null)

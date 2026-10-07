@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2188852452233133000}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.8, z: 0}
+  m_LocalPosition: {x: 0, y: -1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -183,8 +183,8 @@ MonoBehaviour:
   plantRoot: {fileID: 5864182552438162115}
   plotVisual: {fileID: 7493328478997708553}
   upgradeIconOffset: {x: 0.5, y: 1.2, z: 1.1}
-  plotPriceOffset: {x: 0.2, y: 0.2, z: 0.2}
-  plantTreeOffset: {x: 0.2, y: 0.2, z: 0}
+  plotPriceOffset: {x: -0.5, y: 0, z: 0}
+  plantTreeOffset: {x: 0, y: 0, z: 0.4}
 --- !u!114 &7493328478997708553
 MonoBehaviour:
   m_ObjectHideFlags: 0

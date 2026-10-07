@@ -1,5 +1,9 @@
 # Lessons
 
+- Plant picker selection must not replace a plot's gameplay plant identity: preserve the plot/ring plant type for prices, water, and upgrades, and store picker-selected art as a separate visual override.
+
+- When plant visual/config list order is intended to control starter planting order, never resolve starter plants by stable ID alone; use an explicit FarmConfig order first, then PlantConfig list order, and keep stable IDs only for identity.
+
 - When a user reports that the same Luna visual bug persists after a fix, add temporary identity/state/renderer diagnostics at bind, refresh, and assignment boundaries before making another visual-logic change; prove whether the wrong object, wrong state, or wrong sprite binding is responsible.
 
 - If a Luna plot visual fix passes Unity runtime but the local web still shows stale plot sprites, do not assume PlotVisual is the only writer; trace every SpriteRenderer assignment plus scene prefab overrides and exported scene data before changing the renderer again.
@@ -32,4 +36,4 @@
 - When Luna excludes a coroutine method, never start that transition from an exported method: assign the main sprite synchronously and always clear any legacy overlay, including when the requested sprite is already assigned.
 - When plot state is evaluated before scene-authored plot components bind, queue the visual refresh by plot ID and replay it after registration; an explicit refresh call made against an empty component map is otherwise lost in exported runtime.
 - If Luna logs show the authoritative SpriteRenderer sprite changed correctly but pixels update only after another plot changes, treat SpriteRenderer sprite mutation as a stale batch/cache boundary; use pre-authored per-state renderers and switch active GameObjects instead of mutating atlas UV state in place.
-- When a fix appears absent in Luna, verify the active build scene and every prefab source GUID before changing code; scene instances can preserve null overrides from an older serialized component version.
+- Plant visual order and plant ID are separate concerns: when the starter plant must follow authored order, resolve initial plot plant IDs from an explicit FarmConfig order before scenario defaults; never assume visual list order changes enum ID 0.

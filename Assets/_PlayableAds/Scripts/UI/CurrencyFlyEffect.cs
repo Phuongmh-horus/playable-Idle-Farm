@@ -20,18 +20,20 @@ public sealed class CurrencyFlyEffect : MonoBehaviour
 
     public static CurrencyFlyEffect Instance { get; private set; }
 
-    [SerializeField, Min(1)] private int prewarmCount = 6;
+    [SerializeField, Min(1)] private int prewarmCount = 5;
     [SerializeField, Min(0.1f)] private float flightDuration = 0.55f;
     [SerializeField, Min(0f)] private float stagger = 0.045f;
     [SerializeField, Min(1)] private int coinsPerPayout = 5;
     [Header("Prewarmed inspector references")]
     [SerializeField] private RectTransform flyRoot;
     [SerializeField] private Image[] prewarmedTokens;
+    [SerializeField] private RectTransform payoutSource;
 
     private readonly List<Token> _tokens = new List<Token>(6);
     private RectTransform _flyRoot;
     private RectTransform _target;
     private Canvas _canvas;
+    private Canvas _sourceCanvas;
     private PlayableCurrencyDisplay _display;
     private bool _isPlaying;
 
@@ -94,9 +96,20 @@ public sealed class CurrencyFlyEffect : MonoBehaviour
         }
     }
 
+    public void SetPayoutSource(Transform source)
+    {
+        payoutSource = source as RectTransform;
+        _sourceCanvas = payoutSource != null ? payoutSource.GetComponentInParent<Canvas>() : null;
+    }
+
     public static bool PlayFromWorld(Vector3 worldPosition, Action onComplete)
     {
         return Instance != null && Instance.Play(worldPosition, onComplete);
+    }
+
+    public static bool PlayFromSellout(Action onComplete)
+    {
+        return Instance != null && Instance.PlayFromPayoutSource(onComplete);
     }
 
     private bool Play(Vector3 worldPosition, Action onComplete)
@@ -112,11 +125,37 @@ public sealed class CurrencyFlyEffect : MonoBehaviour
             return false;
         }
 
+        Vector2 start = Vector2.zero;
+        if (!TryGetCanvasPosition(sceneCamera.WorldToScreenPoint(worldPosition), out start)) return false;
+        return PlayFromScreenPosition(start, onComplete);
+    }
+
+    private bool PlayFromPayoutSource(Action onComplete)
+    {
+        if (payoutSource == null || _flyRoot == null) return false;
+
+        if (payoutSource.root == _flyRoot.root)
+        {
+            Vector3 sourceWorldPosition = payoutSource.TransformPoint(payoutSource.rect.center);
+            Vector2 localStart = _flyRoot.InverseTransformPoint(sourceWorldPosition);
+            return PlayFromScreenPosition(localStart, onComplete);
+        }
+
+        Camera sourceCamera = _sourceCanvas != null && _sourceCanvas.renderMode != RenderMode.ScreenSpaceOverlay
+            ? (_sourceCanvas.worldCamera != null ? _sourceCanvas.worldCamera : Camera.main)
+            : null;
         Vector2 start;
-        if (!TryGetCanvasPosition(sceneCamera.WorldToScreenPoint(worldPosition), out start))
+        if (!TryGetCanvasPosition(RectTransformUtility.WorldToScreenPoint(sourceCamera, payoutSource.position), out start))
         {
             return false;
         }
+
+        return PlayFromScreenPosition(start, onComplete);
+    }
+
+    private bool PlayFromScreenPosition(Vector2 start, Action onComplete)
+    {
+        if (_isPlaying || _flyRoot == null || _target == null || _tokens.Count == 0) return false;
 
         Vector2 end;
         Camera canvasCamera = GetCanvasCamera();
@@ -124,6 +163,9 @@ public sealed class CurrencyFlyEffect : MonoBehaviour
         {
             return false;
         }
+
+        start = ToTokenAnchoredPosition(start);
+        end = ToTokenAnchoredPosition(end);
 
         _isPlaying = true;
         SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_cash_fly);
@@ -197,5 +239,12 @@ public sealed class CurrencyFlyEffect : MonoBehaviour
     {
         return RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _flyRoot, screenPosition, GetCanvasCamera(), out canvasPosition);
+    }
+
+    private Vector2 ToTokenAnchoredPosition(Vector2 localPosition)
+    {
+        // CurrencyFlyPool uses bottom-left anchored token RectTransforms,
+        // while local positions returned by RectTransformUtility are pivot-relative.
+        return localPosition - _flyRoot.rect.min;
     }
 }

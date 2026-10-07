@@ -61,10 +61,7 @@ public class HarvestBlade : MonoBehaviour
         Instance = this;
         _mainCamera = Camera.main;
         _visualRestRotation = Visual.localRotation;
-        // if (fireFlare == null)
-        // {
-        //     fireFlare = GetComponentInChildren<ParticleSystem>();
-        // }
+
     }
 
     private void OnDestroy()
@@ -78,7 +75,6 @@ public class HarvestBlade : MonoBehaviour
 
     private void OnDisable()
     {
-        // StopFireFlare();
         CancelMotions();
         _isDragging = false;
         transform.localScale = Vector3.one;
@@ -99,7 +95,6 @@ public class HarvestBlade : MonoBehaviour
     {
         CancelMotions();
         _isDragging = false;
-        // StopFireFlare();
 
         if (harvesterBladeRoot != null)
         {
@@ -213,8 +208,6 @@ public class HarvestBlade : MonoBehaviour
 
         _isDragging = true;
 
-        // PlayFireFlare();
-
         transform.localScale = Vector3.one * dragScale;
 
         OnDragStarted?.Invoke();
@@ -226,8 +219,6 @@ public class HarvestBlade : MonoBehaviour
             return;
 
         _isDragging = false;
-        // StopFireFlare();
-
         OnDragEnded?.Invoke();
         ReturnToRoot();
     }
@@ -361,22 +352,6 @@ public class HarvestBlade : MonoBehaviour
         }
         _harvestBuffer.Clear();
     }
-
-    // public void PlayFireFlare()
-    // {
-    //     if (fireFlare != null && !fireFlare.isPlaying)
-    //     {
-    //         fireFlare.Play();
-    //     }
-    // }
-
-    // public void StopFireFlare()
-    // {
-    //     if (fireFlare != null && fireFlare.isPlaying)
-    //     {
-    //         fireFlare.Stop();
-    //     }
-    // }
 
     private void CancelMotions()
     {

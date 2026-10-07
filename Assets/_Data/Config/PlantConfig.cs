@@ -33,6 +33,20 @@ public class PlantConfig : ScriptableObject
         return plants.Find(p => (int)p.plantType == plantId);
     }
 
+    /// <summary>
+    /// Gets the plant ID at the configured list position. The list order is
+    /// intentionally separate from the stable PlantType/ID value.
+    /// </summary>
+    public int GetPlantIdAtOrder(int orderIndex)
+    {
+        if (plants == null || orderIndex < 0 || orderIndex >= plants.Count || plants[orderIndex] == null)
+        {
+            return -1;
+        }
+
+        return plants[orderIndex].ID;
+    }
+
     #endregion
 }
 
@@ -58,11 +72,11 @@ public class PlantRingStats
 [Serializable]
 public class PlantConfigData
 {
-    [Header("Identity & Visuals")]
+    [Header("Identity")]
     public PlantType plantType;
-    public Sprite plantIcon;
-    public Sprite fruitIcon;
-    public Plant plantPrefab;
+
+    [Header("Visual Set (ScriptableObject)")]
+    public PlantVisualSO visual;
 
     [Header("Playable Progression")]
     [Min(1)] public int maxLevel = 5;
@@ -72,14 +86,15 @@ public class PlantConfigData
     [Header("Ring Stats (Cây ở 3 ring đầu: có 3 phần tử cho Ring 0, 1, 2. Cây ở Ring 4 hoặc cây dùng chung: chỉ cần 1 phần tử)")]
     public List<PlantRingStats> ringStats = new List<PlantRingStats>();
 
-    [Header("Plant Level Sprites (Mỗi level tương ứng 1 Sprite, Số lượng = Max Level)")]
-    public List<Sprite> plantSprites = new List<Sprite>();
-
     #region Properties
 
     public int ID => (int)plantType;
     public string PlantName => GetDisplayName();
     public string FruitName => GetDisplayName();
+    public Sprite plantIcon => visual != null ? visual.plantIcon : null;
+    public Sprite fruitIcon => visual != null ? visual.fruitIcon : null;
+    public Plant plantPrefab => GetPrefab();
+    public List<Sprite> plantSprites => visual != null ? visual.plantSprites : null;
 
     public string GetDisplayName()
     {
@@ -104,12 +119,7 @@ public class PlantConfigData
 
     public Sprite GetPlantSprite(int fruitCount = 0)
     {
-        if (plantSprites == null || plantSprites.Count == 0)
-            return plantIcon != null ? plantIcon : fruitIcon;
-
-        int index = Mathf.Clamp(fruitCount, 0, plantSprites.Count - 1);
-        Sprite sp = plantSprites[index];
-        return sp != null ? sp : (plantIcon != null ? plantIcon : fruitIcon);
+        return visual != null ? visual.GetPlantSprite(fruitCount) : null;
     }
 
     public List<Vector2> GetFruitPositions()
@@ -130,7 +140,7 @@ public class PlantConfigData
 
     public Plant GetPrefab()
     {
-        return plantPrefab;
+        return visual != null ? visual.plantPrefab : null;
     }
 
     public Sprite GetIcon(int level = 1)
