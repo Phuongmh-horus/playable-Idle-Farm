@@ -14,6 +14,14 @@ public class PlantItem : MonoBehaviour
     private void Awake()
     {
         button = GetComponent<Button>();
+        if (fruitIconImage == null)
+        {
+            fruitIconImage = GetComponentInChildren<Image>(true);
+        }
+        if (fruitNameText == null)
+        {
+            fruitNameText = GetComponentInChildren<TMP_Text>(true);
+        }
     }
 
     public void SetData(PlantConfigData data)
@@ -25,10 +33,10 @@ public class PlantItem : MonoBehaviour
             return;
         }
 
-        if (fruitIconImage != null)
-        {
-            fruitIconImage.sprite = data != null ? (data.plantIcon != null ? data.plantIcon : data.fruitIcon) : null;
-        }
+        // The picker deliberately uses the big plant art, independently of
+        // gameplay's fruit/plant sprites and their progression visuals.
+        Sprite icon = data != null ? data.GetPlantStoreIcon() : null;
+        if (fruitIconImage != null) fruitIconImage.sprite = icon;
 
         if (fruitNameText != null)
         {

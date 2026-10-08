@@ -10,6 +10,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
 
     private readonly Dictionary<WorldLayerType, Queue<WorldLayerBase>> _poolDic = new Dictionary<WorldLayerType, Queue<WorldLayerBase>>();
     private readonly List<WorldLayerBase> _activeLayers = new List<WorldLayerBase>();
+    private readonly HashSet<WorldLayerBase> _pooledLayers = new HashSet<WorldLayerBase>();
 
     private void Reset()
     {
@@ -30,16 +31,37 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
 
     private void RegisterPreAttachedLayers()
     {
-        WorldLayerBase[] sceneLayers = GetComponentsInChildren<WorldLayerBase>(true);
+        WorldLayerBase[] sceneLayers = GetSceneLayers();
         for (int i = 0; i < sceneLayers.Length; i++)
         {
             WorldLayerBase layer = sceneLayers[i];
             if (layer == null) continue;
-            layer.LayerType = GetLayerType(layer);
-            layer.CleanupBeforeHide();
-            layer.gameObject.SetActive(false);
-            GetOrCreatePool(layer.LayerType).Enqueue(layer);
+            RegisterPreAttachedLayer(layer);
         }
+    }
+
+    private WorldLayerBase[] GetSceneLayers()
+    {
+        // GameplayWorldCanvas is commonly a separate scene root from the
+        // manager. Searching only this transform silently produces an empty
+        // pool even though the layer instances are correctly authored under
+        // worldLayerParent.
+        Transform root = worldLayerParent != null
+            ? worldLayerParent
+            : (worldCanvas != null ? worldCanvas.transform : transform);
+        return root.GetComponentsInChildren<WorldLayerBase>(true);
+    }
+
+    private void RegisterPreAttachedLayer(WorldLayerBase layer)
+    {
+        if (layer == null || _pooledLayers.Contains(layer)) return;
+
+        layer.LayerType = GetLayerType(layer);
+        _activeLayers.Remove(layer);
+        _pooledLayers.Add(layer);
+        layer.CleanupBeforeHide();
+        layer.gameObject.SetActive(false);
+        GetOrCreatePool(layer.LayerType).Enqueue(layer);
     }
 
     private static WorldLayerType GetLayerType(WorldLayerBase layer)
@@ -108,13 +130,19 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
             }
         }
 
-        var pool = GetOrCreatePool(layerType);
-        WorldLayerBase layer = null;
-
-        while (pool.Count > 0)
+        WorldLayerBase layer = AcquirePooledLayer(layerType);
+        if (layer == null)
         {
-            layer = pool.Dequeue();
-            if (layer != null) break;
+            RecoverInactivePreAttachedLayers(layerType);
+            layer = AcquirePooledLayer(layerType);
+        }
+
+        // Playable world layers are authored in the scene. When a burst exceeds
+        // the finite pool, reuse an active visual instead of instantiating a
+        // prefab or leaving the active/pooled collections out of sync.
+        if (layer == null)
+        {
+            layer = RecycleActiveLayer(layerType);
         }
 
         if (layer == null)
@@ -129,6 +157,50 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         }
 
         return layer;
+    }
+
+    private WorldLayerBase AcquirePooledLayer(WorldLayerType layerType)
+    {
+        Queue<WorldLayerBase> pool = GetOrCreatePool(layerType);
+        while (pool.Count > 0)
+        {
+            WorldLayerBase layer = pool.Dequeue();
+            if (layer == null || _activeLayers.Contains(layer)) continue;
+
+            _pooledLayers.Remove(layer);
+            return layer;
+        }
+
+        return null;
+    }
+
+    private void RecoverInactivePreAttachedLayers(WorldLayerType layerType)
+    {
+        WorldLayerBase[] sceneLayers = GetSceneLayers();
+        for (int i = 0; i < sceneLayers.Length; i++)
+        {
+            WorldLayerBase layer = sceneLayers[i];
+            if (layer == null || layer.gameObject.activeInHierarchy || _activeLayers.Contains(layer)) continue;
+
+            if (GetLayerType(layer) == layerType)
+            {
+                RegisterPreAttachedLayer(layer);
+            }
+        }
+    }
+
+    private WorldLayerBase RecycleActiveLayer(WorldLayerType layerType)
+    {
+        for (int i = 0; i < _activeLayers.Count; i++)
+        {
+            WorldLayerBase layer = _activeLayers[i];
+            if (layer == null || layer.LayerType != layerType) continue;
+
+            ReleaseToPool(layer);
+            return AcquirePooledLayer(layerType);
+        }
+
+        return null;
     }
 
     public void Hide(WorldLayerBase layer, bool animate = true)
@@ -147,12 +219,25 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
 
     public void ReleaseToPool(WorldLayerBase layer)
     {
-        if (layer == null) return;
+        if (layer == null || _pooledLayers.Contains(layer)) return;
 
         _activeLayers.Remove(layer);
+        _pooledLayers.Add(layer);
         layer.CleanupBeforeHide();
         layer.gameObject.SetActive(false);
         GetOrCreatePool(layer.LayerType).Enqueue(layer);
+    }
+
+    /// <summary>
+    /// Protects the scene-owned layer pool from legacy callers that only
+    /// deactivate a layer. Manager-owned releases are already marked pooled.
+    /// </summary>
+    public void NotifyLayerDisabled(WorldLayerBase layer)
+    {
+        if (layer != null && !_pooledLayers.Contains(layer) && _activeLayers.Contains(layer))
+        {
+            ReleaseToPool(layer);
+        }
     }
 
     public void HideWorldLayer(WorldLayerType layerType, Transform target, bool animate = true)
@@ -264,10 +349,13 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
 
     public PopupPlantPriceLayer ShowPopupPlantPriceLayer(PlantPriceData plantPriceData, Transform target, Vector3 offset = default)
     {
+        // Refreshing a locked plot can happen several times during one frame.
+        // Reuse its existing price layer instead of consuming another pool slot.
+        HidePlantPriceLayer(target);
         var layer = ShowWorldLayer<PopupPlantPriceLayer>(WorldLayerType.PopupPlantPriceLayer, target, offset);
         if (layer != null)
         {
-            layer.InitData(plantPriceData) ;
+            layer.InitData(plantPriceData);
         }
         return layer;
     }
@@ -458,4 +546,6 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
     }
 
 }
+
+
 

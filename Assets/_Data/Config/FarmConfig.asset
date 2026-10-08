@@ -86,21 +86,23 @@ MonoBehaviour:
     isUnlockedByDefault: 0
   initialPlantOrder: 06000000030000000200000001000000080000000000000009000000040000000700000005000000
   sprinkler:
-    maxLevel: 20
-    rotationDuration: 10
-    rotationDurationReductionPerMilestone: 1
-    minimumRotationDuration: 5
+    maxLevel: 10
+    rotationDuration: 12
+    rotationDurationReductionPerMilestone: 3
+    minimumRotationDuration: 6
     level1Cost: 88
     sprinklerBasePrice: 88
     sprinklerUpdateScale: 2.2
     baseWaterAmount: 10
     waterAmountSumPerLevel: 3
   harvester:
-    maxLevel: 9
-    rotationDuration: 5
-    level1Cost: 130
-    harvesterBasePrice: 9750
-    harvesterUpdateScale: 3
+    maxLevel: 10
+    rotationDuration: 15
+    rotationDurationReductionPerLevel: 1
+    minimumRotationDuration: 5
+    level1Cost: 88
+    harvesterBasePrice: 88
+    harvesterUpdateScale: 2.25
   transport:
     maxLevel: 20
     baseCapacity: 3

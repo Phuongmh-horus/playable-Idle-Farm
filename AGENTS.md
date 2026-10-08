@@ -42,7 +42,8 @@ Spawn subagents liberally to keep main context window clean Offload research, ex
 @RTK.md
 
 ### 9. Playable Ads Specify
-If converting form game to PLA í required, follow these rules:
+Do NOT use find/resolve missing refernces logic, check serialized field and add references in inspector setup. 
+If converting form game to PLA is required, follow these rules:
 - Analyze scripts, prefabs, inspector setups... of original game to understand its logic, runtime flow, scene/gameobject/component setup before changing/modifying PLA.
 - Playable ads sdk use C# .Net 7, so downgrade code if they use higher vesion. 
 Example 1: 'new' cannot be used with tuple type. Use a tuple literal expression instead.

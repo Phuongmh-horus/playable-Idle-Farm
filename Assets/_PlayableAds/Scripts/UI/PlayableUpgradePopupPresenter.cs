@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
 {
     private PlayableUpgradePopupView _popupView;
-    private CanvasGroup _canvasGroup;
     private Func<int> _getLevel;
     private Func<int> _getMaxLevel;
     private Func<double> _getCost;
@@ -44,9 +43,8 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         _title = title;
         _getStatRows = getStatRows;
         _getIllustration = getIllustration;
-        _popupView.ResolveMissingReferences();
-        _canvasGroup = _popupView.GetComponent<CanvasGroup>();
-        if (_canvasGroup == null)
+        CanvasGroup canvasGroup = _popupView.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
         {
             Debug.LogError("Pre-attached upgrade popup needs a CanvasGroup: " + _popupView.name);
             ClearData();
@@ -54,9 +52,9 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         }
 
         _popupView.gameObject.SetActive(true);
-        _canvasGroup.alpha = 1f;
-        _canvasGroup.interactable = true;
-        _canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
         WireButtons();
         Refresh();
     }
@@ -79,7 +77,6 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
     private void ClearData()
     {
         _popupView = null;
-        _canvasGroup = null;
         _getLevel = null;
         _getMaxLevel = null;
         _getCost = null;

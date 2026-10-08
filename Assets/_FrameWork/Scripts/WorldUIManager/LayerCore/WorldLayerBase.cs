@@ -118,6 +118,11 @@ public class WorldLayerBase : MonoBehaviour
     protected virtual void OnDisable()
     {
         ActiveInteractableLayers.Remove(this);
+        WorldLayerManager manager = WorldLayerManager.Instance;
+        if (manager != null)
+        {
+            manager.NotifyLayerDisabled(this);
+        }
     }
 
     protected virtual void OnDestroy()
@@ -199,6 +204,12 @@ public class WorldLayerBase : MonoBehaviour
         SetupCameraForWorldCanvas();
 
         if (canvas) canvas.enabled = true;
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
         if (!gameObject.activeSelf)
         {
             gameObject.SetActive(true);

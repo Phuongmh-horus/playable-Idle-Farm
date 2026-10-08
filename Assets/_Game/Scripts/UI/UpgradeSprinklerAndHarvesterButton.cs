@@ -5,6 +5,7 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
     [Header("Upgrade Icon Settings")]
     [SerializeField] private Transform targetTransform;
     [SerializeField] private Vector3 iconOffset = new Vector3(0, 1.5f, 0);
+    [SerializeField] private LunaUIManager uiManager;
 
     private bool _isShowingIcon;
     private bool _isGoldSubscribed;
@@ -15,12 +16,6 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
     private FarmIrrigationSystem IrrigationSystem => FarmSystem.Instance != null ? FarmSystem.Instance.IrrigationSystem : null;
     private FarmHarvestSystem HarvestSystem => FarmSystem.Instance != null ? FarmSystem.Instance.HarvestSystem : null;
 
-    private void Start()
-    {
-        SubscribeEvents();
-        UpdateUpgradeIconState();
-    }
-
     private void OnEnable()
     {
         SubscribeEvents();
@@ -28,12 +23,6 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
     }
 
     private void OnDisable()
-    {
-        UnsubscribeEvents();
-        HideIcon();
-    }
-
-    private void OnDestroy()
     {
         UnsubscribeEvents();
         HideIcon();
@@ -191,8 +180,22 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
         ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
         if (scenario != null && !scenario.showUpgrade) return;
 
-        if (CanUpgradeSprinkler()) LunaUIManager.Instance?.ShowIrrigationUpgrade();
-        else if (CanUpgradeHarvester()) LunaUIManager.Instance?.ShowHarvestUpgrade();
+        LunaUIManager manager = GetUIManager();
+        if (manager == null) return;
+
+        if (CanUpgradeSprinkler()) manager.ShowIrrigationUpgrade();
+        else if (CanUpgradeHarvester()) manager.ShowHarvestUpgrade();
+    }
+
+    private LunaUIManager GetUIManager()
+    {
+        if (uiManager != null) return uiManager;
+        uiManager = LunaUIManager.Instance;
+        if (uiManager == null)
+        {
+            uiManager = FindObjectOfType<LunaUIManager>();
+        }
+        return uiManager;
     }
 
     private void HideIcon()

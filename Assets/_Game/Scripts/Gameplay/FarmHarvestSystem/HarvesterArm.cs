@@ -26,6 +26,8 @@ public class HarvesterArm : MonoBehaviour
 
     private void Update()
     {
+        // Keep the blade animation self-contained; the owning system rotates
+        // the arm so sprinkler and harvester share the same Luna-safe motion path.
         AnimateBladePulse(Time.deltaTime);
     }
 

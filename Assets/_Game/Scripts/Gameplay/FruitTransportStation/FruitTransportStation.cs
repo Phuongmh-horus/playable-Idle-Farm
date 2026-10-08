@@ -107,16 +107,20 @@ public sealed class FruitTransportStation : MonoBehaviour
         OnVehicleStateChanged?.Invoke(_state);
     }
 
-    public void CollectFruitsWithAnimation(int plantId, int fruitCount, Vector3 startPos, int plantLevel, int ringIndex)
+    public int CollectFruitsWithAnimation(int plantId, int visualPlantId, int fruitCount, Vector3 startPos, int plantLevel, int ringIndex)
     {
         if (!IsIdleAtStation || IsFull)
-            return;
+            return 0;
 
         PlantConfigData plantConfig = ConfigHolder.Instance?.PlantConfig?.GetPlant(plantId);
+        PlantConfigData visualPlantConfig = ConfigHolder.Instance?.PlantConfig?.GetPlant(visualPlantId >= 0 ? visualPlantId : plantId);
+        if (plantConfig == null || fruitCount <= 0)
+            return 0;
+
         int spaceLeft = GetCapacityLeft();
         int acceptedCount = Mathf.Min(fruitCount, spaceLeft);
 
-        if (acceptedCount > 0 && plantConfig != null)
+        if (acceptedCount > 0)
         {
             double price = plantConfig.GetFruitPrice(plantLevel, ringIndex);
             double totalGained = price * acceptedCount;
@@ -148,13 +152,13 @@ public sealed class FruitTransportStation : MonoBehaviour
             animFruit.Fly(
                 startPosition: startPos,
                 targetTransform: targetCargo,
-                fruitSprite: plantConfig?.fruitIcon,
+                fruitSprite: visualPlantConfig?.GetHarvestIcon(),
                 onArrived: () =>
                 {
                     _activeAnimatedFruits.Remove(animFruit);
                     if (vehicle)
                     {
-                        vehicle.SpawnFruitVisuals(plantId, 1);
+                        vehicle.SpawnFruitVisuals(visualPlantId >= 0 ? visualPlantId : plantId, 1);
                     }
                     _arrivedFruitCount++;
                     OnFruitLoaded?.Invoke(plantId, 1);
@@ -168,6 +172,8 @@ public sealed class FruitTransportStation : MonoBehaviour
                 }
             );
         }
+
+        return acceptedCount;
     }
 
     public int GetCapacityLeft()

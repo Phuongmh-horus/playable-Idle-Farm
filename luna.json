@@ -133,7 +133,7 @@
             ]
         },
         "scenes": [
-            "Assets/_FrameWork/Scenes/PLA/PLA.unity"
+            "Assets/_FrameWork/Scenes/PLA.unity"
         ],
         "disabledScenes": [],
         "startupScene": 0,
@@ -6575,10 +6575,6 @@
                 "excluded": true
             },
             {
-                "name": "UnityEngine.UI.GridLayoutGroup",
-                "excluded": true
-            },
-            {
                 "name": "UnityEngine.UI.Outline",
                 "excluded": true
             },
@@ -6664,15 +6660,15 @@
             },
             {
                 "name": "UnityEngine.UI.GridLayoutGroup.Axis",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.UI.GridLayoutGroup.Constraint",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.UI.GridLayoutGroup.Corner",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.UI.IClipper",
@@ -18566,7 +18562,7 @@
                     },
                     {
                         "name": "sizeDelta#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "sizeDelta#set",
@@ -23703,6 +23699,30 @@
                     {
                         "name": "HideAll",
                         "excluded": true
+                    },
+                    {
+                        "name": "GetSceneLayers",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RegisterPreAttachedLayer",
+                        "excluded": false
+                    },
+                    {
+                        "name": "AcquirePooledLayer",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RecoverInactivePreAttachedLayers",
+                        "excluded": true
+                    },
+                    {
+                        "name": "RecycleActiveLayer",
+                        "excluded": true
+                    },
+                    {
+                        "name": "NotifyLayerDisabled",
+                        "excluded": false
                     }
                 ]
             },
@@ -27526,7 +27546,7 @@
                     },
                     {
                         "name": "isRootLayoutGroup#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "init",
@@ -27546,7 +27566,7 @@
                     },
                     {
                         "name": "SetChildAlongAxis",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetChildAlongAxis$1",
@@ -27586,7 +27606,7 @@
                     },
                     {
                         "name": "OnRectTransformDimensionsChange",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDidApplyAnimationProperties",
@@ -31389,6 +31409,10 @@
                     {
                         "name": "TryOccupyPlot$1",
                         "excluded": false
+                    },
+                    {
+                        "name": "EnsureInitialized",
+                        "excluded": false
                     }
                 ]
             },
@@ -32103,6 +32127,30 @@
                     {
                         "name": "GetActivePlantStore",
                         "excluded": true
+                    },
+                    {
+                        "name": "ResetColumnPickerStateIfScenarioChanged",
+                        "excluded": false
+                    },
+                    {
+                        "name": "EnsureColumnChoiceIds",
+                        "excluded": true
+                    },
+                    {
+                        "name": "AdvanceColumnChoices",
+                        "excluded": true
+                    },
+                    {
+                        "name": "FillColumnChoices",
+                        "excluded": true
+                    },
+                    {
+                        "name": "GetColumnPlantOrder",
+                        "excluded": true
+                    },
+                    {
+                        "name": "AddColumnPlantId",
+                        "excluded": true
                     }
                 ]
             },
@@ -32395,6 +32443,10 @@
                     {
                         "name": "VisualConfig#get",
                         "excluded": false
+                    },
+                    {
+                        "name": "SetVisualPlantId",
+                        "excluded": true
                     }
                 ]
             },
@@ -32545,6 +32597,18 @@
                     {
                         "name": "plantSprites#get",
                         "excluded": true
+                    },
+                    {
+                        "name": "giantSkin#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "GetPlantStoreIcon",
+                        "excluded": true
+                    },
+                    {
+                        "name": "GetHarvestIcon",
+                        "excluded": false
                     }
                 ]
             },
@@ -32644,6 +32708,14 @@
                     },
                     {
                         "name": "IsGridStore#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "ItemsPerColumn#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "RegisterItem",
                         "excluded": true
                     }
                 ]
@@ -35049,6 +35121,10 @@
                     {
                         "name": "GetPlantSprite",
                         "excluded": false
+                    },
+                    {
+                        "name": "GetPlantStoreIcon",
+                        "excluded": true
                     }
                 ]
             },
@@ -35126,6 +35202,84 @@
                     },
                     {
                         "name": "OutBounce",
+                        "excluded": true
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.UI.GridLayoutGroup",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "startCorner#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "startCorner#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "startAxis#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "startAxis#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "cellSize#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "cellSize#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "spacing#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "spacing#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "constraint#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "constraint#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "constraintCount#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "constraintCount#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "CalculateLayoutInputHorizontal",
+                        "excluded": true
+                    },
+                    {
+                        "name": "CalculateLayoutInputVertical",
+                        "excluded": true
+                    },
+                    {
+                        "name": "SetLayoutHorizontal",
+                        "excluded": true
+                    },
+                    {
+                        "name": "SetLayoutVertical",
+                        "excluded": true
+                    },
+                    {
+                        "name": "SetCellsAlongAxis",
                         "excluded": true
                     }
                 ]
@@ -35291,7 +35445,7 @@
                         "maxWidth": 1024,
                         "maxHeight": 512,
                         "format": "png32",
-                        "compression": "quantQuality",
+                        "compression": "quantSize",
                         "quality": 65,
                         "script": "",
                         "ext": "",
@@ -35426,6 +35580,16 @@
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Scenes/PLA/PLA.unity/PrefilteredEnvironment.exr"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 300,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/UI/farm logo 1.png"
                     }
                 ]
             },

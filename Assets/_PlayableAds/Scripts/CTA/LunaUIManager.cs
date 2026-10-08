@@ -34,6 +34,7 @@ public class LunaUIManager : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text selloutValueText;
     [Header("Pre-attached playable UI")]
     [SerializeField] private PlayableUpgradePopupView upgradePopup;
+    [SerializeField] private PlayableSprinklerAndHarvesterUpgradePopup combinedUpgradePopup;
     [SerializeField] private Sprite sprinklerUpgradeIcon;
     [SerializeField] private Sprite harvesterUpgradeIcon;
     [SerializeField] private Sprite transportUpgradeIcon;
@@ -49,10 +50,15 @@ public class LunaUIManager : MonoBehaviour
     private float _nextEndcardAt;
     private FruitTransportStation _transportStation;
     private FarmPlotSystem _plotSystem;
+    private readonly List<int> _columnChoiceIds = new List<int>(2);
+    private int _columnNextPlantIndex;
+    private ScenePlayableSO _columnChoiceScenario;
     [SerializeField] private PlayableUpgradePopupPresenter upgradePopupPresenter;
     private PlayableCurrencyDisplay _currencyDisplay;
 
-    public bool IsGameplayInputBlocked => upgradePopupPresenter != null && upgradePopupPresenter.IsVisible;
+    public bool IsGameplayInputBlocked =>
+        (combinedUpgradePopup != null && combinedUpgradePopup.IsVisible) ||
+        (upgradePopupPresenter != null && upgradePopupPresenter.IsVisible);
 
     private void Awake()
     {
@@ -130,6 +136,7 @@ public class LunaUIManager : MonoBehaviour
         }
         _waitingForFruitSelection = false;
         _pendingPlantPlotId = -1;
+        ResetColumnPickerStateIfScenarioChanged();
         if (CurrentScenePlayableSO.UsesPlantPicker && TryShowPlantPicker(GetFirstEmptyPlot(), true))
         {
             return;
@@ -192,14 +199,112 @@ public class LunaUIManager : MonoBehaviour
                 AddPlantChoice(choices, plantConfig.plants[i]);
             }
         }
-        else if (CurrentScenePlayableSO.selectablePlantIds != null)
+        else
         {
-            foreach (int id in CurrentScenePlayableSO.selectablePlantIds)
+            EnsureColumnChoiceIds();
+            for (int i = 0; i < _columnChoiceIds.Count; i++)
             {
-                AddPlantChoice(choices, plantConfig.GetPlant(id));
+                PlantConfigData plant = plantConfig.GetPlant(_columnChoiceIds[i]);
+                if (plant != null)
+                {
+                    choices.Add(plant);
+                }
             }
         }
         return choices;
+    }
+
+    private void ResetColumnPickerStateIfScenarioChanged()
+    {
+        if (_columnChoiceScenario == CurrentScenePlayableSO)
+        {
+            return;
+        }
+
+        _columnChoiceScenario = CurrentScenePlayableSO;
+        _columnChoiceIds.Clear();
+        _columnNextPlantIndex = 0;
+    }
+
+    /// <summary>
+    /// Column mode owns a two-item rolling window. After a choice, only the
+    /// chosen plant leaves the window; the other option survives until picked.
+    /// </summary>
+    private void EnsureColumnChoiceIds()
+    {
+        ResetColumnPickerStateIfScenarioChanged();
+        FillColumnChoices(2);
+    }
+
+    private void AdvanceColumnChoices(int selectedPlantId)
+    {
+        if (CurrentScenePlayableSO == null ||
+            CurrentScenePlayableSO.plantPickerVariant == PlayablePlantPickerVariant.AllPlants)
+        {
+            return;
+        }
+
+        _columnChoiceIds.Remove(selectedPlantId);
+        FillColumnChoices(2);
+    }
+
+    private void FillColumnChoices(int targetCount)
+    {
+        if (plantConfig == null || CurrentScenePlayableSO == null)
+        {
+            return;
+        }
+
+        List<int> orderedIds = GetColumnPlantOrder();
+        while (_columnChoiceIds.Count < targetCount && _columnNextPlantIndex < orderedIds.Count)
+        {
+            int candidateId = orderedIds[_columnNextPlantIndex++];
+            if (_columnChoiceIds.Contains(candidateId) || IsPlantAlreadyPlanted(candidateId))
+            {
+                continue;
+            }
+
+            _columnChoiceIds.Add(candidateId);
+        }
+    }
+
+    private List<int> GetColumnPlantOrder()
+    {
+        List<int> orderedIds = new List<int>();
+        if (plantConfig == null || CurrentScenePlayableSO == null)
+        {
+            return orderedIds;
+        }
+
+        List<int> configuredIds = CurrentScenePlayableSO.selectablePlantIds;
+        if (configuredIds != null && configuredIds.Count > 0)
+        {
+            for (int i = 0; i < configuredIds.Count; i++)
+            {
+                AddColumnPlantId(orderedIds, configuredIds[i]);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < plantConfig.plants.Count; i++)
+            {
+                PlantConfigData plant = plantConfig.plants[i];
+                if (plant != null)
+                {
+                    AddColumnPlantId(orderedIds, plant.ID);
+                }
+            }
+        }
+
+        return orderedIds;
+    }
+
+    private void AddColumnPlantId(List<int> orderedIds, int plantId)
+    {
+        if (plantConfig.GetPlant(plantId) != null && !orderedIds.Contains(plantId))
+        {
+            orderedIds.Add(plantId);
+        }
     }
 
     private void AddPlantChoice(List<PlantConfigData> choices, PlantConfigData plant)
@@ -250,6 +355,7 @@ public class LunaUIManager : MonoBehaviour
         }
 
         PlayableFarmState.UnlockCollectionPlant(plantId, 1);
+        AdvanceColumnChoices(plantId);
         bool startTutorial = _startTutorialAfterPlantSelection;
         _waitingForFruitSelection = false;
         _startTutorialAfterPlantSelection = false;
@@ -261,12 +367,6 @@ public class LunaUIManager : MonoBehaviour
 
     private int ResolveGameplayPlantId(Plot targetPlot, int visualPlantId)
     {
-        if (targetPlot != null && targetPlot.PlotData != null && targetPlot.PlotData.Config != null &&
-            targetPlot.PlotData.Config.defaultPlantId >= 0)
-        {
-            return targetPlot.PlotData.Config.defaultPlantId;
-        }
-
         FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
         PlantConfig config = plantConfig != null ? plantConfig : ConfigHolder.Instance?.PlantConfig;
         int configuredId = farmConfig != null && targetPlot != null
@@ -275,6 +375,15 @@ public class LunaUIManager : MonoBehaviour
         if (configuredId >= 0 && config != null && config.GetPlant(configuredId) != null)
         {
             return configuredId;
+        }
+
+        // Keep the legacy per-plot default as the final config fallback. The
+        // picker selection is visual-only and must never replace the plot's
+        // configured gameplay plant when a farm/plant order exists.
+        if (targetPlot != null && targetPlot.PlotData != null && targetPlot.PlotData.Config != null &&
+            targetPlot.PlotData.Config.defaultPlantId >= 0)
+        {
+            return targetPlot.PlotData.Config.defaultPlantId;
         }
 
         return visualPlantId;
@@ -323,6 +432,10 @@ public class LunaUIManager : MonoBehaviour
         _plotSystem = system;
         if (_plotSystem != null)
         {
+            // The scenario is prepared in LunaUIManager.Awake. If FarmSystem's
+            // Awake order was earlier, rebuild its empty runtime cache now
+            // against that prepared state before asking it for an empty plot.
+            _plotSystem.EnsureInitialized();
             _plotSystem.OnPlotUnlocked += HandlePlotUnlocked;
         }
     }
@@ -609,6 +722,12 @@ public class LunaUIManager : MonoBehaviour
 
     public void ShowIrrigationUpgrade()
     {
+        if (UsesHybridHarvestPopup())
+        {
+            ShowCombinedUpgradePopup(PlayableUpgradePopupTab.Sprinkler);
+            return;
+        }
+
         FarmIrrigationSystem system = FarmSystem.Instance != null ? FarmSystem.Instance.IrrigationSystem : null;
         if (system != null)
         {
@@ -620,13 +739,43 @@ public class LunaUIManager : MonoBehaviour
 
     public void ShowHarvestUpgrade()
     {
+        if (UsesHybridHarvestPopup())
+        {
+            ShowCombinedUpgradePopup(PlayableUpgradePopupTab.Harvester);
+            return;
+        }
+
         FarmHarvestSystem system = FarmSystem.Instance != null ? FarmSystem.Instance.HarvestSystem : null;
         if (system != null && system.AutomaticArmEnabled)
         {
-            ShowUpgrade("HARVEST ARM", () => OneStatRow("BLADES", system.TotalBladeCount.ToString(), GetHarvesterBladeCount(system.Level + 1).ToString()),
+            ShowUpgrade("HARVEST ARM", () => GetHarvesterUpgradeRows(system),
                 () => harvesterUpgradeIcon != null ? harvesterUpgradeIcon : GetLocalSprite(system.transform),
                 () => system.Level, () => system.MaxLevel, () => system.NextUpgradeCost, () => system.CanUpgrade, system.TryUpgrade);
         }
+    }
+
+    private bool UsesHybridHarvestPopup()
+    {
+        ScenePlayableSO activeScenario = CurrentScenePlayableSO != null
+            ? CurrentScenePlayableSO
+            : PlayableScenarioRuntime.CurrentScenario;
+        return activeScenario != null && activeScenario.harvestMode == PlayableHarvestMode.Hybrid;
+    }
+
+    private void ShowCombinedUpgradePopup(PlayableUpgradePopupTab tab)
+    {
+        if (combinedUpgradePopup == null)
+        {
+            ResolvePreloadedUpgradePopups(transform.root);
+        }
+
+        if (combinedUpgradePopup == null)
+        {
+            Debug.LogError("LunaUIManager requires PopupSprinklerAndHarvesterUpgradeLayer in the playable scene.");
+            return;
+        }
+
+        combinedUpgradePopup.Show(tab);
     }
 
     public void ShowTransportUpgrade()
@@ -649,11 +798,12 @@ public class LunaUIManager : MonoBehaviour
         }
 
         PlantConfigData config = plant.Config;
+        PlantConfigData visualConfig = plant.VisualConfig;
         Func<UpgradeStatRow[]> stat = () => config != null
             ? GetPlantUpgradeRows(config, plant.PlantLevel, plant.RingIndex)
             : OneStatRow("VALUE", string.Empty, "INCREASE");
-        Func<Sprite> icon = () => config != null ? config.GetIcon(plant.PlantLevel) : GetLocalSprite(plant.transform);
-        string title = config != null ? config.PlantName.ToUpperInvariant() : "PLANT";
+        Func<Sprite> icon = () => visualConfig != null ? visualConfig.GetIcon(plant.PlantLevel) : GetLocalSprite(plant.transform);
+        string title = visualConfig != null ? visualConfig.PlantName.ToUpperInvariant() : "PLANT";
         ShowUpgrade(title, stat, icon, () => plant.PlantLevel, () => plant.MaxLevel, () => plant.UpgradeCost, plot.CanUpgradePlant, () => UpgradePlant(plot, plant));
     }
 
@@ -701,7 +851,20 @@ public class LunaUIManager : MonoBehaviour
     private void ResolvePreloadedUpgradePopups(Transform playableRoot)
     {
         upgradePopup = ResolvePopup(playableRoot, upgradePopup, "PlayableUpgradePopupLayer");
+        if (combinedUpgradePopup == null)
+        {
+            GameObject popupObject = FindChildByName(playableRoot, "PopupSprinklerAndHarvesterUpgradeLayer");
+            if (popupObject == null && WorldLayerManager.Instance != null)
+            {
+                popupObject = FindChildByName(WorldLayerManager.Instance.transform, "PopupSprinklerAndHarvesterUpgradeLayer");
+            }
+            if (popupObject != null)
+            {
+                combinedUpgradePopup = popupObject.GetComponent<PlayableSprinklerAndHarvesterUpgradePopup>();
+            }
+        }
         HidePopupAtStartup(upgradePopup);
+        if (combinedUpgradePopup != null) combinedUpgradePopup.Hide();
     }
 
     private static PlayableUpgradePopupView ResolvePopup(Transform root, PlayableUpgradePopupView assigned, string objectName)
@@ -750,21 +913,6 @@ public class LunaUIManager : MonoBehaviour
         return null;
     }
 
-    private static UpgradeStatRow[] GetSprinklerUpgradeRows(int level, int maxLevel)
-    {
-        FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
-        SprinklerConfig config = farmConfig != null ? farmConfig.sprinkler : null;
-        if (config == null) return OneStatRow("WATER", string.Empty, "INCREASE");
-
-        int currentLevel = Mathf.Clamp(level, 1, maxLevel);
-        int nextLevel = Mathf.Min(currentLevel + 1, maxLevel);
-        return new[]
-        {
-            new UpgradeStatRow("WATER", config.GetWaterAmount(currentLevel).ToString(), config.GetWaterAmount(nextLevel).ToString()),
-            new UpgradeStatRow("ARMS", config.GetNozzleCount(currentLevel).ToString(), config.GetNozzleCount(nextLevel).ToString())
-        };
-    }
-
     private static UpgradeStatRow[] GetPlantUpgradeRows(PlantConfigData config, int level, int ringIndex)
     {
         int currentLevel = Mathf.Clamp(level, 1, config.GetMaxLevel());
@@ -790,10 +938,37 @@ public class LunaUIManager : MonoBehaviour
         return new[] { new UpgradeStatRow(label, current, next) };
     }
 
-    private static int GetHarvesterBladeCount(int level)
+    private static UpgradeStatRow[] GetSprinklerUpgradeRows(int level, int maxLevel)
     {
-        FarmConfig config = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
-        return config != null && config.harvester != null ? config.harvester.GetTotalBlades(level) : level;
+        FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+        SprinklerConfig config = farmConfig != null ? farmConfig.sprinkler : null;
+        if (config == null) return OneStatRow("WATER", string.Empty, "INCREASE");
+
+        int currentLevel = Mathf.Clamp(level, 1, maxLevel);
+        int nextLevel = Mathf.Min(currentLevel + 1, maxLevel);
+        return new[]
+        {
+            new UpgradeStatRow("WATER", config.GetWaterAmount(currentLevel).ToString(), config.GetWaterAmount(nextLevel).ToString()),
+            new UpgradeStatRow("ARMS", config.GetNozzleCount(currentLevel).ToString(), config.GetNozzleCount(nextLevel).ToString())
+        };
+    }
+
+    private static UpgradeStatRow[] GetHarvesterUpgradeRows(FarmHarvestSystem system)
+    {
+        FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+        HarvesterConfig config = farmConfig != null ? farmConfig.harvester : null;
+        if (config == null)
+        {
+            return OneStatRow("ARMS", system.HarvesterCount.ToString(), system.HarvesterCount.ToString());
+        }
+
+        int currentLevel = Mathf.Clamp(system.Level, 1, system.MaxLevel);
+        int nextLevel = Mathf.Min(currentLevel + 1, system.MaxLevel);
+        return new[]
+        {
+            new UpgradeStatRow("TIME", config.GetRotationDuration(currentLevel).ToString("0.##") + "s", config.GetRotationDuration(nextLevel).ToString("0.##") + "s"),
+            new UpgradeStatRow("ARMS", config.GetHarvesterCount(currentLevel).ToString(), config.GetHarvesterCount(nextLevel).ToString())
+        };
     }
 
     private static int GetTransportCapacity(int level)

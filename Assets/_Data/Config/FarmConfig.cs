@@ -205,12 +205,29 @@ public class HarvesterConfig
 {
     [Header("General Settings")]
     [Tooltip("Cấp độ tối đa của máy gặt")]
-    public int maxLevel = 9;
+    public int maxLevel = 10;
 
     [Tooltip("Chu kỳ quay 1 vòng 360 độ (giây/vòng)")]
     public float rotationDuration = 45f;
 
-    public float rotationSpeed => rotationDuration > 0f ? 360f / rotationDuration : 8f;
+    [Tooltip("Số giây giảm trên mỗi level")]
+    [Min(0f)] public float rotationDurationReductionPerLevel = 1f;
+
+    [Tooltip("Chu kỳ quay ngắn nhất")]
+    [Min(0.1f)] public float minimumRotationDuration = 1f;
+
+    public float GetRotationDuration(int level)
+    {
+        int clampedLevel = Mathf.Clamp(level, 1, Mathf.Max(1, maxLevel));
+        float duration = rotationDuration - (clampedLevel - 1) * rotationDurationReductionPerLevel;
+        return Mathf.Max(minimumRotationDuration, duration);
+    }
+
+    public float GetRotationSpeed(int level)
+    {
+        float duration = GetRotationDuration(level);
+        return duration > 0f ? 360f / duration : 0f;
+    }
 
     [Header("Upgrade Cost Formula Settings")]
     [Tooltip("Chi phí nâng cấp tại Level 1")]
@@ -233,13 +250,13 @@ public class HarvesterConfig
     public int GetHarvesterCount(int level)
     {
         int clampedLevel = Mathf.Clamp(level, 1, maxLevel);
-        return (clampedLevel + 2) / 3;
+        return 1 + (clampedLevel - 1) / 5;
     }
 
     public int GetBladeCount(int level, int armIndex)
     {
         int clampedLevel = Mathf.Clamp(level, 1, maxLevel);
-        return Mathf.Clamp(clampedLevel - armIndex * 3, 1, 3);
+        return Mathf.Clamp(clampedLevel - armIndex * 5, 1, 3);
     }
 
     public int GetTotalBlades(int level)

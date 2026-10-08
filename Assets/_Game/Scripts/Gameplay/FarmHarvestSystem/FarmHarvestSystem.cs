@@ -31,9 +31,10 @@ public sealed class FarmHarvestSystem : MonoBehaviour
     public HarvesterArmConfig ArmConfig => armConfig != null ? armConfig : (harvesterArmPrefab != null ? harvesterArmPrefab.Config : null);
     public float AlignmentTolerance => ArmConfig != null ? ArmConfig.alignmentTolerance : 3f;
 
-    public int MaxLevel => (Config != null && Config.maxLevel > 0) ? Config.maxLevel : 9;
-    public float RotationSpeed => Config != null ? Config.rotationSpeed : 30f;
-    public int HarvesterCount => Config != null ? Config.GetHarvesterCount(harvesterLevel) : ((harvesterLevel + 2) / 3);
+    public int MaxLevel => (Config != null && Config.maxLevel > 0) ? Config.maxLevel : 10;
+    public float RotationDuration => Config != null ? Config.GetRotationDuration(harvesterLevel) : 15f;
+    public float RotationSpeed => Config != null ? Config.GetRotationSpeed(harvesterLevel) : 24f;
+    public int HarvesterCount => Config != null ? Config.GetHarvesterCount(harvesterLevel) : (1 + (harvesterLevel - 1) / 5);
     public int TotalBladeCount => Config != null ? Config.GetTotalBlades(harvesterLevel) : harvesterLevel;
     public int Level => harvesterLevel;
     public PlayableHarvestMode HarvestMode => _harvestMode;
@@ -148,7 +149,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         {
             if (_spawnedHarvesterArms[i] != null)
             {
-                int bladeCount = Config != null ? Config.GetBladeCount(harvesterLevel, i) : Mathf.Clamp(harvesterLevel - i * 3, 1, 3);
+                int bladeCount = Config != null ? Config.GetBladeCount(harvesterLevel, i) : Mathf.Clamp(harvesterLevel - i * 5, 1, 3);
                 _spawnedHarvesterArms[i].SetBladeCount(bladeCount);
             }
         }
@@ -325,7 +326,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
             if (arm != null && arm.Pivot != null)
             {
                 arm.Pivot.localRotation = Quaternion.Euler(0f, 0f, baseZ + i * angleStep);
-                int bladeCount = Config != null ? Config.GetBladeCount(harvesterLevel, i) : Mathf.Clamp(harvesterLevel - i * 3, 1, 3);
+                int bladeCount = Config != null ? Config.GetBladeCount(harvesterLevel, i) : Mathf.Clamp(harvesterLevel - i * 5, 1, 3);
                 arm.SetBladeCount(bladeCount);
                 arm.gameObject.SetActive(true);
             }

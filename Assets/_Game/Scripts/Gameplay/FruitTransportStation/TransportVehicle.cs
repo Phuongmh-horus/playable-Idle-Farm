@@ -53,7 +53,7 @@ public sealed class TransportVehicle : MonoBehaviour
         _moveRoutine = null;
     }
 
-    public void SpawnFruitVisuals(int plantId, int count)
+    public void SpawnFruitVisuals(int visualPlantId, int count)
     {
         int capacity = ConfigHolder.Instance != null && ConfigHolder.Instance.FarmConfig != null
             ? ConfigHolder.Instance.FarmConfig.transport.GetCapacity(PlayableFarmState.GetTransportSaveData().currentLevel)
@@ -62,7 +62,7 @@ public sealed class TransportVehicle : MonoBehaviour
         for (int i = 0; i < toSpawn; i++)
         {
             Vector2 offset = UnityEngine.Random.insideUnitCircle * spawnRadius;
-            Fruit fruit = FruitSpawner.SpawnFruit(plantId, cargoRoot, new Vector3(offset.x, offset.y, 0f), Quaternion.identity);
+            Fruit fruit = FruitSpawner.SpawnFruit(visualPlantId, cargoRoot, new Vector3(offset.x, offset.y, 0f), Quaternion.identity);
             if (fruit == null) continue;
             fruit.SetLayer("Fruit", 20 + _spawnedFruitVisuals.Count);
             fruit.PlaySpawnScale();

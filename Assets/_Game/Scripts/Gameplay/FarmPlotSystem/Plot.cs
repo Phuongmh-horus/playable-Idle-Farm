@@ -309,9 +309,17 @@ public class Plot : MonoBehaviour
                 int ringIndex = _plotData != null ? _plotData.RingIndex : _ringIndex;
                 _spawnedPlant = PlantSpawner.SpawnPlant(_plotData.PlantId, _plotData.PlantLevel, parent, plantTreeOffset, ringIndex, _plotData.VisualPlantId);
             }
-            else if (_spawnedPlant != null && _spawnedPlant.PlantLevel != _plotData.PlantLevel)
+            else if (_spawnedPlant != null)
             {
-                _spawnedPlant.SetLevel(_plotData.PlantLevel);
+                if (_spawnedPlant.VisualPlantId != _plotData.VisualPlantId)
+                {
+                    _spawnedPlant.SetVisualPlantId(_plotData.VisualPlantId);
+                }
+
+                if (_spawnedPlant.PlantLevel != _plotData.PlantLevel)
+                {
+                    _spawnedPlant.SetLevel(_plotData.PlantLevel);
+                }
             }
         }
         else

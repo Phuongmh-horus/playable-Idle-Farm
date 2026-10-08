@@ -17,6 +17,7 @@ MonoBehaviour:
   tutorialStartPhase: 2
   skippedTutorialPhases: 0000000001000000
   enablePlantPicker: 0
+  plantPickerVariant: 0
   selectablePlantIds: 
   initialPlotCount: 10
   initialPlantIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000

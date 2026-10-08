@@ -86,7 +86,7 @@ public static class PlantSpawner
             plant.transform.localPosition = localPosition;
             plant.transform.rotation = Quaternion.Euler(90, 0, 0);
             plant.transform.localScale = plantPrefab.transform.localScale;
-            plant.Init(plantId, owner.PlotData?.PlantLevel ?? 1, owner.RingIndex);
+            plant.Init(plantId, owner.PlotData?.PlantLevel ?? 1, owner.RingIndex, owner.PlotData?.VisualPlantId ?? -1);
         }
         return plant;
     }

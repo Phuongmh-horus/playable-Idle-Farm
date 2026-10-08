@@ -112,9 +112,10 @@
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UIManager\General\LayerSourcePath.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Manager\Singletons\MonoSingleton.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\WorldUILayers\BuyPlot\PopupBuyPlotLayer.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\VideoEditor\HandCreative.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\PlayableCurrencyDisplay.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\VideoEditor\HandCreative.cs" />
     <Compile Include="Assets\_FrameWork\Scripts\UIHelper\ImageStateHandle.cs" />
+    <Compile Include="Assets\_PlayableAds\Scripts\UI\PlayableSprinklerAndHarvesterUpgradePopup.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\FarmHarvestSystem\HarvestBlade.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\UIGamePlayLayer.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\CTAButton.cs" />

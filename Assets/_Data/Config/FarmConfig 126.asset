@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa1e535d19b4cd4586fbe867472ac1a, type: 3}
+  m_Name: FarmConfig 126
+  m_EditorClassIdentifier: 
+  farmName: Idle Farm
+  plots:
+  - id: 0
+    ringIndex: 0
+    sectorIndex: 0
+    plotType: 0
+    defaultPlantId: 0
+    unlockCost: 0
+    isUnlockedByDefault: 1
+  - id: 1
+    ringIndex: 0
+    sectorIndex: 1
+    plotType: 0
+    defaultPlantId: 1
+    unlockCost: 80
+    isUnlockedByDefault: 1
+  - id: 2
+    ringIndex: 0
+    sectorIndex: 2
+    plotType: 0
+    defaultPlantId: 2
+    unlockCost: 350
+    isUnlockedByDefault: 1
+  - id: 3
+    ringIndex: 0
+    sectorIndex: 3
+    plotType: 0
+    defaultPlantId: 3
+    unlockCost: 1440
+    isUnlockedByDefault: 1
+  - id: 4
+    ringIndex: 0
+    sectorIndex: 4
+    plotType: 0
+    defaultPlantId: 4
+    unlockCost: 6000
+    isUnlockedByDefault: 1
+  - id: 5
+    ringIndex: 0
+    sectorIndex: 5
+    plotType: 0
+    defaultPlantId: 5
+    unlockCost: 26000
+    isUnlockedByDefault: 0
+  - id: 6
+    ringIndex: 0
+    sectorIndex: 6
+    plotType: 0
+    defaultPlantId: 6
+    unlockCost: 100000
+    isUnlockedByDefault: 0
+  - id: 7
+    ringIndex: 0
+    sectorIndex: 7
+    plotType: 0
+    defaultPlantId: 7
+    unlockCost: 365000
+    isUnlockedByDefault: 0
+  - id: 8
+    ringIndex: 0
+    sectorIndex: 8
+    plotType: 0
+    defaultPlantId: 8
+    unlockCost: 1444000
+    isUnlockedByDefault: 0
+  - id: 9
+    ringIndex: 0
+    sectorIndex: 9
+    plotType: 0
+    defaultPlantId: 9
+    unlockCost: 6000000
+    isUnlockedByDefault: 0
+  initialPlantOrder: 06000000030000000200000001000000080000000000000009000000040000000700000005000000
+  sprinkler:
+    maxLevel: 10
+    rotationDuration: 10
+    rotationDurationReductionPerMilestone: 1
+    minimumRotationDuration: 5
+    level1Cost: 88
+    sprinklerBasePrice: 88
+    sprinklerUpdateScale: 2.2
+    baseWaterAmount: 10
+    waterAmountSumPerLevel: 3
+  harvester:
+    maxLevel: 10
+    rotationDuration: 15
+    rotationDurationReductionPerLevel: 1
+    minimumRotationDuration: 1
+    level1Cost: 88
+    harvesterBasePrice: 88
+    harvesterUpdateScale: 2.25
+  transport:
+    maxLevel: 20
+    baseCapacity: 5
+    capacitySumPerLevel: 1
+    level1Cost: 40
+    cargoBasePrice: 80
+    cargoUpdateScale: 2.2

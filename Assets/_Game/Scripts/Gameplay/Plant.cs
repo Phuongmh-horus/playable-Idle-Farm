@@ -28,7 +28,7 @@ public class Plant : MonoBehaviour
     #region Config Shortcuts
 
     public PlantConfigData Config => ConfigHolder.Instance?.PlantConfig?.GetPlant(_plantId);
-    private PlantConfigData VisualConfig => ConfigHolder.Instance?.PlantConfig?.GetPlant(_visualPlantId >= 0 ? _visualPlantId : _plantId);
+    public PlantConfigData VisualConfig => ConfigHolder.Instance?.PlantConfig?.GetPlant(_visualPlantId >= 0 ? _visualPlantId : _plantId);
     public int MaxLevel => Config?.GetMaxLevel() ?? 1;
     public float WaterRequirement => Config?.GetWaterRequirement(_ringIndex) ?? 0;
     public double UpgradeCost => Config?.GetUpgradeCost(_plantLevel, _ringIndex) ?? 0;
@@ -144,23 +144,37 @@ public class Plant : MonoBehaviour
             return 0d;
         }
 
-        int acceptedCount = Mathf.Min(_filledSlotCount, transport.GetCapacityLeft());
+        int requestedCount = Mathf.Min(_filledSlotCount, transport.GetCapacityLeft());
+        int fruitVisualPlantId = _visualPlantId >= 0 ? _visualPlantId : PlantId;
+        int acceptedCount = transport.CollectFruitsWithAnimation(
+            PlantId, fruitVisualPlantId, requestedCount, transform.position, _plantLevel, _ringIndex);
+        if (acceptedCount <= 0)
+        {
+            return 0d;
+        }
+
         double price = Config?.GetFruitPrice(_plantLevel, _ringIndex) ?? 0;
         double totalGained = price * acceptedCount;
+
+        // Commit the crop state before publishing any event. Harvest can be
+        // re-entered by gameplay/event code on the same frame; observers must
+        // see the post-harvest slot count and the seedling sprite together.
+        _filledSlotCount -= acceptedCount;
+        if (_filledSlotCount == 0)
+        {
+            _currentWater = 0f;
+            LastWaterStartProgress = 0f;
+            LastWaterTargetProgress = 0f;
+        }
+        UpdatePlantSprite();
+
         if (totalGained > 0d && WorldLayerManager.Instance != null)
         {
             // Show the total value of every fruit accepted from this plant.
             WorldLayerManager.Instance.ShowFloatingCurrencyLayer(transform, floatingCurrencyOffset, totalGained);
         }
-        if (transport != null)
-        {
-            transport.CollectFruitsWithAnimation(PlantId, _filledSlotCount, transform.position, _plantLevel, _ringIndex);
-        }
-        GameEventBus.OnCropHarvestedEvent?.Invoke(PlantId, _filledSlotCount);
+        GameEventBus.OnCropHarvestedEvent?.Invoke(PlantId, acceptedCount);
         PlayableTutorialFlow.Instance?.ReportFruitHarvested();
-        _filledSlotCount -= acceptedCount;
-        if (_filledSlotCount == 0) _currentWater = 0f;
-        UpdatePlantSprite();
         return totalGained;
     }
 
@@ -190,6 +204,17 @@ public class Plant : MonoBehaviour
         int maxLevel = Config != null ? Config.GetMaxLevel() : 1;
         _plantLevel = Mathf.Clamp(level, 1, Math.Max(1, maxLevel));
         _currentWater = 0f;
+        UpdatePlantSprite();
+    }
+
+    public void SetVisualPlantId(int visualPlantId)
+    {
+        if (_visualPlantId == visualPlantId)
+        {
+            return;
+        }
+
+        _visualPlantId = visualPlantId;
         UpdatePlantSprite();
     }
 }

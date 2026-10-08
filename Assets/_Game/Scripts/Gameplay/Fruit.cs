@@ -8,7 +8,7 @@ public class Fruit : MonoBehaviour
 
     public void Init(int id)
     {
-        Sprite spriteToUse = ConfigHolder.Instance?.PlantConfig?.GetPlant(id)?.fruitIcon;
+        Sprite spriteToUse = ConfigHolder.Instance?.PlantConfig?.GetPlant(id)?.GetHarvestIcon();
         SetSprite(spriteToUse);
     }
 
@@ -55,7 +55,7 @@ public class Fruit : MonoBehaviour
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
-        if (spriteRenderer != null && sprite != null)
+        if (spriteRenderer != null)
         {
             spriteRenderer.sprite = sprite;
         }

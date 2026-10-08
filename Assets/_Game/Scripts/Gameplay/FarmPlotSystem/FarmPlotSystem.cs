@@ -135,6 +135,18 @@ public sealed class FarmPlotSystem : MonoBehaviour
         PlaceSlotPrefabs();
     }
 
+    /// <summary>
+    /// Guarantees runtime plot data is available without rebuilding a farm
+    /// that has already started progressing.
+    /// </summary>
+    public void EnsureInitialized()
+    {
+        if (_plots.Count == 0)
+        {
+            Initialize();
+        }
+    }
+
     private void PlaceSlotPrefabs()
     {
         _plots.Clear();

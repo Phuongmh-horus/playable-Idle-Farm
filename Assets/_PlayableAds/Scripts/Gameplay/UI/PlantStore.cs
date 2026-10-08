@@ -4,25 +4,42 @@ using UnityEngine.UI;
 
 public class PlantStore : MonoBehaviour
 {
-    private const int maxItemPerColumn = 4;
+    private const int fallbackItemsPerColumn = 4;
 
-    [SerializeField, Min(1)] private int prewarmItemCount = maxItemPerColumn;
+    [SerializeField, Min(1)] private int prewarmItemCount = 2;
 
     private readonly List<GameObject> _columns = new List<GameObject>();
     private readonly List<GameObject> _itemObjects = new List<GameObject>();
     private readonly List<PlantItem> _plantItems = new List<PlantItem>();
     private readonly List<bool> _itemListenersInitialized = new List<bool>();
 
-    [Header ("Prefab")]
+    [Header("Prefab")]
     public GameObject ColumnPrefab;
 
-    public GameObject ItemInColumnPrefab;
+    public List<GameObject> ItemInColumnPrefab;
 
     public GameObject Panel;
 
     public bool IsGridStore
     {
         get { return ColumnPrefab != null && ColumnPrefab.name.Contains("Grid"); }
+    }
+
+    private int ItemsPerColumn
+    {
+        get
+        {
+            if (ColumnPrefab != null)
+            {
+                PlantItem[] authoredItems = ColumnPrefab.GetComponentsInChildren<PlantItem>(true);
+                if (authoredItems != null && authoredItems.Length > 0)
+                {
+                    return authoredItems.Length;
+                }
+            }
+
+            return fallbackItemsPerColumn;
+        }
     }
 
     private void Awake()
@@ -70,7 +87,7 @@ public class PlantStore : MonoBehaviour
             return;
         }
         int count = plantConfigs.Count;
-        int columnCount = Mathf.CeilToInt((float)count / maxItemPerColumn);
+        int columnCount = Mathf.CeilToInt((float)count / ItemsPerColumn);
         EnsurePoolCapacity(Mathf.Max(count, prewarmItemCount));
 
         ClearStore();
@@ -99,22 +116,45 @@ public class PlantStore : MonoBehaviour
 
     private void EnsurePoolCapacity(int requiredItemCount)
     {
-        int requiredColumnCount = Mathf.CeilToInt((float)Mathf.Max(1, requiredItemCount) / maxItemPerColumn);
+        int requiredColumnCount = Mathf.CeilToInt((float)Mathf.Max(1, requiredItemCount) / ItemsPerColumn);
         while (_columns.Count < requiredColumnCount)
         {
             GameObject column = Instantiate(ColumnPrefab, Panel.transform);
             column.SetActive(false);
             _columns.Add(column);
 
-            for (int i = 0; i < maxItemPerColumn; i++)
+            PlantItem[] authoredItems = column.GetComponentsInChildren<PlantItem>(true);
+            if (authoredItems != null && authoredItems.Length > 0)
             {
-                GameObject itemObject = Instantiate(ItemInColumnPrefab, column.transform);
-                itemObject.SetActive(false);
-                _itemObjects.Add(itemObject);
-                _plantItems.Add(itemObject.GetComponent<PlantItem>());
-                _itemListenersInitialized.Add(false);
+                for (int i = 0; i < authoredItems.Length; i++)
+                {
+                    RegisterItem(authoredItems[i]);
+                }
+            }
+            else if (ItemInColumnPrefab != null && ItemInColumnPrefab.Count > 0)
+            {
+                for (int i = 0; i < ItemsPerColumn; i++)
+                {
+                    GameObject itemObject = Instantiate(ItemInColumnPrefab[i % ItemInColumnPrefab.Count], column.transform);
+                    itemObject.SetActive(false);
+                    RegisterItem(itemObject.GetComponent<PlantItem>());
+                }
             }
         }
+    }
+
+    private void RegisterItem(PlantItem plantItem)
+    {
+        if (plantItem == null)
+        {
+            Debug.LogError("PlantStore: every item slot needs a PlantItem component.", this);
+            return;
+        }
+
+        plantItem.gameObject.SetActive(false);
+        _itemObjects.Add(plantItem.gameObject);
+        _plantItems.Add(plantItem);
+        _itemListenersInitialized.Add(false);
     }
 
     private void BindItem(int index, PlantConfigData data)
@@ -129,6 +169,7 @@ public class PlantStore : MonoBehaviour
         // Rebind every time the modal opens. The same pooled item can represent
         // a different plant in the next unlock, so never leave stale name/art.
         plantItem.SetData(data);
+        plantItem.gameObject.name = data != null ? "Item_PlantStore_" + data.PlantName : "Item_PlantStore_Empty";
         _itemListenersInitialized[index] = true;
     }
 

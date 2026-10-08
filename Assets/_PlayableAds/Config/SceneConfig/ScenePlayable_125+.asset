@@ -24,6 +24,6 @@ MonoBehaviour:
   startingCurrency: 0
   showConveyorAndSell: 1
   showUpgrade: 1
-  harvestMode: 0
+  harvestMode: 2
   enableIrrigation: 1
   endcardDelaySeconds: 90

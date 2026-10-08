@@ -93,6 +93,7 @@ public class PlantConfigData
     public string FruitName => GetDisplayName();
     public Sprite plantIcon => visual != null ? visual.plantIcon : null;
     public Sprite fruitIcon => visual != null ? visual.fruitIcon : null;
+    public Sprite giantSkin => visual != null ? visual.giantSkin : null;
     public Plant plantPrefab => GetPrefab();
     public List<Sprite> plantSprites => visual != null ? visual.plantSprites : null;
 
@@ -146,6 +147,20 @@ public class PlantConfigData
     public Sprite GetIcon(int level = 1)
     {
         return GetPlantSprite(level);
+    }
+
+    public Sprite GetPlantStoreIcon()
+    {
+        return visual != null ? visual.GetPlantStoreIcon() : (plantIcon != null ? plantIcon : fruitIcon);
+    }
+
+    /// <summary>
+    /// Artwork for harvested fruit and transport cargo. This deliberately stays
+    /// separate from the picker icon, which uses the plant's giant skin.
+    /// </summary>
+    public Sprite GetHarvestIcon()
+    {
+        return fruitIcon != null ? fruitIcon : (plantIcon != null ? plantIcon : GetIcon());
     }
 
     public int GetWaterRequirement(int ringIndex = 0)
