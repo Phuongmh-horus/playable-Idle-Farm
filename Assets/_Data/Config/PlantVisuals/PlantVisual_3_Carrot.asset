@@ -21,3 +21,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 26bdac68f67019846b2ccf40d8574691, type: 3}
   - {fileID: 21300000, guid: 123776701ba6229439a2c4334a0b957c, type: 3}
   - {fileID: 21300000, guid: 06e149aeb06d1ae46b002880add9652e, type: 3}
+  giantSkin: {fileID: 21300000, guid: d4b83d8238742d1499f1e2ba08542fa1, type: 3}

@@ -11,6 +11,13 @@ public class PlantVisualSO : ScriptableObject
     [Header("World Prefab & Growth Sprites")]
     public Plant plantPrefab;
     public List<Sprite> plantSprites = new List<Sprite>();
+    public Sprite giantSkin;
+
+    /// <summary>Icon authored for the plant picker; falls back to the legacy UI art.</summary>
+    public Sprite GetPlantStoreIcon()
+    {
+        return giantSkin != null ? giantSkin : (plantIcon != null ? plantIcon : fruitIcon);
+    }
 
     public Sprite GetPlantSprite(int fruitCount = 0)
     {
