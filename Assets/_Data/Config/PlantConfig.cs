@@ -11,9 +11,9 @@ public enum PlantType
     Eggplant = 4,
     Pumpkin = 5,
     Wheat = 6,
-    ChiliPepper = 7,
+    Chili = 7,
     Radish = 8,
-    BellPepper = 9
+    Pepper = 9
 }
 
 [CreateAssetMenu(fileName = "PlantConfig", menuName = "Farm/PlantConfig")]

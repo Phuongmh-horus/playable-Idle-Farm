@@ -19,6 +19,7 @@ public class Plot : MonoBehaviour
     private bool _isShowingUpgradeIcon;
     private bool _isGoldSubscribed;
     private bool _isPurchasingPlot;
+    private bool _initialFruitCountApplied;
 
     public int PlotId => _plotId;
     public int RingIndex => _ringIndex;
@@ -99,6 +100,7 @@ public class Plot : MonoBehaviour
         ClearSpawnedPlant();
         _plotData = null;
         _slotSystem = null;
+        _initialFruitCountApplied = false;
     }
 
     private void OnValidate()
@@ -307,7 +309,12 @@ public class Plot : MonoBehaviour
 
                 Transform parent = plantRoot != null ? plantRoot.transform : transform;
                 int ringIndex = _plotData != null ? _plotData.RingIndex : _ringIndex;
-                _spawnedPlant = PlantSpawner.SpawnPlant(_plotData.PlantId, _plotData.PlantLevel, parent, plantTreeOffset, ringIndex, _plotData.VisualPlantId);
+                int initialFruitCount = _initialFruitCountApplied ? 0 : PlayableScenarioRuntime.GetInitialFruitCount(_plotId);
+                _spawnedPlant = PlantSpawner.SpawnPlant(_plotData.PlantId, _plotData.PlantLevel, parent, plantTreeOffset, ringIndex, _plotData.VisualPlantId, initialFruitCount);
+                if (_spawnedPlant != null)
+                {
+                    _initialFruitCountApplied = true;
+                }
             }
             else if (_spawnedPlant != null)
             {

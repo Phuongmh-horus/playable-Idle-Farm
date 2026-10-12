@@ -309,7 +309,8 @@ public sealed class FarmPlotSystem : MonoBehaviour
             return false;
         }
 
-        return TryOccupyPlot(plotId, plantId);
+        int visualPlantId = PlayableScenarioRuntime.GetConfiguredVisualPlantId(plotId);
+        return TryOccupyPlot(plotId, plantId, visualPlantId);
     }
 
     private static bool UsesPlantPicker()

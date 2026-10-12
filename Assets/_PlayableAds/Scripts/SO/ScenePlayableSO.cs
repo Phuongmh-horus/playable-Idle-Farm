@@ -15,15 +15,19 @@ public class ScenePlayableSO : ScriptableObject
     [Tooltip("Show PlantStore at startup and after every plot unlock. When disabled, each unlocked plot immediately grows its configured default plant.")]
     [FormerlySerializedAs("showFruitPicker")]
     public bool enablePlantPicker;
+    [Tooltip("When enabled, show SelectPlantStore only for the first plot at playable start. Later unlocked plots use FarmConfig/PlantConfig order automatically.")]
+    [FormerlySerializedAs("showAllPlantsPickerOnlyAtStartup")]
+    public bool showPlantPickerOnlyAtStart;
     public PlayablePlantPickerVariant plantPickerVariant = PlayablePlantPickerVariant.ConfiguredPlants;
     [Tooltip("Plant IDs shown by PlantStore, kept in this exact display order.")]
     public List<int> selectablePlantIds = new List<int>();
-
     public bool UsesPlantPicker => enablePlantPicker;
     [Header("Farm preset")]
     [Min(1)] public int initialPlotCount = 1;
     [Tooltip("Starter plant IDs applied left-to-right to the first plots for this scenario.")]
     public List<int> initialPlantIds = new List<int>();
+    [Tooltip("Number of fruit slots already ready on every initially planted plot. Zero keeps the normal empty starter state.")]
+    [Min(0)] public int initialFruitCount;
     [Min(0)] public int startingCurrency;
     public bool showConveyorAndSell = true;
     public bool showUpgrade = true;
@@ -31,9 +35,6 @@ public class ScenePlayableSO : ScriptableObject
     [Tooltip("Manual uses the draggable blade, Automatic uses rotating harvester arms, Hybrid enables both.")]
     public PlayableHarvestMode harvestMode = PlayableHarvestMode.ManualBlade;
     public bool enableIrrigation = true;
-    [Header("Repeating endcard")]
-    [Tooltip("Seconds of uninterrupted play before this scenario shows the endcard again.")]
-    [Min(1f)] public float endcardDelaySeconds = 60f;
 }
 
 public enum PlayableScenarioId { Scenario123 = 123, Scenario124 = 124, Scenario125 = 125, Scenario126 = 126 }

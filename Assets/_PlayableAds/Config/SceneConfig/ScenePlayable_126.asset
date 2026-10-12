@@ -15,15 +15,15 @@ MonoBehaviour:
   scenario: 126
   showTutorial: 1
   tutorialStartPhase: 0
-  skippedTutorialPhases: 
+  skippedTutorialPhases: 00000000
   enablePlantPicker: 0
   plantPickerVariant: 0
   selectablePlantIds: 
   initialPlotCount: 5
   initialPlantIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
+  initialFruitCount: 1
   startingCurrency: 0
   showConveyorAndSell: 1
   showUpgrade: 1
   harvestMode: 2
   enableIrrigation: 1
-  endcardDelaySeconds: 90

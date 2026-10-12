@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802e4d8f5fc71b041b767969d4b47fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenario: 123
+  scenario: 125
   scenePlayableSOs:
   - {fileID: 11400000, guid: a96b974627490244689f61a691d3fb0c, type: 2}
   - {fileID: 11400000, guid: aba9bb8ca8c561e4581d294e14a56b2c, type: 2}
   - {fileID: 11400000, guid: e65396d9dbeefa049b70438603edb6ad, type: 2}
   - {fileID: 11400000, guid: 4b0a4480b7a176248b92ba89abcc52a2, type: 2}
+  scenePlayableConfigIndex: -1
   ctaButtons:
   - {fileID: 0}
   - {fileID: 0}
@@ -58,14 +59,15 @@ MonoBehaviour:
   continueButton: {fileID: 0}
   endcardStoreButtons:
   - {fileID: 0}
-  fallbackEndcardDelaySeconds: 60
   tutorialFlow: {fileID: 0}
   plantStore: {fileID: 0}
+  plantStores: []
   plantConfig: {fileID: 11400000, guid: 2b48e6ade1c6a8d47b920717148c09e2, type: 2}
   selloutButton: {fileID: 0}
   selloutCanvasGroup: {fileID: 0}
   selloutValueText: {fileID: 0}
   upgradePopup: {fileID: 0}
+  combinedUpgradePopup: {fileID: 0}
   sprinklerUpgradeIcon: {fileID: 21300000, guid: 9c0f6b73262c88d44ba1b3fa2270d6b1, type: 3}
   harvesterUpgradeIcon: {fileID: 21300000, guid: 6be7d07c6d993984583c0c3f954713a6, type: 3}
   transportUpgradeIcon: {fileID: 21300000, guid: 91adfbe4a41fdf8468348d1779fc1393, type: 3}

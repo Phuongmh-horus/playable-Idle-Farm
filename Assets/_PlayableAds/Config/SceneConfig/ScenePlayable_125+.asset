@@ -19,6 +19,7 @@ MonoBehaviour:
   enablePlantPicker: 1
   plantPickerVariant: 1
   selectablePlantIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
+  showPlantPickerOnlyAtStart: 0
   initialPlotCount: 1
   initialPlantIds: 
   startingCurrency: 0
@@ -26,4 +27,3 @@ MonoBehaviour:
   showUpgrade: 1
   harvestMode: 2
   enableIrrigation: 1
-  endcardDelaySeconds: 90

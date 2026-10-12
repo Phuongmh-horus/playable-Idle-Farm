@@ -2,7 +2,7 @@
     "version": "7.0.0",
     "projectId": "6de55b9e7b1f9804a859458bd0ec3af8",
     "applicationID": 43232,
-    "creativeName": "kichban123",
+    "creativeName": "kichban125",
     "pgServer": "EU",
     "window": {
         "‐⁏": true
@@ -133,9 +133,12 @@
             ]
         },
         "scenes": [
-            "Assets/_FrameWork/Scenes/PLA.unity"
+            "Assets/_FrameWork/Scenes/PLA_Order/PLA_125.unity"
         ],
-        "disabledScenes": [],
+        "disabledScenes": [
+            "Assets/_FrameWork/Scenes/PLA.unity",
+            "Assets/_FrameWork/Scenes/PLA_Order/PLA_126.unity"
+        ],
         "startupScene": 0,
         "packages": {
             "default": {
@@ -4856,7 +4859,7 @@
             },
             {
                 "name": "UnityEngine.Rendering.ColorWriteMask",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.Rendering.CommandBufferExecutionFlags",
@@ -4864,7 +4867,7 @@
             },
             {
                 "name": "UnityEngine.Rendering.CompareFunction",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.Rendering.ComputeQueueType",
@@ -5072,7 +5075,7 @@
             },
             {
                 "name": "UnityEngine.Rendering.StencilOp",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.Rendering.SynchronisationStage",
@@ -6523,10 +6526,6 @@
                 "excluded": true
             },
             {
-                "name": "UnityEngine.UI.Misc",
-                "excluded": true
-            },
-            {
                 "name": "UnityEngine.UI.RectangularVertexClipper",
                 "excluded": true
             },
@@ -6544,10 +6543,6 @@
             },
             {
                 "name": "UnityEngine.UI.CoroutineTween.FloatTween",
-                "excluded": true
-            },
-            {
-                "name": "UnityEngine.UI.ToggleGroup",
                 "excluded": true
             },
             {
@@ -6584,10 +6579,6 @@
             },
             {
                 "name": "UnityEngine.UI.Slider",
-                "excluded": true
-            },
-            {
-                "name": "UnityEngine.UI.Toggle",
                 "excluded": true
             },
             {
@@ -6768,11 +6759,11 @@
             },
             {
                 "name": "UnityEngine.UI.Toggle.ToggleEvent",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.UI.Toggle.ToggleTransition",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.EventSystems.ICancelHandler",
@@ -8804,6 +8795,10 @@
             },
             {
                 "name": "PlayablePlantPickerVariant",
+                "excluded": false
+            },
+            {
+                "name": "PlayableUpgradePopupTab",
                 "excluded": false
             }
         ],
@@ -16846,7 +16841,7 @@
                     },
                     {
                         "name": "RemoveListener",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -18514,19 +18509,19 @@
                     },
                     {
                         "name": "anchorMax#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "anchorMax#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "anchorMin#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "anchorMin#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "offsetMin#get",
@@ -18550,11 +18545,11 @@
                     },
                     {
                         "name": "pivot#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "anchoredPosition#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "anchoredPosition#set",
@@ -18566,7 +18561,7 @@
                     },
                     {
                         "name": "sizeDelta#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "rect#get",
@@ -23714,11 +23709,11 @@
                     },
                     {
                         "name": "RecoverInactivePreAttachedLayers",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "RecycleActiveLayer",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "NotifyLayerDisabled",
@@ -24910,7 +24905,7 @@
                 "instanceMethods": [
                     {
                         "name": "name#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "name#set",
@@ -24934,7 +24929,7 @@
                     },
                     {
                         "name": "shader#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "shader#set",
@@ -24974,7 +24969,7 @@
                     },
                     {
                         "name": "shaderKeywords#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ctor",
@@ -24982,7 +24977,7 @@
                     },
                     {
                         "name": "$ctor1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "$ctor2",
@@ -25026,7 +25021,7 @@
                     },
                     {
                         "name": "SetInt$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetInt",
@@ -25210,11 +25205,11 @@
                     },
                     {
                         "name": "EnableKeyword",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "DisableKeyword",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsKeywordEnabled",
@@ -25764,7 +25759,7 @@
                     },
                     {
                         "name": "popMaterialCount#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "hasPopInstruction#get",
@@ -25840,7 +25835,7 @@
                     },
                     {
                         "name": "SetPopMaterial",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -26734,7 +26729,7 @@
                     },
                     {
                         "name": "NotifyStencilStateChanged",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "FindRootSortOverrideCanvas",
@@ -26790,11 +26785,11 @@
                     },
                     {
                         "name": "Add$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Add$2",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Remove",
@@ -26812,7 +26807,7 @@
                 "instanceMethods": [
                     {
                         "name": "init",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -27204,7 +27199,7 @@
                     },
                     {
                         "name": "ForceRebuildLayoutImmediate",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Allocate",
@@ -27262,11 +27257,11 @@
                 "instanceMethods": [
                     {
                         "name": "graphic#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "rectTransform#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "showMaskGraphic#get",
@@ -27278,7 +27273,7 @@
                     },
                     {
                         "name": "init",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "$ctor1",
@@ -27286,35 +27281,35 @@
                     },
                     {
                         "name": "ctor",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "MaskEnabled",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Awake",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnEnable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDisable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "UpdateMaskGraphicSettings",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetModifiedMaterial",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsRaycastLocationValid",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -27418,7 +27413,7 @@
                     },
                     {
                         "name": "OnDisable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnRectTransformDimensionsChange",
@@ -30904,7 +30899,7 @@
                 "instanceMethods": [
                     {
                         "name": "PlotSystem#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Arms#get",
@@ -30924,11 +30919,11 @@
                     },
                     {
                         "name": "ArmConfig#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "AlignmentTolerance#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "MaxLevel#get",
@@ -30936,7 +30931,7 @@
                     },
                     {
                         "name": "RotationSpeed#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HarvesterCount#get",
@@ -30948,7 +30943,7 @@
                     },
                     {
                         "name": "Level#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HarvestMode#get",
@@ -30960,15 +30955,15 @@
                     },
                     {
                         "name": "NextUpgradeCost#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsMaxLevel#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CanUpgrade#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "UsesManualBlade#get",
@@ -31004,7 +30999,7 @@
                     },
                     {
                         "name": "TryUpgrade",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "UpdateBladeCountVisual",
@@ -31012,23 +31007,23 @@
                     },
                     {
                         "name": "RotateHarvester",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CheckPlotAlignment",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HandlePlotAlignment",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HarvestPlot",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "LogHarvest",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "EnsureHarvesterArms",
@@ -31041,6 +31036,10 @@
                     {
                         "name": "CollectExistingArms",
                         "excluded": false
+                    },
+                    {
+                        "name": "RotationDuration#get",
+                        "excluded": true
                     }
                 ]
             },
@@ -31734,7 +31733,7 @@
                     },
                     {
                         "name": "Pivot#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "init",
@@ -31742,43 +31741,43 @@
                     },
                     {
                         "name": "Awake",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnEnable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDisable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Update",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CacheInitialScales",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "AnimateBladePulse",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ApplyBladeScale",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ResetBladeScale",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "RotateArm",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SpinBlades",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetBladeCount",
@@ -31786,7 +31785,7 @@
                     },
                     {
                         "name": "GetForwardDirection",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -31805,16 +31804,12 @@
                 "staticMethods": [],
                 "instanceMethods": [
                     {
-                        "name": "rotationSpeed#get",
-                        "excluded": true
-                    },
-                    {
                         "name": "init",
                         "excluded": false
                     },
                     {
                         "name": "GetUpgradeCost",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetHarvesterCount",
@@ -31827,6 +31822,14 @@
                     {
                         "name": "GetTotalBlades",
                         "excluded": true
+                    },
+                    {
+                        "name": "GetRotationDuration",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetRotationSpeed",
+                        "excluded": false
                     }
                 ]
             },
@@ -31893,10 +31896,6 @@
                         "excluded": true
                     },
                     {
-                        "name": "GetHarvesterBladeCount",
-                        "excluded": true
-                    },
-                    {
                         "name": "GetTransportCapacity",
                         "excluded": false
                     },
@@ -31950,7 +31949,7 @@
                     },
                     {
                         "name": "GetConfiguredFruitChoices",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HandlePlantSelected",
@@ -32086,7 +32085,7 @@
                     },
                     {
                         "name": "TryShowPlantPicker",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "RequestPlantChoice",
@@ -32102,7 +32101,7 @@
                     },
                     {
                         "name": "GetFirstEmptyPlot",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsConfiguredPlantChoice",
@@ -32114,19 +32113,19 @@
                     },
                     {
                         "name": "IsPlantAlreadyPlanted",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetVisualPlantId",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ResolveGameplayPlantId",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetActivePlantStore",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ResetColumnPickerStateIfScenarioChanged",
@@ -32134,23 +32133,35 @@
                     },
                     {
                         "name": "EnsureColumnChoiceIds",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "AdvanceColumnChoices",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "FillColumnChoices",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetColumnPlantOrder",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "AddColumnPlantId",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetHarvesterUpgradeRows",
                         "excluded": true
+                    },
+                    {
+                        "name": "UsesHybridHarvestPopup",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ShowCombinedUpgradePopup",
+                        "excluded": false
                     }
                 ]
             },
@@ -32604,7 +32615,7 @@
                     },
                     {
                         "name": "GetPlantStoreIcon",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetHarvestIcon",
@@ -32618,15 +32629,15 @@
                 "instanceMethods": [
                     {
                         "name": "Awake",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetData",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnPlantItemClicked",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDestroy",
@@ -32676,27 +32687,27 @@
                     },
                     {
                         "name": "Awake",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ClearStore",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetupStore",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "EnsurePoolCapacity",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "BindItem",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "UpdateLayout",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "HideStore",
@@ -32704,19 +32715,19 @@
                     },
                     {
                         "name": "Prewarm",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsGridStore#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ItemsPerColumn#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "RegisterItem",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -32810,7 +32821,7 @@
                     },
                     {
                         "name": "UpdateHarvesterLevel",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetTransportSaveData",
@@ -32847,8 +32858,44 @@
                         "excluded": false
                     },
                     {
-                        "name": "GetInitialPlantId",
+                        "name": "GetInitialFruitCount",
                         "excluded": false
+                    },
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetConfiguredVisualPlantId",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SwapConfiguredVisualOrder",
+                        "excluded": false
+                    },
+                    {
+                        "name": "CanSwapConfiguredVisualOrder",
+                        "excluded": false
+                    },
+                    {
+                        "name": "BuildConfiguredVisualOrder",
+                        "excluded": false
+                    },
+                    {
+                        "name": "EnsureConfiguredVisualOrder",
+                        "excluded": false
+                    },
+                    {
+                        "name": "EnsureConfiguredVisualOrderSize",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetInitialPlotPlantId",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ResolveConfiguredGameplayPlantId",
+                        "excluded": true
                     }
                 ]
             },
@@ -33124,10 +33171,6 @@
                     },
                     {
                         "name": "DimButton#get",
-                        "excluded": false
-                    },
-                    {
-                        "name": "ResolveMissingReferences",
                         "excluded": false
                     },
                     {
@@ -34111,19 +34154,11 @@
                         "excluded": false
                     },
                     {
-                        "name": "Start",
-                        "excluded": false
-                    },
-                    {
                         "name": "OnEnable",
                         "excluded": false
                     },
                     {
                         "name": "OnDisable",
-                        "excluded": true
-                    },
-                    {
-                        "name": "OnDestroy$1",
                         "excluded": true
                     },
                     {
@@ -34180,6 +34215,10 @@
                     },
                     {
                         "name": "HideIcon",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetUIManager",
                         "excluded": false
                     }
                 ]
@@ -34520,7 +34559,7 @@
                     },
                     {
                         "name": "RectangleContainsScreenPoint$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "RectangleContainsScreenPoint",
@@ -35124,7 +35163,7 @@
                     },
                     {
                         "name": "GetPlantStoreIcon",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -35281,6 +35320,274 @@
                     {
                         "name": "SetCellsAlongAxis",
                         "excluded": true
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.UI.ToggleGroup",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "allowSwitchOff#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "allowSwitchOff#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ctor",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ValidateToggleIsInGroup",
+                        "excluded": false
+                    },
+                    {
+                        "name": "NotifyToggleOn",
+                        "excluded": false
+                    },
+                    {
+                        "name": "UnregisterToggle",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RegisterToggle",
+                        "excluded": false
+                    },
+                    {
+                        "name": "AnyTogglesOn",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ActiveToggles",
+                        "excluded": true
+                    },
+                    {
+                        "name": "SetAllTogglesOff",
+                        "excluded": true
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.UI.Toggle",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "group#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "group#set",
+                        "excluded": true
+                    },
+                    {
+                        "name": "isOn#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "isOn#set",
+                        "excluded": false
+                    },
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ctor",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Start",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnEnable",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnDisable",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnDidApplyAnimationProperties",
+                        "excluded": true
+                    },
+                    {
+                        "name": "Rebuild",
+                        "excluded": true
+                    },
+                    {
+                        "name": "LayoutComplete",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GraphicUpdateComplete",
+                        "excluded": true
+                    },
+                    {
+                        "name": "OnPointerClick",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnSubmit",
+                        "excluded": true
+                    },
+                    {
+                        "name": "SetToggleGroup",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetIsOnWithoutNotify",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Set",
+                        "excluded": false
+                    },
+                    {
+                        "name": "PlayEffect",
+                        "excluded": false
+                    },
+                    {
+                        "name": "InternalToggle",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "PlayableSprinklerAndHarvesterUpgradePopup",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "GetIrrigation",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetHarvest",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetPanelVisible",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetText",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetStatArrow",
+                        "excluded": false
+                    },
+                    {
+                        "name": "IsVisible#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SelectedTab#get",
+                        "excluded": true
+                    },
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Awake",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnEnable",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnDisable",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Show",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Hide",
+                        "excluded": false
+                    },
+                    {
+                        "name": "WireListeners",
+                        "excluded": false
+                    },
+                    {
+                        "name": "UnwireListeners",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SubscribeSystems",
+                        "excluded": false
+                    },
+                    {
+                        "name": "UnsubscribeSystems",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnSystemLevelChanged",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnSprinklerTabChanged",
+                        "excluded": false
+                    },
+                    {
+                        "name": "OnHarvesterTabChanged",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SelectTab",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Refresh",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RefreshSprinkler",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RefreshHarvester",
+                        "excluded": false
+                    },
+                    {
+                        "name": "UpgradeSprinkler",
+                        "excluded": false
+                    },
+                    {
+                        "name": "UpgradeHarvester",
+                        "excluded": false
+                    },
+                    {
+                        "name": "IsHarvesterAvailable",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetRootVisible",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.UI.Misc",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "Destroy",
+                        "excluded": true
+                    },
+                    {
+                        "name": "DestroyImmediate",
+                        "excluded": false
                     }
                 ]
             }
@@ -35462,8 +35769,8 @@
                         "name": "Assets/_FrameWork/Sprites/GamePlay/icn_cash2.png"
                     },
                     {
-                        "maxWidth": 1024,
-                        "maxHeight": 2048,
+                        "maxWidth": 512,
+                        "maxHeight": 256,
                         "format": "png32",
                         "compression": "quantQuality",
                         "quality": 65,
@@ -35532,8 +35839,8 @@
                         "name": "Assets/_Game/Resource2D/Trinker.png"
                     },
                     {
-                        "maxWidth": 2048,
-                        "maxHeight": 2048,
+                        "maxWidth": 1024,
+                        "maxHeight": 1024,
                         "format": "png32",
                         "compression": "quantQuality",
                         "quality": 65,
@@ -35590,6 +35897,26 @@
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Sprites/UI/farm logo 1.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "jpeg",
+                        "compression": "quantSize",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Resource2D/tx 1.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/Harvester/Harvester.png"
                     }
                 ]
             },

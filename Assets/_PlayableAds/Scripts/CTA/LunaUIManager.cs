@@ -10,6 +10,9 @@ using UnityEngine.UI;
 [DefaultExecutionOrder(-1000)]
 public class LunaUIManager : MonoBehaviour
 {
+    private const float InitialEndcardDelaySeconds = 120f;
+    private const float RecurringEndcardDelaySeconds = 90f;
+
     public static LunaUIManager Instance { get; private set; }
 
     [Header("Scenario")]
@@ -23,7 +26,6 @@ public class LunaUIManager : MonoBehaviour
     [SerializeField] private GameObject endcardRoot;
     [SerializeField] private Button continueButton;
     [SerializeField] private List<Button> endcardStoreButtons = new List<Button>();
-    [SerializeField, Min(1f)] private float fallbackEndcardDelaySeconds = 60f;
     [Header("Optional references (auto-resolved when empty)")]
     [SerializeField] private PlayableTutorialFlow tutorialFlow;
     [SerializeField] private PlantStore plantStore;
@@ -47,6 +49,7 @@ public class LunaUIManager : MonoBehaviour
     private bool _startTutorialAfterPlantSelection;
     private int _pendingPlantPlotId = -1;
     private bool _endcardVisible;
+    private bool _hasShownEndcard;
     private float _nextEndcardAt;
     private FruitTransportStation _transportStation;
     private FarmPlotSystem _plotSystem;
@@ -348,10 +351,16 @@ public class LunaUIManager : MonoBehaviour
         Plot targetPlot = _plotSystem != null ? _plotSystem.GetPlotComponent(_pendingPlantPlotId) : null;
         int gameplayPlantId = ResolveGameplayPlantId(targetPlot, plantId);
         if (gameplayPlantId < 0 || targetPlot == null || targetPlot.State != FarmPlotState.Empty ||
+            !PlayableScenarioRuntime.CanSwapConfiguredVisualOrder(_pendingPlantPlotId, plantId) ||
             !_plotSystem.TryOccupyPlot(_pendingPlantPlotId, gameplayPlantId, plantId))
         {
             Debug.LogWarning("LunaUIManager: selected plant could not be placed on the pending plot.");
             return;
+        }
+
+        if (!PlayableScenarioRuntime.SwapConfiguredVisualOrder(_pendingPlantPlotId, plantId))
+        {
+            Debug.LogError("LunaUIManager: selected plant was placed, but its visual order could not be swapped.");
         }
 
         PlayableFarmState.UnlockCollectionPlant(plantId, 1);
@@ -377,9 +386,6 @@ public class LunaUIManager : MonoBehaviour
             return configuredId;
         }
 
-        // Keep the legacy per-plot default as the final config fallback. The
-        // picker selection is visual-only and must never replace the plot's
-        // configured gameplay plant when a farm/plant order exists.
         if (targetPlot != null && targetPlot.PlotData != null && targetPlot.PlotData.Config != null &&
             targetPlot.PlotData.Config.defaultPlantId >= 0)
         {
@@ -444,6 +450,17 @@ public class LunaUIManager : MonoBehaviour
     {
         if (plotData == null || plotData.State != FarmPlotState.Empty || CurrentScenePlayableSO == null || !CurrentScenePlayableSO.UsesPlantPicker)
         {
+            return;
+        }
+
+        if (CurrentScenePlayableSO.showPlantPickerOnlyAtStart)
+        {
+            // The initial picker selection is the only player choice in this
+            // mode. Every later plot follows the authored FarmConfig order.
+            if (!_plotSystem.TryPlantConfiguredPlot(plotData.Id))
+            {
+                Debug.LogWarning($"LunaUIManager: plot {plotData.Id} has no valid configured plant for first-time picker mode.");
+            }
             return;
         }
 
@@ -673,16 +690,17 @@ public class LunaUIManager : MonoBehaviour
 
     private void RestartEndcardCountdown()
     {
-        float delay = CurrentScenePlayableSO != null
-            ? CurrentScenePlayableSO.endcardDelaySeconds
-            : fallbackEndcardDelaySeconds;
-        _nextEndcardAt = Time.unscaledTime + Mathf.Max(1f, delay);
+        float delay = _hasShownEndcard
+            ? RecurringEndcardDelaySeconds
+            : InitialEndcardDelaySeconds;
+        _nextEndcardAt = Time.unscaledTime + delay;
     }
 
     [ContextMenu("Show Endcard Now")]
     public void ShowEndcard()
     {
         if (endcardRoot == null) return;
+        _hasShownEndcard = true;
         _endcardVisible = true;
         endcardRoot.SetActive(true);
     }

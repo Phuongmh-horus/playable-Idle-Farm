@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 8190794302820951950}
   - component: {fileID: 7878175853418721860}
   - component: {fileID: 163347352585999886}
+  - component: {fileID: 2182257865799449510}
   m_Layer: 5
   m_Name: IconUpgradeLayer
   m_TagString: Untagged
@@ -296,3 +297,15 @@ MonoBehaviour:
   manageScale: 0
   flipX: 0
   customScale: {x: 1, y: 1, z: 1}
+--- !u!210 &2182257865799449510
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504062229381536321}
+  m_Enabled: 1
+  m_SortingLayerID: -1822937161
+  m_SortingLayer: 11
+  m_SortingOrder: 200
+  m_SortAtRoot: 0

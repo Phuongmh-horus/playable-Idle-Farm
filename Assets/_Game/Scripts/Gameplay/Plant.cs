@@ -46,14 +46,15 @@ public class Plant : MonoBehaviour
         if (!plantAnimator) plantAnimator = gameObject.AddComponent<PlantAnimator>();
     }
 
-    public void Init(int id, int initialLevel = 1, int ring = 0, int visualPlantId = -1)
+    public void Init(int id, int initialLevel = 1, int ring = 0, int visualPlantId = -1, int initialFruitCount = 0)
     {
         _plantId = id;
         _visualPlantId = visualPlantId;
         _ringIndex = ring;
         _plantLevel = Math.Max(1, initialLevel);
         _currentWater = 0f;
-        _filledSlotCount = 0;
+        int fruitCapacity = Config != null ? Config.GetFruitCount(_plantLevel) : 1;
+        _filledSlotCount = Mathf.Clamp(initialFruitCount, 0, fruitCapacity);
         LastWaterStartProgress = 0f;
         LastWaterTargetProgress = 0f;
         UpdatePlantSprite();

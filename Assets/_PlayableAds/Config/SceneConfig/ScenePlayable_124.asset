@@ -26,4 +26,3 @@ MonoBehaviour:
   showUpgrade: 1
   harvestMode: 1
   enableIrrigation: 1
-  endcardDelaySeconds: 90

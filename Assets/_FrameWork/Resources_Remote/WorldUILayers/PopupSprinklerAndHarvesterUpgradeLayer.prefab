@@ -1119,12 +1119,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 45
+  m_fontSizeMax: 40
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
@@ -2321,12 +2321,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 45
+  m_fontSizeMax: 40
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
@@ -2377,9 +2377,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: 130
-  m_MinHeight: 58
+  m_MinHeight: 50
   m_PreferredWidth: 130
-  m_PreferredHeight: 58
+  m_PreferredHeight: 50
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
@@ -3427,7 +3427,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4153586892217664072}
   - component: {fileID: 8923337237045606002}
-  - component: {fileID: 6261938664710014798}
+  - component: {fileID: 5436343977981258752}
   m_Layer: 0
   m_Name: SprinklerButton
   m_TagString: Untagged
@@ -3464,7 +3464,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6221843311060178645}
   m_CullTransparentMesh: 1
---- !u!114 &6261938664710014798
+--- !u!114 &5436343977981258752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3507,11 +3507,11 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   toggleTransition: 1
   graphic: {fileID: 0}
-  m_Group: {fileID: 6393820652384555014}
+  m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &6284998985293157813
 GameObject:
   m_ObjectHideFlags: 0
@@ -4075,12 +4075,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 45
+  m_fontSizeMax: 40
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
@@ -4131,9 +4131,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: 130
-  m_MinHeight: 58
+  m_MinHeight: 50
   m_PreferredWidth: 130
-  m_PreferredHeight: 58
+  m_PreferredHeight: 50
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
@@ -4230,12 +4230,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
+  m_fontSize: 40
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 45
+  m_fontSizeMax: 40
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
@@ -4419,7 +4419,7 @@ RectTransform:
   m_GameObject: {fileID: 7518985683150219731}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1247408527666458947}
@@ -4526,8 +4526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67241d7a7eebec44b40d5ef94545dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprinklerTab: {fileID: 6261938664710014798}
-  harvesterTab: {fileID: 7571051415087911630}
+  sprinklerTab: {fileID: 5436343977981258752}
+  harvesterTab: {fileID: 6273720305516650589}
   sprinklerTabBackground: {fileID: 3027765187222301344}
   harvesterTabBackground: {fileID: 3140227338980439966}
   selectedTabSprite: {fileID: 21300000, guid: 7fc51205ac49cd9478b90ddce1f240c1, type: 3}
@@ -4821,7 +4821,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7791361000773704660}
   - component: {fileID: 1594381002587905700}
-  - component: {fileID: 7571051415087911630}
+  - component: {fileID: 6273720305516650589}
   m_Layer: 0
   m_Name: HarvesterButton
   m_TagString: Untagged
@@ -4858,7 +4858,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7892440856763567180}
   m_CullTransparentMesh: 1
---- !u!114 &7571051415087911630
+--- !u!114 &6273720305516650589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4901,7 +4901,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   toggleTransition: 1
   graphic: {fileID: 0}
-  m_Group: {fileID: 6393820652384555014}
+  m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []

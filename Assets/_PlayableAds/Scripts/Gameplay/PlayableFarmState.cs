@@ -214,6 +214,7 @@ public static class PlayableFarmState
 public static class PlayableScenarioRuntime
 {
     public static ScenePlayableSO CurrentScenario { get; private set; }
+    private static readonly List<int> _configuredVisualPlantOrder = new List<int>();
 
     public static int InitialPlotCount => CurrentScenario != null
         ? Mathf.Max(1, CurrentScenario.initialPlotCount)
@@ -222,13 +223,14 @@ public static class PlayableScenarioRuntime
     public static void Prepare(ScenePlayableSO scenario)
     {
         CurrentScenario = scenario;
+        BuildConfiguredVisualOrder();
         // Currency is an inspector-authored scenario value; all later income
         // and spending remains session-only in PlayableFarmState.
         PlayableFarmState.ResetPlayableState(scenario != null ? scenario.startingCurrency : 0d);
         int initialPlotCount = InitialPlotCount;
         for (int plotId = 0; plotId < initialPlotCount; plotId++)
         {
-            int plantId = scenario != null ? GetInitialPlantId(scenario, plotId) : -1;
+            int plantId = scenario != null ? GetInitialPlotPlantId(plotId) : -1;
             PlotState state = plantId >= 0 ? PlotState.Planted : PlotState.Empty;
             PlayableFarmState.UpdatePlotData(plotId, state, plantId, 1);
         }
@@ -247,7 +249,7 @@ public static class PlayableScenarioRuntime
             return false;
         }
 
-        int plantId = GetInitialPlantId(CurrentScenario, plotId);
+        int plantId = GetInitialPlotPlantId(plotId);
         data = new PlotSaveData
         {
             plotId = plotId,
@@ -258,14 +260,130 @@ public static class PlayableScenarioRuntime
         return true;
     }
 
-    private static int GetInitialPlantId(ScenePlayableSO scenario, int plotId)
+    public static int GetInitialFruitCount(int plotId)
     {
-        // The first visible plot must stay empty until the player picks a plant.
-        if (scenario.UsesPlantPicker && plotId == 0)
+        if (CurrentScenario == null || plotId < 0 || plotId >= InitialPlotCount)
+        {
+            return 0;
+        }
+
+        return Mathf.Max(0, CurrentScenario.initialFruitCount);
+    }
+
+    public static int GetConfiguredVisualPlantId(int plotId)
+    {
+        EnsureConfiguredVisualOrder();
+        if (plotId >= 0 && plotId < _configuredVisualPlantOrder.Count && _configuredVisualPlantOrder[plotId] >= 0)
+        {
+            return _configuredVisualPlantOrder[plotId];
+        }
+
+        return CurrentScenario != null ? ResolveConfiguredGameplayPlantId(CurrentScenario, plotId) : -1;
+    }
+
+    public static bool SwapConfiguredVisualOrder(int plotId, int selectedPlantId)
+    {
+        if (plotId < 0 || selectedPlantId < 0)
+        {
+            return false;
+        }
+
+        EnsureConfiguredVisualOrder();
+        EnsureConfiguredVisualOrderSize(plotId + 1);
+        int configuredPlantId = GetConfiguredVisualPlantId(plotId);
+        if (configuredPlantId < 0 || configuredPlantId == selectedPlantId)
+        {
+            return configuredPlantId == selectedPlantId;
+        }
+
+        int selectedIndex = _configuredVisualPlantOrder.IndexOf(selectedPlantId);
+        if (selectedIndex < 0)
+        {
+            return false;
+        }
+
+        _configuredVisualPlantOrder[selectedIndex] = configuredPlantId;
+        _configuredVisualPlantOrder[plotId] = selectedPlantId;
+        return true;
+    }
+
+    public static bool CanSwapConfiguredVisualOrder(int plotId, int selectedPlantId)
+    {
+        if (plotId < 0 || selectedPlantId < 0)
+        {
+            return false;
+        }
+
+        EnsureConfiguredVisualOrder();
+        EnsureConfiguredVisualOrderSize(plotId + 1);
+        int configuredPlantId = GetConfiguredVisualPlantId(plotId);
+        return configuredPlantId == selectedPlantId ||
+            (configuredPlantId >= 0 && _configuredVisualPlantOrder.IndexOf(selectedPlantId) >= 0);
+    }
+
+    private static void BuildConfiguredVisualOrder()
+    {
+        _configuredVisualPlantOrder.Clear();
+
+        FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
+        PlantConfig plantConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.PlantConfig : null;
+        if (farmConfig != null && farmConfig.initialPlantOrder != null && farmConfig.initialPlantOrder.Count > 0)
+        {
+            _configuredVisualPlantOrder.AddRange(farmConfig.initialPlantOrder);
+        }
+        else if (plantConfig != null && plantConfig.plants != null)
+        {
+            for (int i = 0; i < plantConfig.plants.Count; i++)
+            {
+                if (plantConfig.plants[i] != null)
+                {
+                    _configuredVisualPlantOrder.Add(plantConfig.plants[i].ID);
+                }
+            }
+        }
+        else if (CurrentScenario != null && CurrentScenario.initialPlantIds != null)
+        {
+            _configuredVisualPlantOrder.AddRange(CurrentScenario.initialPlantIds);
+        }
+    }
+
+    private static void EnsureConfiguredVisualOrder()
+    {
+        if (_configuredVisualPlantOrder.Count > 0 || CurrentScenario == null)
+        {
+            return;
+        }
+
+        // LunaUIManager prepares the scenario before ConfigHolder's Awake.
+        // Defer the authored order until those inspector references exist.
+        if (ConfigHolder.Instance != null)
+        {
+            BuildConfiguredVisualOrder();
+        }
+    }
+
+    private static void EnsureConfiguredVisualOrderSize(int size)
+    {
+        while (_configuredVisualPlantOrder.Count < size)
+        {
+            int nextPlotId = _configuredVisualPlantOrder.Count;
+            int plantId = CurrentScenario != null ? ResolveConfiguredGameplayPlantId(CurrentScenario, nextPlotId) : -1;
+            _configuredVisualPlantOrder.Add(plantId);
+        }
+    }
+
+    private static int GetInitialPlotPlantId(int plotId)
+    {
+        if (CurrentScenario != null && CurrentScenario.UsesPlantPicker && plotId == 0)
         {
             return -1;
         }
 
+        return CurrentScenario != null ? ResolveConfiguredGameplayPlantId(CurrentScenario, plotId) : -1;
+    }
+
+    private static int ResolveConfiguredGameplayPlantId(ScenePlayableSO scenario, int plotId)
+    {
         FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
         PlantConfig plantConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.PlantConfig : null;
         if (farmConfig != null && farmConfig.HasInitialPlantOrder &&

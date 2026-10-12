@@ -1,5 +1,9 @@
 # Lessons
 
+- Khi picker cho phép chọn lệch plant order, chỉ hoán đổi runtime visual order: gameplay plant ID, price, water và upgrade stat của từng plot phải giữ nguyên theo FarmConfig.
+
+- Khi scenario runtime được prepare trước ConfigHolder, không được chốt plant order rỗng: phải lazy-initialize order khi ConfigHolder inspector references đã sẵn sàng trước lúc picker validates hoặc swap selection.
+
 - Plant picker selection must not replace a plot's gameplay plant identity: preserve the plot/ring plant type for prices, water, and upgrades, and store picker-selected art as a separate visual override.
 
 - When plant visual/config list order is intended to control starter planting order, never resolve starter plants by stable ID alone; use an explicit FarmConfig order first, then PlantConfig list order, and keep stable IDs only for identity.

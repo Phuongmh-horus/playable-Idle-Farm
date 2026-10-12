@@ -6,6 +6,8 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
     [SerializeField] private Transform targetTransform;
     [SerializeField] private Vector3 iconOffset = new Vector3(0, 1.5f, 0);
     [SerializeField] private LunaUIManager uiManager;
+    [Tooltip("When enabled, this entry point always opens the sprinkler tab/data instead of selecting an affordable system.")]
+    [SerializeField] private bool showSprinklerOnly;
 
     private bool _isShowingIcon;
     private bool _isGoldSubscribed;
@@ -182,6 +184,12 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
 
         LunaUIManager manager = GetUIManager();
         if (manager == null) return;
+
+        if (showSprinklerOnly)
+        {
+            manager.ShowIrrigationUpgrade();
+            return;
+        }
 
         if (CanUpgradeSprinkler()) manager.ShowIrrigationUpgrade();
         else if (CanUpgradeHarvester()) manager.ShowHarvestUpgrade();
