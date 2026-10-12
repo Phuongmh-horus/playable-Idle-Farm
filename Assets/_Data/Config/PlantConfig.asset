@@ -106,8 +106,8 @@ MonoBehaviour:
     - baseUpgradeCost: 2592
       baseFruitPrice: 3240
       waterRequirement: 18
-      levelUpCostSumPerLevel: 912
-      priceSumPerLevel: 324
+      levelUpCostSumPerLevel: 3888
+      priceSumPerLevel: 648
     - baseUpgradeCost: 112500
       baseFruitPrice: 798
       waterRequirement: 68
@@ -148,7 +148,7 @@ MonoBehaviour:
     - baseUpgradeCost: 23328
       baseFruitPrice: 29160
       waterRequirement: 27
-      levelUpCostSumPerLevel: 34882
+      levelUpCostSumPerLevel: 34982
       priceSumPerLevel: 5830
     - baseUpgradeCost: 2812500
       baseFruitPrice: 7182
@@ -162,14 +162,14 @@ MonoBehaviour:
       priceSumPerLevel: 30720
   - plantType: 4
     visual: {fileID: 11400000, guid: fd5b75ba5f394b25af1de10d52baee67, type: 2}
-    maxLevel: 25
+    maxLevel: 5
     baseFruitCount: 1
     fruitCountPerLevel: 1
     ringStats:
     - baseUpgradeCost: 70084
       baseFruitPrice: 87480
       waterRequirement: 32
-      levelUpCostSumPerLevel: 1049760
+      levelUpCostSumPerLevel: 104976
       priceSumPerLevel: 17496
     - baseUpgradeCost: 14062500
       baseFruitPrice: 21546
@@ -211,7 +211,7 @@ MonoBehaviour:
     - baseUpgradeCost: 585937
       baseFruitPrice: 787314
       waterRequirement: 45
-      levelUpCostSumPerLevel: 859376
+      levelUpCostSumPerLevel: 944784
       priceSumPerLevel: 157462
     - baseUpgradeCost: 351562500
       baseFruitPrice: 193914

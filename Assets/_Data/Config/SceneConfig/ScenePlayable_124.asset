@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31bb7af18bb377f4fb538c44a26ed036, type: 3}
-  m_Name: ScenePlayable_126
+  m_Name: ScenePlayable_124
   m_EditorClassIdentifier: 
-  scenario: 126
+  scenario: 124
   showTutorial: 1
-  tutorialStartPhase: 0
-  skippedTutorialPhases: 00000000
+  tutorialStartPhase: 2
+  skippedTutorialPhases: 0000000001000000
   enablePlantPicker: 0
+  showPlantPickerOnlyAtStart: 0
   plantPickerVariant: 0
   selectablePlantIds: 
-  initialPlotCount: 5
+  initialPlotCount: 10
   initialPlantIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
   initialFruitCount: 1
   startingCurrency: 0
   showConveyorAndSell: 1
   showUpgrade: 1
-  harvestMode: 2
+  harvestMode: 1
   enableIrrigation: 1

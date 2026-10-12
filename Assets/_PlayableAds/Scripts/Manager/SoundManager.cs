@@ -221,9 +221,13 @@ public class SoundManager : MonoSingleton<SoundManager>
         {
             yield break;
         }
-        if (clipName == AudioClipName.sfx_pickaxe)
+        if (clipName == AudioClipName.sfx_pickaxe && delay > 0f)
         {
-            yield return new WaitForSeconds(delay);
+            while (delay > 0f)
+            {
+                delay -= Time.deltaTime;
+                yield return null;
+            }
         }
 
         if (loopFxSource == null) yield break; ;

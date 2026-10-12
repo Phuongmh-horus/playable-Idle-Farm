@@ -24,20 +24,13 @@ public class HarvesterArm : MonoBehaviour
     private void OnEnable() { _pulseElapsed = 0f; }
     private void OnDisable() { ResetBladeScale(); }
 
-    private void Update()
-    {
-        // Keep the blade animation self-contained; the owning system rotates
-        // the arm so sprinkler and harvester share the same Luna-safe motion path.
-        AnimateBladePulse(Time.deltaTime);
-    }
-
     private void CacheInitialScales()
     {
         _initialBladeScales = new Vector3[blades.Count];
         for (int i = 0; i < blades.Count; i++) _initialBladeScales[i] = blades[i] != null ? blades[i].localScale : Vector3.one;
     }
 
-    private void AnimateBladePulse(float deltaTime)
+    public void AnimateBladePulse(float deltaTime)
     {
         if (blades.Count == 0) return;
 

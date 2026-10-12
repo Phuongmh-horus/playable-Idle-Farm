@@ -137,7 +137,7 @@ public class SprinklerConfig
     [Tooltip("Chu kỳ quay 1 vòng 360 độ (giây/vòng)")]
     public float rotationDuration = 10f;
 
-    [Tooltip("Seconds removed from one revolution at every 5-level milestone.")]
+    [Tooltip("Seconds removed from one revolution at every 3-level milestone.")]
     [Min(0f)] public float rotationDurationReductionPerMilestone = 2f;
 
     [Tooltip("Shortest allowed revolution duration.")]
@@ -146,7 +146,7 @@ public class SprinklerConfig
     public float GetRotationDuration(int level)
     {
         int clampedLevel = Mathf.Clamp(level, 1, Mathf.Max(1, maxLevel));
-        int milestoneCount = clampedLevel / 5;
+        int milestoneCount = clampedLevel / 3;
         return Mathf.Max(minimumRotationDuration, rotationDuration - milestoneCount * rotationDurationReductionPerMilestone);
     }
 

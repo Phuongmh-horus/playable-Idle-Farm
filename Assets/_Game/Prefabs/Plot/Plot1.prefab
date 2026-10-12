@@ -182,7 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 5864182552438162115}
   plotVisual: {fileID: 7493328478997708553}
-  upgradeIconOffset: {x: 0.5, y: 1, z: 1}
+  upgradeIconOffset: {x: 0, y: 1.5, z: 1.2}
   plotPriceOffset: {x: 0, y: 0.2, z: 0.2}
   plantTreeOffset: {x: 0, y: 0, z: 0.4}
 --- !u!114 &7493328478997708553
@@ -202,11 +202,6 @@ MonoBehaviour:
   lockedRenderer: {fileID: 1445111220976807183}
   emptyRenderer: {fileID: 3651906527773565445}
   occupiedRenderer: {fileID: 1007499272598159945}
-  visualConfig: {fileID: 11400000, guid: c218e006e2c4e7549bc786c1c91b2697, type: 2}
-  ringLockedSprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
-  lockedSprite: {fileID: 21300000, guid: 548c0c4c0bc41ab45823395c7d2df581, type: 3}
-  emptySprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
-  occupiedSprite: {fileID: 21300000, guid: 804f8283beeee7a479fbc5557704d1ab, type: 3}
 --- !u!1 &4463878835484280107
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,12 +478,12 @@ SpriteRenderer:
   m_SortingLayerID: -496145767
   m_SortingLayer: 2
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 8372e9b652683e04aa279070f1a61422, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b769603e4bd3d649a8628632207cf27, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.56, y: 2.56}
+  m_Size: {x: 1.6, y: 2.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

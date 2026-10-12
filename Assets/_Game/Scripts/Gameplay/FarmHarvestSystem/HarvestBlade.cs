@@ -270,6 +270,7 @@ public class HarvestBlade : MonoBehaviour
 
         Vector3 currentBladePos = transform.position;
         IReadOnlyList<Plot> slots = plots.SpawnedPlotComponents;
+        float harvestRadiusSqr = harvestRadius * harvestRadius;
 
         for (int i = 0; i < slots.Count; i++)
         {
@@ -281,8 +282,8 @@ public class HarvestBlade : MonoBehaviour
             if (plant == null || !plant.CanHarvest())
                 continue;
 
-            float dist = Vector3.Distance(currentBladePos, slot.PlantPosition);
-            if (dist <= harvestRadius)
+            Vector3 offset = currentBladePos - slot.PlantPosition;
+            if (offset.sqrMagnitude <= harvestRadiusSqr)
             {
                 _pendingHarvestPlots.Add(slot);
             }
@@ -339,7 +340,7 @@ public class HarvestBlade : MonoBehaviour
     private void HarvestPendingPlots()
     {
         _harvestBuffer.Clear();
-        foreach (Plot plot in _pendingHarvestPlots) _harvestBuffer.Add(plot);
+        _harvestBuffer.AddRange(_pendingHarvestPlots);
         _pendingHarvestPlots.Clear();
 
         for (int i = 0; i < _harvestBuffer.Count; i++)

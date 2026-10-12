@@ -10,10 +10,17 @@ using UnityEngine.UI;
 [DefaultExecutionOrder(-1000)]
 public class LunaUIManager : MonoBehaviour
 {
-    private const float InitialEndcardDelaySeconds = 120f;
-    private const float RecurringEndcardDelaySeconds = 90f;
-
     public static LunaUIManager Instance { get; private set; }
+
+    [Header("Repeating endcard timing")]
+    [Tooltip("Thời gian xuất hiện endcard lần đầu (giây).")]
+    [SerializeField] private float initialEndcardDelay = 45f;
+    [Tooltip("Thời gian xuất hiện lại endcard sau khi bấm tiếp tục (giây).")]
+    [SerializeField] private float recurringEndcardDelay = 45f;
+    [Tooltip("Thời gian tối đa trước khi hiện endcard (giây). Bất kể đang ở trạng thái nào.")]
+    [SerializeField] private float maxGameTimeout = 120f;
+    [Tooltip("Cho phép hiện endcard kể cả khi tutorial chưa hoàn thành nếu người chơi idle/hết giờ.")]
+    [SerializeField] private bool allowEndcardDuringTutorial = true;
 
     [Header("Scenario")]
     [SerializeField] private PlayableScenarioId scenario = PlayableScenarioId.Scenario123;
@@ -51,6 +58,8 @@ public class LunaUIManager : MonoBehaviour
     private bool _endcardVisible;
     private bool _hasShownEndcard;
     private float _nextEndcardAt;
+    private float _totalPlayTime;
+    private float _lastInteractionTime;
     private FruitTransportStation _transportStation;
     private FarmPlotSystem _plotSystem;
     private readonly List<int> _columnChoiceIds = new List<int>(2);
@@ -97,14 +106,48 @@ public class LunaUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (_waitingForFruitSelection || _endcardVisible) return;
-        if (IsGameplayInputBlocked || IsTutorialVisible)
+        if (_endcardVisible) return;
+
+        float dt = Time.unscaledDeltaTime;
+        _totalPlayTime += dt;
+
+        // 1. Hard Timeout toàn cục (120s): Bắt buộc bật Endcard lần đầu nếu người chơi chưa từng thấy Endcard
+        if (!_hasShownEndcard && _totalPlayTime >= maxGameTimeout)
         {
-            _nextEndcardAt += Time.unscaledDeltaTime;
+            ShowEndcard();
             return;
         }
-        if (Time.unscaledTime < _nextEndcardAt) return;
-        ShowEndcard();
+
+        // 2. Nếu người chơi đang chạm màn hình (vuốt / kéo), hoãn nhẹ 1.5s để không ngắt thao tác
+        if (Input.GetMouseButton(0))
+        {
+            _lastInteractionTime = Time.unscaledTime;
+            if (Time.unscaledTime >= _nextEndcardAt)
+            {
+                _nextEndcardAt = Time.unscaledTime + 1.5f;
+            }
+            return;
+        }
+
+        // 3. Nếu đang mở popup (chọn quả hoặc upgrade), chỉ hoãn nếu chưa chạm mốc thời gian đếm ngược
+        if (_waitingForFruitSelection || IsGameplayInputBlocked)
+        {
+            if (Time.unscaledTime < _nextEndcardAt)
+            {
+                return;
+            }
+        }
+        else if (IsTutorialVisible && !allowEndcardDuringTutorial)
+        {
+            _nextEndcardAt += dt;
+            return;
+        }
+
+        // 4. Hết thời gian đếm ngược -> Bật Endcard
+        if (Time.unscaledTime >= _nextEndcardAt)
+        {
+            ShowEndcard();
+        }
     }
 
     private void OnDestroy()
@@ -507,7 +550,15 @@ public class LunaUIManager : MonoBehaviour
         }
         if (plantStore == null && plantStores.Count > 0) plantStore = plantStores[0];
         if (plantConfig == null && ConfigHolder.Instance != null) plantConfig = ConfigHolder.Instance.PlantConfig;
+        if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "PopupEndcard");
         if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "EndGamePanel");
+        if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "PopupEndGame");
+        if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "Endcard");
+        if (endcardRoot == null)
+        {
+            PopupStore popupStore = FindObjectOfType<PopupStore>();
+            if (popupStore != null) endcardRoot = popupStore.gameObject;
+        }
         ResolvePreloadedUpgradePopups(playableRoot);
 
         if (selloutButton == null)
@@ -549,12 +600,36 @@ public class LunaUIManager : MonoBehaviour
             }
         }
 
-        if (endcardRoot == null) return;
-
-        foreach (Button button in endcardRoot.GetComponentsInChildren<Button>(true))
+        if (endcardRoot != null)
         {
-            if (button.name == "Continue_Button") continueButton = button;
-            else if (!endcardStoreButtons.Contains(button)) endcardStoreButtons.Add(button);
+            if (continueButton == null)
+            {
+                Button[] buttons = endcardRoot.GetComponentsInChildren<Button>(true);
+                for (int i = 0; i < buttons.Length; i++)
+                {
+                    Button button = buttons[i];
+                    if (button != null && button.name == "Continue_Button")
+                    {
+                        continueButton = button;
+                        break;
+                    }
+                }
+            }
+
+            if (endcardStoreButtons.Count == 0)
+            {
+                Button[] buttons = endcardRoot.GetComponentsInChildren<Button>(true);
+                for (int i = 0; i < buttons.Length; i++)
+                {
+                    Button button = buttons[i];
+                    if (button != null && button != continueButton && !endcardStoreButtons.Contains(button))
+                    {
+                        endcardStoreButtons.Add(button);
+                    }
+                }
+            }
+
+            WireEndcardButtons();
         }
 
     }
@@ -691,18 +766,43 @@ public class LunaUIManager : MonoBehaviour
     private void RestartEndcardCountdown()
     {
         float delay = _hasShownEndcard
-            ? RecurringEndcardDelaySeconds
-            : InitialEndcardDelaySeconds;
+            ? recurringEndcardDelay
+            : initialEndcardDelay;
         _nextEndcardAt = Time.unscaledTime + delay;
     }
 
     [ContextMenu("Show Endcard Now")]
     public void ShowEndcard()
     {
-        if (endcardRoot == null) return;
+        if (endcardRoot == null)
+        {
+            ResolveReferences();
+        }
+
+        if (endcardRoot == null)
+        {
+            Debug.LogWarning("LunaUIManager: cannot ShowEndcard because endcardRoot is null.");
+            return;
+        }
+
         _hasShownEndcard = true;
         _endcardVisible = true;
+
+        HideFruitPicker();
+        if (combinedUpgradePopup != null && combinedUpgradePopup.IsVisible)
+        {
+            combinedUpgradePopup.Hide();
+        }
+        if (upgradePopupPresenter != null && upgradePopupPresenter.IsVisible)
+        {
+            upgradePopupPresenter.Hide();
+        }
+
         endcardRoot.SetActive(true);
+        WireEndcardButtons();
+
+        Luna.Unity.LifeCycle.GameEnded();
+
     }
 
     public void ContinuePlaying()

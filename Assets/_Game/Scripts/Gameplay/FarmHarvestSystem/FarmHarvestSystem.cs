@@ -166,6 +166,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
             {
                 arm.RotateArm(speed, dt);
                 arm.SpinBlades(dt);
+                arm.AnimateBladePulse(dt);
             }
         }
     }
@@ -179,8 +180,12 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         }
 
         float minimumAlignmentDot = Mathf.Cos(AlignmentTolerance * Mathf.Deg2Rad);
-        foreach (FarmPlotData plot in plots.Plots)
+        IReadOnlyList<FarmPlotData> plotList = plots.Plots;
+        int plotCount = plotList.Count;
+        for (int plotIdx = 0; plotIdx < plotCount; plotIdx++)
         {
+            FarmPlotData plot = plotList[plotIdx];
+            if (plot == null) continue;
             HarvesterArm alignedArm = null;
 
             for (int i = 0; i < _spawnedHarvesterArms.Count; i++)

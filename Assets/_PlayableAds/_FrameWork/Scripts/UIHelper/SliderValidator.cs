@@ -17,6 +17,7 @@ public class SliderValidator : MonoBehaviour
     void Start()
     {
         Value = 0f;
+        enabled = false;
     }
     private void OnValidate()
     {
@@ -30,13 +31,22 @@ public class SliderValidator : MonoBehaviour
 
     private void Update()
     {
-        if (!_isAnimating) return;
+        if (!_isAnimating)
+        {
+            enabled = false;
+            return;
+        }
+
         _animationElapsed += Time.unscaledDeltaTime;
         float progress = _animationDuration <= 0f ? 1f : Mathf.Clamp01(_animationElapsed / _animationDuration);
         float eased = progress * progress * (3f - 2f * progress);
         Progress = Mathf.Lerp(_animationStart, _animationTarget, eased);
         UpdateProgress();
-        if (progress >= 1f) _isAnimating = false;
+        if (progress >= 1f)
+        {
+            _isAnimating = false;
+            enabled = false;
+        }
     }
 
     public float Value
@@ -56,6 +66,7 @@ public class SliderValidator : MonoBehaviour
         _animationDuration = Mathf.Max(0f, duration);
         _animationElapsed = 0f;
         _isAnimating = true;
+        enabled = true;
     }
 
     private void UpdateProgress()

@@ -207,7 +207,7 @@
         "disableRuntimeAnalysisForShaders": false,
         "useShadersCache": true,
         "preventUpdatingRAListWhenRAIsDisabled": false,
-        "bakeReferenceAmbientProbe": true,
+        "bakeReferenceAmbientProbe": false,
         "unusedClasses": [
             {
                 "name": "System.Reflection.AssemblyName",
@@ -12437,7 +12437,7 @@
                     },
                     {
                         "name": "copyTo",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CopyTo",
@@ -12445,7 +12445,7 @@
                     },
                     {
                         "name": "CopyTo$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "remove",
@@ -31752,10 +31752,6 @@
                         "excluded": false
                     },
                     {
-                        "name": "Update",
-                        "excluded": false
-                    },
-                    {
                         "name": "CacheInitialScales",
                         "excluded": false
                     },
@@ -33234,14 +33230,6 @@
                 "staticMethods": [],
                 "instanceMethods": [
                     {
-                        "name": "VisualConfig#get",
-                        "excluded": true
-                    },
-                    {
-                        "name": "VisualConfig#set",
-                        "excluded": true
-                    },
-                    {
                         "name": "Awake",
                         "excluded": false
                     },
@@ -33250,23 +33238,11 @@
                         "excluded": false
                     },
                     {
-                        "name": "OnDisable",
-                        "excluded": true
-                    },
-                    {
                         "name": "SetState",
                         "excluded": false
                     },
                     {
-                        "name": "ResetRenderers",
-                        "excluded": false
-                    },
-                    {
-                        "name": "EnsureRenderer",
-                        "excluded": false
-                    },
-                    {
-                        "name": "ResetRenderers$1",
+                        "name": "ApplyState",
                         "excluded": false
                     },
                     {
@@ -33274,7 +33250,15 @@
                         "excluded": false
                     },
                     {
-                        "name": "SetStateRenderersActive",
+                        "name": "SetRendererActive",
+                        "excluded": false
+                    },
+                    {
+                        "name": "EnsureRendererReferences",
+                        "excluded": false
+                    },
+                    {
+                        "name": "init",
                         "excluded": false
                     }
                 ]
@@ -35722,7 +35706,7 @@
                         "maxWidth": 512,
                         "maxHeight": 512,
                         "format": "png32",
-                        "compression": "quantSize",
+                        "compression": "quantQuality",
                         "quality": 65,
                         "script": "",
                         "ext": "",
@@ -35890,9 +35874,9 @@
                     },
                     {
                         "maxWidth": 512,
-                        "maxHeight": 300,
+                        "maxHeight": 512,
                         "format": "png32",
-                        "compression": "quantQuality",
+                        "compression": "quantSize",
                         "quality": 65,
                         "script": "",
                         "ext": "",
@@ -35917,6 +35901,36 @@
                         "script": "",
                         "ext": "",
                         "name": "Assets/_Game/Sprites/Harvester/Harvester.png"
+                    },
+                    {
+                        "maxWidth": 256,
+                        "maxHeight": 256,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/Ground/1/Ground1-2.png"
+                    },
+                    {
+                        "maxWidth": 256,
+                        "maxHeight": 256,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/Ground/1/Ground1-3.png"
+                    },
+                    {
+                        "maxWidth": 256,
+                        "maxHeight": 256,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_Game/Sprites/Ground/1/Ground1-1.png"
                     }
                 ]
             },
@@ -35926,7 +35940,7 @@
                     "startTime": "00:00.000",
                     "endTime": "00:00.000",
                     "lengthInSeconds": 0.0,
-                    "bitrate": 128,
+                    "bitrate": 64,
                     "script": "",
                     "ext": ""
                 },
@@ -35944,19 +35958,9 @@
                     {
                         "channels": 1,
                         "startTime": "00:00.000",
-                        "endTime": "00:00.950",
-                        "lengthInSeconds": 0.949999988079071,
-                        "bitrate": 128,
-                        "script": "",
-                        "ext": "",
-                        "name": "Assets/_FrameWork/Sounds/sfx_selling.ogg"
-                    },
-                    {
-                        "channels": 1,
-                        "startTime": "00:00.000",
                         "endTime": "00:00.900",
                         "lengthInSeconds": 0.8999999761581421,
-                        "bitrate": 128,
+                        "bitrate": 64,
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Sounds/sfx_cash_fly.ogg"
@@ -35964,39 +35968,9 @@
                     {
                         "channels": 1,
                         "startTime": "00:00.000",
-                        "endTime": "00:00.900",
-                        "lengthInSeconds": 0.8999999761581421,
-                        "bitrate": 128,
-                        "script": "",
-                        "ext": "",
-                        "name": "Assets/_FrameWork/Sounds/sfx_watering_machine.ogg"
-                    },
-                    {
-                        "channels": 1,
-                        "startTime": "00:00.000",
-                        "endTime": "00:00.650",
-                        "lengthInSeconds": 0.6499999761581421,
-                        "bitrate": 128,
-                        "script": "",
-                        "ext": "",
-                        "name": "Assets/_FrameWork/Sounds/sfx_upgrade.ogg"
-                    },
-                    {
-                        "channels": 1,
-                        "startTime": "00:00.000",
-                        "endTime": "00:00.550",
-                        "lengthInSeconds": 0.550000011920929,
-                        "bitrate": 128,
-                        "script": "",
-                        "ext": "",
-                        "name": "Assets/_FrameWork/Sounds/sfx_reaper_collect.ogg"
-                    },
-                    {
-                        "channels": 1,
-                        "startTime": "00:00.000",
                         "endTime": "00:00.440",
                         "lengthInSeconds": 0.4399999976158142,
-                        "bitrate": 128,
+                        "bitrate": 64,
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Sounds/sfx_cash.ogg"
@@ -36004,19 +35978,9 @@
                     {
                         "channels": 1,
                         "startTime": "00:00.000",
-                        "endTime": "00:00.400",
-                        "lengthInSeconds": 0.4000000059604645,
-                        "bitrate": 128,
-                        "script": "",
-                        "ext": "",
-                        "name": "Assets/_FrameWork/Sounds/sfx_sickle_harvest.ogg"
-                    },
-                    {
-                        "channels": 1,
-                        "startTime": "00:00.000",
-                        "endTime": "00:00.000",
-                        "lengthInSeconds": 0.0,
-                        "bitrate": 128,
+                        "endTime": "00:00.440",
+                        "lengthInSeconds": 0.4399999976158142,
+                        "bitrate": 64,
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Sounds/sfx_plant_grow.ogg"
@@ -36024,8 +35988,8 @@
                     {
                         "channels": 1,
                         "startTime": "00:00.000",
-                        "endTime": "00:23.000",
-                        "lengthInSeconds": 23.0,
+                        "endTime": "00:24.000",
+                        "lengthInSeconds": 24.0,
                         "bitrate": 128,
                         "script": "",
                         "ext": "",
@@ -36033,10 +35997,10 @@
                     },
                     {
                         "channels": 1,
-                        "startTime": "00:00.000",
-                        "endTime": "00:00.000",
-                        "lengthInSeconds": 0.0,
-                        "bitrate": 128,
+                        "startTime": "00:00.020",
+                        "endTime": "00:00.100",
+                        "lengthInSeconds": 0.07999999821186066,
+                        "bitrate": 64,
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Sounds/sfx_pickaxe.ogg"
@@ -36044,12 +36008,62 @@
                     {
                         "channels": 1,
                         "startTime": "00:00.000",
-                        "endTime": "00:00.000",
-                        "lengthInSeconds": 0.0,
-                        "bitrate": 128,
+                        "endTime": "00:24.000",
+                        "lengthInSeconds": 24.0,
+                        "bitrate": 64,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_selling.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.550",
+                        "lengthInSeconds": 0.550000011920929,
+                        "bitrate": 64,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_reaper_collect.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.550",
+                        "lengthInSeconds": 0.550000011920929,
+                        "bitrate": 64,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_sickle_harvest.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.020",
+                        "endTime": "00:00.100",
+                        "lengthInSeconds": 0.07999999821186066,
+                        "bitrate": 64,
                         "script": "",
                         "ext": "",
                         "name": "Assets/_FrameWork/Sounds/sfx_ui_click.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.000",
+                        "endTime": "00:00.900",
+                        "lengthInSeconds": 0.8999999761581421,
+                        "bitrate": 64,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_upgrade.ogg"
+                    },
+                    {
+                        "channels": 1,
+                        "startTime": "00:00.050",
+                        "endTime": "00:00.700",
+                        "lengthInSeconds": 0.6499999761581421,
+                        "bitrate": 64,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sounds/sfx_watering_machine.ogg"
                     }
                 ]
             },

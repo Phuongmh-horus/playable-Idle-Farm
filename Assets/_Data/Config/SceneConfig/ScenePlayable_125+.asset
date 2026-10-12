@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31bb7af18bb377f4fb538c44a26ed036, type: 3}
-  m_Name: ScenePlayable_125
+  m_Name: ScenePlayable_125+
   m_EditorClassIdentifier: 
   scenario: 125
   showTutorial: 1
   tutorialStartPhase: 0
   skippedTutorialPhases: 
   enablePlantPicker: 1
-  showPlantPickerOnlyAtStart: 1
-  plantPickerVariant: 0
+  showPlantPickerOnlyAtStart: 0
+  plantPickerVariant: 1
   selectablePlantIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
   initialPlotCount: 1
   initialPlantIds: 

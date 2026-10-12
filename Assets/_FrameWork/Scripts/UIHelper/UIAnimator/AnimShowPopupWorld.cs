@@ -37,6 +37,7 @@ public class AnimShowPopupWorld : MonoBehaviour
     {
         _targetScale = TargetTransform.localScale == Vector3.zero ? Vector3.one : TargetTransform.localScale;
         if (worldLayerBase != null) worldLayerBase.OnShowLayer.AddListener(PlayAnim);
+        enabled = false;
     }
 
     private void OnDestroy()

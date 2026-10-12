@@ -153,8 +153,12 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         }
 
         float minimumAlignmentDot = Mathf.Cos(AlignmentTolerance * Mathf.Deg2Rad);
-        foreach (FarmPlotData plot in plots.Plots)
+        IReadOnlyList<FarmPlotData> plotList = plots.Plots;
+        int plotCount = plotList != null ? plotList.Count : 0;
+        for (int p = 0; p < plotCount; p++)
         {
+            FarmPlotData plot = plotList[p];
+            if (plot == null) continue;
             SprinklerArm alignedArm = null;
 
             for (int i = 0; i < _spawnedSprinklerArms.Count; i++)

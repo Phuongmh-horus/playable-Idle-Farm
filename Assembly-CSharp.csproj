@@ -117,6 +117,7 @@
     <Compile Include="Assets\_FrameWork\Scripts\UIHelper\ImageStateHandle.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\PlayableSprinklerAndHarvesterUpgradePopup.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\FarmHarvestSystem\HarvestBlade.cs" />
+    <Compile Include="Assets\_Data\Config\SceneConfig\ScenePlayableSO.cs" />
     <Compile Include="Assets\_PlayableAds\_FrameWork\Scripts\UILayers\GamePlayLayer\UIGamePlayLayer.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\UI\CTAButton.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\SO\LevelDataConfigSO.cs" />
@@ -142,7 +143,6 @@
     <Compile Include="Assets\_Game\Scripts\Gameplay\FruitTransportStation\FruitTransportStationConfig.cs" />
     <Compile Include="Assets\_PlayableAds\Scripts\Gameplay\UI\PlantItem.cs" />
     <Compile Include="Assets\_Game\Scripts\ClickBasedSelection\Scripts\StaticSelectable.cs" />
-    <Compile Include="Assets\_PlayableAds\Scripts\SO\ScenePlayableSO.cs" />
     <Compile Include="Assets\_PlayableAds\Config\Sound\SoundData.cs" />
     <Compile Include="Assets\_PlayableAds\Config\CapacityConfig\CapacityConfig.cs" />
     <Compile Include="Assets\_Game\Scripts\Gameplay\FarmHarvestSystem\HarvesterArmConfig.cs" />

@@ -34,7 +34,9 @@ public class BillboardJobManager : MonoSingleton<BillboardJobManager>
 
     private readonly List<FollowerItem> registeredItems = new List<FollowerItem>();
     private readonly Dictionary<Transform, int> itemIndices = new Dictionary<Transform, int>();
+    private static readonly Quaternion GroundFlatRotation = Quaternion.Euler(90f, 0f, 0f);
     private Camera cachedCamera;
+    private Transform _cachedCameraTransform;
 
     public int ActiveCount { get { return registeredItems.Count; } }
     public Camera ActiveCamera { get { return cachedCamera; } }
@@ -47,6 +49,8 @@ public class BillboardJobManager : MonoSingleton<BillboardJobManager>
             cachedCamera = CameraManager.Instance.MainCamera;
         if (cachedCamera == null)
             cachedCamera = Camera.main;
+        if (cachedCamera != null)
+            _cachedCameraTransform = cachedCamera.transform;
     }
 
     public void Register(Transform follower, Transform target, Vector3 positionOffset,
@@ -140,7 +144,15 @@ public class BillboardJobManager : MonoSingleton<BillboardJobManager>
 
     private void LateUpdate()
     {
-        for (int i = registeredItems.Count - 1; i >= 0; i--)
+        int count = registeredItems.Count;
+        if (count == 0)
+            return;
+
+        Quaternion camRot = _cachedCameraTransform != null 
+            ? _cachedCameraTransform.rotation 
+            : (cachedCamera != null ? cachedCamera.transform.rotation : Quaternion.identity);
+
+        for (int i = count - 1; i >= 0; i--)
         {
             FollowerItem item = registeredItems[i];
             if (item.Follower == null)
@@ -152,7 +164,10 @@ public class BillboardJobManager : MonoSingleton<BillboardJobManager>
             if (item.FollowPosition && item.Target != null && item.Target.gameObject.activeInHierarchy)
                 item.Follower.position = item.Target.position + item.PositionOffset;
             if (item.Billboard)
-                item.Follower.rotation = GetBillboardRotation(item.Mode) * item.RotationOffset;
+            {
+                Quaternion baseRot = item.Mode == BillboardMode.GroundFlat ? GroundFlatRotation : camRot;
+                item.Follower.rotation = baseRot * item.RotationOffset;
+            }
             if (item.ApplyScale)
                 item.Follower.localScale = item.LocalScale;
         }
@@ -161,8 +176,10 @@ public class BillboardJobManager : MonoSingleton<BillboardJobManager>
     public Quaternion GetBillboardRotation(BillboardMode mode)
     {
         if (mode == BillboardMode.GroundFlat)
-            return Quaternion.Euler(90f, 0f, 0f);
-        return cachedCamera != null ? cachedCamera.transform.rotation : Quaternion.identity;
+            return GroundFlatRotation;
+        return _cachedCameraTransform != null 
+            ? _cachedCameraTransform.rotation 
+            : (cachedCamera != null ? cachedCamera.transform.rotation : Quaternion.identity);
     }
 
     private static void UpdateItem(FollowerItem item, Transform target, Vector3 positionOffset,

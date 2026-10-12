@@ -201,7 +201,11 @@ public sealed class CurrencyFlyEffect : MonoBehaviour
         token.Rect.localScale = Vector3.one;
         token.Image.color = Color.white;
 
-        if (delay > 0f) yield return new WaitForSeconds(delay);
+        while (delay > 0f)
+        {
+            delay -= Time.deltaTime;
+            yield return null;
+        }
 
         float horizontal = UnityEngine.Random.Range(-90f, 90f);
         Vector2 control = Vector2.Lerp(start, end, 0.45f) + new Vector2(horizontal, 130f);

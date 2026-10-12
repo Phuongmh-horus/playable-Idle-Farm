@@ -5,9 +5,9 @@ public class Plot : MonoBehaviour
 {
     [SerializeField] protected StaticSelectable plantRoot;
     [SerializeField] private PlotVisual plotVisual;
-    [SerializeField] private Vector3 upgradeIconOffset = new Vector3(0, 1.2f, 0);
-    [SerializeField] private Vector3 plotPriceOffset = new Vector3(0f, 0.8f, 0f);
-    [SerializeField] private Vector3 plantTreeOffset = new Vector3(0f, 1.1f, 0f);
+    [SerializeField] private Vector3 upgradeIconOffset = new Vector3(0f, 1f, 1f);
+    [SerializeField] private Vector3 plotPriceOffset = new Vector3(0f, 0f, 0f);
+    [SerializeField] private Vector3 plantTreeOffset = new Vector3(0f, 0f, 0.5f);
 
     private int _plotId;
     private int _ringIndex;
@@ -20,6 +20,8 @@ public class Plot : MonoBehaviour
     private bool _isGoldSubscribed;
     private bool _isPurchasingPlot;
     private bool _initialFruitCountApplied;
+
+    private Transform _plantRootTransform;
 
     public int PlotId => _plotId;
     public int RingIndex => _ringIndex;
@@ -34,11 +36,10 @@ public class Plot : MonoBehaviour
         {
             if (_spawnedPlant != null)
                 return _spawnedPlant.transform.position;
-            if (plantRoot != null)
-                return plantRoot.transform.position;
+            if (_plantRootTransform != null)
+                return _plantRootTransform.position;
 
-            Transform childRoot = transform.Find("PlantRoot");
-            return childRoot != null ? childRoot.position : transform.position;
+            return transform.position;
         }
     }
 
@@ -47,7 +48,13 @@ public class Plot : MonoBehaviour
         EnsureVisual();
         if (plantRoot != null)
         {
+            _plantRootTransform = plantRoot.transform;
             plantRoot.OnTapped += HandlePlantRootTapped;
+        }
+        else
+        {
+            Transform child = transform.Find("PlantRoot");
+            _plantRootTransform = child != null ? child : transform;
         }
     }
 
@@ -143,7 +150,6 @@ public class Plot : MonoBehaviour
 
         Transform popupTarget = plantRoot != null ? plantRoot.transform : transform;
 
-        // Chá»‰ hiá»‡n popup giÃ¡ náº¿u Ã´ Ä‘áº¥t Ä‘ang Locked (chÆ°a má»Ÿ khÃ³a)
         if (_plotData.State == FarmPlotState.Locked)
         {
             if (_plotData.Config == null)
