@@ -4330,6 +4330,7 @@ MonoBehaviour:
   sprinklerStatTwoArrow: {fileID: 7275661507841077826}
   sprinklerUpgradeButton: {fileID: 8338256413136420900}
   sprinklerCostText: {fileID: 3146035415400565573}
+  sprinklerCurrencyIcon: {fileID: 4999435420495051249}
   harvesterIcon: {fileID: 3514296609074567863}
   harvesterLevelText: {fileID: 7803578674984895459}
   harvesterStatOneName: {fileID: 975925182030544238}
@@ -4342,6 +4343,7 @@ MonoBehaviour:
   harvesterStatTwoArrow: {fileID: 3006751717555837478}
   harvesterUpgradeButton: {fileID: 2414952698542968323}
   harvesterCostText: {fileID: 7616027585646612122}
+  harvesterCurrencyIcon: {fileID: 4629503029502695021}
   closeButton: {fileID: 339057912125538129}
   dimButton: {fileID: 5955273677013331762}
 --- !u!1 &7754014611976206643

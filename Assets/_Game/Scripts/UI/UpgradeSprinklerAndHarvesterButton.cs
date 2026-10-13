@@ -199,10 +199,6 @@ public class UpgradeSprinklerAndHarvesterButton : StaticSelectableButtonBase
     {
         if (uiManager != null) return uiManager;
         uiManager = LunaUIManager.Instance;
-        if (uiManager == null)
-        {
-            uiManager = FindObjectOfType<LunaUIManager>();
-        }
         return uiManager;
     }
 

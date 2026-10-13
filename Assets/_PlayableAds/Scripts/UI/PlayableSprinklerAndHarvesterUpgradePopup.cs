@@ -38,6 +38,7 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
     [SerializeField] private Image sprinklerStatTwoArrow;
     [SerializeField] private Button sprinklerUpgradeButton;
     [SerializeField] private TMP_Text sprinklerCostText;
+    [SerializeField] private Image sprinklerCurrencyIcon;
 
     [Header("Harvester panel")]
     [SerializeField] private Image harvesterIcon;
@@ -52,6 +53,7 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
     [SerializeField] private Image harvesterStatTwoArrow;
     [SerializeField] private Button harvesterUpgradeButton;
     [SerializeField] private TMP_Text harvesterCostText;
+    [SerializeField] private Image harvesterCurrencyIcon;
 
     [Header("Common")]
     [SerializeField] private Button closeButton;
@@ -71,8 +73,16 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
     private void Awake()
     {
         _rootCanvasGroup = GetComponent<CanvasGroup>();
-        _configuredSprinklerIcon = sprinklerIcon.sprite;
-        _configuredHarvesterIcon = harvesterIcon.sprite;
+        if (sprinklerIcon != null)
+        {
+            _configuredSprinklerIcon = sprinklerIcon.sprite;
+            sprinklerIcon.preserveAspect = true;
+        }
+        if (harvesterIcon != null)
+        {
+            _configuredHarvesterIcon = harvesterIcon.sprite;
+            harvesterIcon.preserveAspect = true;
+        }
         SetRootVisible(false);
         SetPanelVisible(sprinklerPanel, false);
         SetPanelVisible(harvesterPanel, false);
@@ -138,14 +148,14 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
     {
         _irrigation = GetIrrigation();
         _harvest = GetHarvest();
-        GameEventBus.OnGoldChange += Refresh;
+        GameEventBus.OnGoldChange += RefreshAffordability;
         if (_irrigation != null) _irrigation.OnSprinklerLevelChanged += OnSystemLevelChanged;
         if (_harvest != null) _harvest.OnHarvesterLevelChanged += OnSystemLevelChanged;
     }
 
     private void UnsubscribeSystems()
     {
-        GameEventBus.OnGoldChange -= Refresh;
+        GameEventBus.OnGoldChange -= RefreshAffordability;
         if (_irrigation != null) _irrigation.OnSprinklerLevelChanged -= OnSystemLevelChanged;
         if (_harvest != null) _harvest.OnHarvesterLevelChanged -= OnSystemLevelChanged;
     }
@@ -162,7 +172,7 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
         Refresh();
     }
 
-    private void Refresh()
+    public void Refresh()
     {
         _irrigation = GetIrrigation();
         _harvest = GetHarvest();
@@ -181,6 +191,7 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
         SetPanelVisible(harvesterPanel, !sprinklerSelected && harvesterAvailable);
         if (sprinklerAvailable) RefreshSprinkler();
         if (harvesterAvailable) RefreshHarvester();
+        RefreshAffordability();
     }
 
     private void RefreshSprinkler()
@@ -201,9 +212,6 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
         SetStatArrow(sprinklerStatOneArrow, !isMax);
         SetStatArrow(sprinklerStatTwoArrow, !isMax);
         SetText(sprinklerCostText, isMax ? "MAX" : T_Utility.FormatGold(_irrigation.NextUpgradeCost));
-        sprinklerUpgradeButton.interactable = _irrigation.CanUpgrade;
-        sprinklerIcon.sprite = _configuredSprinklerIcon;
-        sprinklerIcon.preserveAspect = true;
     }
 
     private void RefreshHarvester()
@@ -224,9 +232,43 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
         SetStatArrow(harvesterStatOneArrow, !isMax);
         SetStatArrow(harvesterStatTwoArrow, !isMax);
         SetText(harvesterCostText, isMax ? "MAX" : T_Utility.FormatGold(_harvest.NextUpgradeCost));
-        harvesterUpgradeButton.interactable = _harvest.CanUpgrade;
-        harvesterIcon.sprite = _configuredHarvesterIcon;
-        harvesterIcon.preserveAspect = true;
+    }
+
+    /// <summary>
+    /// Chỉ cập nhật tương tác của nút Upgrade và làm mờ cash icon khi không đủ tiền.
+    /// </summary>
+    private void RefreshAffordability()
+    {
+        if (_irrigation != null && sprinklerUpgradeButton != null)
+        {
+            bool canUpgrade = _irrigation.CanUpgrade;
+            sprinklerUpgradeButton.interactable = canUpgrade;
+            if (sprinklerCurrencyIcon != null)
+            {
+                Color c = sprinklerCurrencyIcon.color;
+                float targetAlpha = canUpgrade ? 1f : 0.35f;
+                if (Mathf.Abs(c.a - targetAlpha) > 0.01f)
+                {
+                    c.a = targetAlpha;
+                    sprinklerCurrencyIcon.color = c;
+                }
+            }
+        }
+        if (_harvest != null && harvesterUpgradeButton != null)
+        {
+            bool canUpgrade = _harvest.CanUpgrade;
+            harvesterUpgradeButton.interactable = canUpgrade;
+            if (harvesterCurrencyIcon != null)
+            {
+                Color c = harvesterCurrencyIcon.color;
+                float targetAlpha = canUpgrade ? 1f : 0.35f;
+                if (Mathf.Abs(c.a - targetAlpha) > 0.01f)
+                {
+                    c.a = targetAlpha;
+                    harvesterCurrencyIcon.color = c;
+                }
+            }
+        }
     }
 
     private void UpgradeSprinkler() { if (_irrigation != null) { _irrigation.TryUpgrade(); Refresh(); } }
@@ -253,7 +295,20 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
         panel.blocksRaycasts = visible;
     }
 
-    private static void SetText(TMP_Text text, string value) { text.text = value; }
-    private static void SetStatArrow(Image arrow, bool visible) { arrow.gameObject.SetActive(visible); }
+    private static void SetText(TMP_Text text, string value)
+    {
+        if (text != null && text.text != value)
+        {
+            text.text = value;
+        }
+    }
+
+    private static void SetStatArrow(Image arrow, bool visible)
+    {
+        if (arrow != null && arrow.gameObject.activeSelf != visible)
+        {
+            arrow.gameObject.SetActive(visible);
+        }
+    }
 }
 

@@ -50,6 +50,12 @@ public class LunaUIManager : MonoBehaviour
     [Tooltip("Enable only when this scene should take tutorial start/skip values from ScenePlayableSO. By default, TutorialLayer's inspector settings win.")]
     [SerializeField] private bool useSceneSoTutorialSettings;
 
+    [Header("Responsive bottom bar layout")]
+    [SerializeField] private RectTransform canvasHiddenEndGameRect;
+    [SerializeField] private float landscapeBottomBarWidth = 1920f;
+    [SerializeField] private float bottomBarHeight = 200f;
+    [SerializeField] private float bottomBarOffsetY = 30f;
+
     public ScenePlayableSO CurrentScenePlayableSO { get; private set; }
     public bool IsTutorialVisible => tutorialFlow != null && tutorialFlow.IsRunning;
     private bool _waitingForFruitSelection;
@@ -93,6 +99,7 @@ public class LunaUIManager : MonoBehaviour
 
     private void Start()
     {
+        AdjustBottomBarLayout();
         WireStoreButtons();
         WireEndcardButtons();
         WireSelloutButton();
@@ -104,8 +111,20 @@ public class LunaUIManager : MonoBehaviour
         GameEventBus.OnStartGame?.Invoke();
     }
 
+#if UNITY_EDITOR
+    private float _lastAspect;
+#endif
+
     private void Update()
     {
+#if UNITY_EDITOR
+        float currentAspect = (float)Screen.width / Screen.height;
+        if (Mathf.Abs(currentAspect - _lastAspect) > 0.01f)
+        {
+            _lastAspect = currentAspect;
+            AdjustBottomBarLayout();
+        }
+#endif
         if (_endcardVisible) return;
 
         float dt = Time.unscaledDeltaTime;
@@ -230,6 +249,10 @@ public class LunaUIManager : MonoBehaviour
         _pendingPlantPlotId = targetPlot.PlotId;
         _startTutorialAfterPlantSelection = startTutorialAfterSelection;
         _waitingForFruitSelection = true;
+        if (_nextEndcardAt - Time.unscaledTime < 6f)
+        {
+            _nextEndcardAt = Time.unscaledTime + 6f;
+        }
         activeStore.SetupStore(choices);
         return true;
     }
@@ -450,7 +473,12 @@ public class LunaUIManager : MonoBehaviour
 
     public void RequestPlantChoice(Plot plot)
     {
-        if (plot == null || plot.State != FarmPlotState.Empty || _waitingForFruitSelection)
+        if (plot == null || plot.State != FarmPlotState.Empty)
+        {
+            return;
+        }
+
+        if (_waitingForFruitSelection && IsFruitPickerVisible())
         {
             return;
         }
@@ -538,123 +566,67 @@ public class LunaUIManager : MonoBehaviour
 
     private void ResolveReferences()
     {
-        Transform playableRoot = transform.root;
-        if (tutorialFlow == null) tutorialFlow = playableRoot.GetComponentInChildren<PlayableTutorialFlow>(true);
-        PlantStore[] discoveredStores = playableRoot.GetComponentsInChildren<PlantStore>(true);
-        for (int i = 0; i < discoveredStores.Length; i++)
+        if (plantStore != null && !plantStores.Contains(plantStore))
         {
-            if (discoveredStores[i] != null && !plantStores.Contains(discoveredStores[i]))
-            {
-                plantStores.Add(discoveredStores[i]);
-            }
+            plantStores.Add(plantStore);
         }
-        if (plantStore == null && plantStores.Count > 0) plantStore = plantStores[0];
-        if (plantConfig == null && ConfigHolder.Instance != null) plantConfig = ConfigHolder.Instance.PlantConfig;
-        if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "PopupEndcard");
-        if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "EndGamePanel");
-        if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "PopupEndGame");
-        if (endcardRoot == null) endcardRoot = FindChildByName(playableRoot, "Endcard");
-        if (endcardRoot == null)
+        if (plantConfig == null && ConfigHolder.Instance != null)
         {
-            PopupStore popupStore = FindObjectOfType<PopupStore>();
-            if (popupStore != null) endcardRoot = popupStore.gameObject;
-        }
-        ResolvePreloadedUpgradePopups(playableRoot);
-
-        if (selloutButton == null)
-        {
-            Button[] buttons = playableRoot.GetComponentsInChildren<Button>(true);
-            for (int i = 0; i < buttons.Length; i++)
-            {
-                if (buttons[i] != null && buttons[i].name == "Sellout_Button")
-                {
-                    selloutButton = buttons[i];
-                    break;
-                }
-            }
+            plantConfig = ConfigHolder.Instance.PlantConfig;
         }
 
-        if (selloutCanvasGroup == null && selloutButton != null)
+        if (upgradePopup != null)
         {
-            selloutCanvasGroup = selloutButton.GetComponent<CanvasGroup>();
+            upgradePopup.gameObject.SetActive(false);
+        }
+        if (combinedUpgradePopup != null)
+        {
+            combinedUpgradePopup.Hide();
         }
 
-        if (selloutValueText == null && selloutButton != null)
+        if (canvasHiddenEndGameRect == null && selloutButton != null)
         {
-            selloutValueText = selloutButton.GetComponentInChildren<TMPro.TMP_Text>(true);
+            canvasHiddenEndGameRect = selloutButton.transform.parent as RectTransform;
         }
-
-        GameObject currencyRoot = FindChildByName(playableRoot, "CurrencyLayer");
-        if (currencyRoot != null)
-        {
-            _currencyDisplay = currencyRoot.GetComponent<PlayableCurrencyDisplay>();
-            CurrencyFlyEffect currencyFlyEffect = currencyRoot.GetComponent<CurrencyFlyEffect>();
-            if (_currencyDisplay == null || currencyFlyEffect == null)
-            {
-                Debug.LogError("CurrencyLayer requires PlayableCurrencyDisplay and CurrencyFlyEffect components.");
-            }
-            else
-            {
-                currencyFlyEffect.Initialize(_currencyDisplay);
-                currencyFlyEffect.SetPayoutSource(selloutButton != null ? selloutButton.transform : null);
-            }
-        }
-
-        if (endcardRoot != null)
-        {
-            if (continueButton == null)
-            {
-                Button[] buttons = endcardRoot.GetComponentsInChildren<Button>(true);
-                for (int i = 0; i < buttons.Length; i++)
-                {
-                    Button button = buttons[i];
-                    if (button != null && button.name == "Continue_Button")
-                    {
-                        continueButton = button;
-                        break;
-                    }
-                }
-            }
-
-            if (endcardStoreButtons.Count == 0)
-            {
-                Button[] buttons = endcardRoot.GetComponentsInChildren<Button>(true);
-                for (int i = 0; i < buttons.Length; i++)
-                {
-                    Button button = buttons[i];
-                    if (button != null && button != continueButton && !endcardStoreButtons.Contains(button))
-                    {
-                        endcardStoreButtons.Add(button);
-                    }
-                }
-            }
-
-            WireEndcardButtons();
-        }
-
     }
 
-    private static GameObject FindChildByName(Transform root, string objectName)
+    [ContextMenu("Adjust Bottom Bar Layout")]
+    public void AdjustBottomBarLayout()
     {
-        Transform[] items = root.GetComponentsInChildren<Transform>(true);
-        for (int i = 0; i < items.Length; i++)
+        if (canvasHiddenEndGameRect == null && selloutButton != null)
         {
-            if (items[i].name == objectName) return items[i].gameObject;
+            canvasHiddenEndGameRect = selloutButton.transform.parent as RectTransform;
         }
-        return null;
+
+        if (canvasHiddenEndGameRect == null) return;
+
+        float aspect = (float)Screen.width / Screen.height;
+        if (aspect > 1.0f)
+        {
+            // Màn hình ngang (Landscape: x : y > 1, ví dụ Full HD / 4K): Center-Bottom, width = 1920
+            canvasHiddenEndGameRect.anchorMin = new Vector2(0.5f, 0f);
+            canvasHiddenEndGameRect.anchorMax = new Vector2(0.5f, 0f);
+            canvasHiddenEndGameRect.pivot = new Vector2(0.5f, 0f);
+            canvasHiddenEndGameRect.sizeDelta = new Vector2(landscapeBottomBarWidth, bottomBarHeight);
+            canvasHiddenEndGameRect.anchoredPosition = new Vector2(0f, bottomBarOffsetY);
+        }
+        else
+        {
+            // Màn hình dọc hoặc vuông (Portrait / Square: x : y <= 1): Stretch ngang ở đáy
+            canvasHiddenEndGameRect.anchorMin = new Vector2(0f, 0f);
+            canvasHiddenEndGameRect.anchorMax = new Vector2(1f, 0f);
+            canvasHiddenEndGameRect.pivot = new Vector2(0.5f, 0f);
+            canvasHiddenEndGameRect.sizeDelta = new Vector2(0f, bottomBarHeight);
+            canvasHiddenEndGameRect.anchoredPosition = new Vector2(0f, bottomBarOffsetY);
+        }
     }
 
     private void WireStoreButtons()
     {
-        Transform[] items = transform.root.GetComponentsInChildren<Transform>(true);
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < ctaButtons.Count; i++)
         {
-            Transform item = items[i];
-            if (item.name != "Logo_Button" && item.name != "PlayNow_Button") continue;
-            Button button = item.GetComponent<Button>();
-            if (button != null && !ctaButtons.Contains(button)) ctaButtons.Add(button);
+            WireStoreButton(ctaButtons[i]);
         }
-        foreach (Button button in ctaButtons) WireStoreButton(button);
     }
 
     private void WireEndcardButtons()
@@ -776,11 +748,6 @@ public class LunaUIManager : MonoBehaviour
     {
         if (endcardRoot == null)
         {
-            ResolveReferences();
-        }
-
-        if (endcardRoot == null)
-        {
             Debug.LogWarning("LunaUIManager: cannot ShowEndcard because endcardRoot is null.");
             return;
         }
@@ -809,6 +776,45 @@ public class LunaUIManager : MonoBehaviour
     {
         HideEndcard();
         RestartEndcardCountdown();
+        RestorePendingPlantPicker();
+    }
+
+    private void RestorePendingPlantPicker()
+    {
+        if (!_waitingForFruitSelection && _pendingPlantPlotId < 0)
+        {
+            Plot emptyPlot = GetFirstEmptyPlot();
+            if (emptyPlot != null && CurrentScenePlayableSO != null && CurrentScenePlayableSO.UsesPlantPicker)
+            {
+                TryShowPlantPicker(emptyPlot, false);
+            }
+            return;
+        }
+
+        Plot pendingPlot = _plotSystem != null && _pendingPlantPlotId >= 0
+            ? _plotSystem.GetPlotComponent(_pendingPlantPlotId)
+            : null;
+
+        if (pendingPlot == null || pendingPlot.State != FarmPlotState.Empty)
+        {
+            pendingPlot = GetFirstEmptyPlot();
+        }
+
+        if (pendingPlot != null && pendingPlot.State == FarmPlotState.Empty)
+        {
+            TryShowPlantPicker(pendingPlot, _startTutorialAfterPlantSelection);
+        }
+        else
+        {
+            _waitingForFruitSelection = false;
+            _pendingPlantPlotId = -1;
+        }
+    }
+
+    public bool IsFruitPickerVisible()
+    {
+        PlantStore store = GetActivePlantStore();
+        return store != null && store.gameObject.activeSelf;
     }
 
     private void HideEndcard()
@@ -849,8 +855,9 @@ public class LunaUIManager : MonoBehaviour
         FarmIrrigationSystem system = FarmSystem.Instance != null ? FarmSystem.Instance.IrrigationSystem : null;
         if (system != null)
         {
+            Sprite icon = sprinklerUpgradeIcon != null ? sprinklerUpgradeIcon : GetLocalSprite(system.transform);
             ShowUpgrade("SPRINKLER", () => GetSprinklerUpgradeRows(system.Level, system.MaxLevel),
-                () => sprinklerUpgradeIcon != null ? sprinklerUpgradeIcon : GetLocalSprite(system.transform),
+                icon,
                 () => system.Level, () => system.MaxLevel, () => system.NextUpgradeCost, () => system.CanUpgrade, system.TryUpgrade);
         }
     }
@@ -866,8 +873,9 @@ public class LunaUIManager : MonoBehaviour
         FarmHarvestSystem system = FarmSystem.Instance != null ? FarmSystem.Instance.HarvestSystem : null;
         if (system != null && system.AutomaticArmEnabled)
         {
+            Sprite icon = harvesterUpgradeIcon != null ? harvesterUpgradeIcon : GetLocalSprite(system.transform);
             ShowUpgrade("HARVEST ARM", () => GetHarvesterUpgradeRows(system),
-                () => harvesterUpgradeIcon != null ? harvesterUpgradeIcon : GetLocalSprite(system.transform),
+                icon,
                 () => system.Level, () => system.MaxLevel, () => system.NextUpgradeCost, () => system.CanUpgrade, system.TryUpgrade);
         }
     }
@@ -884,12 +892,7 @@ public class LunaUIManager : MonoBehaviour
     {
         if (combinedUpgradePopup == null)
         {
-            ResolvePreloadedUpgradePopups(transform.root);
-        }
-
-        if (combinedUpgradePopup == null)
-        {
-            Debug.LogError("LunaUIManager requires PopupSprinklerAndHarvesterUpgradeLayer in the playable scene.");
+            Debug.LogError("LunaUIManager requires combinedUpgradePopup serialized on inspector.");
             return;
         }
 
@@ -901,8 +904,9 @@ public class LunaUIManager : MonoBehaviour
         FruitTransportStation system = FarmSystem.Instance != null ? FarmSystem.Instance.TransportStation : null;
         if (system != null)
         {
+            Sprite truckIcon = transportUpgradeIcon != null ? transportUpgradeIcon : GetLocalSprite(system.transform);
             ShowUpgrade("TRUCK", () => OneStatRow("CAPACITY", system.Capacity.ToString(), GetTransportCapacity(system.Level + 1).ToString()),
-                () => transportUpgradeIcon != null ? transportUpgradeIcon : GetLocalSprite(system.transform),
+                truckIcon,
                 () => system.Level, () => system.MaxLevel, () => system.NextUpgradeCost, () => system.CanUpgrade, system.TryUpgrade);
         }
     }
@@ -920,9 +924,10 @@ public class LunaUIManager : MonoBehaviour
         Func<UpgradeStatRow[]> stat = () => config != null
             ? GetPlantUpgradeRows(config, plant.PlantLevel, plant.RingIndex)
             : OneStatRow("VALUE", string.Empty, "INCREASE");
-        Func<Sprite> icon = () => visualConfig != null ? visualConfig.GetIcon(plant.PlantLevel) : GetLocalSprite(plant.transform);
+        Sprite giantSkin = visualConfig != null ? visualConfig.GetGiantSkin() : (config != null ? config.GetGiantSkin() : null);
+        if (giantSkin == null) giantSkin = GetLocalSprite(plant.transform);
         string title = visualConfig != null ? visualConfig.PlantName.ToUpperInvariant() : "PLANT";
-        ShowUpgrade(title, stat, icon, () => plant.PlantLevel, () => plant.MaxLevel, () => plant.UpgradeCost, plot.CanUpgradePlant, () => UpgradePlant(plot, plant));
+        ShowUpgrade(title, stat, giantSkin, () => plant.PlantLevel, () => plant.MaxLevel, () => plant.UpgradeCost, plot.CanUpgradePlant, () => UpgradePlant(plot, plant));
     }
 
     private bool UpgradePlant(Plot plot, Plant plant)
@@ -952,7 +957,7 @@ public class LunaUIManager : MonoBehaviour
         return true;
     }
 
-    private void ShowUpgrade(string title, Func<UpgradeStatRow[]> getStatRows, Func<Sprite> getIllustration, Func<int> getLevel,
+    private void ShowUpgrade(string title, Func<UpgradeStatRow[]> getStatRows, Sprite illustrationSprite, Func<int> getLevel,
         Func<int> getMaxLevel, Func<double> getCost, Func<bool> canUpgrade, Func<bool> performUpgrade)
     {
         if (upgradePopupPresenter == null) upgradePopupPresenter = GetComponent<PlayableUpgradePopupPresenter>();
@@ -962,62 +967,13 @@ public class LunaUIManager : MonoBehaviour
             return;
         }
 
-        if (upgradePopup == null) ResolvePreloadedUpgradePopups(transform.root);
-        upgradePopupPresenter.Show(upgradePopup, title, getStatRows, getIllustration, getLevel, getMaxLevel, getCost, canUpgrade, performUpgrade);
-    }
-
-    private void ResolvePreloadedUpgradePopups(Transform playableRoot)
-    {
-        upgradePopup = ResolvePopup(playableRoot, upgradePopup, "PlayableUpgradePopupLayer");
-        if (combinedUpgradePopup == null)
+        if (upgradePopup == null)
         {
-            GameObject popupObject = FindChildByName(playableRoot, "PopupSprinklerAndHarvesterUpgradeLayer");
-            if (popupObject == null && WorldLayerManager.Instance != null)
-            {
-                popupObject = FindChildByName(WorldLayerManager.Instance.transform, "PopupSprinklerAndHarvesterUpgradeLayer");
-            }
-            if (popupObject != null)
-            {
-                combinedUpgradePopup = popupObject.GetComponent<PlayableSprinklerAndHarvesterUpgradePopup>();
-            }
-        }
-        HidePopupAtStartup(upgradePopup);
-        if (combinedUpgradePopup != null) combinedUpgradePopup.Hide();
-    }
-
-    private static PlayableUpgradePopupView ResolvePopup(Transform root, PlayableUpgradePopupView assigned, string objectName)
-    {
-        if (assigned != null && assigned.gameObject.scene == root.gameObject.scene) return assigned;
-        GameObject sceneObject = FindChildByName(root, objectName);
-        if (sceneObject == null && WorldLayerManager.Instance != null)
-        {
-            sceneObject = FindChildByName(WorldLayerManager.Instance.transform, objectName);
-        }
-        if (sceneObject == null)
-        {
-            PlayableUpgradePopupView[] scenePopups = Resources.FindObjectsOfTypeAll<PlayableUpgradePopupView>();
-            for (int i = 0; i < scenePopups.Length; i++)
-            {
-                PlayableUpgradePopupView candidate = scenePopups[i];
-                if (candidate != null && candidate.gameObject.scene == root.gameObject.scene && candidate.name == objectName)
-                {
-                    sceneObject = candidate.gameObject;
-                    break;
-                }
-            }
-        }
-        if (sceneObject == null)
-        {
-            return null;
+            Debug.LogError("LunaUIManager requires upgradePopup serialized on inspector.");
+            return;
         }
 
-        PlayableUpgradePopupView popup = sceneObject.GetComponent<PlayableUpgradePopupView>();
-        return popup;
-    }
-
-    private static void HidePopupAtStartup(PlayableUpgradePopupView popup)
-    {
-        if (popup != null) popup.gameObject.SetActive(false);
+        upgradePopupPresenter.Show(upgradePopup, title, getStatRows, illustrationSprite, getLevel, getMaxLevel, getCost, canUpgrade, performUpgrade);
     }
 
     private static Sprite GetLocalSprite(Transform root)
@@ -1031,29 +987,23 @@ public class LunaUIManager : MonoBehaviour
         return null;
     }
 
+    private static readonly UpgradeStatRow[] s_cachedTwoStatRows = new UpgradeStatRow[2];
+    private static readonly UpgradeStatRow[] s_cachedOneStatRow = new UpgradeStatRow[1];
+
     private static UpgradeStatRow[] GetPlantUpgradeRows(PlantConfigData config, int level, int ringIndex)
     {
         int currentLevel = Mathf.Clamp(level, 1, config.GetMaxLevel());
         int nextLevel = Mathf.Min(currentLevel + 1, config.GetMaxLevel());
-        if (currentLevel >= config.GetMaxLevel())
-        {
-            return new[]
-            {
-                new UpgradeStatRow("FRUIT", config.GetFruitCount(currentLevel).ToString(), "MAX"),
-                new UpgradeStatRow("PRICE", T_Utility.FormatGold(config.GetFruitPrice(currentLevel, ringIndex)), "MAX")
-            };
-        }
-
-        return new[]
-        {
-            new UpgradeStatRow("FRUIT", config.GetFruitCount(currentLevel).ToString(), config.GetFruitCount(nextLevel).ToString()),
-            new UpgradeStatRow("PRICE", T_Utility.FormatGold(config.GetFruitPrice(currentLevel, ringIndex)), T_Utility.FormatGold(config.GetFruitPrice(nextLevel, ringIndex)))
-        };
+        bool isMax = currentLevel >= config.GetMaxLevel();
+        s_cachedTwoStatRows[0] = new UpgradeStatRow("FRUIT", config.GetFruitCount(currentLevel).ToString(), isMax ? "MAX" : config.GetFruitCount(nextLevel).ToString());
+        s_cachedTwoStatRows[1] = new UpgradeStatRow("PRICE", T_Utility.FormatGold(config.GetFruitPrice(currentLevel, ringIndex)), isMax ? "MAX" : T_Utility.FormatGold(config.GetFruitPrice(nextLevel, ringIndex)));
+        return s_cachedTwoStatRows;
     }
 
     private static UpgradeStatRow[] OneStatRow(string label, string current, string next)
     {
-        return new[] { new UpgradeStatRow(label, current, next) };
+        s_cachedOneStatRow[0] = new UpgradeStatRow(label, current, next);
+        return s_cachedOneStatRow;
     }
 
     private static UpgradeStatRow[] GetSprinklerUpgradeRows(int level, int maxLevel)
@@ -1064,11 +1014,9 @@ public class LunaUIManager : MonoBehaviour
 
         int currentLevel = Mathf.Clamp(level, 1, maxLevel);
         int nextLevel = Mathf.Min(currentLevel + 1, maxLevel);
-        return new[]
-        {
-            new UpgradeStatRow("WATER", config.GetWaterAmount(currentLevel).ToString(), config.GetWaterAmount(nextLevel).ToString()),
-            new UpgradeStatRow("ARMS", config.GetNozzleCount(currentLevel).ToString(), config.GetNozzleCount(nextLevel).ToString())
-        };
+        s_cachedTwoStatRows[0] = new UpgradeStatRow("WATER", config.GetWaterAmount(currentLevel).ToString(), config.GetWaterAmount(nextLevel).ToString());
+        s_cachedTwoStatRows[1] = new UpgradeStatRow("ARMS", config.GetNozzleCount(currentLevel).ToString(), config.GetNozzleCount(nextLevel).ToString());
+        return s_cachedTwoStatRows;
     }
 
     private static UpgradeStatRow[] GetHarvesterUpgradeRows(FarmHarvestSystem system)
@@ -1082,11 +1030,9 @@ public class LunaUIManager : MonoBehaviour
 
         int currentLevel = Mathf.Clamp(system.Level, 1, system.MaxLevel);
         int nextLevel = Mathf.Min(currentLevel + 1, system.MaxLevel);
-        return new[]
-        {
-            new UpgradeStatRow("TIME", config.GetRotationDuration(currentLevel).ToString("0.##") + "s", config.GetRotationDuration(nextLevel).ToString("0.##") + "s"),
-            new UpgradeStatRow("ARMS", config.GetHarvesterCount(currentLevel).ToString(), config.GetHarvesterCount(nextLevel).ToString())
-        };
+        s_cachedTwoStatRows[0] = new UpgradeStatRow("TIME", config.GetRotationDuration(currentLevel).ToString("0.##") + "s", config.GetRotationDuration(nextLevel).ToString("0.##") + "s");
+        s_cachedTwoStatRows[1] = new UpgradeStatRow("ARMS", config.GetHarvesterCount(currentLevel).ToString(), config.GetHarvesterCount(nextLevel).ToString());
+        return s_cachedTwoStatRows;
     }
 
     private static int GetTransportCapacity(int level)

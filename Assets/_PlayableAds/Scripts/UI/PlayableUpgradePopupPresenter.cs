@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
 {
     private PlayableUpgradePopupView _popupView;
+    private PlayableUpgradePopupView _wiredView;
     private Func<int> _getLevel;
     private Func<int> _getMaxLevel;
     private Func<double> _getCost;
@@ -17,14 +18,14 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
     private Func<bool> _performUpgrade;
     private string _title;
     private Func<UpgradeStatRow[]> _getStatRows;
-    private Func<Sprite> _getIllustration;
+    private Sprite _illustrationSprite;
 
     public bool IsVisible { get { return _popupView != null && _popupView.gameObject.activeSelf; } }
 
-    private void OnEnable() { GameEventBus.OnGoldChange += Refresh; }
-    private void OnDisable() { GameEventBus.OnGoldChange -= Refresh; }
+    private void OnEnable() { GameEventBus.OnGoldChange += RefreshAffordability; }
+    private void OnDisable() { GameEventBus.OnGoldChange -= RefreshAffordability; }
 
-    public void Show(PlayableUpgradePopupView popupView, string title, Func<UpgradeStatRow[]> getStatRows, Func<Sprite> getIllustration,
+    public void Show(PlayableUpgradePopupView popupView, string title, Func<UpgradeStatRow[]> getStatRows, Sprite illustrationSprite,
         Func<int> getLevel, Func<int> getMaxLevel, Func<double> getCost, Func<bool> canUpgrade, Func<bool> performUpgrade)
     {
         Hide();
@@ -42,7 +43,8 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         _performUpgrade = performUpgrade;
         _title = title;
         _getStatRows = getStatRows;
-        _getIllustration = getIllustration;
+        _illustrationSprite = illustrationSprite;
+
         CanvasGroup canvasGroup = _popupView.GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
@@ -55,20 +57,22 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
-        WireButtons();
-        Refresh();
+
+        Image illustration = _popupView.Illustration;
+        if (illustration != null && _illustrationSprite != null)
+        {
+            illustration.sprite = _illustrationSprite;
+            illustration.preserveAspect = true;
+        }
+
+        WireButtonsOnce(_popupView);
+        RefreshContent();
     }
 
     public void Hide()
     {
         if (_popupView != null)
         {
-            Button closeButton = _popupView.CloseButton;
-            Button dimButton = _popupView.DimButton;
-            Button upgradeButton = _popupView.UpgradeButton;
-            if (closeButton != null) closeButton.onClick.RemoveListener(Hide);
-            if (dimButton != null) dimButton.onClick.RemoveListener(Hide);
-            if (upgradeButton != null) upgradeButton.onClick.RemoveListener(Upgrade);
             _popupView.gameObject.SetActive(false);
         }
         ClearData();
@@ -84,14 +88,17 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         _performUpgrade = null;
         _title = null;
         _getStatRows = null;
-        _getIllustration = null;
+        _illustrationSprite = null;
     }
 
-    private void WireButtons()
+    private void WireButtonsOnce(PlayableUpgradePopupView view)
     {
-        Button closeButton = _popupView.CloseButton;
-        Button dimButton = _popupView.DimButton;
-        Button upgradeButton = _popupView.UpgradeButton;
+        if (_wiredView == view) return;
+        _wiredView = view;
+
+        Button closeButton = view.CloseButton;
+        Button dimButton = view.DimButton;
+        Button upgradeButton = view.UpgradeButton;
         if (closeButton != null) closeButton.onClick.AddListener(Hide);
         if (dimButton != null) dimButton.onClick.AddListener(Hide);
         if (upgradeButton != null) upgradeButton.onClick.AddListener(Upgrade);
@@ -101,14 +108,22 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
     {
         if (_canUpgrade == null || _performUpgrade == null || !_canUpgrade())
         {
-            Refresh();
+            RefreshAffordability();
             return;
         }
         _performUpgrade();
-        Refresh();
+        RefreshContent();
     }
 
-    private void Refresh()
+    public void Refresh()
+    {
+        RefreshContent();
+    }
+
+    /// <summary>
+    /// Cập nhật đầy đủ nội dung (Text, Stats, Cost) khi mở popup hoặc khi nâng cấp thành công.
+    /// </summary>
+    private void RefreshContent()
     {
         if (_popupView == null) return;
         int level = _getLevel != null ? _getLevel() : 0;
@@ -119,8 +134,6 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         TMP_Text levelText = _popupView.LevelText;
         TMP_Text costText = _popupView.CostText;
         TMP_Text costForegroundText = _popupView.CostForegroundText;
-        Image illustration = _popupView.Illustration;
-        Button upgradeButton = _popupView.UpgradeButton;
         bool isMaxLevel = level >= maxLevel;
 
         if (titleText != null) titleText.text = _title;
@@ -131,13 +144,18 @@ public sealed class PlayableUpgradePopupPresenter : MonoBehaviour
         string costValue = isMaxLevel || cost <= 0d ? "MAX" : T_Utility.FormatGold(cost);
         if (costText != null) costText.text = costValue;
         if (costForegroundText != null) costForegroundText.text = costValue;
-        Sprite illustrationSprite = _getIllustration != null ? _getIllustration() : null;
-        if (illustration != null && illustrationSprite != null)
-        {
-            illustration.sprite = illustrationSprite;
-            illustration.preserveAspect = true;
-        }
+
+        RefreshAffordability();
+    }
+
+    /// <summary>
+    /// Chỉ cập nhật trạng thái đủ tiền của nút bấm khi vàng thay đổi, không cấp phát chuỗi hay tính toán lại stat.
+    /// </summary>
+    private void RefreshAffordability()
+    {
+        if (_popupView == null) return;
         bool canUpgrade = _canUpgrade != null && _canUpgrade();
+        Button upgradeButton = _popupView.UpgradeButton;
         if (upgradeButton != null) upgradeButton.interactable = canUpgrade;
         Image currencyIcon = _popupView.UpgradeCurrencyIcon;
         if (currencyIcon != null)

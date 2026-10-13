@@ -541,7 +541,7 @@ PrefabInstance:
     - target: {fileID: 4900967745924437225, guid: 771d110faac6d4b438143a5762fc94bc, type: 3}
       propertyPath: plantStore
       value: 
-      objectReference: {fileID: 5784568457458253742}
+      objectReference: {fileID: 3671046623669963644}
     - target: {fileID: 4900967745924437225, guid: 771d110faac6d4b438143a5762fc94bc, type: 3}
       propertyPath: endcardRoot
       value: 
@@ -575,6 +575,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6106830000014004815}
     - target: {fileID: 4900967745924437225, guid: 771d110faac6d4b438143a5762fc94bc, type: 3}
+      propertyPath: plantStores.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900967745924437225, guid: 771d110faac6d4b438143a5762fc94bc, type: 3}
       propertyPath: ctaButtons.Array.data[0]
       value: 
       objectReference: {fileID: 6706232742603252826}
@@ -582,6 +586,14 @@ PrefabInstance:
       propertyPath: ctaButtons.Array.data[1]
       value: 
       objectReference: {fileID: 8874253818420852873}
+    - target: {fileID: 4900967745924437225, guid: 771d110faac6d4b438143a5762fc94bc, type: 3}
+      propertyPath: plantStores.Array.data[0]
+      value: 
+      objectReference: {fileID: 3671046623669963644}
+    - target: {fileID: 4900967745924437225, guid: 771d110faac6d4b438143a5762fc94bc, type: 3}
+      propertyPath: plantStores.Array.data[1]
+      value: 
+      objectReference: {fileID: 5784568457458253742}
     - target: {fileID: 4900967745924437225, guid: 771d110faac6d4b438143a5762fc94bc, type: 3}
       propertyPath: endcardStoreButtons.Array.data[0]
       value: 
@@ -726,6 +738,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3671046623669963644 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6091682905915130076, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}
+  m_PrefabInstance: {fileID: 7383700138022849440}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e4d512db944ade448d0fd1452b85428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4137738935628292984 stripped

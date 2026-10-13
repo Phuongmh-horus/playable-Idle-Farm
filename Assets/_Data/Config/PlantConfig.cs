@@ -154,6 +154,13 @@ public class PlantConfigData
         return visual != null ? visual.GetPlantStoreIcon() : (plantIcon != null ? plantIcon : fruitIcon);
     }
 
+    public Sprite GetGiantSkin()
+    {
+        if (visual != null && visual.giantSkin != null)
+            return visual.giantSkin;
+        return visual != null ? visual.GetPlantStoreIcon() : (plantIcon != null ? plantIcon : fruitIcon);
+    }
+
     /// <summary>
     /// Artwork for harvested fruit and transport cargo. This deliberately stays
     /// separate from the picker icon, which uses the plant's giant skin.

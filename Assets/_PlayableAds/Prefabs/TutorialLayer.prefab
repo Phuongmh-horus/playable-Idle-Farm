@@ -1368,7 +1368,7 @@ MonoBehaviour:
     ring: {fileID: 0}
   - phase: 3
     root: {fileID: 7673371283922750728}
-    hand: {fileID: 0}
+    hand: {fileID: 1164852948375361737}
     ring: {fileID: 0}
   ringPulseDuration: 0.6
   ringPulseScale: 1.2

@@ -47,16 +47,6 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
 
         public void ResolveVisuals()
         {
-            if (root == null) return;
-
-            RectTransform[] rects = root.GetComponentsInChildren<RectTransform>(true);
-            foreach (RectTransform rect in rects)
-            {
-                if (rect == root.transform) continue;
-                if (hand == null && rect.name == "Hand") hand = rect;
-                if (ring == null && rect.name == "Ring") ring = rect;
-            }
-
             if (_initialVisualsCaptured) return;
             if (hand != null)
             {

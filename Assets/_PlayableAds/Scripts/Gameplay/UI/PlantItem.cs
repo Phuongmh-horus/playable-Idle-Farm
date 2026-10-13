@@ -14,14 +14,6 @@ public class PlantItem : MonoBehaviour
     private void Awake()
     {
         button = GetComponent<Button>();
-        if (fruitIconImage == null)
-        {
-            fruitIconImage = GetComponentInChildren<Image>(true);
-        }
-        if (fruitNameText == null)
-        {
-            fruitNameText = GetComponentInChildren<TMP_Text>(true);
-        }
     }
 
     public void SetData(PlantConfigData data)
