@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialEndcardDelay: 90
-  recurringEndcardDelay: 90
+  recurringEndcardDelay: 45
   maxGameTimeout: 120
   allowEndcardDuringTutorial: 1
   scenario: 125
@@ -76,6 +76,14 @@ MonoBehaviour:
   harvesterUpgradeIcon: {fileID: 21300000, guid: 6be7d07c6d993984583c0c3f954713a6, type: 3}
   transportUpgradeIcon: {fileID: 21300000, guid: 91adfbe4a41fdf8468348d1779fc1393, type: 3}
   useSceneSoTutorialSettings: 0
+  canvasHiddenEndGameRect: {fileID: 0}
+  landscapeBottomBarWidth: 1920
+  bottomBarHeight: 200
+  bottomBarOffsetY: 30
+  currencyLayerRect: {fileID: 0}
+  landscapeCurrencyBarWidth: 1920
+  currencyBarHeight: 150
+  currencyBarOffsetY: 0
   upgradePopupPresenter: {fileID: 7149765224746301888}
 --- !u!114 &7149765224746301888
 MonoBehaviour:
@@ -213,7 +221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1697756570266761846
 Transform:
   m_ObjectHideFlags: 0

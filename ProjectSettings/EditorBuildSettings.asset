@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_FrameWork/Scenes/PLA_Order/PLA_125.unity
     guid: acc85406cf4ce764d8f3b7593317d210
+  - enabled: 1
+    path: Assets/_FrameWork/Scenes/PLA_Order/PLA_125+.unity
+    guid: 4df1df47721b8cf48ac6305a9b916b2a
   m_configObjects: {}

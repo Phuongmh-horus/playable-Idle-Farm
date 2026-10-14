@@ -14,11 +14,11 @@ public class LunaUIManager : MonoBehaviour
 
     [Header("Repeating endcard timing")]
     [Tooltip("Thời gian xuất hiện endcard lần đầu (giây).")]
-    [SerializeField] private float initialEndcardDelay = 45f;
+    [SerializeField] private float initialEndcardDelay = 35f;
     [Tooltip("Thời gian xuất hiện lại endcard sau khi bấm tiếp tục (giây).")]
-    [SerializeField] private float recurringEndcardDelay = 45f;
+    [SerializeField] private float recurringEndcardDelay = 15f;
     [Tooltip("Thời gian tối đa trước khi hiện endcard (giây). Bất kể đang ở trạng thái nào.")]
-    [SerializeField] private float maxGameTimeout = 120f;
+    [SerializeField] private float maxGameTimeout = 60f;
     [Tooltip("Cho phép hiện endcard kể cả khi tutorial chưa hoàn thành nếu người chơi idle/hết giờ.")]
     [SerializeField] private bool allowEndcardDuringTutorial = true;
 
@@ -50,11 +50,14 @@ public class LunaUIManager : MonoBehaviour
     [Tooltip("Enable only when this scene should take tutorial start/skip values from ScenePlayableSO. By default, TutorialLayer's inspector settings win.")]
     [SerializeField] private bool useSceneSoTutorialSettings;
 
-    [Header("Responsive bottom bar layout")]
+    [Header("Responsive layout")]
     [SerializeField] private RectTransform canvasHiddenEndGameRect;
-    [SerializeField] private float landscapeBottomBarWidth = 1920f;
-    [SerializeField] private float bottomBarHeight = 200f;
-    [SerializeField] private float bottomBarOffsetY = 30f;
+    private float bottomBarHeight = 200f;
+    private float bottomBarOffsetY = 30f;
+    [SerializeField] private RectTransform currencyLayerRect;
+    private float landscapeBarWidth = 1920f;
+    private float currencyBarHeight = 150f;
+    private float currencyBarOffsetY = 0f;
 
     public ScenePlayableSO CurrentScenePlayableSO { get; private set; }
     public bool IsTutorialVisible => tutorialFlow != null && tutorialFlow.IsRunning;
@@ -99,7 +102,7 @@ public class LunaUIManager : MonoBehaviour
 
     private void Start()
     {
-        AdjustBottomBarLayout();
+        AdjustBarLayouts();
         WireStoreButtons();
         WireEndcardButtons();
         WireSelloutButton();
@@ -122,7 +125,7 @@ public class LunaUIManager : MonoBehaviour
         if (Mathf.Abs(currentAspect - _lastAspect) > 0.01f)
         {
             _lastAspect = currentAspect;
-            AdjustBottomBarLayout();
+            AdjustBarLayouts();
         }
 #endif
         if (_endcardVisible) return;
@@ -437,7 +440,18 @@ public class LunaUIManager : MonoBehaviour
         _pendingPlantPlotId = -1;
         HideFruitPicker();
         if (startTutorial) StartConfiguredTutorial();
-        RestartEndcardCountdown();
+
+        if (_hasShownEndcard)
+        {
+            if (_nextEndcardAt - Time.unscaledTime < 4f)
+            {
+                _nextEndcardAt = Time.unscaledTime + 4f;
+            }
+        }
+        else
+        {
+            RestartEndcardCountdown();
+        }
     }
 
     private int ResolveGameplayPlantId(Plot targetPlot, int visualPlantId)
@@ -588,38 +602,49 @@ public class LunaUIManager : MonoBehaviour
         {
             canvasHiddenEndGameRect = selloutButton.transform.parent as RectTransform;
         }
+        if (currencyLayerRect == null && canvasHiddenEndGameRect != null && canvasHiddenEndGameRect.parent != null)
+        {
+            Transform cur = canvasHiddenEndGameRect.parent.Find("CurrencyLayer");
+            if (cur != null) currencyLayerRect = cur as RectTransform;
+        }
     }
 
-    [ContextMenu("Adjust Bottom Bar Layout")]
-    public void AdjustBottomBarLayout()
+    private static void ApplyBarLayout(RectTransform rect, bool isLandscape, float targetY, float landscapeWidth, float height, float offsetY)
+    {
+        if (rect == null) return;
+        float minX = isLandscape ? 0.5f : 0f;
+        float maxX = isLandscape ? 0.5f : 1f;
+        float width = isLandscape ? landscapeWidth : 0f;
+
+        rect.anchorMin = new Vector2(minX, targetY);
+        rect.anchorMax = new Vector2(maxX, targetY);
+        rect.pivot = new Vector2(0.5f, targetY);
+        rect.sizeDelta = new Vector2(width, height);
+        rect.anchoredPosition = new Vector2(0f, offsetY);
+    }
+
+    [ContextMenu("Adjust Bar Layouts")]
+    public void AdjustBarLayouts()
     {
         if (canvasHiddenEndGameRect == null && selloutButton != null)
         {
             canvasHiddenEndGameRect = selloutButton.transform.parent as RectTransform;
         }
-
-        if (canvasHiddenEndGameRect == null) return;
+        if (currencyLayerRect == null && canvasHiddenEndGameRect != null && canvasHiddenEndGameRect.parent != null)
+        {
+            Transform cur = canvasHiddenEndGameRect.parent.Find("CurrencyLayer");
+            if (cur != null) currencyLayerRect = cur as RectTransform;
+        }
 
         float aspect = (float)Screen.width / Screen.height;
-        if (aspect > 1.0f)
-        {
-            // Màn hình ngang (Landscape: x : y > 1, ví dụ Full HD / 4K): Center-Bottom, width = 1920
-            canvasHiddenEndGameRect.anchorMin = new Vector2(0.5f, 0f);
-            canvasHiddenEndGameRect.anchorMax = new Vector2(0.5f, 0f);
-            canvasHiddenEndGameRect.pivot = new Vector2(0.5f, 0f);
-            canvasHiddenEndGameRect.sizeDelta = new Vector2(landscapeBottomBarWidth, bottomBarHeight);
-            canvasHiddenEndGameRect.anchoredPosition = new Vector2(0f, bottomBarOffsetY);
-        }
-        else
-        {
-            // Màn hình dọc hoặc vuông (Portrait / Square: x : y <= 1): Stretch ngang ở đáy
-            canvasHiddenEndGameRect.anchorMin = new Vector2(0f, 0f);
-            canvasHiddenEndGameRect.anchorMax = new Vector2(1f, 0f);
-            canvasHiddenEndGameRect.pivot = new Vector2(0.5f, 0f);
-            canvasHiddenEndGameRect.sizeDelta = new Vector2(0f, bottomBarHeight);
-            canvasHiddenEndGameRect.anchoredPosition = new Vector2(0f, bottomBarOffsetY);
-        }
+        bool isLandscape = aspect > 1.0f;
+
+        ApplyBarLayout(canvasHiddenEndGameRect, isLandscape, 0f, landscapeBarWidth, bottomBarHeight, bottomBarOffsetY);
+        ApplyBarLayout(currencyLayerRect, isLandscape, 1f, landscapeBarWidth, currencyBarHeight, currencyBarOffsetY);
     }
+
+    [ContextMenu("Adjust Bottom Bar Layout")]
+    public void AdjustBottomBarLayout() => AdjustBarLayouts();
 
     private void WireStoreButtons()
     {
@@ -769,7 +794,6 @@ public class LunaUIManager : MonoBehaviour
         WireEndcardButtons();
 
         Luna.Unity.LifeCycle.GameEnded();
-
     }
 
     public void ContinuePlaying()
@@ -777,6 +801,7 @@ public class LunaUIManager : MonoBehaviour
         HideEndcard();
         RestartEndcardCountdown();
         RestorePendingPlantPicker();
+        float delay = _hasShownEndcard ? recurringEndcardDelay : initialEndcardDelay;
     }
 
     private void RestorePendingPlantPicker()
@@ -1045,6 +1070,6 @@ public class LunaUIManager : MonoBehaviour
     public void OpenStoreNow() => OnCTAClicked();
     public void StartGame() => GameEventBus.OnStartGame?.Invoke();
     public void PauseGameplay() { }
-    public void ResumeGameplay() { }
+    public void ResumeGameplay() => ContinuePlaying();
     public void NotifySelectableClick(bool unloadBeforePlay = false) { }
 }

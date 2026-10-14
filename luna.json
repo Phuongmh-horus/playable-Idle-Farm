@@ -2,7 +2,7 @@
     "version": "7.0.0",
     "projectId": "6de55b9e7b1f9804a859458bd0ec3af8",
     "applicationID": 43232,
-    "creativeName": "kichban125",
+    "creativeName": "kichban125-2",
     "pgServer": "EU",
     "window": {
         "‐⁏": true
@@ -133,10 +133,11 @@
             ]
         },
         "scenes": [
-            "Assets/_FrameWork/Scenes/PLA_Order/PLA_125.unity"
+            "Assets/_FrameWork/Scenes/PLA.unity"
         ],
         "disabledScenes": [
-            "Assets/_FrameWork/Scenes/PLA.unity",
+            "Assets/_FrameWork/Scenes/PLA_Order/PLA_125+.unity",
+            "Assets/_FrameWork/Scenes/PLA_Order/PLA_125.unity",
             "Assets/_FrameWork/Scenes/PLA_Order/PLA_126.unity"
         ],
         "startupScene": 0,
@@ -6291,7 +6292,7 @@
             },
             {
                 "name": "Luna.Unity.DTO.UnityEngine.Assets.ProjectSettings",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "Luna.Unity.DTO.UnityEngine.Assets.RenderPipelineAsset",
@@ -6311,7 +6312,7 @@
             },
             {
                 "name": "Luna.Unity.DTO.UnityEngine.Components.Component",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "Luna.Unity.DTO.UnityEngine.Scene.GameObject",
@@ -6351,7 +6352,7 @@
             },
             {
                 "name": "Luna.Unity.DTO.UnityEngine.Components.Behaviour",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "Luna.Unity.DTO.UnityEngine.Components.Collider",
@@ -20359,7 +20360,7 @@
                     },
                     {
                         "name": "text#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "text#set",
@@ -31876,18 +31877,6 @@
                 "staticMethods": [],
                 "instanceMethods": [
                     {
-                        "name": "FindChildByName",
-                        "excluded": false
-                    },
-                    {
-                        "name": "ResolvePopup",
-                        "excluded": false
-                    },
-                    {
-                        "name": "HidePopupAtStartup",
-                        "excluded": false
-                    },
-                    {
                         "name": "GetLocalSprite",
                         "excluded": true
                     },
@@ -32040,10 +32029,6 @@
                         "excluded": false
                     },
                     {
-                        "name": "ResolvePreloadedUpgradePopups",
-                        "excluded": false
-                    },
-                    {
                         "name": "OnCTAClicked",
                         "excluded": false
                     },
@@ -32085,7 +32070,7 @@
                     },
                     {
                         "name": "RequestPlantChoice",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SubscribePlotSystem",
@@ -32101,11 +32086,11 @@
                     },
                     {
                         "name": "IsConfiguredPlantChoice",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "AddPlantChoice",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsPlantAlreadyPlanted",
@@ -32157,6 +32142,26 @@
                     },
                     {
                         "name": "ShowCombinedUpgradePopup",
+                        "excluded": false
+                    },
+                    {
+                        "name": "AdjustBottomBarLayout",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RestorePendingPlantPicker",
+                        "excluded": false
+                    },
+                    {
+                        "name": "IsFruitPickerVisible",
+                        "excluded": true
+                    },
+                    {
+                        "name": "ApplyBarLayout",
+                        "excluded": false
+                    },
+                    {
+                        "name": "AdjustBarLayouts",
                         "excluded": false
                     }
                 ]
@@ -32616,6 +32621,10 @@
                     {
                         "name": "GetHarvestIcon",
                         "excluded": false
+                    },
+                    {
+                        "name": "GetGiantSkin",
+                        "excluded": false
                     }
                 ]
             },
@@ -32891,7 +32900,7 @@
                     },
                     {
                         "name": "ResolveConfiguredGameplayPlantId",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -33120,10 +33129,6 @@
                         "excluded": false
                     },
                     {
-                        "name": "WireButtons",
-                        "excluded": false
-                    },
-                    {
                         "name": "Upgrade",
                         "excluded": false
                     },
@@ -33133,6 +33138,18 @@
                     },
                     {
                         "name": "ApplyStatRow",
+                        "excluded": false
+                    },
+                    {
+                        "name": "WireButtonsOnce",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RefreshContent",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RefreshAffordability",
                         "excluded": false
                     }
                 ]
@@ -35009,7 +35026,7 @@
                     },
                     {
                         "name": "ctor",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -35235,7 +35252,7 @@
                 "instanceMethods": [
                     {
                         "name": "startCorner#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "startCorner#set",
@@ -35243,7 +35260,7 @@
                     },
                     {
                         "name": "startAxis#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "startAxis#set",
@@ -35251,7 +35268,7 @@
                     },
                     {
                         "name": "cellSize#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "cellSize#set",
@@ -35259,7 +35276,7 @@
                     },
                     {
                         "name": "spacing#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "spacing#set",
@@ -35287,23 +35304,23 @@
                     },
                     {
                         "name": "CalculateLayoutInputHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CalculateLayoutInputVertical",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetLayoutHorizontal",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetLayoutVertical",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetCellsAlongAxis",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -35558,6 +35575,10 @@
                     {
                         "name": "SetRootVisible",
                         "excluded": false
+                    },
+                    {
+                        "name": "RefreshAffordability",
+                        "excluded": false
                     }
                 ]
             },
@@ -35687,7 +35708,7 @@
                         "maxHeight": 2048,
                         "format": "jpeg",
                         "compression": "quantSize",
-                        "quality": 70,
+                        "quality": 65,
                         "script": "",
                         "ext": "",
                         "name": "Assets/_Game/Resource2D/BG.psd"

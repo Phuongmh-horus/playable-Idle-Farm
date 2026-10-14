@@ -292,7 +292,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sell plants for coins
+  m_text: Sell plants for cash
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b2847ffbb9445634a87dda16e7b50559, type: 2}
   m_sharedMaterial: {fileID: 4841974179605781108, guid: b2847ffbb9445634a87dda16e7b50559, type: 2}
