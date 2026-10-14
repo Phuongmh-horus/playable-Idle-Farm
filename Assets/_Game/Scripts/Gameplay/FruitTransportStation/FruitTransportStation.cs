@@ -162,8 +162,11 @@ public sealed class FruitTransportStation : MonoBehaviour
                     }
                     _arrivedFruitCount++;
                     OnFruitLoaded?.Invoke(plantId, 1);
-                    RefreshCapacityLayer();
-                    if (_arrivedFruitCount == 1)
+                    bool isScenario124 = PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124;
+                    bool shouldReportSaleReady = isScenario124
+                        ? (_arrivedFruitCount >= GetMaxCapacity() || IsFull)
+                        : (_arrivedFruitCount == 1);
+                    if (shouldReportSaleReady)
                     {
                         // First cargo arrival is the playable's sale-ready milestone.
                         PlayableTutorialFlow.Instance?.ReportJuiceDeliveredToBottles();
@@ -181,9 +184,25 @@ public sealed class FruitTransportStation : MonoBehaviour
         return Mathf.Max(0, GetMaxCapacity() - _loadedFruitCount);
     }
 
+    public void RefreshCapacity()
+    {
+        RefreshCapacityLayer();
+    }
+
     private int GetMaxCapacity()
     {
+        if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+        {
+            FarmPlotSystem plotSys = FarmSystem.Instance != null ? FarmSystem.Instance.PlotSystem : null;
+            int ringCount = plotSys != null ? plotSys.GetOwnedRingCount() : 1;
+            return 10 + (Mathf.Clamp(ringCount, 1, 3) - 1) * 20;
+        }
         return ConfigHolder.Instance?.FarmConfig?.transport?.GetCapacity(_vehicleLevel) ?? 10;
+    }
+
+    public void SetTransportLevel(int level)
+    {
+        SetLevel(level);
     }
 
     private void SetLevel(int level)

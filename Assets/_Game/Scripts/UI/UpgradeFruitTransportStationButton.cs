@@ -112,7 +112,8 @@ public class UpgradeFruitTransportStationButton : StaticSelectableButtonBase
         SubscribeEvents();
 
         ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
-        bool canUpgrade = (scenario == null || (scenario.showUpgrade && scenario.showConveyorAndSell)) && CanUpgrade();
+        bool is124 = scenario != null && scenario.scenario == PlayableScenarioId.Scenario124;
+        bool canUpgrade = !is124 && (scenario == null || (scenario.showUpgrade && scenario.showConveyorAndSell)) && CanUpgrade();
         if (canUpgrade)
         {
             ShowIcon();

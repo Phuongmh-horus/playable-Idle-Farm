@@ -64,6 +64,11 @@ public class JobSelectionManager : MonoSingleton<JobSelectionManager>
 
     private bool CanStartWorldPress()
     {
+        if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+        {
+            return false;
+        }
+
         return (LunaUIManager.Instance == null || !LunaUIManager.Instance.IsGameplayInputBlocked)
             && !IsCameraMoving() && !IsPointerOverUI() && mainCamera != null;
     }

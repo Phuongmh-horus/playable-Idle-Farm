@@ -33,8 +33,30 @@ public sealed class FarmHarvestSystem : MonoBehaviour
 
     public int MaxLevel => (Config != null && Config.maxLevel > 0) ? Config.maxLevel : 10;
     public float RotationDuration => Config != null ? Config.GetRotationDuration(harvesterLevel) : 15f;
-    public float RotationSpeed => Config != null ? Config.GetRotationSpeed(harvesterLevel) : 24f;
-    public int HarvesterCount => Config != null ? Config.GetHarvesterCount(harvesterLevel) : (1 + (harvesterLevel - 1) / 5);
+    public float RotationSpeed
+    {
+        get
+        {
+            if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+            {
+                return 32f + (harvesterLevel - 1) * 8f;
+            }
+            return Config != null ? Config.GetRotationSpeed(harvesterLevel) : 24f;
+        }
+    }
+    public int HarvesterCount
+    {
+        get
+        {
+            if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+            {
+                if (harvesterLevel >= 5) return 4;
+                if (harvesterLevel >= 3) return 2;
+                return 1;
+            }
+            return Config != null ? Config.GetHarvesterCount(harvesterLevel) : (1 + (harvesterLevel - 1) / 5);
+        }
+    }
     public int TotalBladeCount => Config != null ? Config.GetTotalBlades(harvesterLevel) : harvesterLevel;
     public int Level => harvesterLevel;
     public PlayableHarvestMode HarvestMode => _harvestMode;
@@ -142,6 +164,22 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         return true;
     }
 
+    public void SetHarvesterLevel(int level)
+    {
+        SetLevel(level, save: true);
+    }
+
+    private int ResolveBladeCount(int armIndex)
+    {
+        if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+        {
+            if (harvesterLevel >= 4) return 3;
+            if (harvesterLevel >= 2) return 2;
+            return 1;
+        }
+        return Config != null ? Config.GetBladeCount(harvesterLevel, armIndex) : Mathf.Clamp(harvesterLevel - armIndex * 5, 1, 3);
+    }
+
     private void UpdateBladeCountVisual()
     {
         int totalArms = _spawnedHarvesterArms.Count;
@@ -149,7 +187,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         {
             if (_spawnedHarvesterArms[i] != null)
             {
-                int bladeCount = Config != null ? Config.GetBladeCount(harvesterLevel, i) : Mathf.Clamp(harvesterLevel - i * 5, 1, 3);
+                int bladeCount = ResolveBladeCount(i);
                 _spawnedHarvesterArms[i].SetBladeCount(bladeCount);
             }
         }
@@ -331,7 +369,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
             if (arm != null && arm.Pivot != null)
             {
                 arm.Pivot.localRotation = Quaternion.Euler(0f, 0f, baseZ + i * angleStep);
-                int bladeCount = Config != null ? Config.GetBladeCount(harvesterLevel, i) : Mathf.Clamp(harvesterLevel - i * 5, 1, 3);
+                int bladeCount = ResolveBladeCount(i);
                 arm.SetBladeCount(bladeCount);
                 arm.gameObject.SetActive(true);
             }

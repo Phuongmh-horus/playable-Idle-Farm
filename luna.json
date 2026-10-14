@@ -2,7 +2,7 @@
     "version": "7.0.0",
     "projectId": "6de55b9e7b1f9804a859458bd0ec3af8",
     "applicationID": 43232,
-    "creativeName": "kichban125",
+    "creativeName": "kichban124",
     "pgServer": "EU",
     "window": {
         "‐⁏": true
@@ -133,10 +133,11 @@
             ]
         },
         "scenes": [
-            "Assets/_FrameWork/Scenes/PLA_Order/PLA_125.unity"
+            "Assets/_FrameWork/Scenes/PLA_Order/PLA_124.unity"
         ],
         "disabledScenes": [
             "Assets/_FrameWork/Scenes/PLA.unity",
+            "Assets/_FrameWork/Scenes/PLA_Order/PLA_125.unity",
             "Assets/_FrameWork/Scenes/PLA_Order/PLA_126.unity"
         ],
         "startupScene": 0,

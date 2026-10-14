@@ -450,7 +450,7 @@ public class Plot : MonoBehaviour
     public void UpdateUpgradeIconState()
     {
         ScenePlayableSO scenario = PlayableScenarioRuntime.CurrentScenario;
-        if (scenario != null && !scenario.showUpgrade)
+        if (scenario != null && (!scenario.showUpgrade || scenario.scenario == PlayableScenarioId.Scenario124))
         {
             HideUpgradeIcon();
             return;

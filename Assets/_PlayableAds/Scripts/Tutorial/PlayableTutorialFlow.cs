@@ -57,6 +57,15 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
             _initialVisualsCaptured = true;
         }
 
+        public void SetHandPosition(Vector3 worldPos)
+        {
+            if (hand != null)
+            {
+                hand.position = worldPos;
+                _initialHandPosition = hand.localPosition;
+            }
+        }
+
         public void ResetVisuals()
         {
             if (!_initialVisualsCaptured) return;
@@ -334,6 +343,11 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
 
     private static bool IsStarterPlantUpgradeAffordable()
     {
+        if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+        {
+            return LunaUIManager.Instance != null && LunaUIManager.Instance.CanUpgradeScenario124;
+        }
+
         FarmPlotSystem plotSystem = FarmSystem.Instance != null ? FarmSystem.Instance.PlotSystem : null;
         Plot starterPlot = plotSystem != null ? plotSystem.GetPlotComponent(0) : null;
         return starterPlot != null && starterPlot.CanUpgradePlant();
@@ -470,6 +484,16 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
             if (view == null || view.Root == null) continue;
             view.ResolveVisuals();
             _views[view.Phase] = view;
+        }
+    }
+
+    public void RepositionPhaseHand(Phase phase, Vector3 worldPosition)
+    {
+        EnsurePhaseViews();
+        CacheViews();
+        if (_views.TryGetValue(phase, out PhaseView view) && view != null)
+        {
+            view.SetHandPosition(worldPosition);
         }
     }
 

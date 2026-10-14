@@ -131,9 +131,18 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         }
     }
 
+    public void SetSprinklerLevel(int level)
+    {
+        SetLevel(level, save: true);
+    }
+
     private void RotateSprinkler()
     {
         float speed = Config != null ? Config.GetRotationSpeed(_sprinklerLevel) : 0f;
+        if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+        {
+            speed = 36f + (_sprinklerLevel - 1) * 8f;
+        }
         float dt = Time.deltaTime;
         for (int i = 0; i < _spawnedSprinklerArms.Count; i++)
         {
@@ -238,6 +247,12 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
     {
         Transform parent = sprinklerArmParent != null ? sprinklerArmParent : transform;
         int nozzleCount = Config != null ? Config.GetNozzleCount(_sprinklerLevel) : 1;
+        if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+        {
+            if (_sprinklerLevel >= 5) nozzleCount = 4;
+            else if (_sprinklerLevel >= 3) nozzleCount = 2;
+            else nozzleCount = 1;
+        }
         int targetCount = Mathf.Max(1, nozzleCount);
 
         // Thu tháº­p các arm hiện có nếu danh sách rỗng

@@ -50,11 +50,14 @@ public class LunaUIManager : MonoBehaviour
     [Tooltip("Enable only when this scene should take tutorial start/skip values from ScenePlayableSO. By default, TutorialLayer's inspector settings win.")]
     [SerializeField] private bool useSceneSoTutorialSettings;
 
-    [Header("Responsive bottom bar layout")]
+    [Header("Responsive layout")]
     [SerializeField] private RectTransform canvasHiddenEndGameRect;
-    [SerializeField] private float landscapeBottomBarWidth = 1920f;
-    [SerializeField] private float bottomBarHeight = 200f;
-    [SerializeField] private float bottomBarOffsetY = 30f;
+    private float bottomBarHeight = 200f;
+    private float bottomBarOffsetY = 30f;
+    [SerializeField] private RectTransform currencyLayerRect;
+    private float landscapeBarWidth = 1920f;
+    private float currencyBarHeight = 150f;
+    private float currencyBarOffsetY = 0f;
 
     public ScenePlayableSO CurrentScenePlayableSO { get; private set; }
     public bool IsTutorialVisible => tutorialFlow != null && tutorialFlow.IsRunning;
@@ -73,6 +76,27 @@ public class LunaUIManager : MonoBehaviour
     private ScenePlayableSO _columnChoiceScenario;
     [SerializeField] private PlayableUpgradePopupPresenter upgradePopupPresenter;
     private PlayableCurrencyDisplay _currencyDisplay;
+
+    private int _scenario124UpgradeCount = 0;
+    private const int SCENARIO_124_MAX_UPGRADES = 5;
+    private static readonly double[] s_scenario124Costs = new double[] { 1000000, 3500000, 8000000, 20000000, 50000000 };
+    [Header("Scenario 124 UI")]
+    [SerializeField] private Button upgrade124Button;
+    [SerializeField] private Transform upgrade124StarGroup;
+    [SerializeField] private TMPro.TMP_Text upgrade124TitleText;
+    [SerializeField] private TMPro.TMP_Text upgrade124PriceText;
+    [SerializeField] private GameObject upgrade124PriceIcon;
+    private Coroutine _scenario124EndcardCoroutine;
+
+    public bool CanUpgradeScenario124
+    {
+        get
+        {
+            if (_scenario124UpgradeCount >= SCENARIO_124_MAX_UPGRADES) return false;
+            double cost = s_scenario124Costs[Mathf.Clamp(_scenario124UpgradeCount, 0, s_scenario124Costs.Length - 1)];
+            return PlayableFarmState.HasEnoughGold(cost);
+        }
+    }
 
     public bool IsGameplayInputBlocked =>
         (combinedUpgradePopup != null && combinedUpgradePopup.IsVisible) ||
@@ -107,6 +131,7 @@ public class LunaUIManager : MonoBehaviour
         SubscribePlotSystem();
         HideEndcard();
         ConfigureScenario();
+        SetupScenario124IfActive();
         RestartEndcardCountdown();
         GameEventBus.OnStartGame?.Invoke();
     }
@@ -134,6 +159,11 @@ public class LunaUIManager : MonoBehaviour
         if (!_hasShownEndcard && _totalPlayTime >= maxGameTimeout)
         {
             ShowEndcard();
+            return;
+        }
+
+        if (CurrentScenePlayableSO != null && CurrentScenePlayableSO.scenario == PlayableScenarioId.Scenario124)
+        {
             return;
         }
 
@@ -183,6 +213,12 @@ public class LunaUIManager : MonoBehaviour
         if (_plotSystem != null)
         {
             _plotSystem.OnPlotUnlocked -= HandlePlotUnlocked;
+        }
+        GameEventBus.OnGoldChange -= RefreshScenario124UpgradeButton;
+        if (_scenario124EndcardCoroutine != null)
+        {
+            StopCoroutine(_scenario124EndcardCoroutine);
+            _scenario124EndcardCoroutine = null;
         }
         if (Instance == this) Instance = null;
     }
@@ -588,38 +624,55 @@ public class LunaUIManager : MonoBehaviour
         {
             canvasHiddenEndGameRect = selloutButton.transform.parent as RectTransform;
         }
+        if (currencyLayerRect == null && canvasHiddenEndGameRect != null && canvasHiddenEndGameRect.parent != null)
+        {
+            Transform cur = canvasHiddenEndGameRect.parent.Find("CurrencyLayer");
+            if (cur != null) currencyLayerRect = cur as RectTransform;
+        }
     }
 
-    [ContextMenu("Adjust Bottom Bar Layout")]
-    public void AdjustBottomBarLayout()
+    private static void ApplyBarLayout(RectTransform rect, bool isLandscape, float targetY, float landscapeWidth, float height, float offsetY)
+    {
+        if (rect == null) return;
+        float minX = isLandscape ? 0.5f : 0f;
+        float maxX = isLandscape ? 0.5f : 1f;
+        float width = isLandscape ? landscapeWidth : 0f;
+
+        rect.anchorMin = new Vector2(minX, targetY);
+        rect.anchorMax = new Vector2(maxX, targetY);
+        rect.pivot = new Vector2(0.5f, targetY);
+        rect.sizeDelta = new Vector2(width, height);
+        rect.anchoredPosition = new Vector2(0f, offsetY);
+    }
+
+    [ContextMenu("Adjust Bar Layouts")]
+    public void AdjustBarLayouts()
     {
         if (canvasHiddenEndGameRect == null && selloutButton != null)
         {
             canvasHiddenEndGameRect = selloutButton.transform.parent as RectTransform;
         }
-
-        if (canvasHiddenEndGameRect == null) return;
+        if (currencyLayerRect == null && canvasHiddenEndGameRect != null && canvasHiddenEndGameRect.parent != null)
+        {
+            Transform cur = canvasHiddenEndGameRect.parent.Find("CurrencyLayer");
+            if (cur != null) currencyLayerRect = cur as RectTransform;
+        }
 
         float aspect = (float)Screen.width / Screen.height;
-        if (aspect > 1.0f)
+        bool isLandscape = aspect > 1.0f;
+
+        ApplyBarLayout(canvasHiddenEndGameRect, isLandscape, 0f, landscapeBarWidth, bottomBarHeight, bottomBarOffsetY);
+        ApplyBarLayout(currencyLayerRect, isLandscape, 1f, landscapeBarWidth, currencyBarHeight, currencyBarOffsetY);
+
+        if (CurrentScenePlayableSO != null && CurrentScenePlayableSO.scenario == PlayableScenarioId.Scenario124)
         {
-            // Màn hình ngang (Landscape: x : y > 1, ví dụ Full HD / 4K): Center-Bottom, width = 1920
-            canvasHiddenEndGameRect.anchorMin = new Vector2(0.5f, 0f);
-            canvasHiddenEndGameRect.anchorMax = new Vector2(0.5f, 0f);
-            canvasHiddenEndGameRect.pivot = new Vector2(0.5f, 0f);
-            canvasHiddenEndGameRect.sizeDelta = new Vector2(landscapeBottomBarWidth, bottomBarHeight);
-            canvasHiddenEndGameRect.anchoredPosition = new Vector2(0f, bottomBarOffsetY);
-        }
-        else
-        {
-            // Màn hình dọc hoặc vuông (Portrait / Square: x : y <= 1): Stretch ngang ở đáy
-            canvasHiddenEndGameRect.anchorMin = new Vector2(0f, 0f);
-            canvasHiddenEndGameRect.anchorMax = new Vector2(1f, 0f);
-            canvasHiddenEndGameRect.pivot = new Vector2(0.5f, 0f);
-            canvasHiddenEndGameRect.sizeDelta = new Vector2(0f, bottomBarHeight);
-            canvasHiddenEndGameRect.anchoredPosition = new Vector2(0f, bottomBarOffsetY);
+            ApplyScenario124ButtonLayout();
+            PositionScenario124TutorialHands();
         }
     }
+
+    [ContextMenu("Adjust Bottom Bar Layout")]
+    public void AdjustBottomBarLayout() => AdjustBarLayouts();
 
     private void WireStoreButtons()
     {
@@ -631,10 +684,20 @@ public class LunaUIManager : MonoBehaviour
 
     private void WireEndcardButtons()
     {
+        bool isScenario124 = CurrentScenePlayableSO != null && CurrentScenePlayableSO.scenario == PlayableScenarioId.Scenario124;
         if (continueButton != null)
         {
             continueButton.onClick.RemoveListener(ContinuePlaying);
-            continueButton.onClick.AddListener(ContinuePlaying);
+            continueButton.onClick.RemoveListener(OnCTAClicked);
+            if (isScenario124)
+            {
+                // Competitor PLA: Both Play Again and Download buttons redirect to store
+                continueButton.onClick.AddListener(OnCTAClicked);
+            }
+            else
+            {
+                continueButton.onClick.AddListener(ContinuePlaying);
+            }
         }
         foreach (Button button in endcardStoreButtons) WireStoreButton(button);
     }
@@ -669,7 +732,27 @@ public class LunaUIManager : MonoBehaviour
         }
 
         FruitTransportStation station = FarmSystem.Instance != null ? FarmSystem.Instance.TransportStation : null;
-        bool isVisible = station != null && station.LoadedFruitCount > 0 && station.IsIdleAtStation;
+        bool hasFruit = station != null && station.LoadedFruitCount > 0 && station.IsIdleAtStation;
+        bool isScenario124 = CurrentScenePlayableSO != null && CurrentScenePlayableSO.scenario == PlayableScenarioId.Scenario124;
+
+        if (isScenario124)
+        {
+            if (selloutCanvasGroup != null)
+            {
+                selloutCanvasGroup.alpha = 1f;
+                selloutCanvasGroup.interactable = true;
+                selloutCanvasGroup.blocksRaycasts = true;
+            }
+            selloutButton.interactable = hasFruit;
+            string selloutValue = (station != null && station.LoadedFruitCount > 0) ? T_Utility.FormatGold(station.LoadedRevenue) : "0";
+            if (selloutValueText != null)
+            {
+                selloutValueText.text = selloutValue;
+            }
+            return;
+        }
+
+        bool isVisible = hasFruit;
         if (selloutCanvasGroup != null)
         {
             selloutCanvasGroup.alpha = isVisible ? 1f : 0f;
@@ -677,10 +760,10 @@ public class LunaUIManager : MonoBehaviour
             selloutCanvasGroup.blocksRaycasts = isVisible;
         }
         selloutButton.interactable = isVisible;
-        string selloutValue = station != null ? T_Utility.FormatGold(station.LoadedRevenue) : "0";
+        string value = station != null ? T_Utility.FormatGold(station.LoadedRevenue) : "0";
         if (selloutValueText != null)
         {
-            selloutValueText.text = selloutValue;
+            selloutValueText.text = value;
         }
     }
 
@@ -691,7 +774,15 @@ public class LunaUIManager : MonoBehaviour
         {
             station.Sell();
         }
+        if (tutorialFlow != null)
+        {
+            tutorialFlow.ReportSellOutClicked();
+        }
         RefreshSelloutButton();
+        if (CurrentScenePlayableSO != null && CurrentScenePlayableSO.scenario == PlayableScenarioId.Scenario124)
+        {
+            RefreshScenario124UpgradeButton();
+        }
     }
 
     private void SubscribeTransportStation()
@@ -1039,6 +1130,221 @@ public class LunaUIManager : MonoBehaviour
     {
         FarmConfig config = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
         return config != null && config.transport != null ? config.transport.GetCapacity(level) : 0;
+    }
+
+    private void SetupScenario124IfActive()
+    {
+        if (CurrentScenePlayableSO == null || CurrentScenePlayableSO.scenario != PlayableScenarioId.Scenario124)
+        {
+            return;
+        }
+
+        if (canvasHiddenEndGameRect == null && selloutButton != null)
+        {
+            canvasHiddenEndGameRect = selloutButton.transform.parent as RectTransform;
+        }
+
+        // 1. Inactivate PlayNow_Button on scene (Requirement 1)
+        if (canvasHiddenEndGameRect != null)
+        {
+            Transform playNowT = canvasHiddenEndGameRect.Find("PlayNow_Button");
+            if (playNowT != null)
+            {
+                playNowT.gameObject.SetActive(false);
+            }
+        }
+
+        // Deactivate persistent CTA buttons (e.g. LogoGame, PlayNow) during gameplay
+        for (int i = 0; i < ctaButtons.Count; i++)
+        {
+            if (ctaButtons[i] != null)
+            {
+                ctaButtons[i].gameObject.SetActive(false);
+            }
+        }
+
+        // 2. Resolve and setup dedicated Upgrade_Button with star progress
+        if (upgrade124Button == null && canvasHiddenEndGameRect != null)
+        {
+            Transform upgT = canvasHiddenEndGameRect.Find("Upgrade_Button");
+            if (upgT != null)
+            {
+                upgrade124Button = upgT.GetComponent<Button>();
+            }
+        }
+
+        if (upgrade124Button != null)
+        {
+            upgrade124Button.gameObject.SetActive(true);
+            upgrade124Button.onClick.RemoveAllListeners();
+            upgrade124Button.onClick.AddListener(HandleScenario124UpgradeClicked);
+
+            if (upgrade124TitleText == null)
+            {
+                Transform t = upgrade124Button.transform.Find("UpgradeTxt");
+                if (t != null) upgrade124TitleText = t.GetComponent<TMPro.TMP_Text>();
+            }
+
+            if (upgrade124StarGroup == null)
+            {
+                upgrade124StarGroup = upgrade124Button.transform.Find("StarGroup");
+            }
+
+            if (upgrade124PriceText == null)
+            {
+                Transform p = upgrade124Button.transform.Find("PriceTxt");
+                if (p != null)
+                {
+                    upgrade124PriceText = p.GetComponent<TMPro.TMP_Text>();
+                    if (upgrade124PriceIcon == null && p.childCount > 0)
+                    {
+                        upgrade124PriceIcon = p.GetChild(0).gameObject;
+                    }
+                }
+            }
+        }
+
+        // 3. Listen to gold changes to update upgrade button affordability
+        GameEventBus.OnGoldChange -= RefreshScenario124UpgradeButton;
+        GameEventBus.OnGoldChange += RefreshScenario124UpgradeButton;
+
+        // 4. Configure layout and tutorial hands
+        ApplyScenario124ButtonLayout();
+        PositionScenario124TutorialHands();
+        UpdateScenario124StarProgress(0);
+        RefreshScenario124UpgradeButton();
+        RefreshSelloutButton();
+    }
+
+    private void UpdateScenario124StarProgress(int count)
+    {
+        if (upgrade124StarGroup == null) return;
+        int totalStars = upgrade124StarGroup.childCount;
+        for (int i = 0; i < totalStars; i++)
+        {
+            Transform star = upgrade124StarGroup.GetChild(i);
+            Transform iconStar = star.Find("IconStar");
+            if (iconStar != null)
+            {
+                iconStar.gameObject.SetActive(i < count);
+            }
+        }
+    }
+
+    private void ApplyScenario124ButtonLayout()
+    {
+        if (upgrade124Button != null)
+        {
+            upgrade124Button.gameObject.SetActive(true);
+        }
+    }
+
+    private void PositionScenario124TutorialHands()
+    {
+        if (tutorialFlow == null) return;
+        if (selloutButton != null)
+        {
+            tutorialFlow.RepositionPhaseHand(PlayableTutorialFlow.Phase.Sell, selloutButton.transform.position + new Vector3(30f, -20f, 0f));
+        }
+        if (upgrade124Button != null)
+        {
+            tutorialFlow.RepositionPhaseHand(PlayableTutorialFlow.Phase.Upgrade, upgrade124Button.transform.position + new Vector3(30f, -20f, 0f));
+        }
+    }
+
+    private void HandleScenario124UpgradeClicked()
+    {
+        if (_scenario124UpgradeCount >= SCENARIO_124_MAX_UPGRADES) return;
+
+        double cost = s_scenario124Costs[Mathf.Clamp(_scenario124UpgradeCount, 0, s_scenario124Costs.Length - 1)];
+        if (!PlayableFarmState.ConsumeGold(cost)) return;
+
+        _scenario124UpgradeCount++;
+        int targetLevel = _scenario124UpgradeCount + 1;
+
+        FarmPlotSystem plotSys = FarmSystem.Instance != null ? FarmSystem.Instance.PlotSystem : null;
+        if (plotSys != null)
+        {
+            // Unlock Ring 2 (Plot2, plots 10..19) at Upgrade 1
+            if (_scenario124UpgradeCount == 1)
+            {
+                plotSys.UnlockAndPlantRing(1);
+            }
+            // Unlock Ring 3 (Plot3, plots 20..29) at Upgrade 3
+            else if (_scenario124UpgradeCount == 3)
+            {
+                plotSys.UnlockAndPlantRing(2);
+            }
+
+            // Level up all plants on the farm
+            IReadOnlyList<FarmPlotData> plots = plotSys.Plots;
+            for (int i = 0; i < plots.Count; i++)
+            {
+                Plot p = plotSys.GetPlotComponent(plots[i].Id);
+                if (p != null && p.CurrentPlant != null)
+                {
+                    p.SetPlantLevel(targetLevel);
+                }
+            }
+        }
+
+        // Upgrade harvester, irrigation, and transport systems
+        FarmSystem.Instance?.HarvestSystem?.SetHarvesterLevel(targetLevel);
+        FarmSystem.Instance?.IrrigationSystem?.SetSprinklerLevel(targetLevel);
+        FarmSystem.Instance?.TransportStation?.SetTransportLevel(targetLevel);
+        FarmSystem.Instance?.TransportStation?.RefreshCapacity();
+
+        GameEventBus.OnCropUpgradedEvent?.Invoke(0, targetLevel);
+
+        if (tutorialFlow != null)
+        {
+            tutorialFlow.ReportFirstPlantUpgraded();
+            tutorialFlow.ReportAnyUpgradeIconClicked();
+        }
+
+        RefreshScenario124UpgradeButton();
+
+        if (_scenario124UpgradeCount >= SCENARIO_124_MAX_UPGRADES)
+        {
+            if (_scenario124EndcardCoroutine != null) StopCoroutine(_scenario124EndcardCoroutine);
+            _scenario124EndcardCoroutine = StartCoroutine(Scenario124EndcardDelayRoutine(5f));
+        }
+    }
+
+    private System.Collections.IEnumerator Scenario124EndcardDelayRoutine(float delaySeconds)
+    {
+        yield return new WaitForSeconds(delaySeconds);
+        ShowEndcard();
+    }
+
+    private void RefreshScenario124UpgradeButton()
+    {
+        if (upgrade124Button == null) return;
+
+        if (_scenario124UpgradeCount >= SCENARIO_124_MAX_UPGRADES)
+        {
+            upgrade124Button.interactable = false;
+            if (upgrade124TitleText != null) upgrade124TitleText.text = "MAX";
+            if (upgrade124PriceText != null) upgrade124PriceText.text = "";
+            if (upgrade124PriceIcon != null) upgrade124PriceIcon.SetActive(false);
+            UpdateScenario124StarProgress(5);
+            return;
+        }
+
+        double nextCost = s_scenario124Costs[_scenario124UpgradeCount];
+        bool canAfford = PlayableFarmState.HasEnoughGold(nextCost);
+        upgrade124Button.interactable = canAfford;
+
+        if (upgrade124TitleText != null) upgrade124TitleText.text = "UPGRADE";
+        if (upgrade124PriceText != null) upgrade124PriceText.text = T_Utility.FormatGold(nextCost);
+        if (upgrade124PriceIcon != null) upgrade124PriceIcon.SetActive(true);
+
+        UpdateScenario124StarProgress(_scenario124UpgradeCount);
+
+        if (canAfford && tutorialFlow != null)
+        {
+            tutorialFlow.ReportFirstPlantUpgradeAffordable();
+        }
     }
 
     public void OnCTAClicked() { GameEventBus.OnCTAClicked?.Invoke(); Luna.Unity.Playable.InstallFullGame(); }

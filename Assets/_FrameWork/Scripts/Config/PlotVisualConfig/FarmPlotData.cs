@@ -151,7 +151,7 @@ public sealed class FarmPlotData
 
     public bool UnlockPlot()
     {
-        if (State != FarmPlotState.Locked)
+        if (State != FarmPlotState.Locked && State != FarmPlotState.RingLocked)
             return false;
 
         PlantId = -1;
@@ -159,6 +159,14 @@ public sealed class FarmPlotData
         PlantLevel = 1;
         SetState(FarmPlotState.Empty);
         return true;
+    }
+
+    public void ForceUnlock()
+    {
+        PlantId = -1;
+        VisualPlantId = -1;
+        PlantLevel = 1;
+        SetState(FarmPlotState.Empty);
     }
 
     public bool Occupy(int plantId, int level = 1, int visualPlantId = -1)

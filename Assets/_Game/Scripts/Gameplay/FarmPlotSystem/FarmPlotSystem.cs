@@ -209,6 +209,29 @@ public sealed class FarmPlotSystem : MonoBehaviour
         return false;
     }
 
+    public void UnlockAndPlantRing(int ringIndex)
+    {
+        for (int sectorIndex = 0; sectorIndex < PlotsPerRing; sectorIndex++)
+        {
+            int plotId = GetPlotId(ringIndex, sectorIndex);
+            UnlockAndPlantPlot(plotId);
+        }
+    }
+
+    public bool UnlockAndPlantPlot(int plotId)
+    {
+        FarmPlotData plot = GetPlot(plotId);
+        if (plot == null) return false;
+
+        plot.ForceUnlock();
+        PlayableFarmState.UpdatePlotData(plotId, PlotState.Empty, -1, 1);
+        RefreshBoundPlot(plotId);
+        bool planted = TryPlantConfiguredPlot(plotId);
+        OnPlotUnlocked?.Invoke(plot);
+        GameEventBus.OnPlotUnlockedEvent?.Invoke(plotId);
+        return planted;
+    }
+
     /// <summary>
     /// Kiá»ƒm tra xem má»™t Ã´ Ä‘áº¥t cÃ³ Ä‘á»§ Ä‘iá»u kiá»‡n chuyá»ƒn tá»« RingLocked sang Locked khÃ´ng:
     /// (1) Ã” Ä‘áº¥t cÃ¹ng sector á»Ÿ ring bÃªn trong (ringIndex - 1, sectorIndex) Ä‘Ã£ Ä‘Æ°á»£c má»Ÿ khÃ³a (IsUnlocked).

@@ -49,9 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantRoot: {fileID: 8381407292617371414}
   plotVisual: {fileID: 2311099394978968435}
-  upgradeIconOffset: {x: 0, y: 1.2, z: 0}
-  plotPriceOffset: {x: 0, y: 0.8, z: 0}
-  plantTreeOffset: {x: 0, y: 1.1, z: 0}
+  upgradeIconOffset: {x: 0, y: 1.5, z: 1.2}
+  plotPriceOffset: {x: 0, y: 0.5, z: 0.5}
+  plantTreeOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &2311099394978968435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,11 +69,6 @@ MonoBehaviour:
   lockedRenderer: {fileID: 4935171282303757026}
   emptyRenderer: {fileID: 1673785639472704867}
   occupiedRenderer: {fileID: 4084594042504070426}
-  visualConfig: {fileID: 11400000, guid: c25a59ba75f5564197ff61b2ef3c9933, type: 2}
-  ringLockedSprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
-  lockedSprite: {fileID: 21300000, guid: a33a5833ee556ab4ca4011a7c369eddb, type: 3}
-  emptySprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
-  occupiedSprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
 --- !u!1 &1280536295480166731
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +478,7 @@ SpriteRenderer:
   m_SortingLayerID: -496145767
   m_SortingLayer: 2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: c0c179aeed7767843bb6d1a86051b3cd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fba876d478bf0064aa06396baed92b45, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

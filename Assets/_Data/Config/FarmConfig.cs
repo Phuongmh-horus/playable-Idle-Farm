@@ -50,13 +50,17 @@ public class FarmConfig : ScriptableObject
 
     public int GetInitialPlantId(int plotId)
     {
-        if (initialPlantOrder != null && plotId >= 0 && plotId < initialPlantOrder.Count)
+        if (initialPlantOrder != null && initialPlantOrder.Count > 0)
         {
-            return initialPlantOrder[plotId];
+            if (plotId >= 0 && plotId < initialPlantOrder.Count)
+            {
+                return initialPlantOrder[plotId];
+            }
+            return initialPlantOrder[plotId % initialPlantOrder.Count];
         }
 
         PlotConfig plot = GetPlotConfig(plotId);
-        return plot != null ? plot.defaultPlantId : -1;
+        return plot != null ? plot.defaultPlantId : (plotId >= 0 ? plotId % 10 : -1);
     }
 
     /// <summary>
@@ -66,14 +70,18 @@ public class FarmConfig : ScriptableObject
     /// </summary>
     public int GetInitialPlantId(int plotId, PlantConfig plantConfig)
     {
-        if (initialPlantOrder != null && plotId >= 0 && plotId < initialPlantOrder.Count)
+        if (initialPlantOrder != null && initialPlantOrder.Count > 0)
         {
-            return initialPlantOrder[plotId];
+            if (plotId >= 0 && plotId < initialPlantOrder.Count)
+            {
+                return initialPlantOrder[plotId];
+            }
+            return initialPlantOrder[plotId % initialPlantOrder.Count];
         }
 
-        if (plantConfig != null)
+        if (plantConfig != null && plantConfig.plants != null && plantConfig.plants.Count > 0)
         {
-            int orderedPlantId = plantConfig.GetPlantIdAtOrder(plotId);
+            int orderedPlantId = plantConfig.GetPlantIdAtOrder(plotId % plantConfig.plants.Count);
             if (orderedPlantId >= 0)
             {
                 return orderedPlantId;
@@ -81,7 +89,7 @@ public class FarmConfig : ScriptableObject
         }
 
         PlotConfig plot = GetPlotConfig(plotId);
-        return plot != null ? plot.defaultPlantId : -1;
+        return plot != null ? plot.defaultPlantId : (plotId >= 0 ? plotId % 10 : -1);
     }
 }
 

@@ -278,6 +278,12 @@ public static class PlayableScenarioRuntime
             return _configuredVisualPlantOrder[plotId];
         }
 
+        if (plotId >= 0 && _configuredVisualPlantOrder.Count > 0)
+        {
+            int fallbackId = _configuredVisualPlantOrder[plotId % _configuredVisualPlantOrder.Count];
+            if (fallbackId >= 0) return fallbackId;
+        }
+
         return CurrentScenario != null ? ResolveConfiguredGameplayPlantId(CurrentScenario, plotId) : -1;
     }
 
@@ -401,9 +407,13 @@ public static class PlayableScenarioRuntime
             }
         }
 
-        if (scenario.initialPlantIds != null && plotId < scenario.initialPlantIds.Count)
+        if (scenario.initialPlantIds != null && scenario.initialPlantIds.Count > 0)
         {
-            return scenario.initialPlantIds[plotId];
+            if (plotId >= 0 && plotId < scenario.initialPlantIds.Count)
+            {
+                return scenario.initialPlantIds[plotId];
+            }
+            return scenario.initialPlantIds[plotId % scenario.initialPlantIds.Count];
         }
         return -1;
     }
