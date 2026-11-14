@@ -244,7 +244,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         double revenue = plant.Harvest();
         if (revenue > 0 || plant.FilledSlotCount == 0)
         {
-            SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_reaper_collect);
+
             LogHarvest(targetPlot, revenue);
             PlotHarvested?.Invoke(targetPlot, revenue);
         }

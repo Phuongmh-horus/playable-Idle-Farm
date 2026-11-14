@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlantVisual_6_Wheat
   m_EditorClassIdentifier: 
   plantIcon: {fileID: 21300000, guid: 972405f6c219aa74c8f4ac7cfaf1fa0c, type: 3}
-  fruitIcon: {fileID: 21300000, guid: 0b461deebe24d1049b19b8a672a665e0, type: 3}
+  fruitIcon: {fileID: 21300000, guid: dcded2e8169a5b14383a747a7b131e55, type: 3}
   plantPrefab: {fileID: 7756525101406347104, guid: 1e202c5ddbf3eba4b866a33ce8f3d918, type: 3}
   plantSprites:
   - {fileID: 21300000, guid: 001f3c8c4e7875844856035509ac9cd7, type: 3}

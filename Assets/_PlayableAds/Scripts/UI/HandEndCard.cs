@@ -50,7 +50,7 @@ public class HandEndCard : MonoBehaviour
             _moveRoutine = StartCoroutine(LosingLoop());
         }
     }
-    
+
     void OnDisable()
     {
         CancelAnimations();
@@ -69,7 +69,7 @@ public class HandEndCard : MonoBehaviour
     [SerializeField] private float StartScale = 0.9f;
 
 
-    
+
     public void AnimationClickButton(Transform buttonTransform)
     {
         if (buttonTransform == null) return;

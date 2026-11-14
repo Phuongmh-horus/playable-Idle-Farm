@@ -107,6 +107,6 @@ MonoBehaviour:
     maxLevel: 20
     baseCapacity: 3
     capacitySumPerLevel: 1
-    level1Cost: 40
+    level1Cost: 52
     cargoBasePrice: 90
     cargoUpdateScale: 2.25

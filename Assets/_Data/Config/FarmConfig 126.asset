@@ -87,7 +87,7 @@ MonoBehaviour:
   initialPlantOrder: 06000000030000000200000001000000080000000000000009000000040000000700000005000000
   sprinkler:
     maxLevel: 10
-    rotationDuration: 12
+    rotationDuration: 10
     rotationDurationReductionPerMilestone: 2
     minimumRotationDuration: 6
     level1Cost: 88

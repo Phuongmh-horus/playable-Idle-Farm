@@ -29,6 +29,7 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
         [SerializeField] private GameObject root;
         [SerializeField] private RectTransform hand;
         [SerializeField] private RectTransform ring;
+        //[SerializeField] private SpotlightCutoutOverlay spotlight;
         private bool _initialVisualsCaptured;
         private Vector3 _initialHandPosition;
         private Vector3 _initialHandScale;
@@ -38,6 +39,7 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
         public GameObject Root => root;
         public RectTransform Hand => hand;
         public RectTransform Ring => ring;
+        //public SpotlightCutoutOverlay Spotlight => spotlight;
 
         public PhaseView(Phase phase, GameObject root)
         {
@@ -170,6 +172,46 @@ public sealed class PlayableTutorialFlow : MonoBehaviour
         view.Root.SetActive(true);
         CurrentPhase = phase;
         PhaseChanged?.Invoke(CurrentPhase);
+
+        // if (view.Spotlight != null)
+        // {
+
+        //     if (phase == Phase.Sprinklers)
+        //     {
+        //         if (view.Ring != null)
+        //         {
+        //             view.Spotlight.SetTarget(view.Ring);
+        //         }
+        //         else
+        //         {
+        //             FarmPlotSystem plotSystem = FarmSystem.Instance != null ? FarmSystem.Instance.PlotSystem : null;
+        //             Plot starterPlot = plotSystem != null ? plotSystem.GetPlotComponent(0) : null;
+        //             if (starterPlot != null)
+        //             {
+        //                 view.Spotlight.SetTarget(starterPlot.transform);
+        //             }
+        //         }
+        //     }
+        //     else if (phase == Phase.Upgrade)
+        //     {
+        //         if (view.Hand != null)
+        //         {
+        //             view.Spotlight.SetTarget(view.Hand);
+        //         }
+        //         else
+        //         {
+        //             FarmPlotSystem plotSystem = FarmSystem.Instance != null ? FarmSystem.Instance.PlotSystem : null;
+        //             Plot starterPlot = plotSystem != null ? plotSystem.GetPlotComponent(0) : null;
+        //             if (starterPlot != null)
+        //             {
+        //                 view.Spotlight.SetTarget(starterPlot.transform);
+        //             }
+        //         }
+        //     }
+
+        //     view.Spotlight.Refresh();
+        // }
+
         _motion = StartCoroutine(PlayMotion(view));
     }
 

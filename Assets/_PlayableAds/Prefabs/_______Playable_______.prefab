@@ -632,6 +632,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 793022840169165471, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1686311379238746894, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -714,6 +718,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1946675699890941451, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2106277324290838301, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2106277324290838301, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}
+      propertyPath: m_OverrideSorting
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3396323483716164973, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4333322777296536188, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758173829661793880, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}
+      propertyPath: m_OverrideSorting
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6226193412626853113, guid: 855da399f84e5c543b023b1e40bffa24, type: 3}

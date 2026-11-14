@@ -48,7 +48,7 @@ public class IconUpgradeLayer : WorldLayerBase
         }
     }
 
-    public override void SetupFollow(Transform target, Vector3 offset = default)
+    public override void SetupFollow(Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         base.SetupFollow(target, offset);
     }

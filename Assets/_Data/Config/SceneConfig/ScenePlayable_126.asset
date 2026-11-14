@@ -26,5 +26,5 @@ MonoBehaviour:
   startingCurrency: 0
   showConveyorAndSell: 1
   showUpgrade: 1
-  harvestMode: 2
+  harvestMode: 0
   enableIrrigation: 1

@@ -74,6 +74,7 @@ public class LunaUIManager : MonoBehaviour
     private readonly List<int> _columnChoiceIds = new List<int>(2);
     private int _columnNextPlantIndex;
     private ScenePlayableSO _columnChoiceScenario;
+    private bool _hasSelectedFirstPlant;
     [SerializeField] private PlayableUpgradePopupPresenter upgradePopupPresenter;
     private PlayableCurrencyDisplay _currencyDisplay;
 
@@ -204,12 +205,14 @@ public class LunaUIManager : MonoBehaviour
         }
         _waitingForFruitSelection = false;
         _pendingPlantPlotId = -1;
+        _hasSelectedFirstPlant = false;
         ResetColumnPickerStateIfScenarioChanged();
         if (CurrentScenePlayableSO.UsesPlantPicker && TryShowPlantPicker(GetFirstEmptyPlot(), true))
         {
             return;
         }
 
+        _hasSelectedFirstPlant = true;
         HideFruitPicker();
         StartConfiguredTutorial();
     }
@@ -256,7 +259,8 @@ public class LunaUIManager : MonoBehaviour
         {
             _nextEndcardAt = Time.unscaledTime + 6f;
         }
-        activeStore.SetupStore(choices);
+        bool isFirstPlant = !_hasSelectedFirstPlant;
+        activeStore.SetupStore(choices, isFirstPlant);
         return true;
     }
 
@@ -434,6 +438,7 @@ public class LunaUIManager : MonoBehaviour
 
         PlayableFarmState.UnlockCollectionPlant(plantId, 1);
         AdvanceColumnChoices(plantId);
+        _hasSelectedFirstPlant = true;
         bool startTutorial = _startTutorialAfterPlantSelection;
         _waitingForFruitSelection = false;
         _startTutorialAfterPlantSelection = false;

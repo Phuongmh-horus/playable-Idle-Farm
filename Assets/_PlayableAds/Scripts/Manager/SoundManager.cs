@@ -12,17 +12,34 @@ public class SoundManager : MonoSingleton<SoundManager>
     [SerializeField] private GameObject sfxPrefab;
     [SerializeField] public SoundDataSO soundDataSO;
     [SerializeField] private List<AudioSource> sfxSource = new List<AudioSource>();
+    [Header("SFX Optimization / Throttle Settings")]
+    [SerializeField] private float defaultSfxCooldown = 0.08f;
     private readonly Dictionary<AudioClipName, float> soundCooldowns = new Dictionary<AudioClipName, float>();
-
     private readonly Dictionary<AudioClipName, float> lastPlayTime = new Dictionary<AudioClipName, float>();
-    private const int MaxSfxSources = 8;
+    private const int MaxSfxSources = 6;
+    private int _roundRobinIndex = 0;
+    private int _lastPlayFrame = -1;
+    private int _sfxPlayedThisFrame = 0;
+    private const int MaxSfxPerFrame = 2;
 
     protected override void Awake()
     {
         base.Awake();
-        soundCooldowns[AudioClipName.sfx_watering_machine] = 0.08f;
-        soundCooldowns[AudioClipName.sfx_reaper_collect] = 0.1f;
-        soundCooldowns[AudioClipName.sfx_pickaxe] = 0.08f;
+        InitCooldowns();
+    }
+
+    private void InitCooldowns()
+    {
+        // Tối ưu số lần phát mỗi giây cho các âm thanh tưới nước, thu hoạch, bán và mọc cây
+        soundCooldowns[AudioClipName.sfx_watering_machine] = 0.28f; // ~3.5 lần/giây khi vòi tưới xoay qua hàng loạt cây
+        soundCooldowns[AudioClipName.sfx_reaper_collect] = 0.28f;   // ~3.5 lần/giây khi lưỡi cưa cắt cây liên tục
+        soundCooldowns[AudioClipName.sfx_sickle_harvest] = 0.25f;
+        soundCooldowns[AudioClipName.sfx_cash_fly] = 0.25f;        // khi hàng chục quả/tiền bay về xe
+        soundCooldowns[AudioClipName.sfx_cash] = 0.2f;            // tiền bán về túi
+        soundCooldowns[AudioClipName.sfx_selling] = 0.50f;         // xe khởi hành bán
+        soundCooldowns[AudioClipName.sfx_plant_grow] = 0.2f;      // cây mọc/mở ring hàng loạt
+        soundCooldowns[AudioClipName.sfx_upgrade] = 0.25f;         // nâng cấp
+        soundCooldowns[AudioClipName.sfx_ui_click] = 0.10f;        // click nút
     }
 
     void OnEnable()
@@ -109,41 +126,46 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     public void PlayOneShot(AudioClipName name)
     {
-        SoundData soundData = GetRandomSound(name);
-
-        if (soundData == null)
+        // 1. Kiểm tra giới hạn số lượng SFX trên cùng 1 frame (tránh âm thanh spike/crackle khi mở nhiều plot)
+        int currentFrame = Time.frameCount;
+        if (currentFrame != _lastPlayFrame)
         {
-            Debug.LogWarning($"SoundManager: no SoundData found for '{name}'");
+            _lastPlayFrame = currentFrame;
+            _sfxPlayedThisFrame = 0;
+        }
+
+        // Bỏ qua nếu đã phát quá số SFX cho phép trong frame này, trừ các SFX UI quan trọng
+        if (_sfxPlayedThisFrame >= MaxSfxPerFrame && name != AudioClipName.sfx_ui_click && name != AudioClipName.sfx_upgrade)
+        {
             return;
         }
 
-        if (soundData.Clip == null)
-        {
-            Debug.LogWarning($"SoundManager: SoundData.clip is null for '{name}'");
-            return;
-        }
-
+        // 2. Kiểm tra cooldown theo loại âm thanh
         if (IsOnCooldown(name))
             return;
 
-        // Debug.Log($"SoundManager {name} -> {soundData.Clip.name}. sfxSource count={sfxSource?.Count ?? 0}");
+        SoundData soundData = GetRandomSound(name);
+        if (soundData == null || soundData.Clip == null)
+            return;
 
         AudioSource source = GetAvailableSfxSource();
         if (source == null)
-        {
-            Debug.LogWarning("SoundManager: failed to get or create an SFX AudioSource.");
             return;
-        }
 
+        _sfxPlayedThisFrame++;
+
+        // Random pitch nhẹ (0.96 - 1.04) để các âm thanh lặp lại nghe tự nhiên và êm tai
+        source.pitch = Random.Range(0.96f, 1.04f);
         source.PlayOneShot(soundData.Clip, soundData.VolumeDefault);
     }
 
     private bool IsOnCooldown(AudioClipName name)
     {
-        if (!soundCooldowns.TryGetValue(name, out float cooldown))
+        float cooldown = soundCooldowns.TryGetValue(name, out float cd) ? cd : defaultSfxCooldown;
+        if (cooldown <= 0f)
             return false;
 
-        float currentTime = Time.time;
+        float currentTime = Time.unscaledTime;
         if (!lastPlayTime.TryGetValue(name, out float lastTime) || currentTime - lastTime >= cooldown)
         {
             lastPlayTime[name] = currentTime;
@@ -165,21 +187,32 @@ public class SoundManager : MonoSingleton<SoundManager>
 
         sfxSource.RemoveAll(source => source == null);
 
-        foreach (AudioSource source in sfxSource)
+        // 1. Tìm AudioSource đang rảnh rỗi
+        for (int i = 0; i < sfxSource.Count; i++)
         {
-            if (source != null)
-                return source;
+            if (sfxSource[i] != null && !sfxSource[i].isPlaying)
+                return sfxSource[i];
         }
 
+        // 2. Nếu tất cả đều bận và chưa chạm MaxSfxSources, tạo thêm source mới
         if (sfxSource.Count < MaxSfxSources)
         {
             AudioSource source = CreateSfxSource();
             if (source != null)
+            {
                 sfxSource.Add(source);
-            return source;
+                return source;
+            }
         }
 
-        return sfxSource.Count > 0 ? sfxSource[0] : CreateSfxSource();
+        // 3. Nếu đã đạt tối đa số source, dùng round-robin xoay vòng
+        if (sfxSource.Count > 0)
+        {
+            _roundRobinIndex = (_roundRobinIndex + 1) % sfxSource.Count;
+            return sfxSource[_roundRobinIndex];
+        }
+
+        return CreateSfxSource();
     }
 
     private AudioSource CreateSfxSource()

@@ -170,7 +170,7 @@ public class WorldLayerBase : MonoBehaviour
         return false;
     }
 
-    public virtual void SetupFollow(Transform target, Vector3 offset = default)
+    public virtual void SetupFollow(Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         followTarget = target;
         worldOffset = offset;

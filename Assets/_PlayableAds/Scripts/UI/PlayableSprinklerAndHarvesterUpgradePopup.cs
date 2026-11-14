@@ -206,7 +206,7 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
         SetText(sprinklerStatOneName, "WATER");
         SetText(sprinklerStatOneCurrent, config != null ? config.GetWaterAmount(level).ToString("0.##") : "-");
         SetText(sprinklerStatOneNext, isMax ? "MAX" : config != null ? config.GetWaterAmount(nextLevel).ToString("0.##") : "-");
-        SetText(sprinklerStatTwoName, "Arms");
+        SetText(sprinklerStatTwoName, "ARMS");
         SetText(sprinklerStatTwoCurrent, config != null ? config.GetNozzleCount(level).ToString() : "-");
         SetText(sprinklerStatTwoNext, isMax ? "MAX" : config != null ? config.GetNozzleCount(nextLevel).ToString() : "-");
         SetStatArrow(sprinklerStatOneArrow, !isMax);
@@ -226,7 +226,7 @@ public sealed class PlayableSprinklerAndHarvesterUpgradePopup : MonoBehaviour
         SetText(harvesterStatOneName, "DURATION");
         SetText(harvesterStatOneCurrent, config != null ? config.GetRotationDuration(level).ToString("0.##") + "s" : "-");
         SetText(harvesterStatOneNext, isMax ? "MAX" : config != null ? config.GetRotationDuration(nextLevel).ToString("0.##") + "s" : "-");
-        SetText(harvesterStatTwoName, "Arms");
+        SetText(harvesterStatTwoName, "ARMS");
         SetText(harvesterStatTwoCurrent, config != null ? config.GetHarvesterCount(level).ToString() : "-");
         SetText(harvesterStatTwoNext, isMax ? "MAX" : config != null ? config.GetHarvesterCount(nextLevel).ToString() : "-");
         SetStatArrow(harvesterStatOneArrow, !isMax);

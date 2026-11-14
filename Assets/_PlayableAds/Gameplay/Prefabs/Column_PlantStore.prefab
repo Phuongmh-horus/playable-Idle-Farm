@@ -38,8 +38,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 70}
-  m_SizeDelta: {x: 500, y: 250}
+  m_AnchoredPosition: {x: 0, y: 120}
+  m_SizeDelta: {x: 700, y: 350}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1663163538925641426
 CanvasRenderer:
@@ -97,7 +97,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -20
+  m_Spacing: -30
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -131,6 +131,14 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3445861504207207703, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445861504207207703, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -157,11 +165,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_LocalPosition.x
@@ -237,6 +245,14 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3445861504207207703, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3445861504207207703, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -263,11 +279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4087438851146317370, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_LocalPosition.x
@@ -320,14 +336,6 @@ PrefabInstance:
     - target: {fileID: 6219224523461550729, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
       propertyPath: m_Name
       value: Item_PlantStore
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 8789923094947401842, guid: 2ea355cb9fc0afa44af1c01072d37e30, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

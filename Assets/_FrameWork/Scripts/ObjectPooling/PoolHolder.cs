@@ -42,8 +42,8 @@ public sealed class PoolHolder : MonoSingleton<PoolHolder>
         }
     }
 
-    public MonoBehaviour Get(MonoBehaviour prefab, Transform parent = null, Vector3 position = default,
-        Quaternion rotation = default, string customKey = "")
+    public MonoBehaviour Get(MonoBehaviour prefab, Transform parent = null, Vector3 position = default(UnityEngine.Vector3),
+         Quaternion rotation = default(UnityEngine.Quaternion), string customKey = "")
     {
         if (prefab == null) return null;
 
