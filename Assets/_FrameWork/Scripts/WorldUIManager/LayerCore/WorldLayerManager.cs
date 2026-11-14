@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -87,7 +87,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         return pool;
     }
 
-    public T ShowWorldLayer<T>(WorldLayerType layerType, Transform target, Vector3 offset = default) where T : WorldLayerBase
+    public T ShowWorldLayer<T>(WorldLayerType layerType, Transform target, Vector3 offset = default(UnityEngine.Vector3)) where T : WorldLayerBase
     {
         var layer = Spawn(layerType);
         if (layer is T typedLayer)
@@ -311,7 +311,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
 
     // CÃ¡c hÃ m Show/Hide cá»¥ thá»ƒ cho tá»«ng WorldLayer sáº½ Ä‘Æ°á»£c sinh tá»± Ä‘á»™ng táº¡i Ä‘Ã¢y thÃ´ng qua Tool Generate Layer
 
-    public PopupUpgradePlantLayer ShowPopupUpgradePlantLayer(Plot plot, Transform target, Vector3 offset = default)
+    public PopupUpgradePlantLayer ShowPopupUpgradePlantLayer(Plot plot, Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         var layer = ShowWorldLayer<PopupUpgradePlantLayer>(WorldLayerType.PopupUpgradePlantLayer, target, offset);
         if (layer != null)
@@ -331,7 +331,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         return layer;
     }
 
-    public PopupUpgradePlantLayer ShowPopupUpgradePlantLayer(Transform target, Vector3 offset = default)
+    public PopupUpgradePlantLayer ShowPopupUpgradePlantLayer(Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         Plot plot = target != null ? target.GetComponentInParent<Plot>() : null;
         return ShowPopupUpgradePlantLayer(plot, target, offset);
@@ -347,7 +347,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         HideWorldLayer(WorldLayerType.PopupUpgradePlantLayer, target);
     }
 
-    public PopupPlantPriceLayer ShowPopupPlantPriceLayer(PlantPriceData plantPriceData, Transform target, Vector3 offset = default)
+    public PopupPlantPriceLayer ShowPopupPlantPriceLayer(PlantPriceData plantPriceData, Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         // Refreshing a locked plot can happen several times during one frame.
         // Reuse its existing price layer instead of consuming another pool slot.
@@ -375,7 +375,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         HideWorldLayer(WorldLayerType.PopupPlantPriceLayer, target);
     }
 
-    public WaterRequiredLayer ShowWaterRequiredLayer(Transform target, Vector3 offset = default)
+    public WaterRequiredLayer ShowWaterRequiredLayer(Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         return ShowWorldLayer<WaterRequiredLayer>(WorldLayerType.WaterRequiredLayer, target, offset);
     }
@@ -390,7 +390,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         HideWorldLayer(WorldLayerType.WaterRequiredLayer, target);
     }
 
-    public PopupBuyPlotLayer ShowPopupBuyPlotLayer(Plot plot, Transform target, Vector3 offset = default)
+    public PopupBuyPlotLayer ShowPopupBuyPlotLayer(Plot plot, Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         var layer = ShowWorldLayer<PopupBuyPlotLayer>(WorldLayerType.PopupBuyPlotLayer, target, offset);
         if (layer != null)
@@ -400,7 +400,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         return layer;
     }
 
-    public PopupBuyPlotLayer ShowPopupBuyPlotLayer(BuyPlotData buyPlotData, Transform target, Vector3 offset = default)
+    public PopupBuyPlotLayer ShowPopupBuyPlotLayer(BuyPlotData buyPlotData, Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         var layer = ShowWorldLayer<PopupBuyPlotLayer>(WorldLayerType.PopupBuyPlotLayer, target, offset);
         if (layer != null)
@@ -425,7 +425,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         HideWorldLayer(WorldLayerType.PopupBuyPlotLayer, target);
     }
 
-    public PopupPlantTreeLayer ShowPopupPlantTreeLayer(Plot plot, Transform target, Vector3 offset = default)
+    public PopupPlantTreeLayer ShowPopupPlantTreeLayer(Plot plot, Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         var layer = ShowWorldLayer<PopupPlantTreeLayer>(WorldLayerType.PopupPlantTreeLayer, target, offset);
         if (layer != null)
@@ -435,7 +435,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         return layer;
     }
 
-    public PopupPlantTreeLayer ShowPopupPlantTreeLayer(PlantTreeData plantTreeData, Transform target, Vector3 offset = default)
+    public PopupPlantTreeLayer ShowPopupPlantTreeLayer(PlantTreeData plantTreeData, Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         var layer = ShowWorldLayer<PopupPlantTreeLayer>(WorldLayerType.PopupPlantTreeLayer, target, offset);
         if (layer != null)
@@ -460,7 +460,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         HideWorldLayer(WorldLayerType.PopupPlantTreeLayer, target);
     }
 
-    public IconUpgradeLayer ShowIconUpgradeLayer(Transform target, Vector3 offset = default, Action onClick = null)
+    public IconUpgradeLayer ShowIconUpgradeLayer(Transform target, Vector3 offset = default(UnityEngine.Vector3), Action onClick = null)
     {
         var layer = ShowWorldLayer<IconUpgradeLayer>(WorldLayerType.IconUpgradeLayer, target, offset);
         if (layer != null)
@@ -485,7 +485,7 @@ public partial class WorldLayerManager : MonoSingleton<WorldLayerManager>
         HideWorldLayer(WorldLayerType.IconUpgradeLayer, target);
     }
 
-    public CapacityFruitTransport ShowCapacityFruitTransport(Transform target, Vector3 offset = default)
+    public CapacityFruitTransport ShowCapacityFruitTransport(Transform target, Vector3 offset = default(UnityEngine.Vector3))
     {
         var layer = ShowWorldLayer<CapacityFruitTransport>(WorldLayerType.CapacityFruitTransport, target, offset);
         if (layer != null)

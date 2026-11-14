@@ -44,7 +44,7 @@ public static class PlantSpawner
         }
     }
 
-    public static Plant SpawnPlant(int plantId, int level, Transform parent, Vector3 localPosition = default, int ringIndex = 0, int visualPlantId = -1, int initialFruitCount = 0)
+    public static Plant SpawnPlant(int plantId, int level, Transform parent, Vector3 localPosition = default(UnityEngine.Vector3), int ringIndex = 0, int visualPlantId = -1, int initialFruitCount = 0)
     {
         Plant plantPrefab = ConfigHolder.Instance?.PlantConfig?.GetPlant(plantId)?.GetPrefab();
         if (plantPrefab == null) return null;

@@ -215,6 +215,7 @@ public static class PlayableScenarioRuntime
 {
     public static ScenePlayableSO CurrentScenario { get; private set; }
     private static readonly List<int> _configuredVisualPlantOrder = new List<int>();
+    private static bool _visualOrderInitializedFromConfig = false;
 
     public static int InitialPlotCount => CurrentScenario != null
         ? Mathf.Max(1, CurrentScenario.initialPlotCount)
@@ -223,6 +224,7 @@ public static class PlayableScenarioRuntime
     public static void Prepare(ScenePlayableSO scenario)
     {
         CurrentScenario = scenario;
+        _visualOrderInitializedFromConfig = false;
         BuildConfiguredVisualOrder();
         // Currency is an inspector-authored scenario value; all later income
         // and spending remains session-only in PlayableFarmState.
@@ -329,16 +331,17 @@ public static class PlayableScenarioRuntime
 
     private static void BuildConfiguredVisualOrder()
     {
-        _configuredVisualPlantOrder.Clear();
-
         FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
         PlantConfig plantConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.PlantConfig : null;
         if (farmConfig != null && farmConfig.initialPlantOrder != null && farmConfig.initialPlantOrder.Count > 0)
         {
+            _configuredVisualPlantOrder.Clear();
             _configuredVisualPlantOrder.AddRange(farmConfig.initialPlantOrder);
+            _visualOrderInitializedFromConfig = true;
         }
-        else if (plantConfig != null && plantConfig.plants != null)
+        else if (plantConfig != null && plantConfig.plants != null && plantConfig.plants.Count > 0)
         {
+            _configuredVisualPlantOrder.Clear();
             for (int i = 0; i < plantConfig.plants.Count; i++)
             {
                 if (plantConfig.plants[i] != null)
@@ -346,23 +349,30 @@ public static class PlayableScenarioRuntime
                     _configuredVisualPlantOrder.Add(plantConfig.plants[i].ID);
                 }
             }
+            _visualOrderInitializedFromConfig = true;
         }
-        else if (CurrentScenario != null && CurrentScenario.initialPlantIds != null)
+        else if (CurrentScenario != null && CurrentScenario.initialPlantIds != null && CurrentScenario.initialPlantIds.Count > 0)
         {
+            _configuredVisualPlantOrder.Clear();
             _configuredVisualPlantOrder.AddRange(CurrentScenario.initialPlantIds);
         }
     }
 
     private static void EnsureConfiguredVisualOrder()
     {
-        if (_configuredVisualPlantOrder.Count > 0 || CurrentScenario == null)
+        if (CurrentScenario == null)
         {
             return;
         }
 
-        // LunaUIManager prepares the scenario before ConfigHolder's Awake.
-        // Defer the authored order until those inspector references exist.
-        if (ConfigHolder.Instance != null)
+        // If we previously fell back before ConfigHolder was available, rebuild once ConfigHolder exists.
+        if (!_visualOrderInitializedFromConfig && ConfigHolder.Instance != null)
+        {
+            BuildConfiguredVisualOrder();
+            return;
+        }
+
+        if (_configuredVisualPlantOrder.Count == 0 && ConfigHolder.Instance != null)
         {
             BuildConfiguredVisualOrder();
         }
@@ -392,10 +402,13 @@ public static class PlayableScenarioRuntime
     {
         FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
         PlantConfig plantConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.PlantConfig : null;
-        if (farmConfig != null && farmConfig.HasInitialPlantOrder &&
-            plotId >= 0 && plotId < farmConfig.initialPlantOrder.Count)
+        if (farmConfig != null && farmConfig.HasInitialPlantOrder && farmConfig.initialPlantOrder.Count > 0)
         {
-            return farmConfig.initialPlantOrder[plotId];
+            if (plotId >= 0 && plotId < farmConfig.initialPlantOrder.Count)
+            {
+                return farmConfig.initialPlantOrder[plotId];
+            }
+            return farmConfig.initialPlantOrder[plotId % farmConfig.initialPlantOrder.Count];
         }
 
         if (farmConfig != null && plantConfig != null)
@@ -407,7 +420,7 @@ public static class PlayableScenarioRuntime
             }
         }
 
-        if (scenario.initialPlantIds != null && scenario.initialPlantIds.Count > 0)
+        if (scenario != null && scenario.initialPlantIds != null && scenario.initialPlantIds.Count > 0)
         {
             if (plotId >= 0 && plotId < scenario.initialPlantIds.Count)
             {

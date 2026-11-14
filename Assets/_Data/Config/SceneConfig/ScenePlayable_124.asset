@@ -21,8 +21,8 @@ MonoBehaviour:
   plantPickerVariant: 0
   selectablePlantIds: 
   initialPlotCount: 10
-  initialPlantIds: 00000000010000000200000003000000040000000500000006000000070000000800000009000000
-  initialFruitCount: 1
+  initialPlantIds: 06000000030000000200000001000000080000000000000009000000040000000700000005000000
+  initialFruitCount: 0
   startingCurrency: 0
   showConveyorAndSell: 1
   showUpgrade: 1

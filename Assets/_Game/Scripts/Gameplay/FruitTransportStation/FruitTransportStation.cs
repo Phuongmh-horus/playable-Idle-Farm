@@ -5,8 +5,8 @@ using UnityEngine;
 public enum TransportVehicleState
 {
     IdleAtStation = 0,
-    Departing = 1, 
-    SellingOffScreen = 2, 
+    Departing = 1,
+    SellingOffScreen = 2,
     Returning = 3
 }
 
@@ -29,7 +29,7 @@ public sealed class FruitTransportStation : MonoBehaviour
     private readonly List<AnimatedFruit> _activeAnimatedFruits = new List<AnimatedFruit>();
     private TransportVehicleState _state = TransportVehicleState.IdleAtStation;
     private CapacityFruitTransport _capacityLayer;
-    
+
     public bool IsFull => _loadedFruitCount >= GetMaxCapacity();
     public int LoadedFruitCount => _loadedFruitCount;
     public double LoadedRevenue => _loadedRevenue;
@@ -136,7 +136,7 @@ public sealed class FruitTransportStation : MonoBehaviour
             };
             _loadedFruits.Add(item);
             RefreshCapacityLayer();
-            SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_cash_fly);
+            //SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_cash_fly);
         }
 
         Transform targetCargo = vehicle != null && vehicle.CargoRoot != null ? vehicle.CargoRoot : (idlePoint != null ? idlePoint : transform);

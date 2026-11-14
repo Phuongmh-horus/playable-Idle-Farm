@@ -45,4 +45,4 @@ MonoBehaviour:
     VolumeDefault: 1
   - Name: 11
     Clip: {fileID: 8300000, guid: 9d2619b0417f7d646b787e8da24cc57d, type: 3}
-    VolumeDefault: 1
+    VolumeDefault: 0.5

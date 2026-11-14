@@ -65,6 +65,10 @@ public sealed class FarmSystem : MonoSingleton<FarmSystem>
         }
 
         PlantSpawner.Prewarm(plantCountPerPrefab);
+        if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+        {
+            maxFruitCapacity = Mathf.Max(maxFruitCapacity, 60);
+        }
         FruitSpawner.Prewarm(fruitCapacity, fruitCapacity, maxFruitCapacity, maxFruitCapacity);
     }
 }

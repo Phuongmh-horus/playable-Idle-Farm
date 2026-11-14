@@ -39,6 +39,11 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         {
             if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
             {
+                if (harvesterLevel >= 6)
+                {
+                    float minDuration = Config != null ? Config.minimumRotationDuration : 6f;
+                    return 360f / Mathf.Max(0.1f, minDuration);
+                }
                 return 32f + (harvesterLevel - 1) * 8f;
             }
             return Config != null ? Config.GetRotationSpeed(harvesterLevel) : 24f;
@@ -50,7 +55,8 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         {
             if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
             {
-                if (harvesterLevel >= 5) return 4;
+                if (harvesterLevel >= 6) return 4;
+                if (harvesterLevel >= 5) return 3;
                 if (harvesterLevel >= 3) return 2;
                 return 1;
             }
@@ -282,7 +288,7 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         double revenue = plant.Harvest();
         if (revenue > 0 || plant.FilledSlotCount == 0)
         {
-            SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_reaper_collect);
+            //SoundManager.Instance?.PlayOneShot(AudioClipName.sfx_reaper_collect);
             LogHarvest(targetPlot, revenue);
             PlotHarvested?.Invoke(targetPlot, revenue);
         }
@@ -310,7 +316,16 @@ public sealed class FarmHarvestSystem : MonoBehaviour
 
         if (PoolHolder.Instance != null && harvesterArmPrefab != null)
         {
-            int maxArmCount = Config != null ? Mathf.Max(1, Config.GetHarvesterCount(MaxLevel)) : targetCount;
+            int maxArmCount = targetCount;
+            if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+            {
+                maxArmCount = Mathf.Max(maxArmCount, 4);
+            }
+            else if (Config != null)
+            {
+                maxArmCount = Mathf.Max(maxArmCount, Config.GetHarvesterCount(MaxLevel));
+            }
+
             PoolHolder.Instance.Prewarm(
                 harvesterArmPrefab,
                 Mathf.Max(0, maxArmCount - _spawnedHarvesterArms.Count),
@@ -325,9 +340,15 @@ public sealed class FarmHarvestSystem : MonoBehaviour
         {
             if (harvesterArmPrefab != null)
             {
-                HarvesterArm newArm = PoolHolder.Instance != null
-                    ? PoolHolder.Instance.Get(harvesterArmPrefab, parent) as HarvesterArm
-                    : Instantiate(harvesterArmPrefab, parent);
+                HarvesterArm newArm = null;
+                if (PoolHolder.Instance != null)
+                {
+                    newArm = PoolHolder.Instance.Get(harvesterArmPrefab, parent) as HarvesterArm;
+                }
+                if (newArm == null)
+                {
+                    newArm = Instantiate(harvesterArmPrefab, parent);
+                }
                 if (newArm == null) break;
                 newArm.transform.localPosition = Vector3.zero;
                 newArm.transform.localRotation = Quaternion.identity;

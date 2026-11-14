@@ -323,16 +323,25 @@ public sealed class FarmPlotSystem : MonoBehaviour
         FarmPlotData plot = GetPlot(plotId);
         FarmConfig farmConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.FarmConfig : null;
         PlantConfig plantConfig = ConfigHolder.Instance != null ? ConfigHolder.Instance.PlantConfig : null;
-        int plantId = farmConfig != null
-            ? farmConfig.GetInitialPlantId(plotId, plantConfig)
-            : (plot != null && plot.Config != null ? plot.Config.defaultPlantId : -1);
+        int plantId = -1;
+        if (farmConfig != null)
+        {
+            plantId = plot != null
+                ? farmConfig.GetInitialPlantId(plot.RingIndex, plot.SectorIndex, plantConfig)
+                : farmConfig.GetInitialPlantId(plotId, plantConfig);
+        }
+        else
+        {
+            plantId = (plot != null && plot.Config != null ? plot.Config.defaultPlantId : -1);
+        }
+
         if (plantId < 0 || plantConfig == null || plantConfig.GetPlant(plantId) == null)
         {
             Debug.LogWarning($"[FarmPlotSystem] Plot {plotId} has no valid default plant.", this);
             return false;
         }
 
-        int visualPlantId = PlayableScenarioRuntime.GetConfiguredVisualPlantId(plotId);
+        int visualPlantId = UsesPlantPicker() ? PlayableScenarioRuntime.GetConfiguredVisualPlantId(plotId) : -1;
         return TryOccupyPlot(plotId, plantId, visualPlantId);
     }
 
@@ -398,7 +407,7 @@ public sealed class FarmPlotSystem : MonoBehaviour
                     if (config != null && config.isUnlockedByDefault)
                     {
                         int defaultPlantId = farmConfig != null
-                            ? farmConfig.GetInitialPlantId(plotId, ConfigHolder.Instance?.PlantConfig)
+                            ? farmConfig.GetInitialPlantId(ringIndex, sectorIndex, ConfigHolder.Instance?.PlantConfig)
                             : config.defaultPlantId;
                         PlotState initialSaveState = defaultPlantId >= 0 ? PlotState.Planted : PlotState.Empty;
                         save = PlayableFarmState.GetOrCreatePlotSaveData(plotId, initialSaveState, defaultPlantId, 1);

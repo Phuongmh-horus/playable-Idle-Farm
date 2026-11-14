@@ -141,7 +141,15 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         float speed = Config != null ? Config.GetRotationSpeed(_sprinklerLevel) : 0f;
         if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
         {
-            speed = 36f + (_sprinklerLevel - 1) * 8f;
+            if (_sprinklerLevel >= 6)
+            {
+                float minDuration = Config != null ? Config.minimumRotationDuration : 5f;
+                speed = 360f / Mathf.Max(0.1f, minDuration);
+            }
+            else
+            {
+                speed = 36f + (_sprinklerLevel - 1) * 8f;
+            }
         }
         float dt = Time.deltaTime;
         for (int i = 0; i < _spawnedSprinklerArms.Count; i++)
@@ -249,7 +257,8 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         int nozzleCount = Config != null ? Config.GetNozzleCount(_sprinklerLevel) : 1;
         if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
         {
-            if (_sprinklerLevel >= 5) nozzleCount = 4;
+            if (_sprinklerLevel >= 6) nozzleCount = 4;
+            else if (_sprinklerLevel >= 5) nozzleCount = 3;
             else if (_sprinklerLevel >= 3) nozzleCount = 2;
             else nozzleCount = 1;
         }
@@ -273,7 +282,16 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
 
         if (PoolHolder.Instance != null && sprinklerArmPrefab != null)
         {
-            int maxArmCount = Config != null ? Mathf.Max(1, Config.GetNozzleCount(MaxLevel)) : targetCount;
+            int maxArmCount = targetCount;
+            if (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+            {
+                maxArmCount = Mathf.Max(maxArmCount, 4);
+            }
+            else if (Config != null)
+            {
+                maxArmCount = Mathf.Max(maxArmCount, Config.GetNozzleCount(MaxLevel));
+            }
+
             PoolHolder.Instance.Prewarm(
                 sprinklerArmPrefab,
                 Mathf.Max(0, maxArmCount - _spawnedSprinklerArms.Count),
@@ -290,9 +308,15 @@ public sealed class FarmIrrigationSystem : MonoBehaviour
         {
             if (sprinklerArmPrefab != null)
             {
-                SprinklerArm newArm = PoolHolder.Instance != null
-                    ? PoolHolder.Instance.Get(sprinklerArmPrefab, parent) as SprinklerArm
-                    : Instantiate(sprinklerArmPrefab, parent);
+                SprinklerArm newArm = null;
+                if (PoolHolder.Instance != null)
+                {
+                    newArm = PoolHolder.Instance.Get(sprinklerArmPrefab, parent) as SprinklerArm;
+                }
+                if (newArm == null)
+                {
+                    newArm = Instantiate(sprinklerArmPrefab, parent);
+                }
                 if (newArm == null) break;
                 newArm.transform.localPosition = Vector3.zero;
                 newArm.transform.localRotation = Quaternion.identity;

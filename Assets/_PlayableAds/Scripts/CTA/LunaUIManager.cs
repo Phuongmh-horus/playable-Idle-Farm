@@ -152,6 +152,16 @@ public class LunaUIManager : MonoBehaviour
 #endif
         if (_endcardVisible) return;
 
+        // Kịch bản 124: Bỏ qua hoàn toàn logic bật endcard theo timing (kể cả timeout),
+        // chỉ dùng logic bật endcard sau khi nâng cấp max (HandleScenario124UpgradeClicked).
+        bool isScenario124 = (CurrentScenePlayableSO != null && CurrentScenePlayableSO.scenario == PlayableScenarioId.Scenario124)
+            || (PlayableScenarioRuntime.CurrentScenario != null && PlayableScenarioRuntime.CurrentScenario.scenario == PlayableScenarioId.Scenario124)
+            || scenario == PlayableScenarioId.Scenario124;
+        if (isScenario124)
+        {
+            return;
+        }
+
         float dt = Time.unscaledDeltaTime;
         _totalPlayTime += dt;
 
@@ -159,11 +169,6 @@ public class LunaUIManager : MonoBehaviour
         if (!_hasShownEndcard && _totalPlayTime >= maxGameTimeout)
         {
             ShowEndcard();
-            return;
-        }
-
-        if (CurrentScenePlayableSO != null && CurrentScenePlayableSO.scenario == PlayableScenarioId.Scenario124)
-        {
             return;
         }
 
@@ -1155,13 +1160,13 @@ public class LunaUIManager : MonoBehaviour
         }
 
         // Deactivate persistent CTA buttons (e.g. LogoGame, PlayNow) during gameplay
-        for (int i = 0; i < ctaButtons.Count; i++)
-        {
-            if (ctaButtons[i] != null)
-            {
-                ctaButtons[i].gameObject.SetActive(false);
-            }
-        }
+        // for (int i = 0; i < ctaButtons.Count; i++)
+        // {
+        //     if (ctaButtons[i] != null)
+        //     {
+        //         ctaButtons[i].gameObject.SetActive(false);
+        //     }
+        // }
 
         // 2. Resolve and setup dedicated Upgrade_Button with star progress
         if (upgrade124Button == null && canvasHiddenEndGameRect != null)

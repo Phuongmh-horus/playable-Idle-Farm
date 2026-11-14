@@ -91,6 +91,30 @@ public class FarmConfig : ScriptableObject
         PlotConfig plot = GetPlotConfig(plotId);
         return plot != null ? plot.defaultPlantId : (plotId >= 0 ? plotId % 10 : -1);
     }
+
+    /// <summary>
+    /// Resolves the first plant for a plot by its ring and sector.
+    /// In a circular farm, all concentric rings share the sector's plant identity.
+    /// </summary>
+    public int GetInitialPlantId(int ringIndex, int sectorIndex, PlantConfig plantConfig)
+    {
+        if (initialPlantOrder != null && initialPlantOrder.Count > 0)
+        {
+            return initialPlantOrder[sectorIndex % initialPlantOrder.Count];
+        }
+
+        if (plantConfig != null && plantConfig.plants != null && plantConfig.plants.Count > 0)
+        {
+            int orderedPlantId = plantConfig.GetPlantIdAtOrder(sectorIndex % plantConfig.plants.Count);
+            if (orderedPlantId >= 0)
+            {
+                return orderedPlantId;
+            }
+        }
+
+        PlotConfig plot = GetPlotConfig(ringIndex, sectorIndex);
+        return plot != null ? plot.defaultPlantId : (sectorIndex >= 0 ? sectorIndex % 10 : -1);
+    }
 }
 
 #region PlotConfig

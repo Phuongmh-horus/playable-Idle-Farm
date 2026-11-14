@@ -148,8 +148,8 @@ public class BillboardJobManager : MonoSingleton<BillboardJobManager>
         if (count == 0)
             return;
 
-        Quaternion camRot = _cachedCameraTransform != null 
-            ? _cachedCameraTransform.rotation 
+        Quaternion camRot = _cachedCameraTransform != null
+            ? _cachedCameraTransform.rotation
             : (cachedCamera != null ? cachedCamera.transform.rotation : Quaternion.identity);
 
         for (int i = count - 1; i >= 0; i--)
@@ -177,8 +177,8 @@ public class BillboardJobManager : MonoSingleton<BillboardJobManager>
     {
         if (mode == BillboardMode.GroundFlat)
             return GroundFlatRotation;
-        return _cachedCameraTransform != null 
-            ? _cachedCameraTransform.rotation 
+        return _cachedCameraTransform != null
+            ? _cachedCameraTransform.rotation
             : (cachedCamera != null ? cachedCamera.transform.rotation : Quaternion.identity);
     }
 

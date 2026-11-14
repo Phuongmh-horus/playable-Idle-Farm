@@ -135,11 +135,7 @@
         "scenes": [
             "Assets/_FrameWork/Scenes/PLA_Order/PLA_124.unity"
         ],
-        "disabledScenes": [
-            "Assets/_FrameWork/Scenes/PLA.unity",
-            "Assets/_FrameWork/Scenes/PLA_Order/PLA_125.unity",
-            "Assets/_FrameWork/Scenes/PLA_Order/PLA_126.unity"
-        ],
+        "disabledScenes": [],
         "startupScene": 0,
         "packages": {
             "default": {
@@ -15352,7 +15348,7 @@
                     },
                     {
                         "name": "RemoveAllListeners",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetPersistentTarget",
@@ -23485,6 +23481,10 @@
                     {
                         "name": "Awake",
                         "excluded": false
+                    },
+                    {
+                        "name": "InitCooldowns",
+                        "excluded": false
                     }
                 ]
             },
@@ -27506,11 +27506,11 @@
                     },
                     {
                         "name": "minWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "preferredWidth#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "flexibleWidth#get",
@@ -27518,11 +27518,11 @@
                     },
                     {
                         "name": "minHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "preferredHeight#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "flexibleHeight#get",
@@ -30870,7 +30870,7 @@
                     },
                     {
                         "name": "GetPlotConfig",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetPlotConfig$1",
@@ -30890,6 +30890,10 @@
                     },
                     {
                         "name": "GetInitialPlantId$1",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GetInitialPlantId$2",
                         "excluded": false
                     }
                 ]
@@ -31041,6 +31045,14 @@
                     {
                         "name": "RotationDuration#get",
                         "excluded": true
+                    },
+                    {
+                        "name": "SetHarvesterLevel",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ResolveBladeCount",
+                        "excluded": false
                     }
                 ]
             },
@@ -31147,6 +31159,10 @@
                     {
                         "name": "EnsureSprinklerArms",
                         "excluded": false
+                    },
+                    {
+                        "name": "SetSprinklerLevel",
+                        "excluded": false
                     }
                 ]
             },
@@ -31214,6 +31230,10 @@
                     },
                     {
                         "name": "SetState",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ForceUnlock",
                         "excluded": false
                     }
                 ]
@@ -31413,6 +31433,14 @@
                     {
                         "name": "EnsureInitialized",
                         "excluded": false
+                    },
+                    {
+                        "name": "UnlockAndPlantRing",
+                        "excluded": false
+                    },
+                    {
+                        "name": "UnlockAndPlantPlot",
+                        "excluded": false
                     }
                 ]
             },
@@ -31606,6 +31634,14 @@
                     },
                     {
                         "name": "HideCapacityLayer",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RefreshCapacity",
+                        "excluded": false
+                    },
+                    {
+                        "name": "SetTransportLevel",
                         "excluded": false
                     }
                 ]
@@ -31877,18 +31913,6 @@
                 "staticMethods": [],
                 "instanceMethods": [
                     {
-                        "name": "FindChildByName",
-                        "excluded": false
-                    },
-                    {
-                        "name": "ResolvePopup",
-                        "excluded": false
-                    },
-                    {
-                        "name": "HidePopupAtStartup",
-                        "excluded": false
-                    },
-                    {
                         "name": "GetLocalSprite",
                         "excluded": true
                     },
@@ -32041,10 +32065,6 @@
                         "excluded": false
                     },
                     {
-                        "name": "ResolvePreloadedUpgradePopups",
-                        "excluded": false
-                    },
-                    {
                         "name": "OnCTAClicked",
                         "excluded": false
                     },
@@ -32158,6 +32178,58 @@
                     },
                     {
                         "name": "ShowCombinedUpgradePopup",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ApplyBarLayout",
+                        "excluded": false
+                    },
+                    {
+                        "name": "CanUpgradeScenario124#get",
+                        "excluded": false
+                    },
+                    {
+                        "name": "AdjustBarLayouts",
+                        "excluded": false
+                    },
+                    {
+                        "name": "AdjustBottomBarLayout",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RestorePendingPlantPicker",
+                        "excluded": true
+                    },
+                    {
+                        "name": "IsFruitPickerVisible",
+                        "excluded": true
+                    },
+                    {
+                        "name": "SetupScenario124IfActive",
+                        "excluded": false
+                    },
+                    {
+                        "name": "UpdateScenario124StarProgress",
+                        "excluded": false
+                    },
+                    {
+                        "name": "ApplyScenario124ButtonLayout",
+                        "excluded": false
+                    },
+                    {
+                        "name": "PositionScenario124TutorialHands",
+                        "excluded": false
+                    },
+                    {
+                        "name": "HandleScenario124UpgradeClicked",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Scenario124EndcardDelayRoutine",
+                        "excluded": false
+                    },
+                    {
+                        "name": "RefreshScenario124UpgradeButton",
                         "excluded": false
                     }
                 ]
@@ -32617,6 +32689,10 @@
                     {
                         "name": "GetHarvestIcon",
                         "excluded": false
+                    },
+                    {
+                        "name": "GetGiantSkin",
+                        "excluded": true
                     }
                 ]
             },
@@ -32892,7 +32968,7 @@
                     },
                     {
                         "name": "ResolveConfiguredGameplayPlantId",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -33051,6 +33127,10 @@
                     {
                         "name": "ReportAnyUpgradeIconClicked",
                         "excluded": false
+                    },
+                    {
+                        "name": "RepositionPhaseHand",
+                        "excluded": false
                     }
                 ]
             },
@@ -33089,6 +33169,10 @@
                     {
                         "name": "ResetVisuals",
                         "excluded": false
+                    },
+                    {
+                        "name": "SetHandPosition",
+                        "excluded": false
                     }
                 ]
             },
@@ -33121,10 +33205,6 @@
                         "excluded": false
                     },
                     {
-                        "name": "WireButtons",
-                        "excluded": false
-                    },
-                    {
                         "name": "Upgrade",
                         "excluded": false
                     },
@@ -33134,6 +33214,18 @@
                     },
                     {
                         "name": "ApplyStatRow",
+                        "excluded": false
+                    },
+                    {
+                        "name": "WireButtonsOnce",
+                        "excluded": true
+                    },
+                    {
+                        "name": "RefreshContent",
+                        "excluded": true
+                    },
+                    {
+                        "name": "RefreshAffordability",
                         "excluded": false
                     }
                 ]
@@ -35559,6 +35651,10 @@
                     {
                         "name": "SetRootVisible",
                         "excluded": false
+                    },
+                    {
+                        "name": "RefreshAffordability",
+                        "excluded": true
                     }
                 ]
             },
@@ -35688,7 +35784,7 @@
                         "maxHeight": 2048,
                         "format": "jpeg",
                         "compression": "quantSize",
-                        "quality": 70,
+                        "quality": 65,
                         "script": "",
                         "ext": "",
                         "name": "Assets/_Game/Resource2D/BG.psd"
@@ -35697,7 +35793,7 @@
                         "maxWidth": 512,
                         "maxHeight": 512,
                         "format": "png32",
-                        "compression": "quantQuality",
+                        "compression": "quantSize",
                         "quality": 65,
                         "script": "",
                         "ext": "",
@@ -35707,7 +35803,7 @@
                         "maxWidth": 512,
                         "maxHeight": 512,
                         "format": "png32",
-                        "compression": "quantQuality",
+                        "compression": "quantSize",
                         "quality": 65,
                         "script": "",
                         "ext": "",
@@ -35734,7 +35830,7 @@
                         "name": "Assets/_Game/Sprites/Plant/1-7.png"
                     },
                     {
-                        "maxWidth": 1024,
+                        "maxWidth": 512,
                         "maxHeight": 512,
                         "format": "png32",
                         "compression": "quantSize",
@@ -35932,6 +36028,26 @@
                         "script": "",
                         "ext": "",
                         "name": "Assets/_Game/Sprites/Ground/1/Ground1-1.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/UI/icon-2 1.png"
+                    },
+                    {
+                        "maxWidth": 512,
+                        "maxHeight": 512,
+                        "format": "png32",
+                        "compression": "quantQuality",
+                        "quality": 65,
+                        "script": "",
+                        "ext": "",
+                        "name": "Assets/_FrameWork/Sprites/UI/Icon.png"
                     }
                 ]
             },

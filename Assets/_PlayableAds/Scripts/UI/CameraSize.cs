@@ -72,7 +72,7 @@ public class CameraSize : MonoSingleton<CameraSize>
 
     public void OnChangeScreen(int index = 0)
     {
-    if (IsHorizontalReference())
+        if (IsHorizontalReference())
         {
             Debug.Log("[CameraSize]Horizontal Reference");
             SetCamera(viewCameraHori, index);
@@ -80,7 +80,7 @@ public class CameraSize : MonoSingleton<CameraSize>
         else
         {
             Debug.Log("[CameraSize]Vertical Reference");
-            SetCamera(viewCameraVerti,index);
+            SetCamera(viewCameraVerti, index);
         }
     }
 
@@ -145,7 +145,7 @@ public class CameraSize : MonoSingleton<CameraSize>
 
 
         // referenceAspect = horizontalReferenceWidth / horizontalReferenceHeight;
-        if(IsHorizontalReference())
+        if (IsHorizontalReference())
         {
             referenceAspect = horizontalReferenceWidth / horizontalReferenceHeight;
         }
@@ -221,7 +221,7 @@ public class CameraSize : MonoSingleton<CameraSize>
         fovRoutine = null;
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     private void Update()
     {
     // Test nhanh trong Editor khi đổi Game View aspect.
@@ -230,14 +230,14 @@ public class CameraSize : MonoSingleton<CameraSize>
         OnChangeScreen();
     }
     }
-    #endif
-    }
+#endif
+}
 
 [System.Serializable]
 public class ViewCamera
 {
-public Vector3 pos;
+    public Vector3 pos;
 
-// Nếu camera Orthographic thì fieldOfView này đang được dùng như orthographicSize.
-public float fieldOfView;
+    // Nếu camera Orthographic thì fieldOfView này đang được dùng như orthographicSize.
+    public float fieldOfView;
 }

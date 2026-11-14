@@ -16,7 +16,7 @@ public static class FruitSpawner
 
     #region Fruit Spawning
 
-    public static Fruit SpawnFruit(int plantId, Transform parent, Vector3 localPosition = default, Quaternion localRotation = default)
+    public static Fruit SpawnFruit(int plantId, Transform parent, Vector3 localPosition = default(UnityEngine.Vector3), Quaternion localRotation = default(UnityEngine.Quaternion))
     {
         var fruitPrefab = ConfigHolder.Instance?.FruitConfig?.fruitPrefab;
         if (!fruitPrefab)
@@ -30,7 +30,7 @@ public static class FruitSpawner
         return fruit;
     }
 
-    private static Fruit SpawnFruit(Fruit prefab, Transform parent, Vector3 localPosition = default, Quaternion localRotation = default)
+    private static Fruit SpawnFruit(Fruit prefab, Transform parent, Vector3 localPosition = default(UnityEngine.Vector3), Quaternion localRotation = default(UnityEngine.Quaternion))
     {
         if (prefab == null) return null;
         PoolHolder pool = PoolHolder.Instance;
@@ -61,7 +61,7 @@ public static class FruitSpawner
 
     #region AnimatedFruit Spawning
 
-    public static AnimatedFruit SpawnAnimatedFruit(Transform parent, Vector3 position = default, Quaternion rotation = default)
+    public static AnimatedFruit SpawnAnimatedFruit(Transform parent, Vector3 position = default(UnityEngine.Vector3), Quaternion rotation = default(UnityEngine.Quaternion))
     {
         var fruitPrefab = ConfigHolder.Instance?.FruitConfig?.animatedFruitPrefab;
         if (fruitPrefab == null)
